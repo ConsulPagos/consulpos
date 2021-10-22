@@ -55,7 +55,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.load()
-    this.title.setTitle('Grupo Altius | Dashboard')
   }
 
   load() {
