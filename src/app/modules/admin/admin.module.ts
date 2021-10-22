@@ -52,6 +52,8 @@ import { AdminCarouselComponent } from './components/admin-carousel/admin-carous
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { OwlModule } from 'ngx-owl-carousel';
 import { AdminCarritoComponent } from './components/admin-carrito/admin-carrito.component';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({

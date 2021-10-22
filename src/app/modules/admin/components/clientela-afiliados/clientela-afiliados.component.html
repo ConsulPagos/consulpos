@@ -1,9 +1,56 @@
-<div> <!-- *ngIf="!loading && !error; else loadingTable" -->
-  <table mat-table [dataSource]="affiliate" multiTemplateDataRows>
+<div>
+  <!-- *ngIf="!loading && !error; else loadingTable" -->
 
-    <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
-      <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-      <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+
+  <div>
+    <mat-form-field appearance="outline" class="mt-4 mx-4">
+      <mat-label>Buscar</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Acciones</mat-label>
+      <mat-select>
+        <mat-option value="option">Activar</mat-option>
+        <mat-option value="option">Desactivar</mat-option>
+        <mat-option value="option">Exportar</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-divider></mat-divider>
+  <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef> fecha </th>
+      <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="correo">
+      <th mat-header-cell *matHeaderCellDef> correo </th>
+      <td mat-cell *matCellDef="let element"> {{element.correo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="razon">
+      <th mat-header-cell *matHeaderCellDef> razon </th>
+      <td mat-cell *matCellDef="let element"> {{element.razon}} </td>
     </ng-container>
 
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
@@ -26,15 +73,16 @@
   </table>
 </div>
 
-<mat-paginator [hidden]="loading || error"  [length]="resultsLength" [pageSize]="15" showFirstLastButtons (page)="load()"></mat-paginator>
+<mat-paginator [hidden]="loading || error" [length]="resultsLength" [pageSize]="15" showFirstLastButtons
+  (page)="load()"></mat-paginator>
 
 <ng-template #loadingTable>
   <div class="loading d-flex justify-content-center align-items-center p-4">
-      <button class="loading-btn" mat-raised-button *ngIf="loading">
-          <mat-spinner [diameter]="20"></mat-spinner>
-      </button>
-      <button class="loading-btn" *ngIf="error" (click)="load()" mat-raised-button>
-          <li class="fas fa-redo-alt"></li>
-      </button>
+    <button class="loading-btn" mat-raised-button *ngIf="loading">
+      <mat-spinner [diameter]="20"></mat-spinner>
+    </button>
+    <button class="loading-btn" *ngIf="error" (click)="load()" mat-raised-button>
+      <li class="fas fa-redo-alt"></li>
+    </button>
   </div>
 </ng-template>
