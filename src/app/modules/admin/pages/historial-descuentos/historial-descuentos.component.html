@@ -1,0 +1,86 @@
+<section id="historial_cobros">
+    <div class="container-fluid">
+        <div class="title">
+            <div class="d-flex">
+                <a class="nav-btn" #tooltip="matTooltip" matTooltip="Volver a CRM"
+                    [routerLink]="['/admin/app',{ outlets: { adr: ['crm'] } }]">
+                    <li class="fa fa-arrow-left"></li>
+                </a>
+                <a class="nav-btn" (click)="dump()" #tooltip="matTooltip" matTooltip="Exportar en formato Excel">
+                    <li class="fas fa-file-download"></li>
+                </a>
+            </div>
+        </div>
+        <div class="table-container" [ngClass]="{'bg-white': !loading && !error}">
+            <div *ngIf="!loading && !error; else loadingTable">
+                <table mat-table [dataSource]="discounts">
+
+                    <ng-container matColumnDef="created_at">
+                        <th mat-header-cell *matHeaderCellDef> Fecha </th>
+                        <td mat-cell *matCellDef="let discount">
+                            {{discount.created_at | date:'short'}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> ID </th>
+                        <td mat-cell *matCellDef="let discount">
+                            <span class="discount-name">{{discount.id}}</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nombre_empresa">
+                        <th mat-header-cell *matHeaderCellDef> Afiliado </th>
+                        <td mat-cell *matCellDef="let discount">
+                            <span class="discount-name">{{discount.nombre_empresa}}</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="monto_descuento">
+                        <th mat-header-cell *matHeaderCellDef> Monto Descuento </th>
+                        <td mat-cell *matCellDef="let discount">
+                            <span>{{discount.monto_descuento}}%</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="limite_descuento">
+                        <th mat-header-cell *matHeaderCellDef> Limite descuento</th>
+                        <td mat-cell *matCellDef="let discount">
+                            <span>{{discount.limite_descuento}}</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef> Admin</th>
+                        <td mat-cell *matCellDef="let discount">
+                            <span>{{discount.email}}</span>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+            <mat-paginator [hidden]="loading || error" [length]="resultsLength" [pageSize]="15" showFirstLastButtons
+                (page)="load()">
+            </mat-paginator>
+        </div>
+    </div>
+</section>
+
+<ng-template #loadingTable>
+    <div class="loading d-flex justify-content-center align-items-center p-4">
+        <div class="p-1" *ngIf="loading">
+            <mat-spinner [diameter]="30"></mat-spinner>
+        </div>
+        <button class="loading-btn" *ngIf="error" (click)="load()" mat-raised-button>
+            <li class="fa fa-redo-alt"></li>
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #activeTemplate>
+    <button mat-button>
+        <li class="fa fa-eye-slash"></li>
+    </button>
+</ng-template>

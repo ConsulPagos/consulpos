@@ -1,0 +1,81 @@
+<h1 mat-dialog-title class="mat-dialog-title">
+    <span class="d-flex align-items-center">
+        <li class="fa fa-map-marker mr-2"></li> Direcciones de despacho
+    </span>
+</h1>
+
+<div mat-dialog-content class="mat-dialog-content">
+    <div class="less-padding">
+        <div class="form-group mb-2">
+            <p>Seleccionar dirección:</p>
+            <div class="d-flex align-items-center">
+                <select id="addressSel" class="form-control shadow-none" (change)="onChangeSel($event.target.value)">
+                    <option selected value="new">Nueva dirección</option>
+                    <option *ngFor="let direccion of direcciones; let i=index" value={{i}}>
+                        <p>{{direccion.calle}} {{direccion.sector}} {{direccion.edificio}} {{direccion.referencia}} -
+                            {{direccion.zona}}</p>
+                    </option>
+                </select>
+                <button class="ml-2 btn btn-danger shadow-none"
+                    [disabled]="!direccionSelected.id || loading || direcciones.length === 1" (click)="delete()">
+                    <li class="fa fa-trash"></li>
+                </button>
+            </div>
+        </div>
+
+        <p class="mt-2 mb-2">Completa o edita los campos:</p>
+        <form [formGroup]="despachoForm" (ngSubmit)="onSubmit()">
+            <div class="form-group d-flex">
+                <input formControlName="calle" [(ngModel)]="direccionSelected.calle" type="text"
+                    class="form-control shadow-none mr-1" id="calle" placeholder="Calle" name="calle">
+                <input formControlName="edificio" [(ngModel)]="direccionSelected.edificio" type="text"
+                    class="form-control shadow-none" id="edificio" placeholder="Edificio" name="edificio">
+            </div>
+            <div class="form-group">
+                <input formControlName="sector" [(ngModel)]="direccionSelected.sector" type="text"
+                    class="form-control shadow-none" id="sector" placeholder="Sector" name="sector">
+            </div>
+            <div class="form-group">
+                <input formControlName="referencia" [(ngModel)]="direccionSelected.referencia" type="text"
+                    class="form-control shadow-none" id="referencia" placeholder="Referencia" name="referencia">
+            </div>
+            <div class="form-group">
+                <select *ngIf="!loadingZones; else loadingZonesTmp" formControlName="zona"
+                    class="form-control shadow-none" id="zoneSel" (change)="setZone($event.target.value)">
+                    <option selected value="">Seleccionar zona</option>
+                    <option *ngFor="let zone of zones; let i=index" value={{i}}>
+                        {{zone.nombre}}
+                    </option>
+                </select>
+            </div>
+            <div *ngIf="despachoForm.invalid && submitted" class="small text-danger text-center">
+                Todos los campos <strong>requeridos</strong>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div mat-dialog-actions class="mat-dialog-actions">
+    <div class="d-flex w-100 btn-container" *ngIf="!loading; else loadingSpinner">
+        <button class="flex-fill cancel action_button" mat-button mat-dialog-close>
+            <li class="fa fa-times text-dark"></li>
+        </button>
+        <button (click)="onSubmit()" class="flex-fill confirm action_button" mat-button cdkFocusInitial>
+            <li class="fa fa-check"></li>
+        </button>
+    </div>
+</div>
+
+<ng-template #loadingSpinner>
+    <div class="d-flex justify-content-center align-items-center w-100">
+        <mat-spinner [diameter]="30"></mat-spinner>
+    </div>
+</ng-template>
+
+<ng-template #loadingZonesTmp>
+    <div *ngIf="!errorZones" class="loadingZones d-flex justify-content-left align-items-center btn shadow-none">
+        Cargando zonas
+    </div>
+    <button class="loadingZones d-flex justify-content-left align-items-center btn shadow-none" *ngIf="errorZones"
+        (click)="loadZones()">Cargar zonas</button>
+</ng-template>

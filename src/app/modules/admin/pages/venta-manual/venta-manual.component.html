@@ -1,0 +1,46 @@
+<section id="venta_manual">
+    <div class="container-fluid">
+        <mat-horizontal-stepper linear #stepper>
+            <ng-template matStepperIcon="edit">
+                <li class="fa fa-check"></li>
+            </ng-template>
+            <mat-step [stepControl]="form">
+                <ng-template matStepLabel>Ingresar el documento de identidad del cliente</ng-template>
+                <form [formGroup]="form">
+                    <div class="d-flex w-100" id="email">
+                        <input formControlName="id" placeholder="Documento de identidad del cliente" class="form-control w-100"
+                            type="text">
+                        <button mat-raised-button class="ml-1 mr-1" (click)="search()">Buscar</button>
+                    </div>
+                </form>
+                <div *ngIf="afiliado && !errorMsg">
+                    Afiliado encontrado: <strong>{{afiliado.email}}</strong>.
+                </div>
+                <div *ngIf="errorMsg" class="text-danger">
+                    {{errorMsg}}
+                </div>
+                <div>
+                    <button class="stepBtn" mat-raised-button matStepperNext>Siguiente</button>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Ingresar los datos de la venta</ng-template>
+                <app-admin-carousel></app-admin-carousel>
+                <div>
+                    <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
+                    <button class="stepBtn" mat-raised-button matStepperNext>Siguiente</button>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Confirmar venta</ng-template>
+                <ng-container>
+                    <app-admin-carrito (completed)="success($event); stepper.reset();" [affiliate]="afiliado">
+                    </app-admin-carrito>
+                </ng-container>
+                <div>
+                    <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </div>
+</section>

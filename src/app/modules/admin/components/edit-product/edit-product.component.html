@@ -1,0 +1,177 @@
+<section id="detalle_pedido_admin">
+    <div class="container-fluid">
+        <div class="d-flex title align-items-center">
+            <a class="nav-btn" #tooltip="matTooltip" matTooltip="Volver a SKU"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['sku'] } }]">
+                <li class="fa fa-arrow-left"></li>
+            </a>
+        </div>
+        <div class="product-container mb-4" *ngIf="product;else loadingproduct">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12 w-100">
+                            <div class="d-flex pl-3 pr-2 pt-2 pb-2 w-100">
+                                <div>
+                                    <h3 class="text-uppercase" *ngIf="id !==0; else newProductTmp">BOTELLA
+                                        N°{{id}}</h3>
+                                </div>
+                                <div class="ml-auto">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <mat-slide-toggle [color]="'primary'" class="mr-3"
+                                            [checked]="product.activo === 1 ? true : false"
+                                            (change)="update_product_status(product)" *ngIf="id != 0">
+                                        </mat-slide-toggle>
+                                        <button mat-button (click)="save_product()" [disabled]="!(this.checkFormList() && this.productForm.valid && this.product.img_name)"
+                                            class=" btn btn-success bg-success rounded-btn">
+                                            <span class="text-uppercase ml-2 mr-2">Guardar</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-md-8 col-12 p-2">
+                                    <form [formGroup]="productForm" class="bg-white radius-10 p-2">
+                                        <div class="input-container">
+                                            <label for="producto">
+                                                Nombre
+                                            </label>
+                                            <input placeholder="Ingrese el nombre del producto" formControlName="nombre" [(ngModel)]="product.producto"
+                                                class="form-control" type="text" name="producto" id="producto">
+                                        </div>
+                                        <div class="input-container mt-2">
+                                            <label for="descripcion">
+                                                Descripcion
+                                            </label>
+                                            <textarea placeholder="Ingrese la descripción del producto" formControlName="descripcion" [(ngModel)]="product.descripcion"
+                                                rows="6" class="form-control" type="text" name="descripcion"
+                                                id="descripcion"></textarea>
+                                        </div>
+                                        <div class="d-flex w-100">
+                                            <div class="input-container mt-2 flex-fill">
+                                                <label for="unidades_caja">
+                                                    Unidades caja
+                                                </label>
+                                                <input placeholder="Ingrese la cantidad de unidades por caja" formControlName="unidades_caja"
+                                                    [(ngModel)]="product.unidades_caja" class="form-control"
+                                                    type="number" name="unidades_caja" id="unidades_caja">
+                                            </div>
+                                            <div class="input-container mt-2 ml-2 flex-fill">
+                                                <label for="codigo_barra">
+                                                    Código de barra
+                                                </label>
+                                                <input placeholder="Ingrese el código de barras para el producto" formControlName="codigo_barra" [(ngModel)]="product.codigo_barra"
+                                                    class="form-control" type="text" name="codigo_barra"
+                                                    id="codigo_barra">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-4 p-2">
+                                    <div class="pt-4 pb-4 bg-white radius-10 h-100 w-100">
+                                        <div class="d-flex justify-content-center">
+                                            <img src={{getProductImg()}} alt={{product.producto}} class="img"
+                                                height="250px" width="auto">
+                                        </div>
+                                        <app-upload class="d-flex justify-content-center ml-4 mr-4"
+                                            (url)="update_img($event)">
+                                        </app-upload>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="presentaciones row">
+                                        <div class="col-6 p-2" *ngFor="let format of formats; let i=index">
+                                            <div class="pl-3 pr-3 pb-2 bg-white radius-10 w-100 h-100">
+                                                <form [formGroup]="formList[i]">
+                                                    <div class="d-flex pr-2 pt-4 pb-4 w-100">
+                                                        <div class="d-flex flex-column">
+                                                            <h5 class="text-uppercase"
+                                                                *ngIf="id !==0; else newFormatTmp">
+                                                                Presentación N°{{format.id}}</h5>
+                                                            <span class="small">{{format.created_at | date}}</span>
+                                                        </div>
+                                                        <div class="ml-auto" *ngIf="id !==0 && formats.length > 1 && format.id !== 0">
+                                                            <div class="d-flex">
+                                                                <mat-slide-toggle [color]="'primary'"
+                                                                    [checked]="format.activo === 1 ? true : false"
+                                                                    (change)="update_format_status(format)">
+                                                                </mat-slide-toggle>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-container">
+                                                        <label for="format_descripcion">
+                                                            Tipo
+                                                        </label>
+                                                        <select class="form-control" formControlName="descripcion"
+                                                            [(ngModel)]="format.descripcion" name="format" id="format"
+                                                            [attr.disabled]="((format.descripcion === 'Unidad' || format.descripcion === 'Caja') && format.id) ? 'disabled' : null">
+                                                            <option value="" selected>Seleccionar tipo</option>
+                                                            <option [disabled]="checkFormat('Unidad')">Unidad</option>
+                                                            <option [disabled]="checkFormat('Caja')">Caja</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="d-flex mt-2 mb-2">
+                                                        <div class="input-container mr-1 flex-fill">
+                                                            <label for="format_unidades">
+                                                                Unidades
+                                                            </label>
+                                                            <input placeholder="Ingrese las unidades" formControlName="unidades"
+                                                                [(ngModel)]="format.unidades" class="form-control"
+                                                                type="number" name="format_unidades"
+                                                                id="format_unidades">
+                                                        </div>
+                                                        <div class="input-container flex-fill">
+                                                            <label for="format_precio">
+                                                                Precio
+                                                            </label>
+                                                            <input placeholder="Ingrese el precio" formControlName="precio" [(ngModel)]="format.precio"
+                                                                class="form-control" type="number" name="format_precio"
+                                                                id="format_precio">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-2">
+                                            <button *ngIf="(formats.length === 1 ||  formats.length === 0)" mat-button
+                                                class="btn btn-ligth w-100 h-100 radius-10 bg-white"
+                                                (click)="addFormat()" style="font-size: 20px;">
+
+                                                <li class="far fa-plus-square mt-3" style="font-size: 30px;"></li>
+
+                                                <p> Agregar presentación</p>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<ng-template #loadingproduct>
+    <div class="loading d-flex justify-content-center align-items-center p-4">
+        <div class="p-1" *ngIf="loading">
+            <mat-spinner [diameter]="30"></mat-spinner>
+        </div>
+        <button class="loading-btn" *ngIf="error" (click)="load()" mat-raised-button>
+            <li class="fa fa-redo-alt"></li>
+        </button>
+    </div>
+</ng-template>
+<ng-template #productAccepted>
+    <button mat-button disabled>Aceptado</button>
+</ng-template>
+<ng-template #newProductTmp>
+    <h3 class="text-uppercase">NUEVA BOTELLA</h3>
+</ng-template>
+<ng-template #newFormatTmp>
+    <h5 class="text-uppercase">NUEVA PRESENTACIÓN</h5>
+</ng-template>

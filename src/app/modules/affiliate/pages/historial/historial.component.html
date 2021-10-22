@@ -1,0 +1,60 @@
+<section id="historial">
+  <div class="container h-100">
+    <div class="row justify-content-center">
+      <app-title class="col-12" [title]="'PEDIDOS'" [subtitle]="'Historial de'"></app-title>
+
+      <!--Accordion wrapper-->
+      <div class="col-12 mt-5" *ngIf="orders; else loadingProduct" role="tablist">
+        <div class="card ml-auto mr-auto" *ngFor="let order of orders"
+          [routerLink]="['/afiliado/app',{ outlets: { afr: ['pedido', order.id ] } }]">
+          <div class="card-header z-depth-1" role="tab">
+            <div class="row d-flex justify-content-center align-items-center">
+              <div class="col-sm-4 col-5">
+                <app-product-grid [ventas]="order.ventas"></app-product-grid>
+              </div>
+              <div class="col-sm-8 col-7">
+                <div class="my-auto">
+                  <h4 class="text-uppercase mb-0 py-1 text-left">
+                    Pedido número {{order.id}}
+                  </h4>
+                  <p class="mb-0 py-1 text-left">
+                    {{order.created_at | date}}
+                  </p>
+                  <p class="mb-0 py-1 text-left">
+                    {{order.estado}} 
+                  </p>
+                  <p class="mb-0 py-1 text-left">
+                    {{order.ventas.length}} items
+                  </p>
+                  <p class="mb-0 py-1 text-right mr-4">
+                    <strong class="total">
+                      {{order.total | currency : 'USD' : true : '1.2-2'}}
+                    </strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Accordion wrapper-->
+    </div>
+  </div>
+</section>
+<ng-template #loadingProduct>
+  <div class="d-flex justify-content-center my-auto pt-4 pb-4" [class.loading-expanded]="!orders">
+    <div class="align-self-center">
+
+      <mat-spinner [diameter]="40" *ngIf="loading"></mat-spinner>
+      <app-afiliado-error *ngIf="error && !notFound" (reload)="load()" [errorDetails]="errorDetails">
+      </app-afiliado-error>
+
+      <div class="d-flex flex-column align-items-center justify-content-center" *ngIf="notFound">
+        <li class="fa fa-truck mb-3" style="font-size: 50px;"></li>
+        <span class="small">Tus pedidos aparecerán aquí</span>
+      </div>
+
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,51 @@
+.sidenav{
+    color: #fff;
+    width: 150px;
+    border: none;
+    
+}
+
+a{
+    height: 55px;
+    width: 150px;
+    font-size: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding-left: 20px;
+    color: #bed3dd;
+    text-decoration: none;
+}
+
+.brand{
+    background-color:  #042925; 
+    height: 60px; 
+    width: 150px;
+}
+
+
+.ad-active li{
+    background-color: #084e47;
+    color: white;
+    //color: #C2FFF8;
+}
+
+li{
+    background-color: #042925;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transition: 0.3s;
+    font-size: 18px;
+    margin-right: 10px;
+}
+a:hover li{
+    background-color: #084e47;
+    //color: #C2FFF8;
+    color: white;
+
+}

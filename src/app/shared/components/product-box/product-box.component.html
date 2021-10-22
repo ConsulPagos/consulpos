@@ -1,0 +1,34 @@
+<div class="product">
+    <div class="d-flex justify-content-center align-items-center">
+        <img src={{product.img_name}} alt="Image" class="image">
+        <img *ngIf="product.stock <= 0" src="../../../../assets/images/agotado.png"alt="Agotado" class="agotado">
+    </div>
+    <div class="overlay d-flex justify-content-center align-items-center">
+        <div class="ribbon" *ngIf="discount && discount > 0">
+            <span> -{{discount}}%</span>
+        </div>
+        <div>
+            <h4 class="text overlay-text">{{product.producto}}</h4>
+            <div class="d-flex justify-content-center mt-2 mb-3">
+                <svg height="5" width="150">
+                    <line x1="0" y1="0" x2="150" y2="0" style="stroke:teal;stroke-width:4;" />
+                </svg>
+            </div>
+            <div *ngFor="let format of product.format">
+                <div class="d-flex justify-content-center" *ngIf="format.activo == 1">
+                    <div>
+                        <span>{{format.descripcion}}</span><span
+                            *ngIf="format.unidades > 1"> de {{format.unidades}}</span>
+                    </div>
+                    <span class="ml-1" *ngIf="discount && discount > 0">
+                        {{(format.precio - format.precio*(discount/100)) | currency : 'USD' : true : '1.2-2'}}
+                    </span>
+                    <span class="ml-1" [ngClass]="{'line-through': discount && discount > 0}">{{format.precio | currency
+                        :
+                        'USD' : true : '1.2-2'}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

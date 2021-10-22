@@ -1,0 +1,48 @@
+ 
+.title{
+    min-height: 40px;
+    text-transform: uppercase;
+    color: black;
+    font-family: 'Montserrat', 'extra-bold';
+    font-weight: 800;
+    font-size: 48px;
+    letter-spacing: 1.3px;
+    margin-bottom: -2px;
+}
+
+.subtitle{
+    font-size: 36px;
+    color: white;
+    font-family: 'Montserrat', 'regular';
+    font-weight: 400;
+    letter-spacing: 1.3px;
+    margin-bottom: -8px;
+}
+#title-container{
+    height: fit-content;
+    margin-top: 2em;
+}
+
+@media screen and (max-width: 768px){
+
+    #title-container{
+        display: block !important;
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .title{
+        font-size: 24px;
+        margin: 0;
+    }
+    .subtitle{
+        font-size: 20px;
+        margin: 0;
+    }
+    svg{
+        margin-top: -5px;
+        width: 80px;
+    }
+
+}

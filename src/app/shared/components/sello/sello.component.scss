@@ -1,0 +1,24 @@
+#sello{
+    position: absolute;
+    top: 70px;
+    right: 0px;
+    z-index: 0;
+}
+
+img{
+    height: 220px;
+    width: 250px;
+}
+
+@media screen and (max-width: 1250px){
+    img{
+        height: 180px;
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 992px){
+    #sello{
+        display: none;
+    }
+}

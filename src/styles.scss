@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "./theme.scss";    
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+html{ 
+    height: 100%; 
+    scroll-behavior: smooth;
+}
+
+body { 
+    margin: 0; 
+    font-family: 'Montserrat', 'medium';
+    color: #ffffff !important;
+    font-weight: 400;
+}
+
+h2,h3,h4,h5,h6{
+    font-family: 'Montserrat', 'black' !important;
+    font-weight: 500 !important;
+    letter-spacing: 1px !important;
+}
+
+h1{
+    font-family: 'Montserrat', 'medium';
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+p {
+    font-family: 'Montserrat', 'medium';
+    font-weight: 300;
+}
+
+input{
+    background-color: transparent;
+}
+
+:focus {outline:0 !important;}
+ 
+

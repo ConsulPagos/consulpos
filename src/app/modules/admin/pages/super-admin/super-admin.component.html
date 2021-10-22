@@ -1,0 +1,14 @@
+<section id="superadmin">
+    <div class="title">
+        <div class="d-flex">
+            <a class="nav-btn pl-3 pr-3" #tooltip="matTooltip" matTooltip="Crear usuario" [routerLink]="['/admin/app',{ outlets: { adr: ['nuevo-admin'] } }]">
+                <li class="fa fa-user-plus"></li>
+            </a>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="table-container">
+            <app-tabla-super-admin></app-tabla-super-admin>
+        </div>
+    </div>
+</section>

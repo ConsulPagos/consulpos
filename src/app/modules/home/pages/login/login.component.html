@@ -1,0 +1,37 @@
+<section id="login" class="d-flex justify-content-center w-100">
+    <div class="d-flex justify-content-center align-self-center w-100">
+        <div class="container0 p-4">
+            <app-title [title]="'INGRESAR'"></app-title>
+            <br/><br/>
+            <form [formGroup]="authForm">
+                <div class="input-container">
+                    <input formControlName="email" type="text" class="form-control" id="email"
+                        placeholder="Correo electronico" name="email" [ngClass]="calculateClasses('email')">
+                </div>
+                <div class="input-container">
+                    <input formControlName="password" type="password" class="form-control" placeholder="Contraseña"
+                        name="password" [ngClass]="calculateClasses('password')">
+                </div>
+                <div class="error-message small">
+                    {{error.msg}}
+                </div>
+                <div class="input-container">
+                    <button mat-button id="btn-confirm" type="button" (click)="login()">
+                        <div *ngIf="!loading; else loadingTemplate">
+                            INGRESAR
+                        </div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+s
+</section>
+
+<ng-template #loadingTemplate>
+    <div class="d-flex justify-content-center" style="height: 40px;">
+        <mat-spinner [diameter]="40"></mat-spinner>
+    </div>
+
+</ng-template>

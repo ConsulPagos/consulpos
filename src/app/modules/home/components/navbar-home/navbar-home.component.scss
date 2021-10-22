@@ -1,0 +1,166 @@
+.navbar{
+  height:85px; 
+  width: 100%;
+  grid-template-columns: repeat(6, 1fr);
+  text-align:center;
+  padding:0;
+  margin: 0;
+}
+
+ nav{
+   position: fixed;
+   z-index: 1001;
+   height: 85px;
+   padding:0;
+   margin: 0;
+ }
+
+  .bg-roncola{
+    background-color: #07423f;
+  }
+
+  .bgcomplete{
+    background-color: #04302d !important;
+  }
+  .navbar-brand{
+    background-image: url('../../../../../assets/images/Asset 64.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 120px;
+    height: 85px;
+  }
+
+  
+.nav-item {
+  height: 85px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  cursor: pointer;
+}
+  .nav-link{
+    color: white !important;
+    text-align: center !important;
+    font-family: 'Montserrat', 'thin';
+    font-weight: 200;
+    font-size: 15px;
+    letter-spacing: 1.2px;
+    height: 85px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+  }
+
+  .bottom-line{
+    background-color: #595959;
+    height: 3px;
+    position: relative;
+    bottom: 20px;
+    width: 100%;
+    transition: 0.6s;
+  }
+
+  .nav-item:hover .bottom-line{
+    background-color: #C2FFF8;
+  }
+
+  .active .bottom-line{
+    background-color: #C2FFF8;
+  }
+  
+  .nav-item:hover, .active{
+    background-color: #04302db0;
+  }
+  
+  
+  ul.nav { display:table; width:100%; }
+  //ul.nav > li { display:table-cell; float:none; }
+  .nav-item a{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+ .login-btn{
+    border-radius: 20px;
+    min-width: 180px;
+    background-color: #08504c;
+    margin-right: 15px;
+    font-family: 'Montserrat', 'thin';
+    font-weight: 200;
+    font-size: 14px;
+    letter-spacing: 1.2px;
+}
+
+.navbar-collapse{
+  height: 85px;
+}
+@media screen and (max-width: 1280px){
+  .nav-pills .nav-item .nav-link{
+    font-size: 12px;
+    padding: 5px;
+  }
+}
+
+
+@media screen and (max-width: 992px){
+  .navbar-collapse{
+    height: auto;
+  }
+  .navbar-brand{
+   position: absolute;
+   width: 100%;
+   height: 65px;
+   display: flex;
+   justify-content: center;
+   z-index: 999;
+  }
+  .navbar-toggler{
+    height: 85px;
+    width: 60px;
+    z-index: 1000;
+  }
+
+  nav{
+    position: fixed;
+    z-index: 1001;
+  }
+
+  .nav-pills{
+    display: flex !important;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  .nav-pills .nav-item .nav-link{
+    font-size: 10px;
+    padding: 5px;
+  }
+
+  #loginBtn{
+    margin-top: 20px;
+  }
+
+  #loginBtn button{
+    height: 60px;
+    width: 100%;
+    max-width: 600px;
+    margin: 10px;
+  }
+  
+}
+
+@media screen and (max-width: 480px){
+  .navbar, .navbar-brand{
+    height: 60px;
+  }
+  .navbar-brand{
+    height: 50px;
+  }
+  .navbar-toggler{
+    height: 60px;
+  }
+}

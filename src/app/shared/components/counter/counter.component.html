@@ -1,0 +1,12 @@
+<section id="counter">
+    <div class="counter-container">
+        <button mat-button *ngIf="(mycount > 1) || !showDelete; else delete" (click)="decrement()" class="increment-btn">-</button>
+        <div class="count-container">
+            <input [(ngModel)]="mycount" (change)="inputChange()" class="form-control" type="number" min="1" name="count" id="inputCount">
+        </div>
+        <button mat-button (click)="increment()" class="decrement-btn">+</button>
+    </div>
+</section>
+<ng-template #delete>
+    <button mat-button (click)="removeEmit()" class="increment-btn"><li class="fa fa-trash"></li></button>
+</ng-template>

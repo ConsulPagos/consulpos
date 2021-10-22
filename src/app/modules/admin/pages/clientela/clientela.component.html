@@ -1,0 +1,51 @@
+<section id="clientela">
+    <div class="title">
+        <div class="d-flex">
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'left'"
+                matTooltip="Exportar en formato Excel">
+                <li class="fas fa-file-download"></li>
+            </a>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <mat-tab-group>
+                <!-- <mat-tab label="Verificados">
+                    <app-clientela-afiliados class="w-100" [access_level]="4"></app-clientela-afiliados>
+                </mat-tab>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span matBadge={{countDocumentos}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">Envió documentos</span>
+                    </ng-template>
+                    <app-clientela-afiliados (count)='countDocumentos = $event' class="w-100" [access_level]="2">
+                    </app-clientela-afiliados>
+                </mat-tab>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span matBadge={{countException}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">Solicitó excepción</span>
+                    </ng-template>
+                    <app-clientela-afiliados (count)='countException = $event' class="w-100" [access_level]="3">
+                    </app-clientela-afiliados>
+                </mat-tab>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span matBadge={{countDocumentosReq}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">Sin verificar</span>
+                    </ng-template>
+                    <app-clientela-afiliados (count)='countDocumentosReq = $event' class="w-100" [access_level]="1">
+                    </app-clientela-afiliados>
+                </mat-tab> -->
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">Listado</span>
+                    </ng-template>
+                    <app-clientela-afiliados (count)='countNuevos = $event' class="w-100" [access_level]="0">
+                    </app-clientela-afiliados>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>

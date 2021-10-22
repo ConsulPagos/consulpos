@@ -1,0 +1,92 @@
+
+h1{
+    font-family: 'Montserrat', 'black' !important;
+    font-weight: 500;
+    color: #074946;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.product-container{
+   border-radius: 10px;
+}
+
+.row, .col-12{
+    padding: 0;
+    margin: 0;
+}
+
+.loading-btn{
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 20px;
+    height: 40px;
+    background-color: whitesmoke;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.accept-btn{
+    background-color: teal;
+}
+
+.input-container{
+    margin-bottom: 10px;
+}
+
+label{
+    font-weight: 500;
+    color: black;
+}
+
+
+.title{
+    font-family: 'Montserrat', 'black' !important;
+    font-weight: 600;
+    color: #414C59;
+    font-size: 18px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    position: absolute;
+    top: 8px;
+    left: 20px;
+}
+
+.edit-btn{
+    border-radius: 10px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    background-color: white;
+    color: black;
+}
+
+.nav-btn{
+    color: #79798a;
+    height: 45px;
+    width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-right: 10px;
+}
+
+.nav-btn:hover{
+    background-color: whitesmoke;
+}
+
+.card{
+    border: none;
+    border-radius: 10px;
+}
+
+.icon-bottle{
+    font-size: 30px;
+}

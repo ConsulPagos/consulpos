@@ -1,0 +1,23 @@
+<div mat-dialog-title class="mat-dialog-title d-flex justify-content-center align-items-center">
+    <i class="fa fa-exclamation-triangle mr-2 less-padding"></i>{{data['title']}}
+</div>
+
+<div mat-dialog-content class="mat-dialog-content">
+    <p class="text-justify less-padding">
+        {{data['body']}}
+    </p>
+    <br>
+</div>
+<div mat-dialog-actions class="mat-dialog-actions">
+    <div class="d-flex w-100 btn-container">
+        <button [ngClass]="{'only-cancel': !data['verification']}" class="flex-fill cancel action_button" mat-button
+            mat-dialog-close>
+            <li class="fa fa-times text-dark" *ngIf="data['verification']"></li>
+            <span *ngIf="!data['verification']" style="font-size: 16px;">Ok</span>
+        </button>
+        <button class="flex-fill confirm action_button" mat-button cdkFocusInitial (click)="ok()"
+            *ngIf="data['verification']">
+            <li class="fa fa-check"></li>
+        </button>
+    </div>
+</div>

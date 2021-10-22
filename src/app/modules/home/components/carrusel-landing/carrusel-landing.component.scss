@@ -1,0 +1,307 @@
+
+  
+    .heading-1us {
+      text-transform: uppercase;
+      color: white;
+      font-family: 'Montserrat', 'extra-bold';
+      font-weight: 800;
+      font-size: 50px;
+      letter-spacing: 1.3px;
+      margin-bottom: 30px;
+    }
+  
+    .text-portafolio{
+      color: #C2FFF8;
+      font-family: 'Montserrat', 'light';
+      font-weight: 300 !important;
+      font-size: 46px;
+    }
+
+    .heading-2us {
+      text-transform: uppercase;
+      color: white;
+      font-family: 'Montserrat', 'extra-bold';
+      font-weight: 800;
+      font-size: 60px;
+      letter-spacing: 1.3px;
+    }
+  
+    .portafoliorones {
+      background-color: #000000;
+      min-height: 120vh;
+    }
+  
+    .row-circles{
+      background-image: url("../../../../../assets/images/FondoBarraRon.png");
+      background-size: 100% 73%;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    
+    .PORTAFOLIO-RONES {
+      text-align: center;
+      color: white;
+      text-transform: bold;
+      font-size: 35px !important;
+    }
+    
+    #circle {
+      z-index: 0 !important;
+      width: 430px;
+      height: 430px;
+      border-radius: 50%;
+      background:#0f605a;
+    }
+    
+    .imagenencima {
+      height: 400px;
+      width: auto;
+      animation: animatedImage 5s linear infinite;
+    }
+  
+    .imagen{
+        height: 30px;
+        width: auto;
+        animation: animatedImage 5s linear infinite;
+    }
+  
+    #circlesmall {
+      width: 400px;
+      height: 400px;
+    //  -webkit-border-radius: 200px;
+     // -moz-border-radius: 160px;
+      border-radius: 50%;
+      background:#0f605a;
+    //  margin-top: 300px;
+      //margin-bottom: -250px;
+     //transform: translate(75px,215px);
+      z-index: 0;
+    }
+    
+    .ultimo {
+      padding-top: 120px;
+    }
+  
+    .hidden{
+        display: none;
+        z-index: 0;
+    }
+    .show{
+        display: block;
+        height: 400px;
+        width: auto;
+        animation: animatedImage 5s linear infinite;
+    }
+
+    @keyframes animatedImage {
+      0% { height: 0px;
+        opacity: 0;
+      }
+      5%{
+        opacity: 1;
+      }
+      95%{
+        opacity: 1;
+      }
+     100% { 
+        opacity: 0;
+         height: 700px;
+      }
+    }
+    
+    @media only screen and (max-width:768px){
+      
+        .row-circles{
+          background-size: 100% 80%;
+          margin-top: 60px;
+        }
+    
+        .heading-2us {
+          font-size: 36px;
+        }
+    
+        .subheading{
+          font-size: 20px;
+          margin-bottom: 10px;
+        }
+        
+        .ultimo{
+          padding-bottom: 20px;
+        }
+        
+        .aboutus{
+          padding-left: 20px;
+          padding-top: 20px;
+          padding-bottom: 20px;
+        }
+        
+        .our-clients{
+          font-size: 16px;
+        }
+        
+        .portafoliorones {
+          min-height: 100vh;
+        }
+    
+        .sobre-nosotros {
+          min-height: 100vh;
+          padding-top: 20px;
+          padding-bottom: 20px;
+        }
+        #circle {
+          width: 150px;
+          height: 150px;
+        }
+
+        @keyframes animatedImage {
+          0% { height: 0px;
+            opacity: 0;
+          }
+          5%{
+            opacity: 1;
+          }
+          95%{
+            opacity: 1;
+          }
+         100% { 
+            opacity: 0;
+             height: 300px;
+          }
+        }
+
+        
+      .text-portafolio{
+        font-size: 24px;
+      }
+    }
+    
+    
+      @media only screen and (max-width:480px){
+        #inicio, #portafoliorones, #contactanos, #sobre-nosotros{
+          transform: scale(1.01); 
+        }
+
+        .heading-1{
+          font-size: 18px;
+          margin-left: 20px;
+          margin-right: 20px;
+        }
+  
+        .heading-1us{
+          font-size: 28px;
+        }
+    
+    }
+    
+    @media only screen and (max-width:400px){
+    
+      .iconside img {
+        width: 30px;
+        height: 30px;
+      }
+      .iconside p {
+        font-size: 12px;
+      }
+      .ppp{
+        font-size: 8px;
+      }
+    
+      .btn-pedidos{
+        padding: 5px;
+        padding-left:20px;
+        padding-right: 20px;
+        font-size: 16px;
+      }
+      .heading-1{
+        font-size: 14px;
+      }
+      .heading-2us{
+        font-size: 24px;
+      }
+      .subheading{
+        font-size: 12px !important;
+      }
+
+      #portafoliorones{
+        height: 100vh;
+      }
+
+      #circle {
+        width: 130px;
+        height: 130px;
+      }
+      
+    }
+    
+    
+    @media (max-height:480px){
+    
+      #inicio{
+        height: auto;
+        padding-bottom: 20px;
+        padding-top: 100px;
+        overflow-y: auto;
+      }
+    
+      #portafoliorones, #contactanos{
+        height: auto;
+        padding: 20px;
+        padding-top: 40px;
+        padding-bottom: 40px;
+      }
+    
+      #sobre-nosotros,.sobre-nosotros{
+        height: auto !important;
+        padding-top: 40px;
+        padding-bottom: 20px;
+      }
+    
+      .aboutus{
+        padding-left: 30px;
+        padding-top: 50px;
+        padding-bottom: 20px;
+      }
+    
+      .infAboutUs{
+        font-size: 10px;
+      }
+    
+      .btn-pedidos{
+        padding: 5px;
+        padding-left:30px;
+        padding-right: 30px;
+        font-size: 20x;
+      }
+      .heading-1{
+        font-size: 18px;
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+      .retailers{
+        font-size: 20px;
+      }
+      .logoimg{
+        width: 70px;
+        height: 30px;
+      }
+      .iconside img {
+        width: 35px;
+        height: 35px;
+      }
+      .iconside p {
+        font-size: 12px;
+      }
+      .ppp{
+        font-size: 10px;
+      }
+      .text-about{
+        font-size: 30px;
+      }
+      .heading-1us{
+        font-size: 28px;
+      }
+    
+
+    }
+    
+       

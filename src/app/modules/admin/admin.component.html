@@ -1,0 +1,11 @@
+<mat-sidenav-container class="custom-container">
+  <mat-sidenav mode="side" opened style="background-color: #04302d; border: none;">
+    <app-admin-sidenav></app-admin-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-admin-navbar></app-admin-navbar>
+    <div class="pt-3">
+      <router-outlet name='adr'></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,16 @@
+#truck{
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+}
+
+img{
+    height: 150px;
+    width: 80px;
+}
+
+@media screen and (max-width: 768px){
+    #truck{
+        display: none;
+    }
+}

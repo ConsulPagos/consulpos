@@ -1,0 +1,209 @@
+li{
+  list-style: none;
+}
+
+.bg-roncola{
+  background-color: #07423f;
+  width:1000px;
+  margin:0 auto;
+  text-align:center;
+} 
+
+.bgcomplete{
+  background-color: #04302d ;
+}
+
+.navbar{
+  height:85px; 
+  width: 100%;
+  padding: 0 !important;
+  grid-template-columns: repeat(6, 1fr) !important;
+  z-index: 2;
+}
+
+nav{
+  position: fixed;
+  z-index: 1;
+}
+.navbar-brand{
+  background-image: url('../../../../../assets/images/Asset 64.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 120px;
+  height: 85px;
+}
+
+.navbar-collapse{
+  height: 85px;
+  z-index: 100;
+}
+
+.nav-link{
+  color: white !important;
+  text-align: center !important;
+  font-family: 'Montserrat', 'thin';
+  font-weight: 200;
+  font-size: 15px;
+  letter-spacing: 1.2px;
+  height: 83px;
+  margin-bottom: 2px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0;
+}
+
+.nav-item:hover{
+  background-color: #04302db0;
+}
+
+ul.nav { display:table; width:100%; }
+
+.nav-item a{
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 0;
+}
+
+.nav-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 0;
+  height: 85px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: -4px;
+}
+
+.bottom-line{
+  background-color: #595959;
+  height: 3px;
+  position: relative;
+  bottom: 20px;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.nav-item:hover .bottom-line{
+  background-color: #C2FFF8;
+}
+
+#carritoBtn{
+    border-radius: 25px;
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    color: black !important;
+    margin-right: 25px;
+    background-image: url('../../../../../assets/images/Asset\ 9.svg');
+}
+
+#identity{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    margin-left: 20px;
+}
+
+#identity_btn{
+    font-family: 'Montserrat', 'thin' !important;
+    font-weight: 200;
+    font-size: 14px;
+    letter-spacing: 1.2px;
+}
+
+.af-active{
+    background-color: #04302db0;
+}
+
+.af-active .bottom-line{
+  background-color: #C2FFF8;
+}
+
+.verification-btn{
+  font-size: 18px;
+  background-color: transparent;
+}
+
+.state{
+  font-family: 'Montserrat', 'thin';
+  font-weight: 200;
+}
+
+@media screen and (max-width: 992px){
+  .hidden-in-mobile{
+    display: none;
+  }
+  .navbar-collapse{
+    height: auto;
+    padding-bottom: 20px;
+    z-index: 99999;
+  }
+  .navbar-brand{
+   position: absolute;
+   width: 100%;
+   height: 65px;
+   display: flex;
+   justify-content: center;
+   z-index: 1;
+  }
+  .navbar-toggler{
+    height: 85px;
+    width: 60px;
+    z-index: 2;
+  }
+  
+  .nav-pills{
+    display: flex !important;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  .nav-pills .nav-item .nav-link{
+    font-size: 10px;
+    padding: 5px;
+  }
+
+  #carritoBtn{
+    position: absolute;
+    top: 22px;
+    right: 0;
+    z-index: 2;
+  }
+
+  li{
+    display: block;
+  }
+
+  nav{
+    position: fixed;
+    z-index: 1;
+  }
+  
+}
+
+
+@media screen and (max-width: 480px){
+  .navbar, .navbar-brand{
+    height: 60px;
+  }
+  .navbar-brand{
+    height: 50px;
+  }
+  .navbar-toggler{
+    height: 60px;
+  }
+
+  #carritoBtn{
+    top: 12px;
+    height: 40px !important;
+    width: 40px !important;
+    right: 0;
+    margin-right: 12px;
+    border-radius: 25px;
+  }
+}

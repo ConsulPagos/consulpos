@@ -1,0 +1,103 @@
+<section id="carrito">
+    <div id="sidepanel" class="sidepanel">
+        <div class="d-flex mb-4 pt-1">
+            <div class="ml-3 d-flex align-items-center address-container">
+                <span class="small address-label">Entregar en:</span>
+                <select class="form-control shadow-none" id="addressSel" (change)="setAddress($event.target.value)">
+                    <option *ngFor="let direccion of direcciones; let i=index" value={{i}}>
+                        {{direccion.calle}} {{direccion.sector}} {{direccion.edificio}} {{direccion.referencia}} -
+                        {{direccion.zona}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="orders && orders.length > 0;else shoppingCartVoid">
+            <div *ngIf="!loading; else loadingProduct" class="container">
+                <div class="row" style="margin-bottom: 80px;">
+                    <mat-divider class="w-100"></mat-divider>
+                    <div class="col-12" *ngFor="let order of orders" style="padding: 0 !important; overflow-x: hidden;">
+                        <div class="row text-box pr-2 pl-2">
+                            <div class="col-3">
+                                <img src={{order.product.img_name}} class="img-product img-fluid" alt="Product img">
+                            </div>
+                            <div class="col-9">
+                                <div class="text-left h-100 w-100">
+                                    <div class="row w-100">
+                                        <div class="col-md-8 col-12 w-100">
+                                            <p class="title">{{order.product.producto}}</p>
+                                        </div>
+                                        <div class="col-md-4 col-12 w-100 counter">
+                                            <app-counter [initial]="order.units" [showDelete]="true"
+                                                (count)="updateUnits($event, order)"
+                                                (remove)="removeOrder(order)">
+                                            </app-counter>
+                                        </div>
+                                    </div>
+                                    <div class="cart-item mt-1">
+                                        <div class="d-flex">
+                                            <div class="small d-flex">
+                                                <span>{{order.format.descripcion}} </span>
+                                                <span *ngIf="order.format.unidades>1">&nbsp;de {{order.format.unidades}}</span>
+                                            </div>
+                                            <span *ngIf="order.descuento && order.descuento > 0; else normalSubtotal"
+                                                id="subtotal" class="ml-auto mr-1">
+                                                {{(order.units*order.format.precio -
+                                                order.units*order.format.precio*(order.descuento/100)) | currency :
+                                                'USD' : true : '1.2-2'}}</span>
+                                            <ng-template #normalSubtotal>
+                                                <span id="subtotal" class="ml-auto mr-1">
+                                                    {{order.units*order.format.precio | currency : 'USD' : true :
+                                                    '1.2-2'}}</span>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <mat-divider class="w-100"></mat-divider>
+
+                    </div>
+                    <div class="confirm-box">
+                        <div class="d-flex align-items-bottom">
+                            <button mat-button class="reset-btn flex-fill" (click)="clear()"><span
+                                    class="reset-btn-text">Borrar todo</span></button>
+
+                            <button mat-button class="confirm-btn flex-fill" (click)="confirmAction()">
+                                <span class="p-1 mr-1">
+                                    {{getCount()}}
+                                </span>
+                                <span class="confirm-btn-text">
+                                    CONFIRMAR
+                                </span>
+                                <span class="total-amount ml-1">{{total | currency : 'USD' : true : '1.2-2'}}
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <ng-template #shoppingCartVoid>
+            <div class="d-flex justify-content-center" style="height: 51vh;">
+                <div class="align-self-center">
+                    <div class="text-center">
+                        <li class="fa fa-shopping-cart mt-4 mb-3" style="font-size: 40px;"></li>
+                        <p class=" small">Los productos que agregues al</p>
+                        <p class=" small">carrito aparecerán aquí</p>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+    </div>
+</section>
+
+<ng-template #loadingProduct>
+    <div class="d-flex justify-content-center" style="height: 60vh;">
+        <div class="align-self-center">
+            <mat-spinner [diameter]="40"></mat-spinner>
+        </div>
+    </div>
+</ng-template>

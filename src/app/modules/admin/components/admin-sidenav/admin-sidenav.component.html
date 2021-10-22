@@ -1,0 +1,69 @@
+<div class="sidenav d-flex flex-column">
+    <div class="sidenav d-flex flex-column ">
+
+        <div class="brand shadow-sm d-flex align-items-center justify-content-center pt-2 pb-2 mb-2">
+            <img src="../../../../../assets/images/logo.png" alt="Consulpagos" style="width: auto; height: 40px;">
+        </div>
+
+        <a *ngIf="access.dashboard()" [routerLink]="['/admin/app',{ outlets: { adr: ['dashboard'] } }]"
+            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-tachometer-alt"></li> <span class="">Dashboard</span>
+        </a>
+
+        <!-- <a *ngIf="access.crm()" [routerLink]="['/admin/app',{ outlets: { adr: ['crm'] } }]" routerLinkActive="ad-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-chart-line"></li> <span class="">CRM</span>
+        </a> -->
+        <!-- <a *ngIf="access.cobros()" [routerLink]="['/admin/app',{ outlets: { adr: ['cobros'] } }]"
+            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-credit-card"></li><span class="">Cobros</span>
+        </a> -->
+        <!-- <a *ngIf="access.inventario()" [routerLink]="['/admin/app',{ outlets: { adr: ['inventario'] } }]"
+            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-box-open"></li><span class="">Inventario</span>
+        </a> -->
+        <!-- <a *ngIf="access.sku()" [routerLink]="['/admin/app',{ outlets: { adr: ['sku'] } }]" routerLinkActive="ad-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-plus"></li><span class="">SKU</span>
+        </a> -->
+        <a *ngIf="access.clientes()" [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]"
+            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-users"></li><span class="">Clientes</span>
+        </a>
+        <a *ngIf="access.venta_manual()" [routerLink]="['/admin/app',{ outlets: { adr: ['venta-manual'] } }]" routerLinkActive="ad-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-cart-plus"></li> <span class="">Registrar <br> Venta</span>
+        </a>
+        <a *ngIf="access.venta_manual()" [routerLink]="['/admin/app',{ outlets: { adr: ['generar-archivo'] } }]" routerLinkActive="ad-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-file"></li> <span class="">Generar <br> Archivo</span>
+        </a>
+
+        <a *ngIf="access.venta_manual()" [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]" routerLinkActive="ad-active"
+        [routerLinkActiveOptions]="{exact: true}">
+        <li class="fa fa-plus"></li> <span class="">Conciliar <br> Archivo</span>
+    </a>
+
+        
+        <!-- <a *ngIf="access.pedidos()" [routerLink]="['/admin/app',{ outlets: { adr: ['pedidos'] } }]"
+            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-shopping-basket"></li><span class="">Pedidos</span>
+        </a> -->
+
+        <!-- <a *ngIf="access.salidas()" [routerLink]="['/admin/app',{ outlets: { adr: ['salida-pedidos'] } }]"
+            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-truck"></li> <span class="">Salidas</span>
+        </a> -->
+        <a *ngIf="access.historial()" [routerLink]="['/admin/app',{ outlets: { adr: ['reportes'] } }]"
+            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-file-excel"></li><span class="">Reportes</span>
+        </a>
+        <a *ngIf="access.historial()" [routerLink]="['/admin/app',{ outlets: { adr: ['historial-pedidos'] } }]"
+            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-book"></li><span class="">Actividad</span>
+        </a>
+        <a *ngIf="access.super()" [routerLink]="['/admin/app',{ outlets: { adr: ['super-admin-panel'] } }]"
+            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-cogs"></li><span class="">Usuarios</span>
+        </a>
+    </div>

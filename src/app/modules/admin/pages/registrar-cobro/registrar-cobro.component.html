@@ -1,0 +1,78 @@
+<section id="crmdetalle">
+    <div class="container-fluid">
+        <div class="title">
+            <!-- <div class="d-flex">
+                <a class="nav-btn" #tooltip="matTooltip" matTooltip="Volver al detalle"
+                    [routerLink]="['/admin/app',{ outlets: { adr: ['cobros', id_afiliado] } }]">
+                    <li class="fa fa-arrow-left"></li>
+                </a>
+            </div> -->
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="w-100">
+                <div class="bg-white rounded card p-4">
+                    <form [formGroup]="form">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="box-title d-flex justify-content-center">
+                                    <h4 class="text-uppercase">Generar Archivo</h4>
+                                </div>
+                                <!-- <div class="d-flex justify-content-center text-uppercase">
+                                    Pedido N° {{this.id}}
+                                </div> -->
+                            </div>
+                        
+                            <div class="col-12 mt-2">
+                                <label for="metodo">
+                                    Seleccionar Plantilla
+                                </label>
+                                <select formControlName="metodo" id="method" class="form-control shadow-none">
+                                    <option selected class="text-uppercase" value="">Seleccionar plantilla</option>
+                                    <option selected class="text-uppercase" value="">100% Banco</option>
+                                    <option selected class="text-uppercase" value="">Bicentenario</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <label for="cash">
+                                    Cantidad de cuotas
+                                </label>
+                                <input formControlName="cash" placeholder="Ingresa la cantidad de cuotas" class="form-control" type="number" min="1" name="cash" id="cash">
+                            </div>
+
+                            
+                            <div class="col-12 mt-2">
+                                <label for="metodo">
+                                    Mes a cobrar
+                                </label>
+                                <select formControlName="metodo" id="method" class="form-control shadow-none">
+                                    <option selected class="text-uppercase" value="">Seleccionar mes</option>
+                                    <option selected class="text-uppercase" value="">ENERO</option>
+                                    <option selected class="text-uppercase" value="">FEBRERO</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <div class="d-flex w-100">
+                                    <button *ngIf="!loading;else loadingTmp" (click)="submit()" [disabled]="form.invalid" mat-button class="p-1 w-100 btn btn-success bg-success text-white text-uppercase h5">GENERAR ARCHIVO</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<ng-template #loadingTmp>
+    <div *ngIf="loading" class="loading d-flex justify-content-center align-items-center w-100">
+        <mat-spinner [diameter]="30"></mat-spinner>
+    </div>
+</ng-template>
+
+<ng-template #loadingMethodsTmp>
+    <div *ngIf="!error_methods" class="loadingM d-flex justify-content-left align-items-center btn shadow-none">
+        Cargando
+    </div>
+    <button class="loadingM d-flex justify-content-left align-items-center btn shadow-none" *ngIf="error_methods"
+        (click)="loadMethods()">Pulse para cargar</button>
+</ng-template>

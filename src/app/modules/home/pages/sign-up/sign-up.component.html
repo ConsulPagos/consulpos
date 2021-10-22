@@ -1,0 +1,128 @@
+<app-navbar-home [component]="'signup'"></app-navbar-home>
+<section id="signup" class="d-flex justify-content-center w-100">
+    <div class="align-self-center w-100">
+        <app-title [title]="'AFÍLIATE'" style="margin-bottom: 15px;"></app-title>
+        <div class="container d-flex justify-content-center w-100">
+            <mat-horizontal-stepper [linear]="'true'" #stepper style="background-color: transparent;">
+                <ng-template matStepperIcon="edit">
+                    <li class="fa fa-check"></li>
+                </ng-template>
+                <mat-step [stepControl]="registerForm">
+                    <ng-template matStepLabel><span class="text-white mat-step-label">Datos de la empresa</span>
+                    </ng-template>
+                    <form [formGroup]="registerForm">
+                        <div class="input-container">
+                            <input formControlName="presencia_online" type="text" class="form-control rounded-input"
+                                id="presencia_online" placeholder="Instagram/Web" name="presencia_online">
+                        </div>
+                        <div class="input-container">
+                            <input formControlName="representante" type="text" class="form-control rounded-input"
+                                id="representante" placeholder="Representante Legal" name="representante">
+                        </div>
+                        <div class="input-container">
+                            <input formControlName="nombre_empresa" type="text" class="form-control rounded-input"
+                                id="nombre_empresa" placeholder="Nombre de la empresa" name="nombre_empresa">
+                        </div>
+                        <div class="input d-flex">
+                            <input formControlName="telefono" type="tel"
+                                class="form-control mr-1 half-input half-input-left" id="tel1"
+                                placeholder="Teléfono principal" name="tel1">
+                            <input formControlName="telefono_auxiliar" type="tel"
+                                class="form-control half-input half-input-right" id="tel2"
+                                placeholder="Telefono auxiliar" name="tel2">
+                        </div>
+                        <div class="input-container">
+                            <input formControlName="email" type="email" class="form-control rounded-input" id="email"
+                                placeholder="Correo electrónico del representante" name="email" email>
+                        </div>
+                        <div *ngIf="registerForm.invalid && nextClicked" class="small text-danger text-center">
+                            Todos los campos son requeridos
+                        </div>
+                        <div *ngIf="error" class="small text-center text-danger pl-4 pr-4">
+                            {{error.msg}}
+                        </div>
+                        <button (click)="nextClicked = true" type="button" class="btn btn-submit text-uppercase"
+                            matStepperNext>
+                            <div>Siguiente</div>
+                        </button>
+                    </form>
+                </mat-step>
+                <mat-step [stepControl]="despachoForm">
+                    <ng-template matStepLabel><span class="text-white mat-step-label">Lugar de despacho</span>
+                    </ng-template>
+                    <form [formGroup]="despachoForm" (ngSubmit)="onSubmit()">
+                        <div class="input d-flex">
+                            <input formControlName="calle" type="text"
+                                class="form-control mr-1 half-input half-input-left" id="calle" placeholder="Calle"
+                                name="calle">
+                            <input formControlName="edificio" type="text"
+                                class="form-control half-input half-input-right" id="edificio" placeholder="Edificio"
+                                name="edificio">
+                        </div>
+                        <div class="input-container">
+                            <input formControlName="sector" type="text" class="form-control rounded-input" id="sector"
+                                placeholder="Sector" name="sector">
+                        </div>
+                        <div class="input-container">
+                            <input formControlName="referencia" type="text" class="form-control rounded-input"
+                                id="referencia" placeholder="Referencia" name="referencia">
+                        </div>
+                        <div class="input-container">
+                            <select formControlName="state" class="form-control rounded-input shadow-none">
+                                <option selected value="0">Seleccionar estado</option>
+                                <option value='1'>
+                                    Caracas
+                                </option>
+                                <option value='2'>
+                                    Zulia
+                                </option>
+                                <option value='3'>
+                                    Lara
+                                </option>
+                            </select>
+                        </div>
+                        <div class="input-container">
+                            <select *ngIf="!loadingZones; else loadingZonesTmp" formControlName="zona"
+                                class="form-control rounded-input shadow-none" id="zoneSel"
+                                (change)="setZone($event.target.value)">
+                                <option selected value="">Seleccionar zona</option>
+                                <option *ngFor="let zone of zones; let i=index" value={{i}}>
+                                    {{zone.nombre}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div *ngIf="despachoForm.invalid && submitted" class="small text-danger text-center">
+                            Todos los campos son requeridos
+                        </div>
+                        <div *ngIf="error" class="small text-center text-danger pl-4 pr-4">
+                            {{error.msg}}
+                        </div>
+                        <button type="submit" class="btn btn-submit text-uppercase">
+                            <div *ngIf="!loading; else loadingTemplate">Afiliarme</div>
+                        </button>
+                    </form>
+                </mat-step>
+            </mat-horizontal-stepper>
+
+        </div>
+    </div>
+
+    <app-bottom-image></app-bottom-image>
+
+</section>
+
+<ng-template #loadingTemplate>
+    <div class="d-flex justify-content-center" style="height: 40px;">
+        <mat-spinner [diameter]="40"></mat-spinner>
+    </div>
+</ng-template>
+<ng-template #loadingZonesTmp>
+    <div *ngIf="!errorZones" class="loadingZones d-flex justify-content-center align-items-center">
+        Cargando zonas...
+    </div>
+    <button class="loadingZones d-flex justify-content-center align-items-center" *ngIf="errorZones"
+        (click)="loadZones()">Cargar zonas</button>
+
+</ng-template>
+<app-sello></app-sello>

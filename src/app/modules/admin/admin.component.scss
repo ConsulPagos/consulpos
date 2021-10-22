@@ -1,0 +1,32 @@
+.custom-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #F4F5F7;
+  }
+ 
+  section { 
+    margin: 0; 
+    font-family: 'Montserrat', 'medium';
+    color: #ffffff !important;
+    font-weight: 400;
+}
+
+h2,h3,h4,h5,h6{
+    font-family: 'Montserrat', 'black' !important;
+    font-weight: 500 !important;
+    letter-spacing: 1px !important;
+}
+
+h1{
+    font-family: 'Montserrat', 'medium';
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+p {
+    font-family: 'Montserrat', 'medium';
+    font-weight: 300;
+}

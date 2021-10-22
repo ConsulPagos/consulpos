@@ -1,0 +1,92 @@
+<section id="producto" class="d-flex justify-content-center">
+    <div class="align-self-center">
+        <div class="row justify-content-center product-row">
+            <div *ngIf="product; else loadingProduct">
+                <app-title [title]="product.producto"></app-title>
+                <div class="container">
+                    <div class="row pt-5">
+                        <div class="col-lg-8 col-md-12 col-sm-12 pl-4 pr-4">
+                            <div class="row d-flex justify-content-center align-items-center shadow product-box h-100">
+                                <div class="col-lg-4">
+                                    <img src={{product.img_name}} class="img-product img-fluid" alt="Product img">
+                                </div>
+                                <div class="col-lg-8">
+                                    <p class="text-justify descripcion">{{product.descripcion}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12 pl-4 pr-4 margin-top-md-4">
+                            <div class="ribbon" *ngIf="discount && discount > 0">
+                                <span> -{{discount}}%</span>
+                            </div>
+                            <div class="row shadow h-100"
+                                style="background-color: #07423f; height: 470px; border-radius: 10px;">
+                                <div class="col-12 text-left pt-4">
+                                    <p>Selecciona el formato que deseas</p>
+                                </div>
+                                <div class="col-12">
+                                    <mat-button-toggle-group #group="matButtonToggleGroup"
+                                        (change)="setFormat(group.value)" name="presentaciones"
+                                        aria-label="Presentaciones" [value]="selectedFormat">
+                                        <mat-button-toggle class="" *ngFor="let format of formats" [value]="format">
+                                            <p class="d-flex align-items-center pt-2" style="margin: 0 !important;">
+                                                <span class="h6" *ngIf="discount; else normalPrice">{{(format.precio -
+                                                    format.precio*(discount/100)) | currency : 'USD' : true :
+                                                    '1.2-2'}}</span>
+                                                <span class="h6 line-through ml-2" *ngIf="discount">{{format.precio |
+                                                    currency : 'USD' : true : '1.2-2'}}</span>
+                                                <ng-template #normalPrice>
+                                                    <span class="h4">{{format.precio | currency : 'USD' : true :
+                                                        '1.2-2'}}</span>
+                                                </ng-template>
+                                            </p>
+                                            <p class="medium" style="margin: 0;">
+                                                <span>{{format.descripcion}}</span><span *ngIf="format.unidades > 1"> de
+                                                    {{format.unidades}}</span>
+                                            </p>
+                                        </mat-button-toggle>
+                                    </mat-button-toggle-group>
+                                </div>
+                                <div class="quantity col-12 text-left mt-2">
+                                    <p>Cantidad</p>
+                                    <app-counter (count)="updateCount($event)" class="mr-auto"></app-counter>
+                                </div>
+                                <div class="col-12 d-flex flex-column justify-content-right">
+                                    <mat-divider class="mt-2 mb-2"></mat-divider>
+                                    <p class="h5 total" *ngIf="discount; else normalTotal">TOTAL:
+                                        {{order.units*(selectedFormat.precio - selectedFormat.precio*(discount/100)) |
+                                        currency : 'USD' : true : '1.2-2'}}
+
+                                    </p>
+                                    <ng-template #normalTotal>
+                                        <p class="h5 total">TOTAL:
+                                            {{order.units*selectedFormat.precio | currency : 'USD' : true : '1.2-2'}}
+
+                                        </p>
+                                    </ng-template>
+                                </div>
+                                <div class="col-12 d-flex justify-content-center mb-3">
+                                    <button *ngIf="product.stock > 0; else agotadoTmp" mat-raised-button
+                                        class=" add-to-cart" (click)="add()">AGREGAR AL
+                                        CARRITO</button>
+                                    <ng-template #agotadoTmp>
+                                        <img src="../../../../assets/images/agotado.png" alt="Agotado" class="agotado">
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<ng-template #loadingProduct>
+    <div class="d-flex justify-content-center" style="height: 60vh;">
+        <div class="align-self-center">
+            <mat-spinner [diameter]="40" *ngIf="loading"></mat-spinner>
+            <app-afiliado-error *ngIf="error" (reload)="load()" [errorDetails]="errorDetails"></app-afiliado-error>
+        </div>
+    </div>
+</ng-template>

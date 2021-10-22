@@ -1,0 +1,7 @@
+<section id="grid">
+    <div class="d-flex align-content-stretch justify-content-center" style="height: 140px;">
+        <div class="p-2" *ngFor="let venta of ventas; let i=index">
+            <img src={{venta.presentacion.producto.img_name}} height="140px" alt="" style="margin-left:-30px">
+        </div>
+    </div>
+</section>

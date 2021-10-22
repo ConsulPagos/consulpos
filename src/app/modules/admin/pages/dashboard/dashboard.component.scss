@@ -1,0 +1,83 @@
+.tile-box{
+    margin-bottom: 20px;
+    min-height: 140px;
+}
+
+.tile-title{
+    padding: 5px;
+    width: 100%;
+    font-size: 10px;
+    font-weight: 400;
+    color: gray;
+    text-transform: uppercase;
+}
+.tile-icon{
+    font-size: 50px;
+    color: #33aaaabb;
+    padding: 10px;
+    margin-left: 10px;
+}
+.tile-content{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    font-size: 14px;
+    font-weight: 400;
+    color: gray;
+}
+
+.text-bold{
+    font-weight: 600;
+    color: teal;
+}
+
+.card{
+    border: none;
+    border-radius: 10px;
+}
+
+.tile-number{
+    font-size: 40px;
+    font-weight: 600;
+}
+
+
+.loading-btn{
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 20px;
+    height: 40px;
+    background-color: whitesmoke;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .bg-blue{
+      background-color: #15BACF;
+  }
+  .bg-green{
+    background-color: #4EA952;
+  }
+  .bg-red{
+      background-color: #E73E3A;
+  }
+  .bg-orange{
+      background-color: #FC940C;
+  }
+
+.text-blue{
+    color: #15BACF;
+}
+.text-green{
+    color: #05828E;
+}
+.text-red{
+    color: #E73E3A;
+}
+.text-orange{
+    color: #FE6625;
+}
+
+.text-winner{
+    color: #FB9334;
+}

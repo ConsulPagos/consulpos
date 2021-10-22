@@ -1,0 +1,252 @@
+#carrito{
+    z-index: 1 !important;
+}
+.container{
+    overflow-y: hidden;
+    color: black;
+}
+
+.title-carrito{
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+}
+
+.title{
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.text-box{
+    //background-color: #07423f;
+    color: black;
+    padding: 5px;
+    height: auto;
+
+}
+
+.confirm-box{
+    width: 100%;
+    padding-top: 20px;
+}
+
+.img-product{
+    height: 80px;
+    width: auto;
+}
+
+.total-amount{
+    font-size: 16px;
+    font-weight: 700;
+}
+.total-title{
+    font-size: 30px;
+}
+.reset-btn{
+    height: 60px;
+    background-color: #07423f;
+    color: whitesmoke;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-right: 20px;
+}
+
+.reset-btn-text{
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 1.2px;
+    font-family: 'Montserrat', 'medium';
+    margin-left: 5px;
+    margin-right: 5px;
+
+}
+
+.confirm-btn{
+    height: 60px;
+    background-color: #C2FFF8;
+    color: #000;
+    font-size: 16px;
+    letter-spacing: 1.6px;
+    font-family: 'Montserrat', 'medium';
+}
+
+.confirm-btn-text{
+    font-weight: 600;
+    font-size: 14px;
+}
+
+#subtotal{
+    font-size: 18px;
+}
+
+#remove{
+    font-size: 12px;
+}
+
+.cart-item{
+    padding: 0;
+}
+
+
+.add-btn{
+    width: 30px;
+    height: 30px;
+    background-image: url('../../../../../assets/images/add-icon.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    padding: 0;
+}
+
+.less-btn{
+    width: 30px;
+    padding: 0;
+    height: 30px;
+    background-image: url('../../../../../assets/images/less-icon.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+
+///sidebar
+
+#carrito_background{
+    width: 100%;
+    height: auto;
+    z-index: 9998 !important;
+    background-color: #000000ad;
+}
+
+.sidepanel  {
+    width: 100%;
+    height: auto;
+    //background-color: #07423f;
+    overflow-x: hidden !important;
+    transition: 0.5s;
+    padding-top: 10px;
+  }
+
+
+  #addressSel{
+    background-color: transparent;
+    color: black;
+    border: none;
+    font-size: 12px;
+    height: 40px;
+    max-width: 300px;
+}
+#addressSel option{
+    border: none;
+    background-color: white;
+    color: black;
+}
+#addressSel option:hover{
+    background-color: rgb(0, 88, 88);
+}
+
+.address-label{
+    width: fit-content;
+    color: black;
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-family: 'Montserrat', 'medium';
+    font-weight: 500;
+    letter-spacing: 1.2px;
+}
+
+.counter{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: left;
+}
+
+  @media screen and (max-width: 768px){
+    #addressSel{
+        max-width: 200px;
+    }
+
+    .product-row{
+        margin: 0;
+    }
+
+    .text-box{
+        max-height: 600px !important;
+    }
+    
+    .img-product{
+        height: 150px;
+        width: auto;
+    }
+    .counter{
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 501px){
+  
+    #addressSel{
+        max-width: 200px;
+    }
+
+    .img-product{
+        height: 100px;
+        width: auto;
+    }
+    .sidepanel  {
+        width: 100%;
+        right: -100%;
+
+    }
+
+    .reset-btn{
+        height: 50px;
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+    .reset-btn-text{
+        font-size: 18px;
+    }
+    .confirm-btn{
+        height: 50px;
+    }
+    
+    .confirm-btn-text{
+        font-weight: 600;
+        font-size: 12px;
+    }
+
+    .address-container{
+        display: flex;
+        flex-direction: column;
+    }
+
+    #addressSel{
+        max-width: 60%;
+        margin-left: 0;
+    }
+
+}
+
+@media screen and (max-width: 380px){
+    #carrito{
+        font-size: 12px;
+    }
+    .address-label{
+        font-size: 10px;
+    }
+    #addressSel{
+        font-size: 10px;
+    }
+    .confirm-btn{
+        padding: 5px;
+        font-size: 10px;
+        margin-right: 5px;
+    }
+    .confirm-btn-text{
+        font-size: 10px;
+    }
+
+}
+

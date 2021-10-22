@@ -1,0 +1,51 @@
+<h1 mat-dialog-title class="mat-dialog-title">
+    <li class="fa fa-edit mr-2"></li>
+    <span class="field">
+        Lugar de despacho
+    </span>
+</h1>
+
+<div mat-dialog-content class="mat-dialog-content" style="height: calc(100% - 168px);">
+    <form [formGroup]="changePasswordForm">
+        <label for="name">Calle</label>
+        <input type="password" class="form-control" formControlName="password">
+        <div *ngIf="submitted && changePasswordForm.get('password').errors" class="text-danger small">
+            <div *ngIf="changePasswordForm.get('password').errors.required">
+                Campo requerido
+            </div>
+        </div>
+        <label for="name">Edificio</label>
+        <input type="password" class="form-control" formControlName="new_password">
+        <div *ngIf="submitted && changePasswordForm.get('new_password').errors" class="text-danger small">
+            <div *ngIf="changePasswordForm.get('new_password').errors.required">
+                Campo requerido
+            </div>
+        </div>
+
+        <label for="name">Zona</label>
+        <input type="password" class="form-control" formControlName="confirmPassword">
+        <div *ngIf="submitted && changePasswordForm.get('confirmPassword').errors" class="text-danger small">
+            <div *ngIf="changePasswordForm.get('confirmPassword').errors.required">
+               Confirma tu contraseña
+            </div>
+            ​
+            <div *ngIf="changePasswordForm.get('confirmPassword').errors.confirmPasswordValidator">
+                Las contraseñas no coinciden
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div mat-dialog-actions class="mat-dialog-actions">
+    <div class="d-flex w-100 btn-container" *ngIf="!loading; else loadingSpinner">
+        <button class="flex-fill cancel" mat-button mat-dialog-close>Cancelar</button>
+        <button (click)="onSubmit()" class="flex-fill confirm" mat-button cdkFocusInitial>Guardar</button>
+    </div>
+</div>
+
+<ng-template #loadingSpinner>
+    <div class="d-flex justify-content-center align-items-center w-100">
+        <mat-spinner [diameter]="30"></mat-spinner>
+    </div>
+</ng-template>

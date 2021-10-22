@@ -1,0 +1,133 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$my-blue: (
+  50: teal,
+  100: teal,
+  200: teal,
+  300: teal,
+  400: teal,
+  500: teal,
+  600: teal,
+  700: teal,
+  800: teal,
+  900: teal,
+  A100: teal,
+  A200: teal,
+  A400: teal,
+  A700: teal,
+  contrast: (
+    50: white,
+    100: white,
+    200: white,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: white,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+
+
+/* ======== Angular material custom themes ======== */ 
+$my-custom-primary:  mat-palette($my-blue, 100, 50, 200);
+$my-custom-accent: mat-palette($mat-pink, 100, 500, A100);
+$my-custom-warn: mat-palette($mat-lime);
+
+$my-custom-theme: mat-light-theme($my-custom-primary, $my-custom-accent, $my-custom-warn);
+
+@include angular-material-theme($my-custom-theme);
+
+.ok-snackbar {
+  background: teal;
+
+  .mat-button-wrapper {
+    color: #ffffff; 
+  }
+}
+
+.ok-snackbar::after{    
+  position: absolute;
+  left: 10px;
+  top: 3px;
+  padding: 10px;
+  font-family: "Font Awesome 5 Free";
+  content: "\f058";
+}
+
+.error-snackbar {
+  background:#d9534f;
+
+  .mat-button-wrapper {
+    color: #ffffff;
+    font-size: 16px; 
+    margin-left: 30px;
+  }
+}
+
+.error-snackbar::after{   
+  position: absolute;
+  left: 10px;
+  top: 3px;
+  padding: 10px;   
+  font-family: "Font Awesome 5 Free";
+  content: "\f071";
+}
+
+.progress-snackbar{
+    background: rgb(0, 110, 255);
+    .mat-button-wrapper {
+      color: #ffffff;
+      font-size: 16px; 
+      margin-left: 30px;
+    }
+}
+
+.progress-snackbar::after{
+  position: absolute;
+  left: 10px;
+  top: 3px;
+  padding: 10px;   
+  font-family: "Font Awesome 5 Free";
+  content: "\f017";
+}
+
+.mat-simple-snackbar > span {
+  font-family: 'Montserrat', 'medium';
+  font-weight: 400;
+  font-size: 16px;
+  color: #ffffff;
+  padding-left: 30px;
+}
+
+
+.mat-tooltip{
+  font-size: 14px;
+  background-color: #04302d;
+  font-family: 'Montserrat', 'medium';
+  font-weight: 400;
+}
+
+.custom-dialog{
+  mat-dialog-container {
+      padding: 25px;
+      border-radius: 10px;
+      background-color: #fff;
+  }
+  mat-dialog-content{
+    padding: 0;
+  }
+}
+
+.mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, 
+.mat-step-header .mat-step-icon-state-edit {
+    background-color: teal !important;
+    color: white !important;
+}

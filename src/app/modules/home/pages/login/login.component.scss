@@ -1,0 +1,116 @@
+@import "../../../../../variables.scss";    
+
+#login{
+    background: white;
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 30px;
+}
+
+.container0{
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  border-radius: 10%;
+}
+
+
+input{
+    border-radius: 30px;
+    height: 60px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+}
+
+
+form{
+  width: 100%;
+  max-width: 420px;
+}
+
+.input-container{
+  margin: 10px 0px;
+  width: 100%;
+}
+
+
+button{
+    width: 100%;
+    height: 60px;
+    border-radius: 30px;
+    background-color: $accent;
+    text-transform: uppercase;
+    font-family: 'Montserrat', 'medium';
+    font-weight: 500;
+    font-size: 23.5px;
+    letter-spacing: 1.2px;
+    color: black;
+}
+
+.error-message{
+    color: red; 
+    min-height: 20px;
+}
+
+.input-error {
+    outline: 0;
+    border-color: red;
+    animation-name: bounce;
+    animation-duration: .5s;
+    animation-delay: 0.25s;
+  }
+  
+  /* This approximates the ease-in-out-bounce animation from easings.net, which would require a plug-in to use*/
+  @keyframes bounce {
+    0% {
+      transform: translateX(0px);
+      timing-function: ease-in;
+    }
+    37% {
+      transform: translateX(5px);
+      timing-function: ease-out;
+    }
+    55% {
+      transform: translateX(-5px);
+      timing-function: ease-in;
+    }
+    73% {
+      transform: translateX(4px);
+      timing-function: ease-out;
+    }
+    82% {
+      transform: translateX(-4px);
+      timing-function: ease-in;
+    }
+    91% {
+      transform: translateX(2px);
+      timing-function: ease-out;
+    }
+    96% {
+      transform: translateX(-2px);
+      timing-function: ease-in;
+    }
+    100% {
+      transform: translateX(0px);
+      timing-function: ease-in;
+    }
+  }
+
+  
+@media screen and (max-width: 992px){
+  #login{
+    height: 100vh;
+    padding-top: 85px;
+  }
+}
+@media (max-height:480px){
+  #login{
+    height: auto; 
+    min-height: 100vh;
+    transform: scale(1.01);
+    overflow: hidden !important;
+  }
+}

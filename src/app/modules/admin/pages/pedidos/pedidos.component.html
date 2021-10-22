@@ -1,0 +1,15 @@
+<section id="pedidos">
+  <div class="container-fluid">
+    <div style="background-color: #fff; border-radius: 10px;">
+      <mat-tab-group>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span matBadge={{nuevos_count}} matBadgeSize="small" matBadgeOverlap="false" matBadgePosition="before">
+              Nuevos Pedidos</span>
+          </ng-template>
+          <app-tabla-pedidos [pistoleado]='0' [aceptado]='0' [cobrado]="0" (count)="nuevos_count = $event"></app-tabla-pedidos>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</section>
