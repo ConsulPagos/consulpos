@@ -22,7 +22,6 @@ import { AdminSidenavComponent } from './components/admin-sidenav/admin-sidenav.
 import { ClientelaAfiliadosComponent } from './components/clientela-afiliados/clientela-afiliados.component';
 import { AffiliateDetailComponent } from './components/affiliate-detail/affiliate-detail.component';
 import { SharedModule } from '../../shared/modules/shared/shared.module';
-import { AdminDetallePedidoComponent } from './components/admin-detalle-pedido/admin-detalle-pedido.component';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
 import { EditInventarioComponent } from './components/edit-inventario/edit-inventario.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -48,14 +47,13 @@ import { NuevoAdminComponent } from './pages/nuevo-admin/nuevo-admin.component';
 import { AdminChangePwdComponent } from './pages/admin-change-pwd/admin-change-pwd.component';
 import { VentaManualComponent } from './pages/venta-manual/venta-manual.component';
 import { MatStepperModule } from '@angular/material/stepper';
-import { AdminCarouselComponent } from './components/admin-carousel/admin-carousel.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { OwlModule } from 'ngx-owl-carousel';
-import { AdminCarritoComponent } from './components/admin-carrito/admin-carrito.component';
+
 
 
 @NgModule({
-  declarations: [AdminComponent, SkuComponent, CobrosComponent, CrmComponent, InventarioComponent, ClientelaComponent, PedidosComponent, LectorComponent, SalidaPedidosComponent, AdminNavbarComponent, AdminSidenavComponent, ClientelaAfiliadosComponent, AffiliateDetailComponent, AdminDetallePedidoComponent, EditProductComponent, EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, CrmDetalleComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, RegistrarCobroComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AdminCarouselComponent, AdminCarritoComponent],
+  declarations: [AdminComponent, SkuComponent, CobrosComponent, CrmComponent, InventarioComponent, ClientelaComponent, PedidosComponent, LectorComponent, SalidaPedidosComponent, AdminNavbarComponent, AdminSidenavComponent, ClientelaAfiliadosComponent, AffiliateDetailComponent, EditProductComponent, EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, CrmDetalleComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, RegistrarCobroComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
