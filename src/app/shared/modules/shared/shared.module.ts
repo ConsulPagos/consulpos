@@ -23,6 +23,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import {EditFieldDialogComponent} from '../../components/edit-field-dialog/edit-field-dialog.component'
 import { SelloComponent } from '../../components/sello/sello.component'
 import { DateAgoPipe } from '../../pipes/date-ago.pipe';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
+import { MatOptionModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -53,6 +59,13 @@ import { DateAgoPipe } from '../../pipes/date-ago.pipe';
     MatPaginatorModule,
     MatSortModule,
     MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDividerModule, 
+    MatOptionModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule,
     
     ],
   exports:[
@@ -78,7 +91,14 @@ import { DateAgoPipe } from '../../pipes/date-ago.pipe';
     EditFieldDialogComponent,
     MatDividerModule,
     SelloComponent,
-    DateAgoPipe
+    DateAgoPipe,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDividerModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule,
   ]
 })
 export class SharedModule { }
