@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
-import { AdminDetallePedidoComponent } from './components/admin-detalle-pedido/admin-detalle-pedido.component';
 import { DetalleCobrosComponent } from './components/detalle-cobros/detalle-cobros.component';
 import { EditInventarioComponent } from './components/edit-inventario/edit-inventario.component';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
@@ -58,7 +57,6 @@ const routes: Routes = [
       { path: 'salidas', component: SalidasComponent, outlet: 'adr', canActivate:[InventarioGuard]},
       { path: 'lector/:id_pedido/:id_afiliado', component: LectorComponent, outlet: 'adr', canActivate:[SalidasGuard]},
       { path: 'pedidos', component: PedidosComponent, outlet: 'adr', canActivate:[PedidosGuard]},
-      { path: 'pedidos/:id_pedido/:id_afiliado', component: AdminDetallePedidoComponent, outlet: 'adr', canActivate:[DetalleSalidasGuard]},
       { path: 'salida-pedidos', component: SalidaPedidosComponent, outlet: 'adr', canActivate:[SalidasGuard]},
       { path: 'dashboard', component: DashboardComponent, outlet: 'adr',  canActivate:[DashboardGuard]},
       { path: 'cobros', component: CobrosComponent, outlet: 'adr', canActivate:[CobrosGuard]},

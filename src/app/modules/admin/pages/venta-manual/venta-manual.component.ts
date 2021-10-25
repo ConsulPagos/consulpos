@@ -20,9 +20,13 @@ export class VentaManualComponent implements OnInit {
     afiliado: new FormControl('', [Validators.required])
   });
 
+  tipo_cliente: string;
+  tipos_clientes: string[] = ['Natural', 'Firma Personal', 'Juridico'];
+
   constructor(private admin: AdminService, private storage: StorageService, private toaster: ToasterService) { }
 
   ngOnInit(): void {
+    this.tipo_cliente = this.tipos_clientes[0]
   }
 
   search() {
@@ -34,7 +38,7 @@ export class VentaManualComponent implements OnInit {
         this.storage.store('addresses', addresses);
         this.form.controls.afiliado.setValue(true);
       }, e => {
-        this.errorMsg = 'Afiliado no encontrado, intentelo nuevamente.';
+        this.errorMsg = 'cliente no encontrado, Por favor registrarlo.';
         this.afiliado = null;
       });
     }
