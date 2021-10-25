@@ -12,7 +12,7 @@ export class HistorialPedidosComponent implements OnInit {
   constructor(private title:Title, private admin:AdminService) { }
 
   ngOnInit(): void {
-    this.title.setTitle('Grupo Altius | Historial')
+    //this.title.setTitle('Grupo Altius | Historial')
   }
 
   dump(){

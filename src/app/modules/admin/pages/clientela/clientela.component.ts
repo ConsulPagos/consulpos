@@ -17,7 +17,6 @@ export class ClientelaComponent implements OnInit {
   constructor(private title:Title) { }
 
   ngOnInit(): void {
-    this.title.setTitle('Grupo Altius | Clientes')
   }
 
 }
