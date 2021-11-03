@@ -1,0 +1,50 @@
+<section id="admindetail">
+    <div>
+        <div class="d-flex flex-column">
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <th>Sucursal</th>
+                        <th>Cedula</th>
+                        <th>Teléfono</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a *ngIf="affiliate.id_sucursal; else nullTemplate" href={{affiliate.id_sucursal}}
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-external-link-alt"></i> Sucursal
+                            </a>
+                        </td>
+                        <td>
+                            <a *ngIf="affiliate.cedula; else nullTemplate" href={{affiliate.cedula}} target="_blank"
+                                rel="noopener noreferrer">
+                                <i class="fas fa-external-link-alt"></i> Cedula
+                            </a>
+                        </td>
+                        <td>
+                            <span *ngIf="affiliate.telefono; else nullTemplate">
+                                {{affiliate.telefono}}
+                            </span>
+                        </td>
+                </tbody>
+            </table>
+            <div class="mb-1 mt-1 text-left">
+                <div class="d-flex m-2 align-items-center">
+                    <mat-spinner [diameter]="20" *ngIf="loading" class="mr-3"></mat-spinner>
+                    <button mat-raised-button class="mr-2"
+                        [disabled]="affiliate.access_level === 4 || affiliate.access_level === 0 || loading">
+                        Deshabilitar Usuario
+                    </button>
+                    <button mat-raised-button class="mr-2"
+                        [disabled]="affiliate.access_level === 4 || affiliate.access_level === 0 || loading"
+                        [routerLink]="['/admin/app',{ outlets: { adr: ['edit-admin'] } }]">
+                        Editar Usuario
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<ng-template #nullTemplate>
+    No agregado
+</ng-template>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AdminService } from '../../services/admin.service';
 import { AccessService } from '../../services/access.service';
@@ -9,6 +9,9 @@ import { AccessService } from '../../services/access.service';
   styleUrls: ['./admin-sidenav.component.scss']
 })
 export class AdminSidenavComponent implements OnInit {
+
+  @Output() Toggle = new EventEmitter<boolean>();
+
   identity = ''
 
   constructor(private auth: AuthService, public access: AccessService) {
@@ -20,6 +23,10 @@ export class AdminSidenavComponent implements OnInit {
 
   loggout() {
     this.auth.loggout();
+  }
+
+  toggle(){
+    this.Toggle.emit(true)
   }
 
 

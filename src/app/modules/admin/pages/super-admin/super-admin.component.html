@@ -1,8 +1,13 @@
 <section id="superadmin">
     <div class="title">
         <div class="d-flex">
-            <a class="nav-btn pl-3 pr-3" #tooltip="matTooltip" matTooltip="Crear usuario" [routerLink]="['/admin/app',{ outlets: { adr: ['nuevo-admin'] } }]">
+            <a class="nav-btn pl-3 pr-3" #tooltip="matTooltip" [matTooltipPosition]="'right'"
+                matTooltip="Agregar Usuario" [routerLink]="['/admin/app',{ outlets: { adr: ['nuevo-admin'] } }]">
                 <li class="fa fa-user-plus"></li>
+            </a>
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'"
+                matTooltip="Exportar en formato Excel">
+                <li class="fas fa-file-download"></li>
             </a>
         </div>
     </div>

@@ -8,10 +8,10 @@ import { Title } from '@angular/platform-browser';
 })
 export class SuperAdminComponent implements OnInit {
 
-  constructor(private title:Title) { }
+  constructor(private title: Title) { }
 
   ngOnInit(): void {
-    this.title.setTitle('Grupo Altius | Super Admin Panel')
+    this.title.setTitle('ConsulPos | Usuarios')
   }
 
 }

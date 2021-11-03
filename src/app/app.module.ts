@@ -52,7 +52,9 @@ import { CarruselLandingComponent } from './modules/home/components/carrusel-lan
     ChangePasswordDialogComponent,
     EditAddressComponent,
     HagaSuPedidoDialogComponent,
-    CarruselLandingComponent ],
+    CarruselLandingComponent,
+
+],
   imports: [
     BrowserModule,
     AppRoutingModule,

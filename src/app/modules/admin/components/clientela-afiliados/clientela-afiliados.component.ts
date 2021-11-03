@@ -22,16 +22,15 @@ import { AdminService } from "../../services/admin.service";
 })
 export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
 
-  displayedColumns: string[] = ['id', 'created_at', 'email', 'nombre_empresa', 'representante', 'presencia_online', 'validado'];
+  displayedColumns: string[] = ['rif', 'nombre_comercial', 'estatus', 'validado'];
   affiliate = [{
-    id:1,
-    created_at: new Date(),
+    rif:'J253862510',
+    nombre_comercial: 'Los Perros de Joao',
     email:"cliente@gmail.com",
-    nombre_empresa:"Panaderia El Portugues",
-    representante:"Carlos",
-    presencia_online:"www.panaderia.com",
+    estatus:'Activo',
     validado: "SI"
   }];
+  
   expandedElement: AffiliateDetailJoinInterface | null;
 
   @Input() access_level: number;

@@ -1,3 +1,4 @@
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -5,23 +6,33 @@ import { MatTableDataSource } from '@angular/material/table';
 import { merge, of as observableOf } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { TransactionInterface } from 'src/app/models/transaction';
-import { ApiService } from 'src/app/shared/services/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-tabla-super-admin',
   templateUrl: './tabla-super-admin.component.html',
-  styleUrls: ['./tabla-super-admin.component.scss']
+  styleUrls: ['./tabla-super-admin.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
 
+  expandedElement;
+
   displayedColumns: string[] = ['id', 'access_level', 'email'];
-  orders = [{
+  users = [{
     id:1,
     access_level: 99,
     email:"john@gmail.com"
   }];
+
+  
   loading = false;
   error = false;
   resultsLength;
@@ -73,7 +84,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
           return observableOf([]);
         })
       ).subscribe(data => {
-        this.orders = data
+        this.users = data
       });
   }
 
