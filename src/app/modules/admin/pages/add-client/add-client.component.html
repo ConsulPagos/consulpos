@@ -202,7 +202,13 @@
                 <!-- Parte 3 del Strepper -->
                 <mat-step>
                     <ng-template matStepLabel>Datos del Representante Legal</ng-template>
+
+
+
                     <ng-container>
+                        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                            <i class="fas fa-user-plus"></i>
+                        </button>
                         <form [formGroup]="agent">
 
                             <mat-form-field appearance="outline" class="container_box_space">
@@ -235,10 +241,10 @@
                                     type="text">
                             </mat-form-field>
 
-                                <mat-form-field appearance="outline">
-                                    <mat-label>Correo Electrónico</mat-label>
-                                    <input matInput formControlName="email" placeholder="123456789" type="text">
-                                </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Correo Electrónico</mat-label>
+                                <input matInput formControlName="email" placeholder="123456789" type="text">
+                            </mat-form-field>
 
                         </form>
                     </ng-container>

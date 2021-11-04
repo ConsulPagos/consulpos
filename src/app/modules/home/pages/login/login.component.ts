@@ -53,12 +53,13 @@ export class LoginComponent implements OnInit {
     this.user.sist_op = this.crypto.encryptJsonFixed('0')
     this.user.modelo_disp = this.crypto.encryptJsonFixed('0')
     
-    const data = this.crypto.encryptStringFixed(JSON.stringify(this.user))
+    const data = this.crypto.encryptStringFixed(JSON.stringify(this.user)).toString()
+    
     const IMEI = '132568486464546848643'
 
     if (this.authForm.valid) {
       this.loading = true;
-      // this.route.navigateByUrl('/admin/app/(adr:dashboard)');
+      this.route.navigateByUrl('/admin/app/(adr:dashboard)');
       localStorage.setItem('user_id', "1");
       localStorage.setItem('access_token', "");
       localStorage.setItem('refresh_token', "");
