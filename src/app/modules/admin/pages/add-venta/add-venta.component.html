@@ -1,0 +1,147 @@
+<!-- Vista de Agregar Cliente -->
+<section id="addClient">
+    <!-- Botones del Navbar -->
+    <div class="title">
+        <div class="d-flex">
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]">
+                <li class="fas fa-arrow-left"></li>
+            </a>
+        </div>
+    </div>
+
+    <!-- Container de los Componentes -->
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+
+            <!-- Container del Stepper -->
+            <mat-vertical-stepper linear #stepper>
+                <ng-template matStepperIcon="edit">
+                    <li class="fa fa-check"></li>
+                </ng-template>
+                <!-- Parte 1 del Stepper -->
+                <mat-step>
+                    <!-- [stepControl]="buy" -->
+                    <form [formGroup]="buy">
+                        <ng-template matStepLabel>Datos de la Venta</ng-template>
+                        <div>
+                            <h6>Datos del Equipo</h6>
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Modelo</mat-label>
+                                <mat-select disableRipple formControlName="modelo">
+                                    <mat-option *ngFor="let modelo of modelos" value={{modelo.id_modelo}}>
+                                        {{modelo.modelo}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Tipo de Comunicación</mat-label>
+                                <mat-select disableRipple formControlName="comunicacion">
+                                    <mat-option *ngFor="let comunicacion of comunicaciones"
+                                        value={{comunicacion.id_comunicacion}}>
+                                        {{comunicacion.comunicacion}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Operadora Tlf. Linea 1</mat-label>
+                                <mat-select disableRipple formControlName="operadora">
+                                    <mat-option *ngFor="let operadora of operadoras"
+                                        value={{operadora.id_operadora}}>
+                                        {{operadora.operadora}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Operadora Tlf. Linea 2</mat-label>
+                                <mat-select disableRipple >
+                                    <mat-option *ngFor="let operadora of operadoras"
+                                        value={{operadora.id_operadora}}>
+                                        {{operadora.operadora}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <h6>Banco y Cuenta</h6>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Plataforma de Pago</mat-label>
+                                <mat-select disableRipple formControlName="plataforma">
+                                    <mat-option *ngFor="let plataforma of plataformas"
+                                        value={{plataforma.id_plataforma}}>
+                                        {{plataforma.plataforma}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Banco</mat-label>
+                                <mat-select disableRipple formControlName="banco">
+                                    <mat-option *ngFor="let banco of bancos"
+                                        value={{banco.id_banco}}>
+                                        {{banco.banco}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Numero de cuenta POS</mat-label>
+                                <input matInput formControlName="Numero_cuenta_pos" placeholder="1234" type="text">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Precio USD</mat-label>
+                                <input matInput formControlName="precio_usd" placeholder="1234" type="text">
+                            </mat-form-field>
+
+                            <h6>Otros</h6>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Plan</mat-label>
+                                <mat-select disableRipple formControlName="plan">
+                                    <mat-option *ngFor="let plan of planes"
+                                        value={{plan.id_plan}}>
+                                        {{plan.nombre}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Tipo de Cobro</mat-label>
+                                <mat-select disableRipple formControlName="tipocobro">
+                                    <mat-option *ngFor="let tipocobro of tipocobros"
+                                        value={{tipocobro.id_tipo_cobro}}>
+                                        {{tipocobro.tipo_cobro}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Lugar de la entrega</mat-label>
+                                <input matInput formControlName="lugar_entrega" placeholder="1234" type="text">
+                            </mat-form-field>
+
+                        </div>
+                    </form>
+                    <!-- Bootn de siguiente strepper -->
+                    <div>
+                        <button class="stepBtn" mat-raised-button matStepperNext>Siguiente</button>
+                    </div>
+                </mat-step>
+
+                <!-- Parte 1 del Stepper -->
+                <mat-step>
+                    <!-- [stepControl]="client" -->
+                    <form [formGroup]="model">
+                        <ng-template matStepLabel>Carga de Documentos</ng-template>
+                        <div>
+                            <h6 class="title_container_file_upload">Referencia Bancaria</h6>
+                            <app-file-upload></app-file-upload>
+                        </div>
+                        <!-- <div *ngIf="getTipoCliente()=='N'"> -->
+                    </form>
+                    <!-- Bootn de siguiente strepper -->
+                    <div>
+                        <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
+                        <button class="stepBtn" mat-raised-button>Finalizar</button>
+                    </div>
+                </mat-step>
+            </mat-vertical-stepper>
+        </div>
+    </div>
+</section>

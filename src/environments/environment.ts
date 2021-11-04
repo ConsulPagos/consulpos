@@ -4,8 +4,21 @@
 
 export const environment = {
   production: false,
-  apiHost: 'http://127.0.0.1:5000/v1/'
-};
+  apiHost: 'http://66.97.35.26',
+  puerto_sesion: 1718,
+  puerto_bancario: 1314,
+
+  J_KEY: "consultelkeyj567",
+
+  J_VEC: "consultelivj4567",
+
+  S_KEY: "consultelkeys567",
+
+  S_VEC: "consultelivs4567",
+
+
+}
+
 
 /*
  * For easier debugging in development mode, you can import the following file
@@ -14,4 +27,5 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// import 'zone.js/dist/zone-error',
+  // Included with Angular CLI.

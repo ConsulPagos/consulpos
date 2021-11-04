@@ -28,7 +28,13 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
-import { MatOptionModule } from '@angular/material/core';
+import { FileUploadComponent } from '../../components/fiel-upload/file-upload.component';
+import {FileUploadDirective } from '../../components/fiel-upload/file-upload.directive';
+import {ProgressComponent } from '../../components/fiel-upload/progress/progress.component';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { BottomFormComponent } from '../../components/bottom-form/bottom-form.component';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +49,12 @@ import { MatOptionModule } from '@angular/material/core';
     UploadComponent,
     EditFieldDialogComponent,
     SelloComponent,
-    DateAgoPipe
+    DateAgoPipe,
+    FileUploadComponent,
+    FileUploadDirective,
+    ProgressComponent,
+    BottomFormComponent,
+    
     ],
   imports: [
     CommonModule,
@@ -66,6 +77,8 @@ import { MatOptionModule } from '@angular/material/core';
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatMenuModule,
+    MatSidenavModule,
     
     ],
   exports:[
@@ -99,6 +112,12 @@ import { MatOptionModule } from '@angular/material/core';
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
+    FileUploadComponent,
+    FileUploadDirective,
+    ProgressComponent,
+    MatMenuModule,
+    MatSidenavModule,
+    BottomFormComponent,
   ]
 })
 export class SharedModule { }

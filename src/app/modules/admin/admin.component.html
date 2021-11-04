@@ -1,11 +1,22 @@
 <mat-sidenav-container class="custom-container">
-  <mat-sidenav mode="side" opened style="background-color: #04302d; border: none;">
-    <app-admin-sidenav></app-admin-sidenav>
+
+  <mat-sidenav [(opened)]="opened" mode="side" opened style="background-color: #04302d; border: none;" #drawer>
+    <app-admin-sidenav (Toggle)='drawer.toggle()'>
+
+    </app-admin-sidenav>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <app-admin-navbar></app-admin-navbar>
     <div class="pt-3">
       <router-outlet name='adr'></router-outlet>
+
+      <button mat-mini-fab aria-label="Example icon button with a home icon" (click)='drawer.toggle()' class="btn_toggle">
+        <i class="fas fa-chevron-left" *ngIf="opened else iconclose"></i>
+      </button>
     </div>
   </mat-sidenav-content>
+
 </mat-sidenav-container>
+
+<ng-template #iconclose > <i class="fas fa-chevron-right"></i></ng-template>

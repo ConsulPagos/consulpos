@@ -1,0 +1,25 @@
+<section id="ventas">
+    <div class="title">
+        <div class="d-flex">
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Venta"  [routerLink]="['/admin/app',{ outlets: { adr: ['add-venta'] } }]" >
+                <i class="fas fa-cart-plus"></i>
+            </a>
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'"
+                matTooltip="Exportar en formato Excel">
+                <li class="fas fa-file-download"></li>
+            </a>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">Listado de Ventas</span>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>

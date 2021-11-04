@@ -37,6 +37,11 @@ import { DetalleSalidasGuard } from './guards/detalle-salidas.guard'
 import { AdminChangePwdComponent } from './pages/admin-change-pwd/admin-change-pwd.component';
 import { VentaManualComponent } from './pages/venta-manual/venta-manual.component';
 import { VentaManualGuard } from './guards/venta-manual.guard'
+import { AddClientComponent } from './pages/add-client/add-client.component';
+import { VentasComponent } from './pages/ventas/ventas.component';
+import { AddVentaComponent } from './pages/add-venta/add-venta.component';
+import { EditAdminComponent } from './pages/edit-admin/edit-admin.component';
+import { EditClientComponent } from './pages/edit-client/edit-client.component';
 
 const routes: Routes = [
   {
@@ -66,8 +71,12 @@ const routes: Routes = [
       { path: 'historial-pedidos', component: HistorialPedidosComponent, outlet: 'adr', canActivate:[HistorialGuard]},
       { path: 'super-admin-panel', component: SuperAdminComponent, outlet: 'adr', canActivate:[SuperGuard]},
       { path: 'nuevo-admin', component: NuevoAdminComponent, outlet: 'adr', canActivate:[SuperGuard]},
-      { path: 'cambiar-contraseña', component: AdminChangePwdComponent, outlet: 'adr'}
-
+      { path: 'cambiar-contraseña', component: AdminChangePwdComponent, outlet: 'adr'},
+      { path: 'add-client', component: AddClientComponent, outlet: 'adr'},
+      { path: 'add-venta', component: AddVentaComponent, outlet: 'adr'},
+      { path: 'edit-admin', component: EditAdminComponent, outlet: 'adr'},
+      { path: 'edit-client', component: EditClientComponent, outlet: 'adr'},
+      { path: 'ventas', component: VentasComponent, outlet: 'adr'},
 
     ],
   }
