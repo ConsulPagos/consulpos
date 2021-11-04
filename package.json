@@ -29,9 +29,7 @@
     "ajv": "^6.12.3",
     "angular-popper": "^2.0.1",
     "bootstrap": "^4.5.3",
-    "buffer": "^4.9.2",
     "chart.js": "^2.9.4",
-    "crypto": "^1.0.1",
     "firebase": "^7.24.0",
     "jquery": "^3.5.1",
     "ng2-charts": "^2.4.2",
@@ -40,7 +38,6 @@
     "owl.carousel": "^2.3.4",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.5",
-    "ts-md5": "^1.2.9",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },
@@ -50,7 +47,7 @@
     "@angular/compiler-cli": "~10.0.14",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^12.20.36",
+    "@types/node": "^12.12.69",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
@@ -63,8 +60,5 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.9.5"
-  },
-  "browser": {
-    "crypto": false
   }
 }
