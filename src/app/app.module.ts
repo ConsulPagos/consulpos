@@ -18,7 +18,7 @@ import { AfiliadoNavbarComponent } from './modules/affiliate/components/afiliado
 import { MatBadgeModule } from '@angular/material/badge'
 import { MatMenuModule } from '@angular/material/menu'
 import { AfiliadoModule } from './modules/affiliate/affiliate.module';
-import { SharedModule } from './shared/modules/shared/shared.module';
+import { SharedModule } from "./shared/modules/shared/shared.module";
 import { AffiliateGuard } from './guards/affiliate.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { StorageService } from './shared/services/storage.service';
@@ -84,12 +84,7 @@ import { CarruselLandingComponent } from './modules/home/components/carrusel-lan
     }),
     AngularFireStorageModule
   ],
-  providers: [AffiliateGuard, AdminGuard, HomeGuard, StorageService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true
-    }],
+  providers: [AffiliateGuard, AdminGuard, HomeGuard, StorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

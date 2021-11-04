@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import AesEncryption from '../utils/aesEncryption'
-import { Md5 } from 'ts-md5/dist/md5';
+import { MD5 } from 'crypto-js';
+import { environment } from 'src/environments/environment';
+import AesEncryption from '../utils/aesEncryption';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,7 @@ export class CryptoService {
 
   }
 
-  encryptString(text: string): string {
+   encryptString(text: string): string {
     if (this.keyString == null || this.vectorString == null) {
       return null
     }
@@ -70,36 +71,24 @@ export class CryptoService {
   ////////////////////////////////////////////////////////////////////
 
   encryptStringFixed(text: string): string {
-    if (this.keyStringFixed == null || this.vectorStringFixed == null) {
-      return null
-    }
-    return AesEncryption.encrypt(this.keyStringFixed, this.vectorStringFixed, text)
+    return AesEncryption.encrypt(environment.S_KEY, environment.S_VEC, text)
   }
 
 
   decryptStringFixed(text: string): string {
-    if (this.keyStringFixed == null || this.vectorStringFixed == null) {
-      return null
-    }
-    return AesEncryption.decrypt(this.keyStringFixed, this.vectorStringFixed, text)
+    return AesEncryption.decrypt(environment.S_KEY, environment.J_VEC, text)
   }
 
   encryptJsonFixed(text: string): string {
-    if (this.keyJsonFixed == null || this.vectorJsonFixed == null) {
-      return null
-    }
-    return AesEncryption.encrypt(this.keyJsonFixed, this.vectorJsonFixed, text)
+    return AesEncryption.encrypt(environment.J_KEY, environment.J_VEC, text)
   }
 
   decryptJsonFixed(text: string): string {
-    if (this.keyJsonFixed == null || this.vectorJsonFixed == null) {
-      return null
-    }
-    return AesEncryption.decrypt(this.keyJsonFixed, this.vectorJsonFixed, text)
+    return AesEncryption.decrypt(environment.J_KEY, environment.J_VEC, text)
   }
 
-  hash(text: string): string {
-    return Md5.hashStr(text)
-  }
+  hash(value: string): string {
+    return MD5(value).toString()
+  } 
 
 }
