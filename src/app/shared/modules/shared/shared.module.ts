@@ -34,6 +34,7 @@ import {ProgressComponent } from '../../components/fiel-upload/progress/progress
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { BottomFormComponent } from '../../components/bottom-form/bottom-form.component';
+import { MatOptionModule } from '@angular/material/core';
 
 
 @NgModule({
