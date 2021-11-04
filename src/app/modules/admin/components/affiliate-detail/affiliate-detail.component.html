@@ -4,29 +4,28 @@
             <table class="table table-borderless">
                 <tbody>
                     <tr>
-                        <th>Cedula representante</th>
-                        <th>Rif Empresa</th>
-                        <th>Registro Mercantil</th>
+                        <th>Representante Legal</th>
+                        <th>Cedula Representante</th>
+                        <th>Nombre Comercial</th>
                         <th>Teléfono</th>
-                        <th>Teléfono Auxiliar</th>
                     </tr>
                     <tr>
                         <td>
                             <a *ngIf="affiliate.cedula_representante; else nullTemplate"
                                 href={{affiliate.cedula_representante}} target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-external-link-alt"></i> Cedula Representante
+                                <i class="fas fa-external-link-alt"></i> Representante Legal
                             </a>
                         </td>
                         <td>
                             <a *ngIf="affiliate.rif_empresa; else nullTemplate" href={{affiliate.rif_empresa}}
                                 target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-external-link-alt"></i> RIF Empresa
+                                <i class="fas fa-external-link-alt"></i> Nombre Comercial
                             </a>
                         </td>
                         <td>
                             <a *ngIf="affiliate.registro_mercantil; else nullTemplate"
                                 href={{affiliate.registro_mercantil}} target="_blank" rel="noopener noreferrer">
-                               <i class="fas fa-external-link-alt"></i> Registro Mercantil
+                                <i class="fas fa-external-link-alt"></i> Cedula Representante Legal
                             </a>
                         </td>
                         <td>
@@ -34,21 +33,23 @@
                                 {{affiliate.telefono}}
                             </span>
                         </td>
-                        <td><span *ngIf="affiliate.telefono_auxiliar; else nullTemplate">
-                                {{affiliate.telefono_auxiliar}}
-                            </span></td>
-                    </tr>
                 </tbody>
             </table>
             <div class="mb-1 mt-1 text-left">
                 <div class="d-flex m-2 align-items-center">
                     <mat-spinner [diameter]="20" *ngIf="loading" class="mr-3"></mat-spinner>
-                    <button  mat-raised-button class="mr-2">
-                        Enviar email
-                    </button>
-                    <button (click)="openDialog(2)" mat-raised-button
+                    <button (click)="openDialog(2)" mat-raised-button class="mr-2"
                         [disabled]="affiliate.access_level === 4 || affiliate.access_level === 0 || loading">
-                        Validar
+                        Validar Cliente
+                    </button>
+                    <button mat-raised-button class="mr-2"
+                        [disabled]="affiliate.access_level === 4 || affiliate.access_level === 0 || loading">
+                        Ver Ficha
+                    </button>
+                    <button mat-raised-button class="mr-2"
+                        [disabled]="affiliate.access_level === 4 || affiliate.access_level === 0 || loading"
+                        [routerLink]="['/admin/app',{ outlets: { adr: ['edit-client'] } }]">
+                    Editar Cliente
                     </button>
                 </div>
             </div>

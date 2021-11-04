@@ -49,10 +49,16 @@ import { VentaManualComponent } from './pages/venta-manual/venta-manual.componen
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { OwlModule } from 'ngx-owl-carousel';
+import { AddClientComponent } from './pages/add-client/add-client.component';
+import { VentasComponent } from './pages/ventas/ventas.component';
+import { AddVentaComponent } from './pages/add-venta/add-venta.component';
+import { EditAdminComponent } from './pages/edit-admin/edit-admin.component';
+import { AdminDetailComponent } from './components/admin-detail/admin-detail.component';
+import { EditClientComponent } from './pages/edit-client/edit-client.component';
 
 
 @NgModule({
-  declarations: [AdminComponent, SkuComponent, CobrosComponent, CrmComponent, InventarioComponent, ClientelaComponent, PedidosComponent, LectorComponent, SalidaPedidosComponent, AdminNavbarComponent, AdminSidenavComponent, ClientelaAfiliadosComponent, AffiliateDetailComponent, EditProductComponent, EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, CrmDetalleComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, RegistrarCobroComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent],
+  declarations: [AdminComponent, SkuComponent, CobrosComponent, CrmComponent, InventarioComponent, ClientelaComponent, PedidosComponent, LectorComponent, SalidaPedidosComponent, AdminNavbarComponent, AdminSidenavComponent, ClientelaAfiliadosComponent, AffiliateDetailComponent, EditProductComponent, EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, CrmDetalleComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, RegistrarCobroComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AddClientComponent, VentasComponent, AddVentaComponent, EditAdminComponent, AdminDetailComponent, EditClientComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

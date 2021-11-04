@@ -5,8 +5,10 @@ import { ErrorResponse } from 'src/app/models/auth_response';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { ConfirmPasswordValidator } from 'src/app/shared/validators/confirm-password.validator';
 import { UserInterface } from '../../../../models/user';
-import { AuthService } from '../../../../shared/services/auth.service'
 
+
+import { SesionService } from '../../../../shared/services/sesion.service'
+import { CryptoService } from '../../../../shared/services/crypto.service'
 
 @Component({
   selector: 'app-login',
@@ -18,7 +20,7 @@ import { AuthService } from '../../../../shared/services/auth.service'
 export class LoginComponent implements OnInit {
 
 
-  constructor(private auth: AuthService, private fb: FormBuilder, private route: Router) { }
+  constructor(private sesion: SesionService, private crypto: CryptoService, private fb: FormBuilder, private route: Router) { }
   authForm: FormGroup;
   user: UserInterface = {};
   error: ErrorResponse = {};
@@ -35,19 +37,37 @@ export class LoginComponent implements OnInit {
     );
 
     this.error = {};
-    this.auth.error.subscribe(e => {
-      this.error = e;
-      this.loading = false;
-    })
+    // this.auth.error.subscribe(e => {
+    //   this.error = e;
+    //   this.loading = false;
+    // })
   }
 
   login() {
     //eliminar esto
     this.error = {};
+    this.user.correo = this.crypto.encryptJsonFixed(this.authForm.get('email').value)
+    this.user.pws = this.crypto.encryptJsonFixed(this.crypto.hash(this.authForm.get('password').value))
+    this.user.lat = this.crypto.encryptJsonFixed('0')
+    this.user.long = this.crypto.encryptJsonFixed('0')
+    this.user.sist_op = this.crypto.encryptJsonFixed('0')
+    this.user.modelo_disp = this.crypto.encryptJsonFixed('0')
+    
+    const data = this.crypto.encryptStringFixed(JSON.stringify(this.user))
+    const IMEI = '132568486464546848643'
 
     if (this.authForm.valid) {
       this.loading = true;
-      this.auth.auth(this.authForm.value);
+      // this.route.navigateByUrl('/admin/app/(adr:dashboard)');
+      localStorage.setItem('user_id', "1");
+      localStorage.setItem('access_token', "");
+      localStorage.setItem('refresh_token', "");
+      localStorage.setItem('identity', "john@gmail.com");
+      localStorage.setItem('access_level', "99");
+      localStorage.setItem('state', "1");
+      this.sesion.doLogin(`${IMEI}:${data}`).subscribe(res => {
+        console.log(res)
+      })
     } else {
       if (this.authForm.get('email').errors) {
         if (this.authForm.get('email').errors.required) {
@@ -66,7 +86,7 @@ export class LoginComponent implements OnInit {
           this.error.field = 'password'
         }
       }
-    } 
+    }
   }
   calculateClasses(field) {
     if (field == this.error.field) {

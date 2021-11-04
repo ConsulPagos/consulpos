@@ -1,27 +1,96 @@
+<!-- Vista de Agregar Usuario -->
 <section id="nuevoadmin">
+    <!-- Botones del Navbar -->
     <div class="title">
         <div class="d-flex">
-            <a class="nav-btn" #tooltip="matTooltip" matTooltip="Volver a Super Admin"
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['super-admin-panel'] } }]">
                 <li class="fa fa-arrow-left"></li>
             </a>
         </div>
     </div>
+    <!-- Container de los Componentes -->
     <div class="container-fluid">
         <div class="row pl-3 pr-3">
-            <div class="col-12 bg-white text-center p-3" style="border-radius: 10px;">
-                <h5 class="text-uppercase">Crear nuevo usuario</h5>
-                <form [formGroup]="form">
-                    <input formControlName="email" class="form-control mt-4" type="email" placeholder="Ingrese un email">
-                    <select formControlName="access_level" class="form-control mt-2" name="access" id="access">
-                        <option value="">Seleccione un nivel de acceso</option>
-                        <option value="99">Super Admin</option>
-                        <option value="98">Vendedor</option>
-                        <option value="97">Depositario</option>
-                    </select>
-                    <button [disabled]="form.invalid" *ngIf="!loading;else loadingTmp" (click)="submit()" class="btn btn-success bg-success text-white w-100 mt-3 mb-3 text-uppercase"
-                        mat-button>Guardar</button>
+            <div class="col-12 bg-white text-justify p-3">
+                <h5 class="text-uppercase">Crear usuario</h5>
 
+                <form [formGroup]="form">
+
+                    <h6>Datos del Usuario</h6>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Primer Nombre</mat-label>
+                        <input matInput placeholder="123456789" formControlName="primer_nombre" type="text">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Segundo Nombre</mat-label>
+                        <input matInput placeholder="123456789" formControlName="segundo_nombre" type="text">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Primer Apellido</mat-label>
+                        <input matInput placeholder="123456789" formControlName="primer_apellido" type="text">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Segundo Apellido</mat-label>
+                        <input matInput placeholder="123456789" formControlName="segundo_apellido" type="text">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Cédula</mat-label>
+                        <input matInput placeholder="123456789" formControlName="cedula" type="text">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Rol</mat-label>
+                        <mat-select disableRipple formControlName="rol">
+                            <mat-option *ngFor="let rol of roles" value={{rol.id_rol}}>
+                                {{rol.rol}} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <h6>Información de contacto</h6>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Correo Electrónico</mat-label>
+                        <input matInput placeholder="123456789" formControlName="email" type="text">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Teléfono</mat-label>
+                        <input matInput placeholder="123456789" formControlName="telefono" type="text">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Dirección</mat-label>
+                        <input matInput placeholder="123456789" formControlName="direccion" type="text">
+                    </mat-form-field>
+
+                    <h6>Datos de la Sucursal</h6>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Estado</mat-label>
+                        <mat-select disableRipple formControlName="estado">
+                            <mat-option *ngFor="let estado of estados" value={{estado.id_estado}}>
+                                {{estado.estado}} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Sucursal / OCC</mat-label>
+                        <mat-select disableRipple formControlName="estado">
+                            <mat-option *ngFor="let sucrusal of sucursales" value={{sucrusal.id_occ}}>
+                                {{sucrusal.nombre}} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="btn_form">
+
+                        <app-bottom-form (onClear)='clear()' (onSubmit)='submit()'>
+                        </app-bottom-form>
+                    </div>
                 </form>
             </div>
         </div>
