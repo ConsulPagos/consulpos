@@ -1,28 +1,34 @@
-import * as crypto from 'crypto';
+ import {AES} from 'crypto-js';
+ import * as CryptoJS from 'crypto-js';
 
-const encryptionType = 'aes-256-cbc';
-const encryptionEncoding = 'base64';
-const bufferEncryption = 'utf-8';
 class AesEncryption {
 
-  encrypt(secretKey: string, initVector: string, text: string): string {
-    const val = text;
-    const key = Buffer.from(secretKey, bufferEncryption);
-    const iv = Buffer.from(initVector, bufferEncryption);
-    const cipher = crypto.createCipheriv(encryptionType, key, iv);
-    let encrypted = cipher.update(val, 'utf8', encryptionEncoding);
-    encrypted += cipher.final(encryptionEncoding);
-    return encrypted;
+  encrypt(secretKey: string, initVector: string, value: string): string {
+    var key = CryptoJS.enc.Utf8.parse(secretKey);
+    var iv = CryptoJS.enc.Utf8.parse(initVector);
+    var encrypted = AES.encrypt(value, key, {
+        keySize: 128 / 8,
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+    });
+    
+    return encrypted.toString();
   }
 
-  decrypt(secretKey: string, initVector: string, base64String: string): any {
-    const buff = Buffer.from(base64String, encryptionEncoding);
-    const key = Buffer.from(secretKey, bufferEncryption);
-    const iv = Buffer.from(initVector, bufferEncryption);
-    const decipher = crypto.createDecipheriv(encryptionType, key, iv);
-    const deciphered = Buffer.concat([decipher.update(buff), decipher.final()]) ;
-    return deciphered;
+  decrypt(secretKey: string, initVector: string, value: string): any {
+    var key = CryptoJS.enc.Utf8.parse(secretKey);
+      var iv = CryptoJS.enc.Utf8.parse(initVector);
+      var decrypted = AES.decrypt(value, key, {
+          keySize: 128 / 8,
+          iv: iv,
+          mode: CryptoJS.mode.CBC,
+          padding: CryptoJS.pad.Pkcs7
+      });
+      
+      return decrypted.toString(CryptoJS.enc.Utf8);
   }
 }
+
 
 export default new AesEncryption;
