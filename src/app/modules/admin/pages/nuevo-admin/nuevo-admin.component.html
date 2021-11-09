@@ -56,7 +56,8 @@
 
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Correo Electrónico</mat-label>
-                        <input matInput placeholder="123456789" formControlName="email" type="text">
+                        <input matInput placeholder="consulpagos@example.com" [formControl]="email" required>
+                        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="container_box_space">
@@ -88,6 +89,16 @@
                     </mat-form-field>
                     <div class="btn_form">
 
+                        <h6>Contraseña para el Usuario</h6>
+
+                        <mat-form-field appearance="outline" >
+                            <mat-label>Contraseña</mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'">
+                            <button mat-icon-button matSuffix (click)="hide = !hide">
+                                <i class="fas fa-eye-slash"></i>
+                            </button>
+                        </mat-form-field>
+            
                         <app-bottom-form (onClear)='clear()' (onSubmit)='submit()'>
                         </app-bottom-form>
                     </div>

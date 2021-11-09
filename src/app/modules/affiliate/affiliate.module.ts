@@ -6,7 +6,7 @@ import { PortafolioComponent } from './pages/portafolio/portafolio.component';
 import { HistorialComponent } from './pages/historial/historial.component';
 import { ContactoComponent } from './pages/contacto/contacto.component';
 import { ProductoComponent } from './pages/producto/producto.component';
-import { SharedModule } from 'src/app/shared/modules/shared/shared.module';
+import { SharedModule } from "src/app/shared/modules/shared/shared.module";
 import { AreaPersonalComponent } from './pages/area-personal/area-personal.component';
 import { PedidoConfirmadoComponent } from './pages/pedido-confirmado/pedido-confirmado.component';
 import { AfiliadoErrorComponent } from './components/afiliado-error/afiliado-error.component';

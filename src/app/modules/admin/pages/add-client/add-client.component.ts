@@ -9,6 +9,7 @@ import { MunicipioInterface } from '../../../../models/municipio'
 import { ContactoInterface } from '../../../../models/contacto'
 import { TipodocumentoInterface } from '../../../../models/tipo_documento'
 import { TipoclienteInterface } from '../../../../models/tipo_cliente'
+import { RepresentanteInterface } from 'src/app/models/user';
 
 @Component({
   selector: 'app-add-client',
@@ -61,6 +62,34 @@ export class AddClientComponent implements OnInit {
     id: new FormControl('', [Validators.required]),
   });
 
+  agents = [];
+  formats: RepresentanteInterface[]=[];
+
+  add_agent() {
+    var newFormat: RepresentanteInterface = {};
+
+    // newFormat.nombre_representante = '';
+    // newFormat.apellido_representante= '';
+    // newFormat.cedula_representante= 0;
+    // newFormat.telefono_local_repre= '';
+    // newFormat.telefono_movil_repre= '';
+    // newFormat.email= '';
+
+    var agente = new FormGroup({
+      nombre_representante: new FormControl(newFormat.nombre_representante, [Validators.required]),
+      apellido_representante: new FormControl(newFormat.apellido_representante, [Validators.required]),
+      cedula_representante: new FormControl(newFormat.cedula_representante, [Validators.required]),
+      telefono_local_repre: new FormControl(newFormat.telefono_local_repre, [Validators.required]),
+      telefono_movil_repre: new FormControl(newFormat.telefono_movil_repre, [Validators.required]),
+      email: new FormControl(newFormat.email, [Validators.required]),
+      tipo_doc_rep: new FormControl('', [Validators.required]),
+
+
+    });
+    this.agents.push(agente);
+    this.formats.push(newFormat);
+  }
+
   agent = new FormGroup({
     nombre_representante: new FormControl('', [Validators.required]),
     apellido_representante: new FormControl('', [Validators.required]),
@@ -68,9 +97,7 @@ export class AddClientComponent implements OnInit {
     telefono_local_repre: new FormControl('', [Validators.required]),
     telefono_movil_repre: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required]),
-
-
-    
+    tipo_doc_rep: new FormControl('', [Validators.required]),
   });
 
   contribuyentes: ContribuyenteInterface[] = [{
@@ -147,12 +174,18 @@ export class AddClientComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Agregar Cliente')
+
+    this.add_agent()
   }
 
   getTipoCliente(): string {
     if (this.client_type.valid) {
       return this.tipos_clientes.filter(t => t.id_tipo_cliente == this.client_type.get('tipo_cliente').value)[0].letra
     } return null
+  }
+
+  deleteAgent(index: number) {
+    this.formats.splice(index, 1);
   }
 
 

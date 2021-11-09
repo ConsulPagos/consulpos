@@ -21,7 +21,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { AdminSidenavComponent } from './components/admin-sidenav/admin-sidenav.component';
 import { ClientelaAfiliadosComponent } from './components/clientela-afiliados/clientela-afiliados.component';
 import { AffiliateDetailComponent } from './components/affiliate-detail/affiliate-detail.component';
-import { SharedModule } from '../../shared/modules/shared/shared.module';
+import { SharedModule } from "../../shared/modules/shared/shared.module";
 import { EditProductComponent } from './components/edit-product/edit-product.component';
 import { EditInventarioComponent } from './components/edit-inventario/edit-inventario.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';

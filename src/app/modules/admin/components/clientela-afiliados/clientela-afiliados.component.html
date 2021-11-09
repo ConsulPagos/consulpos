@@ -33,24 +33,29 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    <ng-container matColumnDef="rif">
+      <th mat-header-cell *matHeaderCellDef> Rif </th>
+      <td mat-cell *matCellDef="let element"> {{element.rif}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="fecha">
-      <th mat-header-cell *matHeaderCellDef> fecha </th>
-      <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+    <ng-container matColumnDef="nombre_comercial">
+      <th mat-header-cell *matHeaderCellDef> nombre_comercial </th>
+      <td mat-cell *matCellDef="let element"> {{element.nombre_comercial}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="correo">
+    <ng-container matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef> correo </th>
-      <td mat-cell *matCellDef="let element"> {{element.correo}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="razon">
-      <th mat-header-cell *matHeaderCellDef> razon </th>
-      <td mat-cell *matCellDef="let element"> {{element.razon}} </td>
+    <ng-container matColumnDef="estatus">
+      <th mat-header-cell *matHeaderCellDef> estatus </th>
+      <td mat-cell *matCellDef="let element"> {{element.estatus}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="validado">
+      <th mat-header-cell *matHeaderCellDef> validado </th>
+      <td mat-cell *matCellDef="let element"> {{element.validado}} </td>
     </ng-container>
 
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->

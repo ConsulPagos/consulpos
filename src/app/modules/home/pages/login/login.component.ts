@@ -53,21 +53,27 @@ export class LoginComponent implements OnInit {
     this.user.sist_op = this.crypto.encryptJsonFixed('0')
     this.user.modelo_disp = this.crypto.encryptJsonFixed('0')
     
-    const data = this.crypto.encryptStringFixed(JSON.stringify(this.user)).toString()
-    
-    const IMEI = '132568486464546848643'
+    const data = this.crypto.encryptStringFixed(JSON.stringify(this.user))
+    const IMEI = '13256848646454643'
+
+    console.log(`${IMEI}:${data}`)
+    console.log(JSON.stringify(this.user))
+    console.log(this.authForm.value)
 
     if (this.authForm.valid) {
       this.loading = true;
-      this.route.navigateByUrl('/admin/app/(adr:dashboard)');
-      localStorage.setItem('user_id', "1");
-      localStorage.setItem('access_token', "");
-      localStorage.setItem('refresh_token', "");
-      localStorage.setItem('identity', "john@gmail.com");
-      localStorage.setItem('access_level', "99");
-      localStorage.setItem('state', "1");
-      this.sesion.doLogin(`${IMEI}:${data}`).subscribe(res => {
+      // this.route.navigateByUrl('/admin/app/(adr:dashboard)');
+      // localStorage.setItem('user_id', "1");
+      // localStorage.setItem('access_token', "");
+      // localStorage.setItem('refresh_token', "");
+      // localStorage.setItem('identity', "john@gmail.com");
+      // localStorage.setItem('access_level', "99");
+      // localStorage.setItem('state', "1");
+      console.log("login")
+      this.sesion.doLogin(data).subscribe(res => {
+        console.log("res")
         console.log(res)
+        this.loading = false
       })
     } else {
       if (this.authForm.get('email').errors) {
