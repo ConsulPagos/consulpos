@@ -1,8 +1,8 @@
 <div class="sidenav d-flex flex-column">
-    <div class="sidenav d-flex flex-column ">
+    <div class="sidenav d-flex flex-column sidenav-items ">
 
         <div class="brand shadow-sm d-flex align-items-center justify-content-center pt-2 pb-2 mb-2">
-            <img src="../../../../../assets/images/logo.png" alt="Consulpagos" style="width: auto; height: 40px;">
+            <img src="../../../../../assets/images/consulpagos.png" alt="Consulpagos" style="width: auto; height: 50px;">
         </div>
 
         <a *ngIf="access.dashboard()" [routerLink]="['/admin/app',{ outlets: { adr: ['dashboard'] } }]"

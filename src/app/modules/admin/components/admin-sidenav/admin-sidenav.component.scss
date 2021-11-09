@@ -1,48 +1,60 @@
 .sidenav{
     color: #fff;
-    width: 150px;
+    width: 120px;
     border: none;
 }
 
 a{
-    height: 55px;
-    width: 150px;
+    width: 120px;
     font-size: 10px;
     text-align: center;
     display: flex;
     align-items: center;
-    justify-content: left;
-    padding-left: 20px;
-    color: #bed3dd;
+    justify-content: center;
+    color: #acacac;
     text-decoration: none;
+    flex-direction: column;
+}
+
+a span{
+    color: black;
+    font-weight: 500;
+    font-size: 8px;
 }
 
 .brand{
-    background-color:  #063f75; 
+    background-color:  #fff; 
     height: 60px; 
-    width: 150px;
+    width: 120px;
 }
 
 
 .ad-active li{
-    background-color: #00d7ff;
-    color: white;
-    //color: #C2FFF8;
+    background-color: #eeeeee;
+    color: black;
 }
 
-li{
-    background-color: #063f75;
-    height: 40px;
-    width: 40px;
+.fa {
+    //background-color: rgb(233, 233, 233);
+    height: 50px;
+    width: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 50%;
     transition: 0.3s;
-    font-size: 18px;
-    margin-right: 10px;
+    font-size: 20px;
+    margin-top: 7px;
+    margin-bottom: 7px;
 }
 a:hover li{
-    background-color: #00d7ff;
-    color: white;
+    background-color: #eeeeee;
+    color: black;
+}
+
+.sidenav-items{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
