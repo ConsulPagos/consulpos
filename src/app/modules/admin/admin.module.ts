@@ -55,10 +55,11 @@ import { AddVentaComponent } from './pages/add-venta/add-venta.component';
 import { EditAdminComponent } from './pages/edit-admin/edit-admin.component';
 import { AdminDetailComponent } from './components/admin-detail/admin-detail.component';
 import { EditClientComponent } from './pages/edit-client/edit-client.component';
+import { AdminTitleComponent } from './components/admin-title/admin-title.component';
 
 
 @NgModule({
-  declarations: [AdminComponent, SkuComponent, CobrosComponent, CrmComponent, InventarioComponent, ClientelaComponent, PedidosComponent, LectorComponent, SalidaPedidosComponent, AdminNavbarComponent, AdminSidenavComponent, ClientelaAfiliadosComponent, AffiliateDetailComponent, EditProductComponent, EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, CrmDetalleComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, RegistrarCobroComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AddClientComponent, VentasComponent, AddVentaComponent, EditAdminComponent, AdminDetailComponent, EditClientComponent],
+  declarations: [AdminComponent, SkuComponent, CobrosComponent, CrmComponent, InventarioComponent, ClientelaComponent, PedidosComponent, LectorComponent, SalidaPedidosComponent, AdminNavbarComponent, AdminSidenavComponent, ClientelaAfiliadosComponent, AffiliateDetailComponent, EditProductComponent, EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, CrmDetalleComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, RegistrarCobroComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AddClientComponent, VentasComponent, AddVentaComponent, EditAdminComponent, AdminDetailComponent, EditClientComponent, AdminTitleComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

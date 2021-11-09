@@ -1,8 +1,7 @@
 <div class="table-container" [ngClass]="{'bg-white': !loading && !error}">
     <div>
         <!-- *ngIf="!loading && !error; else loadingTable" -->
-        <h6 class="pt-3 pl-3 pb-3">Tabla de usuarios</h6>
-        <mat-divider></mat-divider>
+
         <table mat-table [dataSource]="users" multiTemplateDataRows>
 
             <!-- <ng-container matColumnDef="id">

@@ -2,7 +2,6 @@
     color: #fff;
     width: 150px;
     border: none;
-    
 }
 
 a{
@@ -19,20 +18,20 @@ a{
 }
 
 .brand{
-    background-color:  #042925; 
+    background-color:  #063f75; 
     height: 60px; 
     width: 150px;
 }
 
 
 .ad-active li{
-    background-color: #084e47;
+    background-color: #00d7ff;
     color: white;
     //color: #C2FFF8;
 }
 
 li{
-    background-color: #042925;
+    background-color: #063f75;
     height: 40px;
     width: 40px;
     display: flex;
@@ -44,8 +43,6 @@ li{
     margin-right: 10px;
 }
 a:hover li{
-    background-color: #084e47;
-    //color: #C2FFF8;
+    background-color: #00d7ff;
     color: white;
-
 }

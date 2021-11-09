@@ -62,19 +62,19 @@ export class LoginComponent implements OnInit {
 
     if (this.authForm.valid) {
       this.loading = true;
-      // this.route.navigateByUrl('/admin/app/(adr:dashboard)');
-      // localStorage.setItem('user_id', "1");
-      // localStorage.setItem('access_token', "");
-      // localStorage.setItem('refresh_token', "");
-      // localStorage.setItem('identity', "john@gmail.com");
-      // localStorage.setItem('access_level', "99");
-      // localStorage.setItem('state', "1");
+      this.route.navigateByUrl('/admin/app/(adr:dashboard)');
+      localStorage.setItem('user_id', "1");
+      localStorage.setItem('access_token', "");
+      localStorage.setItem('refresh_token', "");
+      localStorage.setItem('identity', "john@gmail.com");
+      localStorage.setItem('access_level', "99");
+      localStorage.setItem('state', "1");
       console.log("login")
-      this.sesion.doLogin(data).subscribe(res => {
-        console.log("res")
-        console.log(res)
-        this.loading = false
-      })
+      // this.sesion.doLogin(data).subscribe(res => {
+      //   console.log("res")
+      //   console.log(res)
+      //   this.loading = false
+      // })
     } else {
       if (this.authForm.get('email').errors) {
         if (this.authForm.get('email').errors.required) {

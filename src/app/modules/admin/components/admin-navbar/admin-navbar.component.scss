@@ -6,10 +6,9 @@
   }
   
   .navbar {
-    height:60px !important; 
+    height: 60px !important; 
     width: 100%;
     background-color: white;
-    //border-bottom: 1px solid rgba(128, 128, 128, 0.123);
   }
   
   ul.nav { display:table; width:100%; }
@@ -25,14 +24,14 @@
 
 .identity{
     font-weight: 500;
-    color: #858598;
+    color: #000;
     font-family: 'Montserrat', 'medium';
     font-size: 14px;
     text-transform: lowercase;
 }
 
 .fa-chevron-down{
-  color: #858598;
+  color: #000;
   font-size: 10px;
 }
 
