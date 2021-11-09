@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CrmDetalleComponent } from './crm-detalle.component';
+import { ConciliarArchivoComponent } from './conciliar-archivo.component';
 
-describe('CrmDetalleComponent', () => {
-  let component: CrmDetalleComponent;
-  let fixture: ComponentFixture<CrmDetalleComponent>;
+describe('ConciliarArchivoComponent', () => {
+  let component: ConciliarArchivoComponent;
+  let fixture: ComponentFixture<ConciliarArchivoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CrmDetalleComponent ]
+      declarations: [ ConciliarArchivoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CrmDetalleComponent);
+    fixture = TestBed.createComponent(ConciliarArchivoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

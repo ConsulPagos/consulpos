@@ -6,7 +6,6 @@ import { AdminComponent } from './admin.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SkuComponent } from './pages/sku/sku.component';
 import { CobrosComponent } from './pages/cobros/cobros.component';
-import { CrmComponent } from './pages/crm/crm.component';
 import { InventarioComponent } from './pages/inventario/inventario.component';
 import { ClientelaComponent } from './pages/clientela/clientela.component';
 import { PedidosComponent } from './pages/pedidos/pedidos.component';
@@ -33,7 +32,7 @@ import { DetalleCobrosComponent } from './components/detalle-cobros/detalle-cobr
 import { HistorialCobrosComponent } from './pages/historial-cobros/historial-cobros.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ChartsModule } from 'ng2-charts';
-import { CrmDetalleComponent } from './pages/crm-detalle/crm-detalle.component';
+import { ConciliarArchivoComponent } from './pages/conciliar-archivo/conciliar-archivo.component';
 import { TablaAfiliadosCrmComponent } from './components/tabla-afiliados-crm/tabla-afiliados-crm.component';
 import { AplicarDescuentoComponent } from './pages/aplicar-descuento/aplicar-descuento.component';
 import { AplicarCreditoComponent } from './pages/aplicar-credito/aplicar-credito.component';
@@ -56,10 +55,14 @@ import { EditAdminComponent } from './pages/edit-admin/edit-admin.component';
 import { AdminDetailComponent } from './components/admin-detail/admin-detail.component';
 import { EditClientComponent } from './pages/edit-client/edit-client.component';
 import { AdminTitleComponent } from './components/admin-title/admin-title.component';
+import { CrmComponent } from './pages/crm/crm.component';
 
 
 @NgModule({
-  declarations: [AdminComponent, SkuComponent, CobrosComponent, CrmComponent, InventarioComponent, ClientelaComponent, PedidosComponent, LectorComponent, SalidaPedidosComponent, AdminNavbarComponent, AdminSidenavComponent, ClientelaAfiliadosComponent, AffiliateDetailComponent, EditProductComponent, EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, CrmDetalleComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, RegistrarCobroComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AddClientComponent, VentasComponent, AddVentaComponent, EditAdminComponent, AdminDetailComponent, EditClientComponent, AdminTitleComponent],
+  declarations: [AdminComponent, 
+    SkuComponent, 
+    CobrosComponent, 
+    ConciliarArchivoComponent, InventarioComponent, ClientelaComponent, CrmComponent, PedidosComponent, LectorComponent, SalidaPedidosComponent, AdminNavbarComponent, AdminSidenavComponent, ClientelaAfiliadosComponent, AffiliateDetailComponent, EditProductComponent, EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, RegistrarCobroComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AddClientComponent, VentasComponent, AddVentaComponent, EditAdminComponent, AdminDetailComponent, EditClientComponent, AdminTitleComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

@@ -8,7 +8,7 @@ import { AplicarCreditoComponent } from './pages/aplicar-credito/aplicar-credito
 import { AplicarDescuentoComponent } from './pages/aplicar-descuento/aplicar-descuento.component';
 import { ClientelaComponent } from './pages/clientela/clientela.component';
 import { CobrosComponent } from './pages/cobros/cobros.component';
-import { CrmDetalleComponent } from './pages/crm-detalle/crm-detalle.component';
+import { ConciliarArchivoComponent } from './pages/conciliar-archivo/conciliar-archivo.component';
 import { CrmComponent } from './pages/crm/crm.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HistorialCobrosComponent } from './pages/historial-cobros/historial-cobros.component';
@@ -52,7 +52,7 @@ const routes: Routes = [
       { path: 'sku', component: SkuComponent, outlet: 'adr', canActivate:[SkuGuard]},
       { path: 'sku/:id_product', component: EditProductComponent, outlet: 'adr', canActivate:[SkuGuard]},
       { path: 'crm', component: CrmComponent, outlet: 'adr', canActivate:[CrmGuard]},
-      { path: 'conciliar-archivo', component: CrmDetalleComponent, outlet: 'adr', canActivate:[CrmGuard]},
+      { path: 'conciliar-archivo', component: ConciliarArchivoComponent, outlet: 'adr', canActivate:[CrmGuard]},
       { path: 'aplicar-descuento/:id_afiliado', component: AplicarDescuentoComponent, outlet: 'adr', canActivate:[CrmGuard]},
       { path: 'reportes', component: AplicarCreditoComponent, outlet: 'adr', canActivate:[CrmGuard]},
       { path: 'clientela', component:ClientelaComponent, outlet: 'adr', canActivate:[ClientesGuard]},

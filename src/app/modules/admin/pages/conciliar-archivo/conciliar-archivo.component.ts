@@ -4,11 +4,11 @@ import { CrmTableInterface } from 'src/app/models/crm';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
-  selector: 'app-crm-detalle',
-  templateUrl: './crm-detalle.component.html',
-  styleUrls: ['./crm-detalle.component.scss']
+  selector: 'app-conciliar-archivo',
+  templateUrl: './conciliar-archivo.component.html',
+  styleUrls: ['./conciliar-archivo.component.scss']
 })
-export class CrmDetalleComponent implements OnInit {
+export class ConciliarArchivoComponent implements OnInit {
 
   data: any = { 'affiliate': {} };
   affiliate: CrmTableInterface;
