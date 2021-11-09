@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CrmTableInterface } from 'src/app/models/crm';
 import { AdminService } from '../../services/admin.service';
 
@@ -16,11 +16,10 @@ export class ConciliarArchivoComponent implements OnInit {
   error = false;
   id;
 
-  constructor(private admin: AdminService, private routes: ActivatedRoute) { }
+  constructor(private admin: AdminService, private routes: ActivatedRoute, private router:Router) { }
 
   ngOnInit(): void {
     //this.id = parseInt(this.routes.snapshot.paramMap.get('id_afiliado'))
-    //this.load()
   }
 
   load() {
@@ -28,17 +27,8 @@ export class ConciliarArchivoComponent implements OnInit {
     this.loading = true;
     this.error = false;
 
-    this.admin.get_crm_affiliate(this.id).subscribe(data => {
+    this.router.navigateByUrl('/admin/app/(adr:previsualizar-archivo)');
 
-      this.data = data;
-      this.loading = false;
-
-    }, e => {
-
-      this.loading = false;
-      this.error = true;
-
-    })
   }
 
   isValid(limite_descuento) {
