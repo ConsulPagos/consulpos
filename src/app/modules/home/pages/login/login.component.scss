@@ -8,13 +8,14 @@
 }
 
 .container0{
-  background-color: whitesmoke;
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 500px;
   border-radius: 10%;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 
@@ -62,7 +63,8 @@ button{
     animation-duration: .5s;
     animation-delay: 0.25s;
   }
-  
+
+ 
   /* This approximates the ease-in-out-bounce animation from easings.net, which would require a plug-in to use*/
   @keyframes bounce {
     0% {
