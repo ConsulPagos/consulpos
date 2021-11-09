@@ -22,3 +22,15 @@ export interface UserFormInterface{
     id_sucursal ?:number;
     access_level?: number;
 }
+
+export interface RepresentanteInterface{
+    id_rep_legal?:number;
+    doc_identidad ?:string;
+    nombre_representante ?:string;
+    apellido_representante ?:string;
+    cedula_representante ?:number;
+    email ?:string;
+    telefono_local_repre ?:string;
+    telefono_movil_repre ?:string;
+}
+

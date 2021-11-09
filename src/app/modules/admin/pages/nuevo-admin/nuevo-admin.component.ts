@@ -30,6 +30,23 @@ export class NuevoAdminComponent implements OnInit {
   //   id_estado:null,
   //   id_sucursal :null,
   // }
+  hide = true;
+
+  email = new FormControl('', [Validators.required, Validators.email]);
+
+  getErrorMessage() {
+    if (this.email.hasError('required')) {
+      return 'Debe ingresar un correo';
+    }
+
+    return this.email.hasError('email') ? 'Ingrese un correo valido' : '';
+  }
+
+    // usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
+    // nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+    // password: /^.{4,12}$/, // 4 a 12 digitos.
+    // correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+    // telefono: /^\d{7,14}$/ // 7 a 14 numeros.
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -43,6 +60,7 @@ export class NuevoAdminComponent implements OnInit {
     direccion: new FormControl('', [Validators.required]),
     estado: new FormControl('', [Validators.required]),
     sucursal: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
   });
 
   loading = false;
