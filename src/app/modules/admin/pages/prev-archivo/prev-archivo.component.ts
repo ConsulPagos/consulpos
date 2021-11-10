@@ -15,7 +15,7 @@ export class PrevArchivoComponent implements OnInit {
   displayedColumns: any;
   progress: number = 0;
 
-  columnasBDV = ["cedulaRif", "numeroCuenta1", "montoTotal", "montoCobrado", "msensajesDetail"]
+  columns = ["cedulaRif", "numeroCuenta1", "montoTotal", "montoCobrado", "msensajesDetail"]
 
   constructor() { }
 
@@ -41,7 +41,7 @@ export class PrevArchivoComponent implements OnInit {
       const json = XLSX.utils.sheet_to_json(ws);
       const nData: CuotaInterface[] = []
       json.forEach(cuota => {
-        const nCuota: CuotaInterface = { doc: cuota[this.columnasBDV[0]] , cuenta: cuota[this.columnasBDV[1]] , monto: parseFloat(cuota[this.columnasBDV[2]]), cobrado: parseFloat(cuota[this.columnasBDV[3]]), mensaje: cuota[this.columnasBDV[4]], }
+        const nCuota: CuotaInterface = { doc: cuota[this.columns[0]] , cuenta: cuota[this.columns[1]] , monto: parseFloat(cuota[this.columns[2]]), cobrado: parseFloat(cuota[this.columns[3]]), mensaje: cuota[this.columns[4]], }
         nData.push(nCuota)
       });
       this.data = nData
