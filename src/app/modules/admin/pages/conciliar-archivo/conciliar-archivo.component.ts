@@ -27,6 +27,7 @@ export class ConciliarArchivoComponent implements OnInit {
 
   ca = new FormGroup({
     banco: new FormControl('', [Validators.required]),
+    proceso: new FormControl('', [Validators.required]),
   });
 
   bancos: BancoInterface[] = [{
@@ -34,12 +35,12 @@ export class ConciliarArchivoComponent implements OnInit {
     banco: 'BANCO DE VENEZUELA',
     codigo: '0102',
     id_plataforma: 1,
-  },
-  {
-    id_banco: 2,
-    banco: 'BANCO NACIONAL DE CREDITO',
-    codigo: '0191',
-    id_plataforma: 2,
+  }]
+
+  procesos = [{
+    id: 1,
+    fecha: '10/11/2021 2:54 pm',
+    trace: '11558'
   }]
 
   load() {

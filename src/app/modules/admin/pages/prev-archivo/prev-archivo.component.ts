@@ -23,8 +23,6 @@ export class PrevArchivoComponent implements OnInit {
   }
 
   onFileChange(event: any) {
-    /* wire up file reader */
-    const finalData = []
     const target: DataTransfer = <DataTransfer>(event.target);
     if (target.files.length !== 1) {
       throw new Error('Cannot use multiple files');
@@ -32,7 +30,6 @@ export class PrevArchivoComponent implements OnInit {
     const reader: FileReader = new FileReader();
     reader.readAsBinaryString(target.files[0]);
     reader.onload = (e: any) => {
-      /* create workbook */
       const binarystr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
       const wsname: string = wb.SheetNames[1];
