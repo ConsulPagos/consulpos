@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrmTableInterface } from 'src/app/models/crm';
 import { AdminService } from '../../services/admin.service';
+import { Title } from '@angular/platform-browser';
+import { BancoInterface } from '../../../../models/banco'
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-conciliar-archivo',
@@ -16,11 +19,28 @@ export class ConciliarArchivoComponent implements OnInit {
   error = false;
   id;
 
-  constructor(private admin: AdminService, private routes: ActivatedRoute, private router:Router) { }
+  constructor(private admin: AdminService, private routes: ActivatedRoute, private router: Router, private title: Title) { }
 
   ngOnInit(): void {
-    //this.id = parseInt(this.routes.snapshot.paramMap.get('id_afiliado'))
+    this.title.setTitle('ConsulPos | Conciliar Archivo')
   }
+
+  ca = new FormGroup({
+    banco: new FormControl('', [Validators.required]),
+  });
+
+  bancos: BancoInterface[] = [{
+    id_banco: 1,
+    banco: 'BANCO DE VENEZUELA',
+    codigo: '0102',
+    id_plataforma: 1,
+  },
+  {
+    id_banco: 2,
+    banco: 'BANCO NACIONAL DE CREDITO',
+    codigo: '0191',
+    id_plataforma: 2,
+  }]
 
   load() {
 

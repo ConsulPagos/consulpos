@@ -1,38 +1,27 @@
 <section id="crmdetalle">
     <div class="container-fluid">
         <div class="title">
-            <!-- <div class="d-flex">
-                <a class="nav-btn" #tooltip="matTooltip" matTooltip="Volver al detalle"
-                    [routerLink]="['/admin/app',{ outlets: { adr: ['cobros', id_afiliado] } }]">
-                    <li class="fa fa-arrow-left"></li>
-                </a>
-            </div> -->
         </div>
         <div class="d-flex justify-content-center">
             <div class="w-100">
                 <div class="bg-white rounded card p-4">
-                    <form>
+                    <form [formGroup]="ca">
                         <div class="row">
                             <div class="col-12">
                                 <div class="box-title d-flex justify-content-center">
                                     <h4 class="text-uppercase">Conciliar Archivo</h4>
                                 </div>
-                                <!-- <div class="d-flex justify-content-center text-uppercase">
-                                    Pedido N° {{this.id}}
-                                </div> -->
                             </div>
-                        
-                            <div class="col-12 mt-2">
-                                <label for="metodo">
-                                    Seleccionar Banco
-                                </label>
-                                <select id="method" class="form-control shadow-none">
-                                    <option selected class="text-uppercase" value="">Seleccionar banco</option>
-                                    <option class="text-uppercase" value="">100% Banco</option>
-                                    <option class="text-uppercase" value="">Bicentenario</option>
-                                </select>
-                            </div>
-                            <div class="col-12 mt-2">
+
+                            <mat-form-field appearance="outline" class="container_box">
+                                <mat-label>Seleccionar Banco</mat-label>
+                                <mat-select disableRipple formControlName="banco">
+                                    <mat-option *ngFor="let banco of bancos" value={{banco.id_banco}}>
+                                        {{banco.banco}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <!-- <div class="col-12 mt-2">
                                 <label for="metodo">
                                     Archivo de cobro
                                 </label>
@@ -40,7 +29,9 @@
                                     <option selected class="text-uppercase" value="">Seleccionar archivo</option>
                                     <option class="text-uppercase" value="">21/10/2021</option>
                                 </select>
-                            </div>
+                            </div> -->
+
+
                             <div class="col-12 mt-2">
                                 <label for="metodo">
                                     Selecionar archivo
@@ -52,7 +43,9 @@
 
                             <div class="col-12 mt-3">
                                 <div class="d-flex w-100">
-                                    <button (click)="load()" mat-button class="p-1 w-100 btn btn-success bg-success text-white text-uppercase h5">Conciliar ARCHIVO</button>
+                                    <button (click)="load()" mat-button
+                                        class="p-1 w-100 btn btn-success bg-success text-white text-uppercase h5">Conciliar
+                                        ARCHIVO</button>
                                 </div>
                             </div>
                         </div>

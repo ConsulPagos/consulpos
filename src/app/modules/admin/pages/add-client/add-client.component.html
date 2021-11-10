@@ -171,27 +171,27 @@
                     <!-- [stepControl]="document" -->
                     <form [formGroup]="document">
                         <ng-template matStepLabel>Carga de Documentos</ng-template>
+                        <div class="row">
+                            <div id="doc_rif" class="col-md-6 col-12">
+                                <h6 class="title_container_file_upload">Rif</h6>
+                                <app-file-upload></app-file-upload>
+                            </div>
 
-                        <div id="doc_rif">
-                            <h6 class="title_container_file_upload">Rif</h6>
-                            <app-file-upload></app-file-upload>
+                            <div id="doc_registro_mercantil" class="col-md-6 col-12">
+                                <h6 class="title_container_file_upload">Registro Mercantil</h6>
+                                <app-file-upload></app-file-upload>
+                            </div>
+
+                            <div id="doc_ci_representante_legal" class="col-md-6 col-12">
+                                <h6 class="title_container_file_upload">Cédula Representante Legal</h6>
+                                <app-file-upload></app-file-upload>
+                            </div>
+
+                            <div id="doc_otro" class="col-md-6 col-12">
+                                <h6 class="title_container_file_upload">Otro</h6>
+                                <app-file-upload></app-file-upload>
+                            </div>
                         </div>
-
-                        <div id="doc_registro_mercantil">
-                            <h6 class="title_container_file_upload">Registro Mercantil</h6>
-                            <app-file-upload></app-file-upload>
-                        </div>
-
-                        <div id="doc_ci_representante_legal">
-                            <h6 class="title_container_file_upload">Cédula Representante Legal</h6>
-                            <app-file-upload></app-file-upload>
-                        </div>
-
-                        <div id="doc_otro">
-                            <h6 class="title_container_file_upload">Otro</h6>
-                            <app-file-upload></app-file-upload>
-                        </div>
-
                     </form>
                     <div>
                         <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
@@ -206,7 +206,7 @@
 
                     <ng-container>
                         <div class="container_agent" *ngFor="let format of formats; let i=index">
-                            <form [formGroup]="agents[i]"  class="formulario">
+                            <form [formGroup]="agents[i]" class="formulario">
 
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Nombre</mat-label>
@@ -219,22 +219,22 @@
                                     <input matInput formControlName="apellido_representante" placeholder="123456789"
                                         type="text">
                                 </mat-form-field>
+                                <div>
+                                    <mat-form-field appearance="outline" class="container_box">
+                                        <mat-label>Tipo</mat-label>
+                                        <mat-select disableRipple formControlName="tipo_doc_rep">
+                                            <mat-option *ngFor="let tipo_documento of tipo_documentos"
+                                                value={{tipo_documento.id_tipo_documento}}>
+                                                {{tipo_documento.tipo_doc}} </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
 
-                                <mat-form-field appearance="outline" class="container_box">
-                                    <mat-label>Tipo</mat-label>
-                                    <mat-select disableRipple formControlName="tipo_doc_rep">
-                                        <mat-option *ngFor="let tipo_documento of tipo_documentos"
-                                            value={{tipo_documento.id_tipo_documento}}>
-                                            {{tipo_documento.tipo_doc}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Cédula</mat-label>
-                                    <input matInput formControlName="cedula_representante" placeholder="123456789"
-                                        type="text">
-                                </mat-form-field>
-
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Cédula</mat-label>
+                                        <input matInput formControlName="cedula_representante" placeholder="123456789"
+                                            type="text">
+                                    </mat-form-field>
+                                </div>
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Teléfono Local</mat-label>
                                     <input matInput formControlName="telefono_local_repre" placeholder="123456789"
@@ -253,13 +253,15 @@
                                 </mat-form-field>
 
                                 <div class="btn_form_add_agent" *ngIf="(i === 0)">
-                                    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon"
-                                        (click)="add_agent()" *ngIf="(formats.length === 1 ||  formats.length === 0)">
+                                    <button mat-mini-fab color="primary"
+                                        aria-label="Example icon button with a menu icon" (click)="add_agent()"
+                                        *ngIf="(formats.length === 1 ||  formats.length === 0)">
                                         <i class="fas fa-user-plus"></i>
                                     </button>
-    
-                                    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon"
-                                        (click)="deleteAgent()" *ngIf="(formats.length === 2)">
+
+                                    <button mat-mini-fab color="primary"
+                                        aria-label="Example icon button with a menu icon" (click)="deleteAgent()"
+                                        *ngIf="(formats.length === 2)">
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>
