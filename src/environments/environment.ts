@@ -7,15 +7,10 @@ export const environment = {
   apiHost: 'http://66.97.35.26',
   puerto_sesion: 1718,
   puerto_bancario: 1314,
-
   J_KEY: "consultelkeyj567",
-
   J_VEC: "consultelivj4567",
-
   S_KEY: "consultelkeys567",
-
   S_VEC: "consultelivs4567",
-
 
 }
 

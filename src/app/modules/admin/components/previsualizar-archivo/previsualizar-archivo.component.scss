@@ -4,6 +4,9 @@ table{
 
 th{
     font-weight: 600;
-    text-transform: uppercase;
     color: black;
 }
+
+tr.mat-footer-row {
+    font-weight: bold;
+  }

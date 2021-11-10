@@ -1,5 +1,6 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, Input, OnInit } from '@angular/core';
+import { CuotaInterface } from 'src/app/models/cuota';
 import * as XLSX from "xlsx";
 
 
@@ -10,8 +11,11 @@ import * as XLSX from "xlsx";
 })
 export class PrevArchivoComponent implements OnInit {
 
-  data: any[];
+  data: CuotaInterface[];
   displayedColumns: any;
+  progress: number = 0;
+
+  columnasBDV = ["cedulaRif", "numeroCuenta1", "montoTotal", "montoCobrado", "msensajesDetail"]
 
   constructor() { }
 
@@ -31,14 +35,17 @@ export class PrevArchivoComponent implements OnInit {
       /* create workbook */
       const binarystr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
-
       const wsname: string = wb.SheetNames[1];
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-      this.displayedColumns = ["cedulaRif", "numeroCuenta1","montoTotal", "montoCobrado", "msensajesDetail"]
-      console.log(this.displayedColumns)
-      this.data = XLSX.utils.sheet_to_json(ws);
-      console.log(this.data)
-
+      this.displayedColumns = ["cedulaRif", "numeroCuenta1", "montoTotal", "montoCobrado", "msensajesDetail"]
+      const json = XLSX.utils.sheet_to_json(ws);
+      const nData: CuotaInterface[] = []
+      json.forEach(cuota => {
+        const nCuota: CuotaInterface = { doc: cuota[this.columnasBDV[0]] , cuenta: cuota[this.columnasBDV[1]] , monto: parseFloat(cuota[this.columnasBDV[2]]), cobrado: parseFloat(cuota[this.columnasBDV[3]]), mensaje: cuota[this.columnasBDV[4]], }
+        nData.push(nCuota)
+      });
+      this.data = nData
+      this.progress = 100
     };
   }
 
