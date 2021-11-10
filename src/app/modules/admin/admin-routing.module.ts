@@ -33,7 +33,6 @@ import { CobrosGuard } from './guards/cobros.guard'
 import { HistorialGuard } from './guards/historial.guard'
 import { SuperGuard } from './guards/super.guard'
 import { DashboardGuard } from './guards/dashboard.guard'
-import { DetalleSalidasGuard } from './guards/detalle-salidas.guard'
 import { AdminChangePwdComponent } from './pages/admin-change-pwd/admin-change-pwd.component';
 import { VentaManualComponent } from './pages/venta-manual/venta-manual.component';
 import { VentaManualGuard } from './guards/venta-manual.guard'
@@ -42,6 +41,7 @@ import { VentasComponent } from './pages/ventas/ventas.component';
 import { AddVentaComponent } from './pages/add-venta/add-venta.component';
 import { EditAdminComponent } from './pages/edit-admin/edit-admin.component';
 import { EditClientComponent } from './pages/edit-client/edit-client.component';
+import { PrevArchivoComponent } from './pages/prev-archivo/prev-archivo.component';
 
 const routes: Routes = [
   {
@@ -77,6 +77,7 @@ const routes: Routes = [
       { path: 'edit-admin', component: EditAdminComponent, outlet: 'adr'},
       { path: 'edit-client', component: EditClientComponent, outlet: 'adr'},
       { path: 'ventas', component: VentasComponent, outlet: 'adr'},
+      { path: 'previsualizar-archivo', component: PrevArchivoComponent, outlet: 'adr'},
 
     ],
   }

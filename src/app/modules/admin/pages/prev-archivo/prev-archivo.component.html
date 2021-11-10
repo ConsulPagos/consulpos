@@ -1,15 +1,20 @@
 <section id="previsualizarArchivo">
     <div class="container-fluid">
         <div class="topButtons">
-           <div class="d-flex">
+            <div class="d-flex">
                 <a class="nav-btn" #tooltip="matTooltip" matTooltip="Volver a conciliar"
                     [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]">
                     <li class="fa fa-arrow-left"></li>
                 </a>
-            </div> 
+            </div>
         </div>
         <div class="content">
-                <p>previsualizarArchivo</p>
+            <input type="file" style="display: inline-block;" (change)="onFileChange($event)" placeholder="Upload file"
+                accept=".xls">
+
+           <div *ngIf="data">
+            <app-previsualizar-archivo [data]="data" [displayedColumns]="displayedColumns"></app-previsualizar-archivo>
+           </div>
         </div>
     </div>
 </section>
