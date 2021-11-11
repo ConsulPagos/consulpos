@@ -21,9 +21,7 @@ export class CryptoService {
     this.keyJson = keyJson
   }
 
-  constructor() {
-
-  }
+  constructor() {}
 
    encryptString(text: string): string {
     if (this.keyString == null || this.vectorString == null) {
@@ -54,8 +52,6 @@ export class CryptoService {
     return AesEncryption.decrypt(this.keyJson, this.vectorJson, text)
   }
 
-  ////////////////////////////////////////////////////////////////////
-
   encryptStringFixed(text: string): string {
     return AesEncryption.encrypt(environment.S_KEY, environment.S_VEC, text)
   }
@@ -76,5 +72,6 @@ export class CryptoService {
   hash(value: string): string {
     return MD5(value).toString()
   } 
+
 
 }

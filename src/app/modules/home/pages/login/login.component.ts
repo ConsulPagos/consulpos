@@ -5,6 +5,7 @@ import { ErrorResponse } from 'src/app/models/auth_response';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { ConfirmPasswordValidator } from 'src/app/shared/validators/confirm-password.validator';
 import { UserInterface } from '../../../../models/user';
+import { SesionObject, SesionResponse } from '../../../../models/sesion_response';
 
 
 import { SesionService } from '../../../../shared/services/sesion.service'
@@ -67,8 +68,13 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('state', "1");
       console.log("login")
       this.sesion.doLogin(`${IMEI};${data}`).toPromise().then(res =>{
-        console.log(res)
-        console.log(this.crypto.decryptJsonFixed(res))
+        var d = JSON.parse(this.crypto.decryptStringFixed(res))
+        d["x"] ="x"
+        console.log(this.crypto.decryptStringFixed(res))
+        //console.log(d.keyJ)
+        var sesionResponse = new SesionObject().deserialize(d)
+        console.log(sesionResponse)
+
       });
 
     } else {
