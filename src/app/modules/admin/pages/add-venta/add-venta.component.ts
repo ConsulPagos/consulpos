@@ -9,6 +9,7 @@ import { ComunicacionInterface } from '../../../../models/tipo_comunicacion'
 import { OperadoraInterface } from '../../../../models/operadora'
 import { TipoCobroInterface } from '../../../../models/tipo_cobro'
 import { PlanInterface } from '../../../../models/plan'
+import { TipoventaInterface } from '../../../../models/tipo_venta'
 
 @Component({
   selector: 'app-add-venta',
@@ -33,9 +34,27 @@ export class AddVentaComponent implements OnInit {
     plan: new FormControl('', [Validators.required]),
   });
 
+  venta = new FormGroup({
+    tipo_venta: new FormControl('', [Validators.required]),
+  });
+
   model = new FormGroup({
 
   });
+
+  tipo_venta: string;
+  tipos_ventas: TipoventaInterface[] = [{
+    id_tipo_venta: 1,
+    tipo_venta: 'Al contado',
+  },
+  {
+    id_tipo_venta: 2,
+    tipo_venta: '50/50',
+  },
+  {
+    id_tipo_venta: 3,
+    tipo_venta: 'Fraccionado',
+  }]
 
   file = new FormGroup({
     id: new FormControl('', [Validators.required]),

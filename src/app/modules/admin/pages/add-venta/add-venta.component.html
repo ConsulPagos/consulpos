@@ -19,6 +19,28 @@
                 <ng-template matStepperIcon="edit">
                     <li class="fa fa-check"></li>
                 </ng-template>
+
+                <mat-step>
+                    <form [formGroup]="venta">
+                        <ng-template matStepLabel>Tipo de Venta</ng-template>
+                        <div>
+                            <h6>Seleccione el tipo de venta</h6>
+
+                            <mat-radio-group [(ngModel)]="tipo_venta" formControlName="tipo_venta">
+                                <mat-radio-button *ngFor="let tipo of tipos_ventas" [value]="tipo.id_tipo_venta"
+                                    class="container_box_space">
+                                    {{tipo.tipo_venta}}
+                                </mat-radio-button>
+                            </mat-radio-group>
+
+                        </div>
+                    </form>
+                    <div>
+                        <button class="stepBtn" mat-raised-button matStepperNext>Siguiente</button>
+                    </div>
+                </mat-step>
+
+
                 <!-- Parte 1 del Stepper -->
                 <mat-step>
                     <!-- [stepControl]="buy" -->
@@ -46,17 +68,15 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Operadora Tlf. Linea 1</mat-label>
                                 <mat-select disableRipple formControlName="operadora">
-                                    <mat-option *ngFor="let operadora of operadoras"
-                                        value={{operadora.id_operadora}}>
+                                    <mat-option *ngFor="let operadora of operadoras" value={{operadora.id_operadora}}>
                                         {{operadora.operadora}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Operadora Tlf. Linea 2</mat-label>
-                                <mat-select disableRipple >
-                                    <mat-option *ngFor="let operadora of operadoras"
-                                        value={{operadora.id_operadora}}>
+                                <mat-select disableRipple>
+                                    <mat-option *ngFor="let operadora of operadoras" value={{operadora.id_operadora}}>
                                         {{operadora.operadora}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -75,8 +95,7 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Banco</mat-label>
                                 <mat-select disableRipple formControlName="banco">
-                                    <mat-option *ngFor="let banco of bancos"
-                                        value={{banco.id_banco}}>
+                                    <mat-option *ngFor="let banco of bancos" value={{banco.id_banco}}>
                                         {{banco.banco}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -96,8 +115,7 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Plan</mat-label>
                                 <mat-select disableRipple formControlName="plan">
-                                    <mat-option *ngFor="let plan of planes"
-                                        value={{plan.id_plan}}>
+                                    <mat-option *ngFor="let plan of planes" value={{plan.id_plan}}>
                                         {{plan.nombre}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -105,8 +123,7 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Tipo de Cobro</mat-label>
                                 <mat-select disableRipple formControlName="tipocobro">
-                                    <mat-option *ngFor="let tipocobro of tipocobros"
-                                        value={{tipocobro.id_tipo_cobro}}>
+                                    <mat-option *ngFor="let tipocobro of tipocobros" value={{tipocobro.id_tipo_cobro}}>
                                         {{tipocobro.tipo_cobro}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -120,6 +137,7 @@
                     </form>
                     <!-- Bootn de siguiente strepper -->
                     <div>
+                        <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
                         <button class="stepBtn" mat-raised-button matStepperNext>Siguiente</button>
                     </div>
                 </mat-step>
