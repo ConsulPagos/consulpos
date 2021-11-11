@@ -14,14 +14,6 @@ export class CryptoService {
   private keyJson: string = null
   private vectorJson: string = null
 
-
-  private keyStringFixed: string = null
-  private vectorStringFixed: string = null
-
-  private keyJsonFixed: string = null
-  private vectorJsonFixed: string = null
-
-
   setKeys(keyString: string, vectorJson: string, keyJson: string, vectorString: string) {
     this.keyString = keyString
     this.vectorString = vectorString

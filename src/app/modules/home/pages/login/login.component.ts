@@ -9,6 +9,7 @@ import { UserInterface } from '../../../../models/user';
 
 import { SesionService } from '../../../../shared/services/sesion.service'
 import { CryptoService } from '../../../../shared/services/crypto.service'
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -51,13 +52,13 @@ export class LoginComponent implements OnInit {
     this.user.long = this.crypto.encryptJsonFixed('0')
     this.user.sist_op = this.crypto.encryptJsonFixed('0')
     this.user.modelo_disp = this.crypto.encryptJsonFixed('0')
-    
+
     const data = this.crypto.encryptStringFixed(JSON.stringify(this.user))
     const IMEI = '13256848646454643'
 
     if (this.authForm.valid) {
       this.loading = true;
-      this.route.navigateByUrl('/admin/app/(adr:dashboard)');
+      //this.route.navigateByUrl('/admin/app/(adr:dashboard)');
       localStorage.setItem('user_id', "1");
       localStorage.setItem('access_token', "");
       localStorage.setItem('refresh_token', "");
@@ -65,11 +66,11 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('access_level', "99");
       localStorage.setItem('state', "1");
       console.log("login")
-      this.sesion.doLogin(`${IMEI};${data}`).subscribe(res => {
-        console.log("res")
+      this.sesion.doLogin(`${IMEI};${data}`).toPromise().then(res =>{
         console.log(res)
-        this.loading = false
-      })
+        console.log(this.crypto.decryptJsonFixed(res))
+      });
+
     } else {
       if (this.authForm.get('email').errors) {
         if (this.authForm.get('email').errors.required) {
