@@ -18,12 +18,14 @@ export class SesionObject {
     deserialize(value: SesionResponse): SesionResponse {
         try {
             value.M = this.crypto.decryptJsonFixed(value.M)
-            //value.keyS = this.crypto.decryptJsonFixed(value.keyS)
+            value.keyS = this.crypto.decryptJsonFixed(value.keyS)
             value.ivS = this.crypto.decryptJsonFixed(value.ivS)
             value.keyJ = this.crypto.decryptJsonFixed(value.keyJ)
             value.ivJ = this.crypto.decryptJsonFixed(value.ivJ)
-            value.scod = this.crypto.decryptJsonFixed(value.scod)
-            
+            if(value.M == "0"){
+                value.scod = this.crypto.decryptJsonFixed(value.scod)
+            }
+        
         } catch (error) {
             console.log(error)
         }

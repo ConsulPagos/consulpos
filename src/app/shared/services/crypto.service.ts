@@ -58,7 +58,7 @@ export class CryptoService {
 
 
   decryptStringFixed(text: string): string {
-    return AesEncryption.decrypt(environment.S_KEY, environment.J_VEC, text)
+    return AesEncryption.decrypt(environment.S_KEY, environment.S_VEC, text)
   }
 
   encryptJsonFixed(text: string): string {
