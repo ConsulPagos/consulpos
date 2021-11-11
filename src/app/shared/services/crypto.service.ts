@@ -22,17 +22,11 @@ export class CryptoService {
   private vectorJsonFixed: string = null
 
 
-  setKeys(keyString: string, vectorJson: string, keyJson: string, vectorString: string, keyStringFixed: string, vectorJsonFixed: string, keyJsonFixed: string, vectorStringFixed: string) {
-    this.keyStringFixed = keyString
-    this.vectorStringFixed = vectorString
-    this.vectorJsonFixed = vectorJson
-    this.keyJsonFixed = keyJson
-
+  setKeys(keyString: string, vectorJson: string, keyJson: string, vectorString: string) {
     this.keyString = keyString
     this.vectorString = vectorString
     this.vectorJson = vectorJson
     this.keyJson = keyJson
-
   }
 
   constructor() {

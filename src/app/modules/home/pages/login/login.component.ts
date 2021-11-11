@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    //eliminar esto
     this.error = {};
     this.user.correo = this.crypto.encryptJsonFixed(this.authForm.get('email').value)
     this.user.psw = this.crypto.encryptJsonFixed(this.crypto.hash(this.authForm.get('password').value))
@@ -55,10 +54,6 @@ export class LoginComponent implements OnInit {
     
     const data = this.crypto.encryptStringFixed(JSON.stringify(this.user))
     const IMEI = '13256848646454643'
-
-    console.log(`${IMEI}:${data}`)
-    console.log(JSON.stringify(this.user))
-    console.log(this.authForm.value)
 
     if (this.authForm.valid) {
       this.loading = true;
