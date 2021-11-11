@@ -44,10 +44,9 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    //eliminar esto
     this.error = {};
     this.user.correo = this.crypto.encryptJsonFixed(this.authForm.get('email').value)
-    this.user.pws = this.crypto.encryptJsonFixed(this.crypto.hash(this.authForm.get('password').value))
+    this.user.psw = this.crypto.encryptJsonFixed(this.crypto.hash(this.authForm.get('password').value))
     this.user.lat = this.crypto.encryptJsonFixed('0')
     this.user.long = this.crypto.encryptJsonFixed('0')
     this.user.sist_op = this.crypto.encryptJsonFixed('0')
@@ -55,10 +54,6 @@ export class LoginComponent implements OnInit {
     
     const data = this.crypto.encryptStringFixed(JSON.stringify(this.user))
     const IMEI = '13256848646454643'
-
-    console.log(`${IMEI}:${data}`)
-    console.log(JSON.stringify(this.user))
-    console.log(this.authForm.value)
 
     if (this.authForm.valid) {
       this.loading = true;
@@ -70,11 +65,11 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('access_level', "99");
       localStorage.setItem('state', "1");
       console.log("login")
-      // this.sesion.doLogin(data).subscribe(res => {
-      //   console.log("res")
-      //   console.log(res)
-      //   this.loading = false
-      // })
+      this.sesion.doLogin(`${IMEI};${data}`).subscribe(res => {
+        console.log("res")
+        console.log(res)
+        this.loading = false
+      })
     } else {
       if (this.authForm.get('email').errors) {
         if (this.authForm.get('email').errors.required) {

@@ -9,12 +9,17 @@
             </div>
         </div>
         <div class="content">
-            <input type="file" style="display: inline-block;" (change)="onFileChange($event)" placeholder="Upload file"
-                accept=".xls">
+            <div class="m-3">
 
-           <div *ngIf="data">
-            <app-previsualizar-archivo [data]="data" [displayedColumns]="displayedColumns" [progress]="progress"></app-previsualizar-archivo>
-           </div>
+                <input type="file" title="Seleccionar archivo" style="display: inline-block;" (change)="onFileChange($event)"
+                    placeholder="Upload file" accept=".xls">
+
+            </div>
+
+            <div *ngIf="data">
+                <app-previsualizar-archivo [data]="data" [displayedColumns]="displayedColumns" [progress]="progress">
+                </app-previsualizar-archivo>
+            </div>
         </div>
     </div>
 </section>

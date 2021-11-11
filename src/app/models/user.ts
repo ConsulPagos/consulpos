@@ -1,6 +1,6 @@
 export interface UserInterface{
     correo ?:string;
-    pws ?:string;
+    psw ?:string;
     lat ?:string;
     long ?:string;
     sist_op ?:string;
