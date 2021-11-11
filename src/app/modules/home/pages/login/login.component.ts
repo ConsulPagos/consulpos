@@ -54,11 +54,11 @@ export class LoginComponent implements OnInit {
     this.user.modelo_disp = this.crypto.encryptJsonFixed('0')
 
     const data = this.crypto.encryptStringFixed(JSON.stringify(this.user))
-    const IMEI = '13256848646454643'
+    const IMEI = '13256848646454643';
 
     if (this.authForm.valid) {
       this.loading = true;
-      //this.route.navigateByUrl('/admin/app/(adr:dashboard)');
+      // this.route.navigateByUrl('/admin/app/(adr:dashboard)');
       localStorage.setItem('user_id', "1");
       localStorage.setItem('access_token', "");
       localStorage.setItem('refresh_token', "");
@@ -82,20 +82,22 @@ export class LoginComponent implements OnInit {
         }
       } else if (this.authForm.get('password').errors) {
         if (this.authForm.get('password').errors.required) {
-          this.error.msg = 'Contraseña es requerida'
-          this.error.field = 'password'
+          this.error.msg = 'Contraseña es requerida';
+          this.error.field = 'password';
         } else if (this.authForm.get('password').errors.minlength) {
-          this.error.msg = 'La contraseña debe tener una longitud mínima de 5 caracteres'
-          this.error.field = 'password'
+          this.error.msg = 'La contraseña debe tener una longitud mínima de 5 caracteres';
+          this.error.field = 'password';
         }
       }
     }
   }
+  // tslint:disable-next-line:typedef
   calculateClasses(field) {
+    // tslint:disable-next-line:triple-equals
     if (field == this.error.field) {
       return {
         'input-error': true
-      }
+      };
     }
     return {
       'input-error': false
