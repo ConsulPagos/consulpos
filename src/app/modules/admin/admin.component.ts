@@ -23,32 +23,27 @@ export class AdminComponent implements OnInit {
   constructor(private sesion: SesionService, private crypto: CryptoService) { }
 
   ngOnInit(): void {
+    this.verify()
   }
 
-  loggout(){
+  loggout() {
     localStorage.clear()
   }
 
-  login() {
-    this.error = {};
+  verify() {
 
-    
-    const data = this.crypto.encryptString(JSON.stringify({correo:this.crypto.encryptJson(this.authForm.get('email').value)}))
+    const data = this.crypto.encryptString(JSON.stringify({ correo: this.crypto.encryptJson("admin@gmail.com") }))
     const IMEI = '13256848646454643'
 
-    if (this.authForm.valid) {
-      this.loading = true;
+    this.loading = true;
 
-      console.log("verify")
+    console.log("verify")
 
-      
-      this.sesion.doVerify(`${IMEI};${data}`).subscribe(res => {
-        console.log("res")
-        console.log(res)
-        this.loading = false
-      })
-    
-    }
+    this.sesion.doVerify(`${IMEI};${data}`).subscribe(res => {
+      console.log(this.crypto.decryptString(res))
+      this.loading = false
+    })
+
   }
 
 

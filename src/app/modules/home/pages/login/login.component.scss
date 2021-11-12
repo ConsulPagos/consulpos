@@ -13,9 +13,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 500px;
+  width: 480px;
   border-radius: 10%;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  backdrop-filter: blur(20px);
+  --webkit-backdrop-filter: blur(20px);
 }
 
 
@@ -62,6 +64,17 @@ button{
     animation-name: bounce;
     animation-duration: .5s;
     animation-delay: 0.25s;
+  }
+
+  .brand{
+    position: fixed;
+    bottom: 20px;
+    left: auto;
+    right: auto;
+  }
+
+  .brand img{
+    height:30px;
   }
 
  

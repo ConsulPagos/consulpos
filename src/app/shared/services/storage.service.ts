@@ -1,13 +1,14 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Subject } from "rxjs";
 import { share } from 'rxjs/operators';
+import { CryptoService } from './crypto.service';
 
 @Injectable()
 export class StorageService implements OnDestroy {
     private onSubject = new Subject<{ key: string, value: any }>();
     public changes = this.onSubject.asObservable().pipe(share());
 
-    constructor() {
+    constructor(private crypto: CryptoService) {
         this.start();
     }
 
@@ -27,15 +28,36 @@ export class StorageService implements OnDestroy {
     }
 
     public store(key: string, data: any): void {
-        localStorage.setItem(key, JSON.stringify(data));
+        localStorage.setItem(key, this.crypto.encryptStringStorage(JSON.stringify(data)));
         // the local application doesn't seem to catch changes to localStorage...
-        this.onSubject.next({key: key, value: data})
+        this.onSubject.next({ key: key, value: data })
+    }
+
+    public storeJson(key: string, data: {}): void {
+        for (var clave in data) {
+            data[clave] = this.crypto.encryptJsonStorage(data[clave])
+        }
+        localStorage.setItem(key, this.crypto.encryptStringStorage(JSON.stringify(data)));
+        // the local application doesn't seem to catch changes to localStorage...
+        this.onSubject.next({ key: key, value: data })
+    }
+
+    public get(key: string): any {
+        return JSON.parse(this.crypto.decryptStringStorage(localStorage.getItem(key)))
+    }
+
+    public getJson(key: string): any {
+        var data = JSON.parse(this.crypto.decryptStringStorage(localStorage.getItem(key)))
+        for (var clave in data) {
+            data[clave] = this.crypto.decryptJsonStorage(data[clave])
+        }
+        return data
     }
 
     public clear(key) {
         localStorage.removeItem(key);
         // the local application doesn't seem to catch changes to localStorage...
-        this.onSubject.next({key: key, value: null});
+        this.onSubject.next({ key: key, value: null });
     }
 
 
@@ -51,7 +73,7 @@ export class StorageService implements OnDestroy {
             } catch (e) {
                 v = event.newValue;
             }
-            this.onSubject.next({key: event.key, value: v});
+            this.onSubject.next({ key: event.key, value: v });
         }
     }
 

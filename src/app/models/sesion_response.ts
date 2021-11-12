@@ -8,7 +8,6 @@ export interface SesionResponse {
     keyJ?: string;
     ivJ?: string;
     M?: string;
-    x?: string;
 }
 
 export class SesionObject {
@@ -22,7 +21,7 @@ export class SesionObject {
             value.ivS = this.crypto.decryptJsonFixed(value.ivS)
             value.keyJ = this.crypto.decryptJsonFixed(value.keyJ)
             value.ivJ = this.crypto.decryptJsonFixed(value.ivJ)
-            if(value.M == "0"){
+            if(value.R == "0"){
                 value.scod = this.crypto.decryptJsonFixed(value.scod)
             }
         
