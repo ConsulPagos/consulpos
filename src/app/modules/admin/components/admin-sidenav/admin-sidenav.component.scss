@@ -4,19 +4,7 @@
     border: none;
 }
 
-a{
-    width: 120px;
-    font-size: 10px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #acacac;
-    text-decoration: none;
-    flex-direction: column;
-}
-
-a span{
+.menu_side span{
     color: black;
     font-weight: 500;
     font-size: 8px;
@@ -35,7 +23,6 @@ a span{
 }
 
 .fa {
-    //background-color: rgb(233, 233, 233);
     height: 50px;
     width: 50px;
     display: flex;
@@ -47,8 +34,7 @@ a span{
     margin-top: 7px;
     margin-bottom: 7px;
 }
-a:hover li{
-    background-color: #eeeeee;
+.menu_side:hover li{
     color: black;
 }
 
@@ -57,4 +43,40 @@ a:hover li{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.menu_side{
+    width: 120px;
+    font-size: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #acacac;
+    text-decoration: none;
+    flex-direction: column;
+    border-radius: 30%;
+}
+
+.sub_side{
+    width: 100%;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+    text-decoration: none;
+    flex-direction: column;
+}
+
+.icon_side{
+    width: 100%;
+}
+
+.text_side{
+    color: black;
+    font-weight: 500;
+    font-size: 8px;
 }

@@ -36,6 +36,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { BottomFormComponent } from '../../components/bottom-form/bottom-form.component';
 import { MatOptionModule } from '@angular/material/core';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatRadioModule,
     MatMenuModule,
     MatSidenavModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatIconModule,
   ],
   exports: [
     TitleComponent,
@@ -118,7 +120,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatMenuModule,
     MatSidenavModule,
     BottomFormComponent,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatIconModule,
   ]
 })
 export class SharedModule { }
