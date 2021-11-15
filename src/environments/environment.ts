@@ -11,7 +11,8 @@ export const environment = {
   J_VEC: "consultelivj4567",
   S_KEY: "consultelkeys567consultelkeys567",
   S_VEC: "consultelivs4567",
-
+  ST_KEY: "NlzvzhuZCcxAwQpbtBjR6JsIo2YJe52Y",
+  ST_VEC: "3KhhLvac7GAvrKoB",
 }
 
 

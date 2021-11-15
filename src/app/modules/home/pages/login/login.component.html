@@ -1,9 +1,10 @@
 <section id="login" class="d-flex justify-content-center w-100">
-    <div class="d-flex justify-content-center align-self-center w-100">
+
+    <div class="d-flex justify-content-center align-items-center flex-column w-100 ">
+
         <div class="container0 p-4">
-            <app-title [title]="'INGRESAR'"></app-title>
-            <br/><br/>
-            <form [formGroup]="authForm">
+            <app-title [title]="'Inicia Sesión'"></app-title>
+            <form [formGroup]="authForm" class="mt-4">
                 <div class="input-container">
                     <input formControlName="email" type="text" class="form-control" id="email"
                         placeholder="Correo electronico" name="email">
@@ -12,17 +13,21 @@
                     <input formControlName="password" type="password" class="form-control" placeholder="Contraseña"
                         name="password">
                 </div>
-                <div class="error-message small">
+                <div class="error-message small d-flex justify-content-center">
                     {{error.msg}}
                 </div>
                 <div class="input-container">
                     <button mat-button class="btn-confirm" id="btn-confirm" type="button" (click)="login()">
                         <div *ngIf="!loading; else loadingTemplate">
-                            INGRESAR
+                            Ingresar
                         </div>
                     </button>
                 </div>
             </form>
+        </div>
+
+        <div class="brand">
+            <img src="../../../../../assets/images/logo.png" alt="Consulpagos">
         </div>
     </div>
 

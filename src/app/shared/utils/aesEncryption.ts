@@ -32,23 +32,9 @@ class AesEncryption {
   decrypt(secretKey: string, initVector: string, value: string): any {
     var key = CryptoJS.enc.Utf8.parse(secretKey);
     var iv = CryptoJS.enc.Utf8.parse(initVector);
-
-    // var ciphertext = CryptoJS.enc.Base64.parse(JSON.stringify(value));
-    // var encryptedCP = CryptoJS.lib.CipherParams.create({
-    //   ciphertext: ciphertext,
-    //   formatter: CryptoJS.format.OpenSSL
-    // });
-
-    // var decrypted = AES.decrypt(JSON.stringify(value), key, {
-    //   iv: iv,
-    //   mode: CryptoJS.mode.CBC,
-    //   padding: CryptoJS.pad.Pkcs7,
-    // });
-
-    var vaina = CryptoJS.enc.Base64.parse(value).toString(CryptoJS.enc.Utf8)
-
-
-    return JSON.parse( CryptoJS.AES.decrypt(vaina,secretKey, {iv:iv}).toString(CryptoJS.enc.Utf8))
+    var decrypted = CryptoJS.AES.decrypt(value, key, {
+      iv: iv
+    });
 
   }
 }

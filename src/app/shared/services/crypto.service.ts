@@ -10,20 +10,19 @@ export class CryptoService {
 
   private keyString: string = null
   private vectorString: string = null
-
   private keyJson: string = null
   private vectorJson: string = null
 
   setKeys(keyString: string, vectorJson: string, keyJson: string, vectorString: string) {
     this.keyString = keyString
+    this.keyJson = keyJson
     this.vectorString = vectorString
     this.vectorJson = vectorJson
-    this.keyJson = keyJson
+    console.log("keyS: " + this.keyString)
+    console.log("keyj: " +this.keyJson)
   }
 
-  constructor() {
-
-  }
+  constructor() {}
 
    encryptString(text: string): string {
     if (this.keyString == null || this.vectorString == null) {
@@ -54,15 +53,13 @@ export class CryptoService {
     return AesEncryption.decrypt(this.keyJson, this.vectorJson, text)
   }
 
-  ////////////////////////////////////////////////////////////////////
-
   encryptStringFixed(text: string): string {
     return AesEncryption.encrypt(environment.S_KEY, environment.S_VEC, text)
   }
 
 
   decryptStringFixed(text: string): string {
-    return AesEncryption.decrypt(environment.S_KEY, environment.J_VEC, text)
+    return AesEncryption.decrypt(environment.S_KEY, environment.S_VEC, text)
   }
 
   encryptJsonFixed(text: string): string {
@@ -76,5 +73,24 @@ export class CryptoService {
   hash(value: string): string {
     return MD5(value).toString()
   } 
+
+  encryptStringStorage(text: string): string {
+    return AesEncryption.encrypt(environment.ST_KEY, environment.ST_VEC, text)
+  }
+
+
+  decryptStringStorage(text: string): string {
+    return AesEncryption.decrypt(environment.ST_KEY, environment.ST_VEC, text)
+  }
+
+  encryptJsonStorage(text: string): string {
+    return AesEncryption.encrypt(environment.ST_KEY, environment.ST_VEC, text)
+  }
+
+
+  decryptJsonStorage(text: string): string {
+    return AesEncryption.decrypt(environment.ST_KEY, environment.ST_VEC, text)
+  }
+
 
 }
