@@ -4,6 +4,8 @@ import { ErrorResponse } from 'src/app/models/auth_response';
 import { UserInterface } from 'src/app/models/user';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
+import { constant } from 'src/app/shared/utils/constant';
 
 
 @Component({
@@ -20,7 +22,7 @@ export class AdminComponent implements OnInit {
   loading: Boolean = false;
   submitted: boolean = false;
 
-  constructor(private sesion: SesionService, private crypto: CryptoService) { }
+  constructor(private sesion: SesionService, private crypto: CryptoService, private storage: StorageService) { }
 
   ngOnInit(): void {
     this.verify()
@@ -32,7 +34,7 @@ export class AdminComponent implements OnInit {
 
   verify() {
 
-    const data = this.crypto.encryptString(JSON.stringify({ correo: this.crypto.encryptJson("admin@gmail.com") }))
+    const data = this.crypto.encryptString(JSON.stringify({ u_id: this.crypto.encryptJson("1"), correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email), scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod) }))
     const IMEI = '13256848646454643'
 
     this.loading = true;
@@ -40,7 +42,7 @@ export class AdminComponent implements OnInit {
     console.log("verify")
 
     this.sesion.doVerify(`${IMEI};${data}`).subscribe(res => {
-      console.log(res)
+      console.log(this.crypto.decryptString(res))
       this.loading = false
     })
 
