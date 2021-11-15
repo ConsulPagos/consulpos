@@ -37,7 +37,9 @@ class AesEncryption {
       iv: iv
     });
 
+    return decrypted.toString(CryptoJS.enc.Utf8);
   }
+
 }
 
 
