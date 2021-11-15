@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
       this.loading = true;
 
       this.sesion.doLogin(`${IMEI};${data}`).toPromise().then(res => {
-
+        console.log(this.crypto.decryptStringFixed(res))
         var sesionResponse = new SesionObject().deserialize(JSON.parse(this.crypto.decryptStringFixed(res)))
         this.loading = false
 
