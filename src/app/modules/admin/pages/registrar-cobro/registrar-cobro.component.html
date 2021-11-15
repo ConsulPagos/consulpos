@@ -17,43 +17,44 @@
                                 <div class="box-title d-flex justify-content-center">
                                     <h4 class="text-uppercase">Generar Archivo</h4>
                                 </div>
-                                <!-- <div class="d-flex justify-content-center text-uppercase">
-                                    Pedido N° {{this.id}}
-                                </div> -->
-                            </div>
-                        
-                            <div class="col-12 mt-2">
-                                <label for="metodo">
-                                    Seleccionar Plantilla
-                                </label>
-                                <select formControlName="metodo" id="method" class="form-control shadow-none">
-                                    <option selected class="text-uppercase" value="">Seleccionar plantilla</option>
-                                    <option selected class="text-uppercase" value="">100% Banco</option>
-                                    <option selected class="text-uppercase" value="">Bicentenario</option>
-                                </select>
-                            </div>
-                            <div class="col-12 mt-2">
-                                <label for="cash">
-                                    Cantidad de cuotas
-                                </label>
-                                <input formControlName="cash" placeholder="Ingresa la cantidad de cuotas" class="form-control" type="number" min="1" name="cash" id="cash">
                             </div>
 
-                            
-                            <div class="col-12 mt-2">
-                                <label for="metodo">
-                                    Mes a cobrar
-                                </label>
-                                <select formControlName="metodo" id="method" class="form-control shadow-none">
-                                    <option selected class="text-uppercase" value="">Seleccionar mes</option>
-                                    <option selected class="text-uppercase" value="">ENERO</option>
-                                    <option selected class="text-uppercase" value="">FEBRERO</option>
-                                </select>
+                            <div class="w-100 pl-4 pr-4 pt-4">
+                                <mat-form-field appearance="outline" class="container_box w-100">
+                                    <mat-label>Seleccionar Banco</mat-label>
+                                    <mat-select disableRipple formControlName="banco">
+                                        <mat-option *ngFor="let banco of bancos" value={{banco.id_banco}}>
+                                            {{banco.banco}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
                             </div>
+
+                            <div class="w-100 pl-4 pr-4 pt-4">
+                                <mat-form-field appearance="outline" class="container_box w-100">
+                                    <mat-label>Mes</mat-label>
+                                    <mat-select disableRipple formControlName="mes">
+                                        <mat-option *ngFor="let mes of meses" value={{mes.mes}}>
+                                            {{mes.mes}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <mat-form-field class="w-100 pl-4 pr-4 pt-4" appearance="outline">
+                                <mat-label>Cantidad de cuotas</mat-label>
+                                <input matInput type="number" [(ngModel)]="value" formControlName="cash"
+                                    placeholder="Ingresa la cantidad de cuotas">
+                                <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </mat-form-field>
+
 
                             <div class="col-12 mt-3">
                                 <div class="d-flex w-100">
-                                    <button *ngIf="!loading;else loadingTmp" (click)="submit()" [disabled]="form.invalid" mat-button class="p-1 w-100 btn btn-success bg-success text-white text-uppercase h5">GENERAR ARCHIVO</button>
+                                    <button *ngIf="!loading;else loadingTmp" (click)="submit()"
+                                        [disabled]="form.invalid" mat-button
+                                        class="p-1 w-100 btn btn-success bg-success text-white text-uppercase h5">GENERAR
+                                        ARCHIVO</button>
                                 </div>
                             </div>
                         </div>

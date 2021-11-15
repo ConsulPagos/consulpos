@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BancoInterface } from 'src/app/models/banco';
 import { PaymentInterface } from 'src/app/models/payment';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AdminService } from '../../services/admin.service';
+import { MesInterface } from '../../../../models/mes'
+ 
+
 @Component({
   selector: 'app-registrar-cobro',
   templateUrl: './registrar-cobro.component.html',
@@ -22,12 +26,36 @@ export class RegistrarCobroComponent implements OnInit {
   error_methods = false;
 
   form = new FormGroup({
-    factura: new FormControl('', [Validators.required]),
-    cash: new FormControl('', [Validators.min(1)]),
-    metodo: new FormControl('', [Validators.required]),
+    banco: new FormControl('', [Validators.required]),
+    mes: new FormControl('', [Validators.required]),
   });
 
   constructor(private admin: AdminService, private api: ApiService, private auth: AuthService, private routes: ActivatedRoute, private router: Router) { }
+
+  value = 'Clear me';
+
+  bancos: BancoInterface[] = [{
+    id_banco: 1,
+    banco: 'BANCO DE VENEZUELA',
+    codigo: '0102',
+    id_plataforma: 1,
+  }]
+
+  meses: MesInterface[] = [{
+    id: 1,
+    mes:'Enero'
+  },
+  {
+    id: 2,
+    mes:'Febrero'
+  }]
+
+  procesos = [{
+    id: 1,
+    fecha: '10/11/2021 2:54 pm',
+    trace: '11558'
+  }]
+
 
   ngOnInit(): void {
     this.id = parseInt(this.routes.snapshot.paramMap.get('id_pedido'))
@@ -48,7 +76,6 @@ export class RegistrarCobroComponent implements OnInit {
   }
 
   submit() {
-
     this.payment.cash_recibido = this.form.get('cash').value
     this.payment.factura = this.form.get('factura').value
     this.payment.id_medio_pago = this.form.get('metodo').value
