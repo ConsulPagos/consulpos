@@ -13,13 +13,13 @@
                 <div class="bg-white rounded card p-4">
                     <form [formGroup]="form">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12 mb-4">
                                 <div class="box-title d-flex justify-content-center">
                                     <h4 class="text-uppercase">Generar Archivo</h4>
                                 </div>
                             </div>
 
-                            <div class="w-100 pl-4 pr-4 pt-4">
+                            <div class="w-100 pl-4 pr-4">
                                 <mat-form-field appearance="outline" class="container_box w-100">
                                     <mat-label>Seleccionar Banco</mat-label>
                                     <mat-select disableRipple formControlName="banco">
@@ -29,7 +29,7 @@
                                 </mat-form-field>
                             </div>
 
-                            <div class="w-100 pl-4 pr-4 pt-4">
+                            <div class="w-100 pl-4 pr-4">
                                 <mat-form-field appearance="outline" class="container_box w-100">
                                     <mat-label>Mes</mat-label>
                                     <mat-select disableRipple formControlName="mes">
@@ -39,7 +39,7 @@
                                 </mat-form-field>
                             </div>
 
-                            <mat-form-field class="w-100 pl-4 pr-4 pt-4" appearance="outline">
+                            <mat-form-field class="w-100 pl-4 pr-4" appearance="outline">
                                 <mat-label>Cantidad de cuotas</mat-label>
                                 <input matInput type="number" [(ngModel)]="value" formControlName="cash"
                                     placeholder="Ingresa la cantidad de cuotas">
@@ -49,7 +49,7 @@
                             </mat-form-field>
 
 
-                            <div class="col-12 mt-3">
+                            <div class="col-12 mt-2">
                                 <div class="d-flex w-100">
                                     <button *ngIf="!loading;else loadingTmp" (click)="submit()"
                                         [disabled]="form.invalid" mat-button

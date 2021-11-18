@@ -18,7 +18,7 @@ import { InventarioComponent } from './pages/inventario/inventario.component';
 import { LectorComponent } from './pages/lector/lector.component';
 import { NuevoAdminComponent } from './pages/nuevo-admin/nuevo-admin.component';
 import { PedidosComponent } from './pages/pedidos/pedidos.component';
-import { RegistrarCobroComponent } from './pages/registrar-cobro/registrar-cobro.component';
+import { GenerarArchivoComponent } from './pages/generar-archivo/generar-archivo.component';
 import { SalidaPedidosComponent } from './pages/salida-pedidos/salida-pedidos.component';
 import { SalidasComponent } from './pages/salidas/salidas.component';
 import { SkuComponent } from './pages/sku/sku.component'
@@ -66,7 +66,7 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent, outlet: 'adr',  canActivate:[DashboardGuard]},
       { path: 'cobros', component: CobrosComponent, outlet: 'adr', canActivate:[CobrosGuard]},
       { path: 'cobros/:id_afiliado', component: DetalleCobrosComponent, outlet: 'adr', canActivate:[CobrosGuard]},
-      { path: 'generar-archivo', component: RegistrarCobroComponent, outlet: 'adr', canActivate:[CobrosGuard]},
+      { path: 'generar-archivo', component: GenerarArchivoComponent, outlet: 'adr', canActivate:[CobrosGuard]},
       { path: 'historial-cobros', component: HistorialCobrosComponent, outlet: 'adr', canActivate:[CobrosGuard]},
       { path: 'historial-pedidos', component: HistorialPedidosComponent, outlet: 'adr', canActivate:[HistorialGuard]},
       { path: 'super-admin-panel', component: SuperAdminComponent, outlet: 'adr', canActivate:[SuperGuard]},

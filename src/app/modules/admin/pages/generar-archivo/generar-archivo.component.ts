@@ -10,11 +10,11 @@ import { MesInterface } from '../../../../models/mes'
  
 
 @Component({
-  selector: 'app-registrar-cobro',
-  templateUrl: './registrar-cobro.component.html',
-  styleUrls: ['./registrar-cobro.component.scss']
+  selector: 'app-generar-archivo',
+  templateUrl: './generar-archivo.component.html',
+  styleUrls: ['./generar-archivo.component.scss']
 })
-export class RegistrarCobroComponent implements OnInit {
+export class GenerarArchivoComponent implements OnInit {
 
   id;
   id_afiliado;
