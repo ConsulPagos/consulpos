@@ -37,7 +37,7 @@ import { TablaAfiliadosCrmComponent } from './components/tabla-afiliados-crm/tab
 import { AplicarDescuentoComponent } from './pages/aplicar-descuento/aplicar-descuento.component';
 import { AplicarCreditoComponent } from './pages/aplicar-credito/aplicar-credito.component';
 import { TablaAfiliadosCobrosComponent } from './components/tabla-afiliados-cobros/tabla-afiliados-cobros.component';
-import { RegistrarCobroComponent } from './pages/registrar-cobro/registrar-cobro.component';
+import { GenerarArchivoComponent } from './pages/generar-archivo/generar-archivo.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HistorialPedidosComponent } from './pages/historial-pedidos/historial-pedidos.component';
 import { SuperAdminComponent } from './pages/super-admin/super-admin.component';
@@ -64,7 +64,7 @@ import { PrevisualizarArchivoComponent } from './components/previsualizar-archiv
   declarations: [AdminComponent, 
     SkuComponent, 
     CobrosComponent, 
-    ConciliarArchivoComponent, InventarioComponent, ClientelaComponent, CrmComponent, PedidosComponent, LectorComponent, SalidaPedidosComponent, AdminNavbarComponent, AdminSidenavComponent, ClientelaAfiliadosComponent, AffiliateDetailComponent, EditProductComponent, EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, RegistrarCobroComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AddClientComponent, VentasComponent, AddVentaComponent, EditAdminComponent, AdminDetailComponent, EditClientComponent, AdminTitleComponent, PrevArchivoComponent, PrevisualizarArchivoComponent],
+    ConciliarArchivoComponent, InventarioComponent, ClientelaComponent, CrmComponent, PedidosComponent, LectorComponent, SalidaPedidosComponent, AdminNavbarComponent, AdminSidenavComponent, ClientelaAfiliadosComponent, AffiliateDetailComponent, EditProductComponent, EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, GenerarArchivoComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AddClientComponent, VentasComponent, AddVentaComponent, EditAdminComponent, AdminDetailComponent, EditClientComponent, AdminTitleComponent, PrevArchivoComponent, PrevisualizarArchivoComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RegistrarCobroComponent } from './registrar-cobro.component';
+import { GenerarArchivoComponent } from './generar-archivo.component';
 
 describe('RegistrarCobroComponent', () => {
-  let component: RegistrarCobroComponent;
-  let fixture: ComponentFixture<RegistrarCobroComponent>;
+  let component: GenerarArchivoComponent;
+  let fixture: ComponentFixture<GenerarArchivoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RegistrarCobroComponent ]
+      declarations: [ GenerarArchivoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RegistrarCobroComponent);
+    fixture = TestBed.createComponent(GenerarArchivoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
