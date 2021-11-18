@@ -1,4 +1,5 @@
 export interface EstadoInterface {
-    id_estado?: number;
-    estado?: string;
+    estado_id: number;
+    estado:    string;
+    pais_id:   string;
 }

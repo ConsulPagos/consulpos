@@ -1,5 +1,5 @@
 export interface MunicipioInterface {
-    id_municipio?: number;
-    municipio?: string;
-    id_estado?: number;
+    estado_id:    string;
+    municipio:    string;
+    municipio_id: number;
 }

@@ -1,4 +1,4 @@
 export interface ContribuyenteInterface {
-    id_contribuyente?: number;
-    contribuyente?: string;
+    contribuyente:    string;
+    contribuyente_id: number;
 }

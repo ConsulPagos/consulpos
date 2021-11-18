@@ -1,8 +1,7 @@
 export interface PlanInterface {
-    id_plan?: number;
-    nombre?: string;
-    monto?: number;
-    fecha_fin?: Date;
-    duracion?: number;
-    id_tipo_cobro?: number;
+    monto:      string;
+    t_cobro_id: string;
+    nombre:     string;
+    plan_id:    number;
+    moneda_id:  string;
 }

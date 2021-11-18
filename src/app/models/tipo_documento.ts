@@ -1,5 +1,5 @@
 export interface TipodocumentoInterface {
-    id_tipo_documento?: number;
-    tipo_doc?: string;
-    descripcion?: string;
+    t_doc:      string;
+    t_doc_id:   number;
+    t_doc_desc: string;
 }

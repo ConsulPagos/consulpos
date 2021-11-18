@@ -7,6 +7,8 @@ import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { constant } from 'src/app/shared/utils/constant';
 
+import { VerifyDecrypter, VerifyResponse } from '../../models/verify_response';
+
 
 @Component({
   selector: 'app-admin',
@@ -42,13 +44,10 @@ export class AdminComponent implements OnInit {
     console.log("verify")
 
     this.sesion.doVerify(`${IMEI};${data}`).subscribe(res => {
-      console.log(this.crypto.decryptString(res))
+      var verifyResponse = new VerifyDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(verifyResponse)
       this.loading = false
+      this.crypto.setKeys(verifyResponse.keyS, verifyResponse.ivJ, verifyResponse.keyJ, verifyResponse.ivS)
     })
-
   }
-
-
-
-
 }

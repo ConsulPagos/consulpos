@@ -1,5 +1,5 @@
 export interface ParroquiaInterface {
-    id_parroquia?: number;
-    parroquia?: string;
-    id_municipio?: number;
+    parroquia:    string;
+    municipio_id: string;
+    parroquia_id: number;
 }

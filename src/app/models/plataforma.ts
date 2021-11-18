@@ -1,5 +1,4 @@
 export interface PlataformaInterface {
-    id_plataforma?: number;
-    plataforma?: string;
-    descripcion?: string;
+    plat_id: number;
+    plat:    string;
 }

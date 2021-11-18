@@ -16,7 +16,7 @@ export class AdminNavbarComponent implements OnInit {
   identity = '';
   state = '';
 
-  constructor(private storage:StorageService,private sesion: SesionService, private crypto: CryptoService, private router: Router) {
+  constructor(private storage: StorageService, private sesion: SesionService, private crypto: CryptoService, private router: Router) {
     this.identity = this.storage.getJson(constant.USER).email;
   }
 
@@ -24,13 +24,14 @@ export class AdminNavbarComponent implements OnInit {
   }
 
   loggout() {
-    const data = this.crypto.encryptString(JSON.stringify({ u_id: this.crypto.encryptJson("1"), scod: this.sesion.getSCod() }))
-    const IMEI = '13256848646454643'
-    console.log("logout")
-    this.sesion.doLogout(`${IMEI};${data}`).toPromise().then(res => {
-      localStorage.clear()
-      this.router.navigateByUrl('')
-    });
+    localStorage.clear()
+    this.router.navigateByUrl('')
+    // const data = this.crypto.encryptString(JSON.stringify({ u_id: this.crypto.encryptJson("1"), scod: this.sesion.getSCod() }))
+    // const IMEI = '13256848646454643'
+    // console.log("logout")
+    // this.sesion.doLogout(`${IMEI};${data}`).toPromise().then(res => {
+    //   this.router.navigateByUrl('')
+    // });
   }
 }
 

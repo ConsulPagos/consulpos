@@ -1,4 +1,4 @@
 export interface TipoCobroInterface {
-    id_tipo_cobro?: number;
-    tipo_cobro?: string;
+    t_cobro_id: number;
+    t_cobro:    string;
 }

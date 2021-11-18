@@ -1,4 +1,4 @@
 export interface ContactoInterface {
-    id_medio_contacto?: number;
-    contacto?: string;
+    m_contacto:    string;
+    m_contacto_id: number;
 }

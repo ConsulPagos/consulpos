@@ -1,4 +1,8 @@
 export interface OperadoraInterface {
-    id_operadora?: number;
-    operadora?: string;
+    pais_id:      number;
+    telefonica:   string;
+    cod_pais:     string;
+    operadora_id: number;
+    operadora:    string;
+    pais:         string;
 }

@@ -1,6 +1,6 @@
 export interface BancoInterface {
-    id_banco?: number;
-    banco?: string;
-    codigo?: string;
-    id_plataforma?: number;
+    banco_id: number;
+    cod_banco: string;
+    nombre: string;
+    plat_id: string;
 }
