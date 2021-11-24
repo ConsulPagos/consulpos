@@ -9,13 +9,28 @@
             </div>
         </div>
         <div class="content">
-            <div>
-                <h6 class="mb-3">Archivo a conciliar</h6>
+            <div class="mb-2" *ngIf="!data">
+                <h3 class="mb-4">Archivo a conciliar</h3>
                 <input class="file-input" type="file" title="Seleccionar archivo" style="display: inline-block;"
                     (change)="onFileChange($event)" placeholder="Upload file" accept=".xls">
             </div>
 
+
             <div *ngIf="data">
+                <div>
+                    <h3>Resumen de archivo</h3>
+                    <div class="resumen-container">
+                        <div class="resumen-item">
+                            <div class="resumen-title">Envíado:</div>
+                            <div class="resumen-text">{{data.length}} ( {{getTotalMonto() | currency }} )</div>
+                        </div>
+                        <div class="resumen-item">
+                            <div class="resumen-title">Cobrado:</div>
+                            <div class="resumen-text">{{getTotal()}} ( {{getTotalCobrado() | currency}} )</div>
+                        </div>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
                 <app-previsualizar-archivo [data]="data" [displayedColumns]="displayedColumns" [progress]="progress">
                 </app-previsualizar-archivo>
             </div>

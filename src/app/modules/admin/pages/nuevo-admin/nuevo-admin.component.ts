@@ -76,25 +76,9 @@ export class NuevoAdminComponent implements OnInit {
     this.form.reset();
   }
 
-  estados: EstadoInterface[] = [{
-    id_estado: 1,
-    estado: 'Merida'
-  },
-  {
-    id_estado: 2,
-    estado: 'Miranda'
-  }]
+  estados: EstadoInterface[];
 
-  roles: RolInterface[] = [{
-    id_rol: 1,
-    rol: 'ADMIN',
-    descripcion: 'Administrador Acceso SUPER',
-  },
-  {
-    id_rol: 2,
-    rol: 'VENDEDOR',
-    descripcion: 'Vendedor de OCC',
-  }]
+  roles: RolInterface[];
 
   sucursales: SucursalInterface[] = [{
     id_occ: 1,

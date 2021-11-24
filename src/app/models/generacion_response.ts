@@ -8,7 +8,7 @@ export interface GeneracionResponse {
     total:number;
 
     R?: string;
-    M: string;
+    M?: string;
     keyS: string;
     ivS: string;
     keyJ: string;

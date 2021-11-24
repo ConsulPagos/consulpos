@@ -55,7 +55,6 @@ export class GenerarArchivoComponent implements OnInit {
     banco: new FormControl('', [Validators.required]),
     cash: new FormControl('', [Validators.required]),
     descripcion: new FormControl('', [Validators.required]),
-
   });
 
   ngOnInit(): void {
@@ -64,7 +63,6 @@ export class GenerarArchivoComponent implements OnInit {
     this.payment.admin = this.auth.getIdentity()
     this.loadMethods()
     this.bancos = JSON.parse(this.storage.get(constant.BANCOS)).bancos
-
   }
 
   loadMethods() {
@@ -112,7 +110,6 @@ export class GenerarArchivoComponent implements OnInit {
       console.log(JSON.parse(this.crypto.decryptString(res)))
 
       this.loading = false
-      // this.storage.store(constant.BANCOS, JSON.stringify(verifyResponse.bancos))
       this.crypto.setKeys(this.generacionResponse.keyS, this.generacionResponse.ivJ, this.generacionResponse.keyJ, this.generacionResponse.ivS)
       this.openDialog();
       if (this.generacionResponse.tipo_archivo === 'EXCEL') {

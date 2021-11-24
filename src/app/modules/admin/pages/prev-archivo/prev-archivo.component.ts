@@ -38,7 +38,7 @@ export class PrevArchivoComponent implements OnInit {
       const json = XLSX.utils.sheet_to_json(ws);
       const nData: CuotaInterface[] = []
       json.forEach(cuota => {
-        const nCuota: CuotaInterface = { doc: cuota[this.columns[0]] , cuenta: cuota[this.columns[1]] , monto: parseFloat(cuota[this.columns[2]]), cobrado: parseFloat(cuota[this.columns[3]]), mensaje: cuota[this.columns[4]], }
+        const nCuota: CuotaInterface = { doc: cuota[this.columns[0]], cuenta: cuota[this.columns[1]], monto: parseFloat(cuota[this.columns[2]]), cobrado: parseFloat(cuota[this.columns[3]]), mensaje: cuota[this.columns[4]], }
         nData.push(nCuota)
       });
       this.data = nData
@@ -62,6 +62,17 @@ export class PrevArchivoComponent implements OnInit {
       headers.push(hdr);
     }
     return headers;
+  }
+  getTotal() {
+    return this.data.map(t => t.cobrado > 0 ? 1 : 0).reduce((acc, value) => acc + value, 0);
+  }
+
+  getTotalMonto() {
+    return this.data.map(t => t.monto).reduce((acc, value) => acc + value, 0);
+  }
+
+  getTotalCobrado() {
+    return this.data.map(t => t.cobrado).reduce((acc, value) => acc + value, 0);
   }
 
 }
