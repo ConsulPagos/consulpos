@@ -5,6 +5,7 @@ import { AdminService } from '../../services/admin.service';
 import { Title } from '@angular/platform-browser';
 import { BancoInterface } from '../../../../models/banco'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { StorageService } from 'src/app/shared/services/storage.service';
 
 @Component({
   selector: 'app-conciliar-archivo',
@@ -19,7 +20,7 @@ export class ConciliarArchivoComponent implements OnInit {
   error = false;
   id;
 
-  constructor(private admin: AdminService, private routes: ActivatedRoute, private router: Router, private title: Title) { }
+  constructor(private admin: AdminService, private routes: ActivatedRoute, private router: Router, private title: Title, private storage:StorageService) { }
 
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Conciliar Archivo')
@@ -30,12 +31,7 @@ export class ConciliarArchivoComponent implements OnInit {
     proceso: new FormControl('', [Validators.required]),
   });
 
-  bancos: BancoInterface[] = [{
-    id_banco: 1,
-    banco: 'BANCO DE VENEZUELA',
-    codigo: '0102',
-    id_plataforma: 1,
-  }]
+  bancos: BancoInterface[];
 
   procesos = [{
     id: 1,

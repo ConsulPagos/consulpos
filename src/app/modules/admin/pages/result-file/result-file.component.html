@@ -1,0 +1,30 @@
+<div>
+    <h3 class="title">
+        Resumen de Archivo Generado:
+    </h3>
+    <div>
+        <h6>Identificador de Archivo: </h6>
+        <p class="text">{{data.id_archivo}}</p>
+    </div>
+    <div>
+        <h6>Cantidad de Cuotas: </h6>
+        <p class="text">{{data.cantidad_cuotas}}</p>
+    </div>
+    <div>
+        <h6>Separador decimal: </h6>
+        <p class="text">{{getSeparador(data.usar_coma)}}</p>
+    </div>
+    <div>
+        <h6>Tipo de Archivo: </h6>
+        <p class="text">{{data.tipo_archivo}}</p>
+    </div>
+    <div>
+        <h6>Cantidad de Decimales: </h6>
+        <p class="text">{{data.decimales}}</p>
+    </div>
+
+    <button mat-button color="primary" class='btn_close' (click)="close()">Aceptar</button>
+</div>
+
+
+

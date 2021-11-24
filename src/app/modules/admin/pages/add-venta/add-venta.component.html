@@ -21,6 +21,35 @@
                 </ng-template>
 
                 <mat-step>
+                    <!-- [stepControl]="client_type" -->
+                    <form [formGroup]="client_type">
+                        <ng-template matStepLabel>Documento de identidad</ng-template>
+                        <div>
+                            <h6>Documento de identidad</h6>
+                            
+                            <mat-form-field appearance="outline" class="container_box">
+                                <mat-label>Tipo</mat-label>
+                                <mat-select disableRipple formControlName="tipo_doc" >
+                                    <mat-option *ngFor="let t_doc of tipo_documentos"
+                                        value={{t_doc.t_doc}}>
+                                        {{t_doc.t_doc}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Rif</mat-label>
+                                <input matInput formControlName="rif" placeholder="123456789" type="text" >
+                            </mat-form-field>
+
+                        </div>
+                    </form>
+                    <!-- Bootn de siguiente strepper -->
+                    <div>
+                        <button class="stepBtn" mat-raised-button matStepperNext (click)="submit()">Siguiente</button>
+                    </div>
+                </mat-step>
+
+                <mat-step>
                     <form [formGroup]="venta">
                         <ng-template matStepLabel>Tipo de Venta</ng-template>
                         <div>

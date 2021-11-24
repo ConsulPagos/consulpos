@@ -5,65 +5,100 @@
             <img src="../../../../../assets/images/consulpagos.png" alt="Consulpagos"
                 style="width: auto; height: 50px;">
         </div>
-
+        <!-- Dashboard -->
         <a class="menu_side" *ngIf="access.dashboard()"
             [routerLink]="['/admin/app',{ outlets: { adr: ['dashboard'] } }]" routerLinkActive="ad-active"
             [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-tachometer-alt"></li> <span class="">Dashboard</span>
         </a>
+        <!-- ************************************************************************************************** -->
 
+        <!-- Registro de Clientes -->
         <a class="menu_side" *ngIf="access.clientes()" [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]"
             routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-users"></li><span class="">Clientes</span>
         </a>
+        <!-- ************************************************************************************************** -->
 
-        <a class="menu_side" *ngIf="access.venta_manual()"
-            [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
-            [routerLinkActiveOptions]="{exact: true}">
-            <li class="fa fa-cart-plus"></li> <span class="">Ventas</span>
+        <!-- Tipos de solicitud -->
+        <a class="menu_side" mat-button [matMenuTriggerFor]="solicitud">
+            <li class="fa fa-file-alt icon_side"></li>
+            <h6 class="text_side">Tipo de Solicitud</h6>
         </a>
+        <mat-menu #solicitud="matMenu">
+            <a class="menu_side" *ngIf="access.venta_manual()"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-cart-plus"></li> <span class="">Ventas</span>
+            </a>
 
+            <a class="menu_side" *ngIf="access.venta_manual()"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-exchange-alt"></li> <span class="">Traspaso</span>
+            </a>
 
-        <a class="menu_side" mat-button [matMenuTriggerFor]="cobranza" >
+            <a class="menu_side" *ngIf="access.venta_manual()"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-university"></li> <span class="">Cambio de Banco</span>
+            </a>
+
+            <a class="menu_side" *ngIf="access.venta_manual()"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-book-dead"></li> <span class="">Desafiliación</span>
+            </a>
+        </mat-menu>
+        <!-- ************************************************************************************************** -->
+
+        <!-- Cobranza -->
+        <a class="menu_side" mat-button [matMenuTriggerFor]="cobranza">
             <li class="fa fa-file icon_side"></li>
             <h6 class="text_side">Cobranza</h6>
         </a>
-
         <mat-menu #cobranza="matMenu">
 
-            <a class="sub_side" mat-menu-item *ngIf="access.venta_manual()"
+            <a class="menu_side" *ngIf="access.venta_manual()"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
-                Validar Pago POS
+                <li class="fa fa-money-bill"></li> <span class="">Validar Pago POS</span>
             </a>
 
-            <a class="sub_side" mat-menu-item *ngIf="access.venta_manual()"
+            <a class="menu_side" *ngIf="access.venta_manual()"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['generar-archivo'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
-                Generar Archivo
+                <li class="fa fa-file-download"></li> <span class="">Generar Archivo</span>
             </a>
 
-            <a class="sub_side" mat-menu-item *ngIf="access.venta_manual()"
+            <a class="menu_side" *ngIf="access.venta_manual()"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
-                Conciliar Archivo
+                <li class="fa fa-file-upload"></li> <span class="">Conciliar Archivo</span>
             </a>
-
         </mat-menu>
+        <!-- ************************************************************************************************** -->
 
-
+        <!-- Solicitud de Reportes -->
         <a class="menu_side" *ngIf="access.historial()" [routerLink]="['/admin/app',{ outlets: { adr: ['reportes'] } }]"
             routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-file-excel"></li><span class="">Reportes</span>
         </a>
+        <!-- ************************************************************************************************** -->
+
+        <!-- Registro de Actividad -->
         <a class="menu_side" *ngIf="access.historial()"
             [routerLink]="['/admin/app',{ outlets: { adr: ['historial-pedidos'] } }]" routerLinkActive="ad-active"
             [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-book"></li><span class="">Actividad</span>
         </a>
+        <!-- ************************************************************************************************** -->
+
+        <!-- Roles de Usuarios -->
         <a class="menu_side" *ngIf="access.super()"
             [routerLink]="['/admin/app',{ outlets: { adr: ['super-admin-panel'] } }]" routerLinkActive="ad-active"
             [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-cogs"></li><span class="">Usuarios</span>
         </a>
+        <!-- ************************************************************************************************** -->
     </div>

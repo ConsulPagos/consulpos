@@ -58,13 +58,14 @@ import { AdminTitleComponent } from './components/admin-title/admin-title.compon
 import { CrmComponent } from './pages/crm/crm.component';
 import { PrevArchivoComponent } from './pages/prev-archivo/prev-archivo.component';
 import { PrevisualizarArchivoComponent } from './components/previsualizar-archivo/previsualizar-archivo.component';
+import { ResultFileComponent } from './pages/result-file/result-file.component';
 
 
 @NgModule({
   declarations: [AdminComponent, 
     SkuComponent, 
     CobrosComponent, 
-    ConciliarArchivoComponent, InventarioComponent, ClientelaComponent, CrmComponent, PedidosComponent, LectorComponent, SalidaPedidosComponent, AdminNavbarComponent, AdminSidenavComponent, ClientelaAfiliadosComponent, AffiliateDetailComponent, EditProductComponent, EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, GenerarArchivoComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AddClientComponent, VentasComponent, AddVentaComponent, EditAdminComponent, AdminDetailComponent, EditClientComponent, AdminTitleComponent, PrevArchivoComponent, PrevisualizarArchivoComponent],
+    ConciliarArchivoComponent, InventarioComponent, ClientelaComponent, CrmComponent, PedidosComponent, LectorComponent, SalidaPedidosComponent, AdminNavbarComponent, AdminSidenavComponent, ClientelaAfiliadosComponent, AffiliateDetailComponent, EditProductComponent, EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, GenerarArchivoComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AddClientComponent, VentasComponent, AddVentaComponent, EditAdminComponent, AdminDetailComponent, EditClientComponent, AdminTitleComponent, PrevArchivoComponent, PrevisualizarArchivoComponent, ResultFileComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

@@ -37,6 +37,7 @@ import { EditAddressComponent } from './shared/components/edit-address/edit-addr
 import { HagaSuPedidoDialogComponent } from './modules/home/components/haga-su-pedido-dialog/haga-su-pedido-dialog.component';
 import { CarruselLandingComponent } from './modules/home/components/carrusel-landing/carrusel-landing.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +54,7 @@ import { CarruselLandingComponent } from './modules/home/components/carrusel-lan
     EditAddressComponent,
     HagaSuPedidoDialogComponent,
     CarruselLandingComponent,
+
 
 ],
   imports: [
@@ -82,7 +84,7 @@ import { CarruselLandingComponent } from './modules/home/components/carrusel-lan
       appId: "1:301996780499:web:0c858330142efc5a259d26",
       measurementId: "G-9WHJ3FEJ9S"
     }),
-    AngularFireStorageModule
+    AngularFireStorageModule,
   ],
   providers: [AffiliateGuard, AdminGuard, HomeGuard, StorageService],
   bootstrap: [AppComponent]

@@ -75,73 +75,18 @@ export class EditClientComponent implements OnInit {
     email: new FormControl('', [Validators.required]),
   });
 
-  contribuyentes: ContribuyenteInterface[] = [{
-    id_contribuyente: 1,
-    contribuyente: 'Ordinario'
-  },
-  {
-    id_contribuyente: 2,
-    contribuyente: 'Formal'
-  }]
+  contribuyentes: ContribuyenteInterface[];
 
-  estados: EstadoInterface[] = [{
-    id_estado: 1,
-    estado: 'Merida'
-  },
-  {
-    id_estado: 2,
-    estado: 'Miranda'
-  }]
+  estados: EstadoInterface[];
 
-  municipios: MunicipioInterface[] = [{
-    id_municipio: 1,
-    municipio: 'Libertador',
-    id_estado: 2,
-  },
-  {
-    id_municipio: 2,
-    municipio: 'Shiba',
-    id_estado: 1,
-  }]
+  municipios: MunicipioInterface[];
 
-  parroquias: ParroquiaInterface[] = [{
-    id_parroquia: 1,
-    parroquia: 'Merida',
-    id_municipio: 2
-  },
-  {
-    id_parroquia: 2,
-    parroquia: 'Miranda',
-    id_municipio: 1
-  }]
+  parroquias: ParroquiaInterface[];
 
-  ciudades: CiudadInterface[] = [{
-    id_ciudad: 1,
-    ciudad: 'ccs',
-    id_estado: 1
-  },
-  {
-    id_ciudad: 2,
-    ciudad: 'lecheria',
-    id_estado: 2
-  }]
+  ciudades: CiudadInterface[];
 
-  contactos: ContactoInterface[] = [{
-    id_medio_contacto: 1,
-    contacto: 'Instagram',
-  },
-  {
-    id_medio_contacto: 1,
-    contacto: 'Facebook',
-  }]
+  contactos: ContactoInterface[];
 
-  tipo_documentos: TipodocumentoInterface[] = [{
-    id_tipo_documento: 1,
-    tipo_doc: 'V',
-  },
-  {
-    id_tipo_documento: 2,
-    tipo_doc: 'J',
-  }]
+  tipo_documentos: TipodocumentoInterface[];
 
 }

@@ -46,8 +46,11 @@ export class AdminComponent implements OnInit {
     this.sesion.doVerify(`${IMEI};${data}`).subscribe(res => {
       var verifyResponse = new VerifyDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(verifyResponse)
+      console.log(JSON.parse(this.crypto.decryptString(res)))
       this.loading = false
+      this.storage.store(constant.BANCOS, JSON.stringify(verifyResponse.bancos))
       this.crypto.setKeys(verifyResponse.keyS, verifyResponse.ivJ, verifyResponse.keyJ, verifyResponse.ivS)
     })
   }
+  
 }

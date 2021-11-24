@@ -29,7 +29,7 @@ export interface VerifyResponse {
     ciudades:       Ciudades[];
     operadoras:     OperadoraInterface[];
     categorias:     Categoria[];
-    t_pagos:        string;
+    // t_pagos:        string;
     planes:         PlanInterface[];
     modelos:        ModeloInterface[];
     parroquias:     ParroquiaInterface[];
@@ -65,8 +65,8 @@ export class VerifyDecrypter {
 
             const verify:VerifyResponse = {
                 M:this.crypto.decryptJson(value.M),
-                keyS:this.crypto.decryptJson(value.keyS),
-                ivS:this.crypto.decryptJson(value.ivS),
+                keyS:this.crypto.decryptString(value.keyS),
+                ivS:this.crypto.decryptString(value.ivS),
                 keyJ:this.crypto.decryptJson(value.keyJ),
                 ivJ:this.crypto.decryptJson(value.ivJ),
     
@@ -80,7 +80,7 @@ export class VerifyDecrypter {
                 ciudades:JSON.parse(this.crypto.decryptJson(value.ciudades)),
                 operadoras:JSON.parse(this.crypto.decryptJson(value.operadoras)),
                 categorias:JSON.parse(this.crypto.decryptJson(value.categorias)),
-                t_pagos:JSON.parse(this.crypto.decryptJson(value.t_pagos)),
+                // t_pagos:JSON.parse(this.crypto.decryptJson(value.t_pagos)),
                 planes:JSON.parse(this.crypto.decryptJson(value.planes)),
                 modelos:JSON.parse(this.crypto.decryptJson(value.modelos)),
                 parroquias:JSON.parse(this.crypto.decryptJson(value.parroquias)),

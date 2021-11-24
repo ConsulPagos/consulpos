@@ -3,5 +3,6 @@ export const constant = {
     EMAIL: "email",
     R0:"0",
     R1:"1",
-    USER:"user"
+    USER:"user",
+    BANCOS: 'bancos',
 };
