@@ -16,6 +16,7 @@ import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { StorageService } from 'src/app/shared/services/storage.service';
+import { ValidacionclienteDecrypter, ValidacionclienteResponse } from '../../../../models/validacioncliente_response'
 
 @Component({
   selector: 'app-add-venta',
@@ -27,7 +28,13 @@ export class AddVentaComponent implements OnInit {
 
   loading = false;
 
-  constructor(private title: Title, private crypto: CryptoService, private sesion: SesionService, private storage: StorageService) { }
+  validacionresponse: ValidacionclienteResponse;
+
+  constructor(
+    private title: Title, 
+    private crypto: CryptoService, 
+    private sesion: SesionService, 
+    private storage: StorageService) { }
 
   buy = new FormGroup({
     modelo: new FormControl('', [Validators.required]),
@@ -75,19 +82,12 @@ export class AddVentaComponent implements OnInit {
 
   tipo_cliente: string;
   tipos_clientes: TipoclienteInterface[];
-
   modelos: ModeloInterface[];
-
   plataformas: PlataformaInterface[];
-
   bancos: BancoInterface[];
-
   comunicaciones: ComunicacionInterface[];
-
   operadoras: OperadoraInterface[];
-
   tipocobros: TipoCobroInterface[];
-
   planes: PlanInterface[];
 
   ngOnInit(): void {
@@ -104,7 +104,7 @@ export class AddVentaComponent implements OnInit {
       u_id: this.crypto.encryptJson("1"),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      rif: this.crypto.encryptJson('J253862510'),
+      rif: this.crypto.encryptJson(this.client_type.get('tipo_doc').value + this.client_type.get('rif').value),
     }))
 
     const IMEI = '13256848646454643'
@@ -114,11 +114,11 @@ export class AddVentaComponent implements OnInit {
     console.log("verify")
 
     this.sesion.doVerificaicon(`${IMEI};${data}`).subscribe(res => {
-      // var verifyResponse = new VerifyDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-
-      // this.loading = false
-      // this.storage.store(constant.BANCOS, JSON.stringify(verifyResponse.bancos))
-      // this.crypto.setKeys(verifyResponse.keyS, verifyResponse.ivJ, verifyResponse.keyJ, verifyResponse.ivS)
+      console.log(JSON.parse(this.crypto.decryptString(res)))
+      this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.validacionresponse)
+      this.loading = false
+      this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
     })
   }
 

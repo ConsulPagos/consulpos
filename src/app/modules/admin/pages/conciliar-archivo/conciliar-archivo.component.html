@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-center">
             <div class="w-100">
                 <div class="bg-white rounded card p-2">
-                    <form [formGroup]="ca">
+                    <form [formGroup]="form">
                         <div class="row">
                             <div class="col-12">
                                 <div class="box-title d-flex justify-content-center">
@@ -16,19 +16,20 @@
                             <div class="w-100 pl-4 pr-4 pt-4">
                                 <mat-form-field appearance="outline" class="container_box w-100">
                                     <mat-label>Seleccionar Banco</mat-label>
-                                    <mat-select disableRipple formControlName="banco">
-                                        <mat-option *ngFor="let banco of bancos" value={{banco.id_banco}}>
-                                            {{banco.banco}} </mat-option>
+                                    <mat-select formControlName="banco" (selectionChange)="submit()">
+                                        <mat-option *ngFor="let banco of bancos" value={{banco.cod_banco}}>
+                                            {{banco.nombre}} </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
 
-                            <div class="w-100 pl-4 pr-4">
+                            <div class="w-100 pl-4 pr-4" *ngIf="archivos; else CargandoArchivos">
                                 <mat-form-field appearance="outline" class="container_box w-100">
                                     <mat-label>Seleccionar archivo</mat-label>
                                     <mat-select disableRipple formControlName="proceso">
-                                        <mat-option *ngFor="let proceso of procesos" value={{proceso.id}}>
-                                            {{proceso.trace + " | " + proceso.fecha}} </mat-option>
+                                        <mat-option *ngFor="let archivo of archivos" value={{archivo.id}}>
+                                            {{archivo.id}} | {{archivo.fecha_generacion | date:'dd/MM/yyyy hh:mm:ss'}}
+                                        </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -36,7 +37,8 @@
                             <div class="col-12 ml-3 mr-3 mb-4">
                                 <div class="d-flex align-items-center">
                                     <button mat-button (click)="load()" mat-button
-                                        class="pr-4 pl-4 pt-1 pb-1 btn btn-success bg-success text-white h5">Nueva conciliación</button>
+                                        class="pr-4 pl-4 pt-1 pb-1 btn btn-success bg-success text-white h5">Nueva
+                                        conciliación</button>
                                 </div>
                             </div>
                         </div>
@@ -46,3 +48,9 @@
         </div>
     </div>
 </section>
+
+<ng-template #CargandoArchivos>
+    <div *ngIf="loading">
+        Cargando
+    </div>
+</ng-template>
