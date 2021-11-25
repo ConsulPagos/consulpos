@@ -20,23 +20,25 @@
         </a>
         <!-- ************************************************************************************************** -->
 
+        <!-- Operaciones -->
+        <a class="menu_side" *ngIf="access.clientes()" [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]"
+            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-users"></li><span class="">Operaciones</span>
+        </a>
+        <!-- ************************************************************************************************** -->
+
         <!-- Tipos de solicitud -->
         <a class="menu_side" mat-button [matMenuTriggerFor]="solicitud">
             <li class="fa fa-file-alt icon_side"></li>
             <h6 class="text_side">Tipo de Solicitud</h6>
         </a>
-        <mat-menu #solicitud="matMenu">
-            <a class="menu_side" *ngIf="access.venta_manual()"
-                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
-                [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-cart-plus"></li> <span class="">Pre-ventas</span>
-            </a>
 
-            <a class="menu_side" *ngIf="access.venta_manual()"
-                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
-                [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-cart-plus"></li> <span class="">Ventas</span>
-            </a>
+        <mat-menu #solicitud="matMenu">
+
+            <button class="menu_side" mat-menu-item [matMenuTriggerFor]="venta">
+                <li class="fa fa-file-alt icon_side"></li>
+                <h6 class="text_side">Ventas</h6>
+            </button>
 
             <a class="menu_side" *ngIf="access.venta_manual()"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
@@ -54,6 +56,20 @@
                 [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-book-dead"></li> <span class="">Desafiliación</span>
+            </a>
+        </mat-menu>
+
+        <mat-menu #venta="matMenu">
+            <a class="menu_side" *ngIf="access.venta_manual()"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-cart-plus"></li> <span class="">Pre-ventas</span>
+            </a>
+
+            <a class="menu_side" *ngIf="access.venta_manual()"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-cart-plus"></li> <span class="">Ventas</span>
             </a>
         </mat-menu>
         <!-- ************************************************************************************************** -->
