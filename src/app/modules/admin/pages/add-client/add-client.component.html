@@ -19,6 +19,39 @@
                 <ng-template matStepperIcon="edit">
                     <li class="fa fa-check"></li>
                 </ng-template>
+
+                <mat-step [stepControl]="identity">
+                    <form [formGroup]="identity">
+                        <ng-template matStepLabel>Ingrese documento de identidad</ng-template>
+                        <div>
+                            <h6>Documento de identidad</h6>
+
+                            <mat-form-field appearance="outline" class="container_box">
+                                <mat-label>Tipo</mat-label>
+                                <mat-select disableRipple formControlName="tipo_doc">
+                                    <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
+                                        {{t_doc.t_doc}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Rif</mat-label>
+                                <input matInput 
+                                formControlName="rif" 
+                                placeholder="123456789" 
+                                type="text"
+                                (keypress)="onlyNumberKey($event)" 
+                                minlength="1" 
+                                maxlength="9">
+                            </mat-form-field>
+
+                        </div>
+                    </form>
+                    <!-- Bootn de siguiente strepper -->
+                    <div>
+                        <button class="stepBtn" mat-raised-button matStepperNext (click)="submit()" [disabled]="identity.invalid">Siguiente</button>
+                    </div>
+                </mat-step>
                 <!-- Parte Inicial -->
                 <mat-step>
                     <!-- [stepControl]="client_type" -->
@@ -45,28 +78,14 @@
                     <!-- [stepControl]="client" -->
                     <form [formGroup]="client">
                         <ng-template matStepLabel>Ingresar los datos del cliente</ng-template>
-                        <div>
-                            <h6>Documento de identidad</h6>
-                            <mat-form-field appearance="outline" class="container_box">
-                                <mat-label>Tipo</mat-label>
-                                <mat-select disableRipple formControlName="tipo_doc">
-                                    <mat-option *ngFor="let tipo_documento of tipo_documentos"
-                                        value={{tipo_documento.id_tipo_documento}}>
-                                        {{tipo_documento.tipo_doc}} </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline">
-                                <mat-label>Rif</mat-label>
-                                <input matInput formControlName="rif" placeholder="123456789" type="text">
-                            </mat-form-field>
-                        </div>
                         <!-- Formulario Datos del Cliente -->
                         <!-- <div *ngIf="getTipoCliente()=='N'"> -->
                         <div>
                             <h6>Datos del Cliente</h6>
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Razón Social</mat-label>
-                                <input matInput formControlName="razon_social" placeholder="123456789" type="text">
+                                <input matInput formControlName="razon_social" placeholder="123456789" type="text"
+                                    maxlength="255">
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="container_box_space">
@@ -138,7 +157,8 @@
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Codigo Postal</mat-label>
-                                <input matInput formControlName="codpostal" placeholder="1234" type="text">
+                                <input matInput formControlName="codpostal" placeholder="1083" type="number"
+                                    (keypress)="onlyNumberKey($event)">
                             </mat-form-field>
 
                             <mat-form-field class="container_box_space" appearance="outline">
@@ -162,7 +182,7 @@
                     <!-- Bootn de siguiente strepper -->
                     <div>
                         <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                        <button class="stepBtn" mat-raised-button matStepperNext>Siguiente</button>
+                        <button class="stepBtn" mat-raised-button matStepperNext *ngIf="client.valid">Siguiente</button>
                     </div>
                 </mat-step>
 

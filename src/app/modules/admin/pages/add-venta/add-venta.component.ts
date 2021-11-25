@@ -47,6 +47,8 @@ export class AddVentaComponent implements OnInit {
     operadora: new FormControl('', [Validators.required]),
     tipocobro: new FormControl('', [Validators.required]),
     plan: new FormControl('', [Validators.required]),
+    cod_afiliado: new FormControl('', [Validators.required]),
+  
   });
 
   venta = new FormGroup({
