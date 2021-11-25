@@ -19,7 +19,7 @@
                                 </div>
                             </div>
 
-                            <div class="w-100 pl-4 pr-4">
+                      
                                 <mat-form-field appearance="outline" class="container_box w-100">
                                     <mat-label>Seleccionar Banco</mat-label>
                                     <mat-select disableRipple formControlName="banco">
@@ -27,43 +27,29 @@
                                             {{banco.nombre}} </mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                            </div>
+               
 
-                            <!-- <div class="w-100 pl-4 pr-4">
-                                <mat-form-field appearance="outline" class="container_box w-100">
-                                    <mat-label>Mes</mat-label>
-                                    <mat-select disableRipple formControlName="mes">
-                                        <mat-option *ngFor="let mes of meses" value={{mes.mes}}>
-                                            {{mes.mes}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div> -->
 
-                            <mat-form-field class="w-100 pl-4 pr-4" appearance="outline">
+                            <mat-form-field class="w-100" appearance="outline">
                                 <mat-label>Cantidad de cuotas</mat-label>
-                                <input matInput type="number"  formControlName="cash"
-                                    placeholder="Ingresa la cantidad de cuotas" >
+                                <input matInput type="number" formControlName="cash"
+                                    placeholder="Ingresa la cantidad de cuotas">
                                 <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </mat-form-field>
 
-                            <mat-form-field class="w-100 pl-4 pr-4" appearance="outline">
+                            <mat-form-field class="w-100" appearance="outline">
                                 <mat-label>Descripcion</mat-label>
-                                <input matInput type="text"  formControlName="descripcion"
-                                    placeholder="Ingresa la descripcion" >
+                                <input matInput type="text" formControlName="descripcion"
+                                    placeholder="Ingresa la descripcion">
                             </mat-form-field>
 
+                            <button class="btn-submit" mat-raised-button color="accent" *ngIf="!loading; else loadingTmp"
+                                (click)="submit()" [disabled]="form.invalid" mat-button>
+                                GENERAR ARCHIVO
+                            </button>
 
-                            <div class="col-12 mt-2">
-                                <div class="d-flex w-100">
-                                    <button *ngIf="!loading; else loadingTmp" (click)="submit()"
-                                        [disabled]="form.invalid" mat-button
-                                        class="p-1 w-100 btn btn-success bg-success text-white text-uppercase h5">
-                                        GENERAR ARCHIVO
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                     </form>
                 </div>
@@ -81,6 +67,5 @@
     <div *ngIf="!error_methods" class="loadingM d-flex justify-content-left align-items-center btn shadow-none">
         Cargando
     </div>
-    <button class="loadingM d-flex justify-content-left align-items-center btn shadow-none" *ngIf="error_methods"
-        (click)="loadMethods()">Pulse para cargar</button>
+    <button mat-button color="primary" class="" *ngIf="error_methods" (click)="loadMethods()">Pulse para cargar</button>
 </ng-template>
