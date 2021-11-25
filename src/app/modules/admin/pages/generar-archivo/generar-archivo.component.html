@@ -14,7 +14,7 @@
                                 </div>
                             </div>
 
-                            <div class="w-100 pl-4 pr-4">
+                      
                                 <mat-form-field appearance="outline" class="container_box w-100">
                                     <mat-label>Seleccionar Banco</mat-label>
                                     <mat-select disableRipple formControlName="banco">
@@ -22,17 +22,8 @@
                                             {{banco.nombre}} </mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                            </div>
+               
 
-                            <!-- <div class="w-100 pl-4 pr-4">
-                                <mat-form-field appearance="outline" class="container_box w-100">
-                                    <mat-label>Mes</mat-label>
-                                    <mat-select disableRipple formControlName="mes">
-                                        <mat-option *ngFor="let mes of meses" value={{mes.mes}}>
-                                            {{mes.mes}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div> -->
 
                             <mat-form-field class="w-100 pl-4 pr-4" appearance="outline">
                                 <mat-label>Monto de la cuota en $</mat-label>
@@ -76,6 +67,5 @@
     <div *ngIf="!error_methods" class="loadingM d-flex justify-content-left align-items-center btn shadow-none">
         Cargando
     </div>
-    <button class="loadingM d-flex justify-content-left align-items-center btn shadow-none" *ngIf="error_methods"
-        (click)="loadMethods()">Pulse para cargar</button>
+    <button mat-button color="primary" class="" *ngIf="error_methods" (click)="loadMethods()">Pulse para cargar</button>
 </ng-template>
