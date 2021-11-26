@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserInterface } from 'src/app/models/user';
+import { RefreshDecrypter } from 'src/app/models/refresh_response';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
@@ -11,7 +12,7 @@ import { constant } from 'src/app/shared/utils/constant';
   providedIn: 'root'
 })
 export class VerifyKeysGuard implements CanActivate {
-  constructor(private crypto: CryptoService, private session: SesionService, private storage: StorageService) {
+  constructor(private crypto: CryptoService, private session: SesionService, private storage: StorageService, private route: Router) {
 
   }
 
@@ -24,15 +25,15 @@ export class VerifyKeysGuard implements CanActivate {
     const IMEI = '13256848646454643';
     var result = false;
     await this.session.doRefresh(`${IMEI};${data}`).toPromise().then(res => {
-      console.log(res);
       console.log(JSON.parse(this.crypto.decryptStringFixed(res)))
-      result = true;
-      //var verifyResponse = new VerifyDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      /*  console.log(verifyResponse)
-      console.log(JSON.parse(this.crypto.decryptString(res)))
-      this.loading = false
-      this.storage.store(constant.BANCOS, JSON.stringify(verifyResponse.bancos))
-      this.crypto.setKeys(verifyResponse.keyS, verifyResponse.ivJ, verifyResponse.keyJ, verifyResponse.ivS) */
+      var response = new RefreshDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptStringFixed(res)))
+      console.log(response.R)
+      if (response.R == "0") {
+        result = true;
+      } else {
+        this.route.navigateByUrl("");
+      }
+      this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
     })
     return result;
 

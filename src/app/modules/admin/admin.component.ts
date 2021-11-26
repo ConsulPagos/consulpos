@@ -27,7 +27,7 @@ export class AdminComponent implements OnInit {
   constructor(private sesion: SesionService, private crypto: CryptoService, private storage: StorageService) { }
 
   ngOnInit(): void {
-    //this.verify()
+    this.verify()
   }
 
   loggout() {
