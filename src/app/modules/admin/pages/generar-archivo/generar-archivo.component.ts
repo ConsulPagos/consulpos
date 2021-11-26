@@ -52,7 +52,8 @@ export class GenerarArchivoComponent implements OnInit {
   ) { }
 
   form = new FormGroup({
-    banco: new FormControl('', [Validators.required]),
+    tipo_cobro: new FormControl(null, [Validators.required]),
+    banco: new FormControl(null, [Validators.required]),
     cash: new FormControl('', [Validators.required]),
     descripcion: new FormControl('', [Validators.required]),
   });
@@ -86,6 +87,15 @@ export class GenerarArchivoComponent implements OnInit {
     this.excelService.exportExcel(this.generacionResponse.cuotas, 'Archivo_' + this.generacionResponse.id_archivo + '_' + new Date());
   }
 
+  getTipoCobro(t: string): boolean {
+    var value = false;
+    try {
+      value = (t == this.form.get("tipo_cobro").value.toString())
+    } catch (error) {
+      value = false
+    }
+    return value;
+  }
 
 
   submit() {
@@ -119,7 +129,7 @@ export class GenerarArchivoComponent implements OnInit {
       }
 
     })
-    //**************************************************************************************************************************//
+
   }
 
 
