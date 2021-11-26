@@ -12,7 +12,7 @@ import { TipoclienteInterface } from '../../../../models/tipo_cliente'
 import { RepresentanteInterface } from 'src/app/models/user';
 import { ValidacionclienteDecrypter, ValidacionclienteResponse } from 'src/app/models/validacioncliente_response';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
-import { SesionService } from 'src/app/shared/services/sesion.service';
+import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { constant } from 'src/app/shared/utils/constant';
 
@@ -28,7 +28,7 @@ export class AddClientComponent implements OnInit {
   validacionresponse: ValidacionclienteResponse;
   loading = false;
   agents = [];
-  search_client: boolean = false;
+  search_client: boolean = true;
   formats: RepresentanteInterface[] = [];
   contribuyentes: ContribuyenteInterface[];
   estados: EstadoInterface[];
@@ -40,26 +40,24 @@ export class AddClientComponent implements OnInit {
   constructor(
     private title: Title,
     private crypto: CryptoService,
-    private sesion: SesionService,
+    private cliente: ClientesService,
     private storage: StorageService,
   ) { }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //FORM DEL PRIMER STEP
+  //FORM DEL PRIMER STEP\\
   identity = new FormGroup({
 
     rif: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
     tipo_doc: new FormControl('', [Validators.required]),
-    search_client: new FormControl(this.search_client, [Validators.required]),
-
   });
 
-  //FORM DEL SEGUNDO STEP
+  //FORM DEL SEGUNDO STEP\\
   client_type = new FormGroup({
     tipo_cliente: new FormControl('', [Validators.required]),
   });
 
-  //FORM DEL TERCER STEP
+  //FORM DEL TERCER STEP\\
   client = new FormGroup({
     razon_social: new FormControl('', [Validators.required]),
     nombre_comercial: new FormControl('', [Validators.required]),
@@ -76,13 +74,12 @@ export class AddClientComponent implements OnInit {
     codpostal: new FormControl('', [Validators.required]),
   });
 
-  //FORM DEL CUARTO STEP
+  //FORM DEL CUARTO STEP\\
   document = new FormGroup({
     id: new FormControl('', [Validators.required]),
   });
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  tipo_cliente: string;
   tipos_clientes: TipoclienteInterface[] = [{
     id_tipo_cliente: 1,
     tipo_cliente: 'Jurídico',
@@ -96,7 +93,7 @@ export class AddClientComponent implements OnInit {
   {
     id_tipo_cliente: 3,
     tipo_cliente: 'Fima Perosnal',
-    letra: 'FP',
+    letra: 'R',
   }]
 
   tipo_documentos: TipodocumentoInterface[] = [{
@@ -106,8 +103,28 @@ export class AddClientComponent implements OnInit {
   },
   {
     t_doc_id: 2,
+    t_doc: 'E',
+    t_doc_desc: 'Extranjero',
+  },
+  {
+    t_doc_id: 3,
+    t_doc: 'P',
+    t_doc_desc: 'Pasaporte',
+  },
+  {
+    t_doc_id: 4,
     t_doc: 'J',
     t_doc_desc: 'juridico',
+  },
+  {
+    t_doc_id: 5,
+    t_doc: 'G',
+    t_doc_desc: 'Gubernamental',
+  },
+  {
+    t_doc_id: 6,
+    t_doc: 'C',
+    t_doc_desc: 'Comuna',
   }]
 
   agent = new FormGroup({
@@ -136,9 +153,9 @@ export class AddClientComponent implements OnInit {
   }
 
   onlyNumberKey(event) {
+    this.resetStatus()
     return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
   }
-
 
   getTipoCliente(): string {
     if (this.client_type.valid) {
@@ -150,30 +167,62 @@ export class AddClientComponent implements OnInit {
     this.formats.splice(index, 1);
   }
 
-  submit() {
+  
 
+  verificar_usuario() {
+    this.search_client = true;
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
-    console.log(rif)
-
+    // console.log(rif)
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson("1"),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
     }))
-
     const IMEI = '13256848646454643'
-
     this.loading = true;
-
-    console.log("verify")
-
-    this.sesion.doVerificaicon(`${IMEI};${data}`).subscribe(res => {
-      console.log(JSON.parse(this.crypto.decryptString(res)))
+    // console.log("verify")
+    this.cliente.doVerificaicon(`${IMEI};${data}`).subscribe(res => {
+      // console.log(JSON.parse(this.crypto.decryptString(res)))
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      console.log(this.validacionresponse)
-      this.search_client = this.validacionresponse.value_exists == "true" ? true : false;
+      // console.log(this.validacionresponse)
+      this.search_client = this.validacionresponse.value_exists === "true" ? true : false;
+      if(this.search_client){
+        this.identity.controls['rif'].setErrors({'existe': true});
+      }else{
+        this.identity.controls['rif'].setErrors({'existe': null});
+        this.identity.controls['rif'].updateValueAndValidity()
+      }
+      this.loading = false
+      this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
+    })
+  }
 
+
+  submit() {
+    this.search_client = true;
+    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
+    // console.log(rif)
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson("1"),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
+    }))
+    const IMEI = '13256848646454643'
+    this.loading = true;
+    // console.log("verify")
+    this.cliente.doVerificaicon(`${IMEI};${data}`).subscribe(res => {
+      // console.log(JSON.parse(this.crypto.decryptString(res)))
+      this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      // console.log(this.validacionresponse)
+      this.search_client = this.validacionresponse.value_exists === "true" ? true : false;
+      if(this.search_client){
+        this.identity.controls['rif'].setErrors({'existe': true});
+      }else{
+        this.identity.controls['rif'].setErrors({'existe': null});
+        this.identity.controls['rif'].updateValueAndValidity()
+      }
       this.loading = false
       this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
     })
@@ -182,6 +231,15 @@ export class AddClientComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Agregar Cliente')
     this.add_agent()
+    this.estados = JSON.parse(this.storage.get(constant.ESTADOS)).estados
+  }
+
+  getError(){
+    return this.identity.errors?.['existe']
+  }
+
+  resetStatus(){
+    this.search_client = true;
   }
 
 

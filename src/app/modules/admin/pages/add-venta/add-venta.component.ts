@@ -16,7 +16,8 @@ import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { StorageService } from 'src/app/shared/services/storage.service';
-import { ValidacionclienteDecrypter, ValidacionclienteResponse } from '../../../../models/validacioncliente_response'
+import { ValidacionclienteDecrypter, ValidacionclienteResponse } from '../../../../models/validacioncliente_response';
+import { ClientesService } from 'src/app/shared/services/clientes.service';
 
 @Component({
   selector: 'app-add-venta',
@@ -33,7 +34,7 @@ export class AddVentaComponent implements OnInit {
   constructor(
     private title: Title, 
     private crypto: CryptoService, 
-    private sesion: SesionService, 
+    private cliente: ClientesService,
     private storage: StorageService) { }
 
   buy = new FormGroup({
@@ -115,7 +116,7 @@ export class AddVentaComponent implements OnInit {
 
     console.log("verify")
 
-    this.sesion.doVerificaicon(`${IMEI};${data}`).subscribe(res => {
+    this.cliente.doVerificaicon(`${IMEI};${data}`).subscribe(res => {
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionresponse)

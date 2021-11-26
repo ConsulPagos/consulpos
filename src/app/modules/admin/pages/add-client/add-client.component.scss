@@ -65,16 +65,36 @@
     margin-right: 10px;
 }
 
-.title_container_file_upload{
+.title_container_file_upload {
     display: flex;
     justify-content: center;
 }
 
-.btn_form_add_agent{
+.btn_form_add_agent {
     padding: 1rem;
 }
 
-.formulario{
+.formulario {
     display: flex;
     flex-wrap: wrap;
+}
+
+.error {
+    display: flex;
+    font-weight: 400;
+    color: red;
+}
+
+.container_error_sell {
+    display: flex;
+    align-items: center;
+    padding-bottom: 1rem;
+}
+
+.icon_sell {
+    margin-right: 0.5rem;
+}
+
+.btn_space{
+    margin-left: .5rem;
 }

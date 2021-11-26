@@ -28,7 +28,7 @@
 
                             <mat-form-field appearance="outline" class="container_box">
                                 <mat-label>Tipo</mat-label>
-                                <mat-select disableRipple formControlName="tipo_doc">
+                                <mat-select disableRipple formControlName="tipo_doc" (selectionChange)="resetStatus()">
                                     <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
                                         {{t_doc.t_doc}} </mat-option>
                                 </mat-select>
@@ -36,20 +36,26 @@
 
                             <mat-form-field appearance="outline">
                                 <mat-label>Rif</mat-label>
-                                <input matInput 
-                                formControlName="rif" 
-                                placeholder="123456789" 
-                                type="text"
-                                (keypress)="onlyNumberKey($event)" 
-                                minlength="1" 
-                                maxlength="9">
-                            </mat-form-field>
+                                <input matInput formControlName="rif" placeholder="123456789" type="text"
+                                    (keypress)="onlyNumberKey($event)" minlength="1" maxlength="9"
+                                    (keyup.enter)="verificar_usuario()">
 
+                            </mat-form-field>
+                            <div class="container_error_sell"
+                                *ngIf="identity.get('rif').errors && identity.get('rif').hasError('existe')">
+                                <span class="error">El cliente ya existe.</span>
+                                <button class="btn_space" mat-button color='accent'>
+                                    <li class="fa fa-cart-plus icon_sell"></li><span>Crear Venta</span>
+                                </button>
+                            </div>
                         </div>
+
                     </form>
+
                     <!-- Bootn de siguiente strepper -->
                     <div>
-                        <button class="stepBtn" mat-raised-button matStepperNext (click)="submit()" [disabled]="identity.invalid">Siguiente</button>
+                        <button class="stepBtn" mat-raised-button matStepperNext
+                            [disabled]="identity.invalid || search_client">Siguiente</button>
                     </div>
                 </mat-step>
                 <!-- Parte Inicial -->
@@ -57,15 +63,14 @@
                     <!-- [stepControl]="client_type" -->
                     <form [formGroup]="client_type">
                         <ng-template matStepLabel>Indique el tipo de cliente</ng-template>
-                        <div>
-                            <h6>Tipo de Cliente</h6>
-                            <mat-radio-group [(ngModel)]="tipo_cliente" formControlName="tipo_cliente">
-                                <mat-radio-button *ngFor="let tipo of tipos_clientes" [value]="tipo.id_tipo_cliente"
-                                    class="container_box_space">
-                                    {{tipo.tipo_cliente}}
-                                </mat-radio-button>
-                            </mat-radio-group>
-                        </div>
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Tipo de Cliente</mat-label>
+                            <mat-select disableRipple formControlName="tipo_cliente">
+                                <mat-option *ngFor="let tipo_cliente of tipos_clientes"
+                                    value={{tipo_cliente.id_tipo_cliente}}>
+                                    {{tipo_cliente.tipo_cliente}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </form>
                     <!-- Bootn de siguiente strepper -->
                     <div>

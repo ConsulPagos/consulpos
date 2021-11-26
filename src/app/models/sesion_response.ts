@@ -10,6 +10,11 @@ export interface SesionResponse {
     M?: string;
 }
 
+export interface LogoutResponse {
+    R?: string;
+    M?: string;
+}
+
 export class SesionObject {
 
     private crypto: CryptoService = new CryptoService()
@@ -25,6 +30,15 @@ export class SesionObject {
                 value.scod = this.crypto.decryptJsonFixed(value.scod)
             }
         
+        } catch (error) {
+            console.log(error)
+        }
+        return value
+    }
+
+    logOutDecrypter(value: LogoutResponse): LogoutResponse {
+        try {
+            value.M = this.crypto.decryptJsonFixed(value.M)
         } catch (error) {
             console.log(error)
         }
