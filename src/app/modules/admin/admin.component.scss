@@ -41,3 +41,12 @@ p {
     margin: 10px;
     background: #fff;
 }
+
+.loader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: black;
+    font-weight: 800;
+}
