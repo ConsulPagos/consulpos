@@ -34,8 +34,8 @@ export class AdminNavbarComponent implements OnInit {
   }
 
   loggout() {
-    localStorage.clear()
-    this.route.navigateByUrl('')
+/*     localStorage.clear()
+    this.route.navigateByUrl('') */
     
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson("1"),
@@ -47,8 +47,8 @@ export class AdminNavbarComponent implements OnInit {
     console.log("logout")
 
     this.sesion.doLogout(`${IMEI};${data}`).subscribe(res => {
-      this.response = new SesionObject().logOutDecrypter(JSON.parse(this.crypto.decryptString(res)))
-
+      this.response = new SesionObject(this.crypto).logOutDecrypter(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.response)
       switch (this.response.R) {
         case constant.R0:
           localStorage.clear()
@@ -56,9 +56,11 @@ export class AdminNavbarComponent implements OnInit {
           break;
         case constant.R1:
           this.toaster.error(this.response.M)
+          this.crypto.setKeys(this.response.keyJ, this.response.ivJ, this.response.keyJ, this.response.keyS)
           break;
         default:
           this.toaster.default_error()
+          this.crypto.setKeys(this.response.keyJ, this.response.ivJ, this.response.keyJ, this.response.keyS)
           break;
       }
     })

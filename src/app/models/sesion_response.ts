@@ -13,11 +13,17 @@ export interface SesionResponse {
 export interface LogoutResponse {
     R?: string;
     M?: string;
+    keyS?: string;
+    ivS?: string;
+    keyJ?: string;
+    ivJ?: string;
 }
 
 export class SesionObject {
 
-    private crypto: CryptoService = new CryptoService()
+    constructor(private crypto: CryptoService){
+        
+    }
 
     deserialize(value: SesionResponse): SesionResponse {
         try {
@@ -37,11 +43,14 @@ export class SesionObject {
     }
 
     logOutDecrypter(value: LogoutResponse): LogoutResponse {
-        try {
-            value.M = this.crypto.decryptJsonFixed(value.M)
-        } catch (error) {
-            console.log(error)
+        const refresh: LogoutResponse = {
+            M: value.M,
+            keyS: this.crypto.decryptString(value.keyS),
+            ivS: this.crypto.decryptString(value.ivS),
+            keyJ: this.crypto.decryptJson(value.keyJ),
+            ivJ: this.crypto.decryptJson(value.ivJ),
+            R:value.R
         }
-        return value
+        return refresh
     }
 }
