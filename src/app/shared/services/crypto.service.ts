@@ -8,15 +8,10 @@ import AesEncryption from '../utils/aesEncryption';
 })
 export class CryptoService {
 
-  // private keyString: string = null
-  // private vectorString: string = null
-  // private keyJson: string = null
-  // private vectorJson: string = null
-
-  keyString: string
-  vectorString: string
-  keyJson: string
-  vectorJson: string
+  private keyString: string
+  private vectorString: string
+  private keyJson: string
+  private vectorJson: string
 
   setKeys(keyString: string, vectorJson: string, keyJson: string, vectorString: string) {
     this.keyString = keyString
@@ -25,6 +20,10 @@ export class CryptoService {
     this.vectorJson = vectorJson
     console.log("keyS: " + this.keyString)
     console.log("keyj: " + this.keyJson)
+  }
+
+  hasKeys() : boolean{
+    return this.vectorJson != undefined && this.keyJson  != undefined && this.vectorString  != undefined && this.keyString  != undefined;
   }
 
   constructor() {}

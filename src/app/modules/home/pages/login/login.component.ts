@@ -58,12 +58,14 @@ export class LoginComponent implements OnInit {
 
     const data = this.crypto.encryptStringFixed(JSON.stringify(this.user))
     const IMEI = '13256848646454643';
+    console.log(`${IMEI};${data}`)
 
     if (this.authForm.valid) {
 
       this.loading = true;
 
       this.sesion.doLogin(`${IMEI};${data}`).toPromise().then( res => {
+        console.log(res);
         console.log(this.crypto.decryptStringFixed(res))
         var sesionResponse = new SesionObject().deserialize(JSON.parse(this.crypto.decryptStringFixed(res)))
         this.loading = false
@@ -71,7 +73,7 @@ export class LoginComponent implements OnInit {
         switch (sesionResponse.R) {
           case constant.R0:
             localStorage.setItem('access_level', "99");
-            this.storage.storeJson(constant.USER, { email: this.authForm.get('email').value, scod: sesionResponse.scod })
+            this.storage.storeJson(constant.USER, { email: this.authForm.get('email').value, scod: sesionResponse.scod, uid: "1" })
             this.route.navigateByUrl('/admin/app/(adr:dashboard)')
             break;
           case constant.R1:
