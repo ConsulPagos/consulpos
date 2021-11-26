@@ -55,15 +55,6 @@ export class SesionService {
     return this.http.post(`${environment.apiHost}:${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
   }
 
-  doVerificaicon(data) {
-    var path = `/getClients`;
-    var headers = new HttpHeaders()
-    headers.set('Content-Type', 'text/plain')
-    headers.set('Accept', 'text/plain');
-    headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
-  }
-
   doLogout(data) {
     var path = `/doLogout`;
     var headers = new HttpHeaders()
