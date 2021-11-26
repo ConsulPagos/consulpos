@@ -131,7 +131,7 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Estado</mat-label>
                                 <mat-select disableRipple formControlName="estado">
-                                    <mat-option *ngFor="let estado of estados" value={{estado.id_estado}}>
+                                    <mat-option *ngFor="let estado of estados" value={{estado.estado_id}}>
                                         {{estado.estado}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -165,8 +165,10 @@
                                 <input matInput formControlName="codpostal" placeholder="1083" type="number"
                                     (keypress)="onlyNumberKey($event)">
                             </mat-form-field>
+                        </div>
 
-                            <mat-form-field class="container_box_space" appearance="outline">
+                        <div>
+                            <mat-form-field class="container_box_direction" appearance="outline">
                                 <mat-label>Dirección</mat-label>
                                 <textarea matInput placeholder="Av. Ernesto Blohm"
                                     formControlName="direccion"> </textarea>

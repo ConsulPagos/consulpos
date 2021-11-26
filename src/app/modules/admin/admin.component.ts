@@ -49,6 +49,7 @@ export class AdminComponent implements OnInit {
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.loading = false
       this.storage.store(constant.BANCOS, JSON.stringify(verifyResponse.bancos))
+      this.storage.store(constant.ESTADOS, JSON.stringify(verifyResponse.estados))
       this.crypto.setKeys(verifyResponse.keyS, verifyResponse.ivJ, verifyResponse.keyJ, verifyResponse.ivS)
     })
   }
