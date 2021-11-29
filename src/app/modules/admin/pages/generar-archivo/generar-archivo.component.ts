@@ -58,6 +58,15 @@ export class GenerarArchivoComponent implements OnInit {
     descripcion: new FormControl('', [Validators.required]),
   });
 
+  formPersonalizado = new FormGroup({
+    tipoCobroJuridico: new FormControl(null, [Validators.required]),
+    cashJuridico: new FormControl('', [Validators.required]),
+    tipoCobroNatural: new FormControl(null, [Validators.required]),
+    cashNatural: new FormControl('', [Validators.required]),
+    tipoCobroFP: new FormControl(null, [Validators.required]),
+    cashFP: new FormControl('', [Validators.required])
+  });
+
   ngOnInit(): void {
     this.id = parseInt(this.routes.snapshot.paramMap.get('id_pedido'))
     this.id_afiliado = parseInt(this.routes.snapshot.paramMap.get('id_afiliado'))
@@ -99,22 +108,47 @@ export class GenerarArchivoComponent implements OnInit {
 
 
   submit() {
-    const data = this.crypto.encryptString(JSON.stringify({
+    var data: any = {
       u_id: this.crypto.encryptJson("1"),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       banco_id: this.crypto.encryptJson(this.form.get('banco').value),
-      monto_cuota: this.crypto.encryptJson(this.form.get('cash').value),
       descripcion: this.crypto.encryptJson(this.form.get('descripcion').value),
       tasa: this.crypto.encryptJson('5'),
-    }))
+      oper: this.crypto.encryptJson(this.form.get("tipo_cobro").value),
+    }
+
+    if (this.form.get("tipo_cobro").value == "personalizado") {
+      data = {
+        ...data,
+        cobroJuridico: this.crypto.encryptJson(JSON.stringify({
+          tipo_cobro: this.formPersonalizado.get("tipoCobroJuridico").value,
+          monto_cuota: this.formPersonalizado.get("cashJuridico").value
+        })),
+        cobroNatural: this.crypto.encryptJson(JSON.stringify({
+          tipo_cobro: this.formPersonalizado.get("tipoCobroNatural").value,
+          monto_cuota: this.formPersonalizado.get("cashNatural").value
+        })),
+        cobroFP: this.crypto.encryptJson(JSON.stringify({
+          tipo_cobro: this.formPersonalizado.get("tipoCobroFP").value,
+          monto_cuota: this.formPersonalizado.get("cashFP").value
+        })),
+      }
+    } else {
+      data = {
+        ...data,
+        monto_cuota: this.crypto.encryptJson(this.form.get('cash').value)
+      }
+    }
+
+    const dataString = this.crypto.encryptString(JSON.stringify(data));
 
     const IMEI = '13256848646454643'
     this.loading = true;
 
     console.log("verify")
 
-    this.sesion.doGeneracion(`${IMEI};${data}`).subscribe(res => {
+    this.sesion.doGeneracion(`${IMEI};${dataString}`).subscribe(res => {
       this.generacionResponse = new GeneracionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.generacionResponse)
       console.log(JSON.parse(this.crypto.decryptString(res)))
@@ -125,7 +159,7 @@ export class GenerarArchivoComponent implements OnInit {
       if (this.generacionResponse.tipo_archivo === 'EXCEL') {
         this.exportXLSX();
       } else if (this.generacionResponse.tipo_archivo === 'TXT') {
-        expFile(this.generacionResponse.cuotas, 'Archivo_' + this.generacionResponse.id_archivo + '_' + new Date())
+        expFile(this.generacionResponse.cuotas.join('\n'), 'Archivo_' + this.generacionResponse.id_archivo + '_' + new Date())
       }
 
     })

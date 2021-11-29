@@ -59,17 +59,21 @@ form{
 }
 
 .cuota-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
 }
 
 .form{
     width: 100%;
-    flex-grow: 1;
+    margin: 5px;
 }
 
 .btn-submit{
     height: 50px;
+}
+
+.cuota-personalizado{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
