@@ -1,5 +1,6 @@
 export interface GeneracionResponse {
     cuotas: [];
+    encabezado: [];
     cantidad_cuotas:number;
     decimales:number;
     tipo_archivo:string;
@@ -38,6 +39,7 @@ export class GeneracionDecrypter {
             usar_coma:parseInt(this.crypto.decryptJson(value.usar_coma)),
             id_archivo:parseInt(this.crypto.decryptJson(value.id_archivo)),
             total:parseInt(this.crypto.decryptJson(value.total)),
+            encabezado: JSON.parse(this.crypto.decryptJson(value.encabezado))
         }
         console.log(verify)
         return verify

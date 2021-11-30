@@ -45,10 +45,10 @@
                                         <mat-form-field class="form" appearance="outline">
                                             <mat-label>Tipo de cobro para Juridico</mat-label>
                                             <mat-select disableRipple formControlName="tipoCobroJuridico">
-                                                <mat-option value="D">
+                                                <mat-option value="unico">
                                                     Diario
                                                 </mat-option>
-                                                <mat-option value="M">
+                                                <mat-option value="total">
                                                     Mensual
                                                 </mat-option>
                                             </mat-select>
@@ -68,10 +68,10 @@
                                         <mat-form-field class="form" appearance="outline">
                                             <mat-label>Tipo de cobro para Natural</mat-label>
                                             <mat-select disableRipple formControlName="tipoCobroNatural">
-                                                <mat-option value="D">
+                                                <mat-option value="unico">
                                                     Diario
                                                 </mat-option>
-                                                <mat-option value="M">
+                                                <mat-option value="total">
                                                     Mensual
                                                 </mat-option>
                                             </mat-select>
@@ -91,17 +91,17 @@
                                         <mat-form-field class="form" appearance="outline">
                                             <mat-label>Tipo de cobro para Firma Personal</mat-label>
                                             <mat-select disableRipple formControlName="tipoCobroFP">
-                                                <mat-option value="D">
+                                                <mat-option value="unico">
                                                     Diario
                                                 </mat-option>
-                                                <mat-option value="M">
+                                                <mat-option value="total">
                                                     Mensual
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                         <mat-form-field class="form" appearance="outline">
                                             <mat-label>Monto de la cuota en $ para Firma Personal</mat-label>
-                                            <input matInput type="number" formControlName="cashFB"
+                                            <input matInput type="number" formControlName="cashFP"
                                                 placeholder="Ingresa el monto de la cuota en $">
                                             <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear"
                                                 (click)="value=''">
@@ -130,7 +130,7 @@
                             </mat-form-field>
 
                             <button mat-raised-button color="accent" *ngIf="!loading; else loadingTmp"
-                                (click)="submit()" [disabled]="form.invalid" mat-button class="btn-submit">
+                                (click)="submit()" [disabled]="isInvalid()" mat-button class="btn-submit">
                                 GENERAR ARCHIVO
                             </button>
 
