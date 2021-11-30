@@ -92,8 +92,8 @@ export class GenerarArchivoComponent implements OnInit {
     });
   }
 
-  exportXLSX(cuotas: [][]): void {
-    this.excelService.exportExcel(cuotas, 'Archivo_' + this.generacionResponse.id_archivo + '_' + new Date());
+  exportXLSX(): void {
+    this.excelService.exportExcel(this.generacionResponse.cuotas, 'Archivo_' + this.generacionResponse.id_archivo + '_' + new Date());
   }
 
   getTipoCobro(t: string): boolean {
@@ -157,24 +157,18 @@ export class GenerarArchivoComponent implements OnInit {
       this.loading = false
       this.crypto.setKeys(this.generacionResponse.keyS, this.generacionResponse.ivJ, this.generacionResponse.keyJ, this.generacionResponse.ivS)
       this.openDialog();
-
-      var cuotas: [][] = [...this.generacionResponse.cuotas];
-      if (this.generacionResponse.encabezado.length > 0) {
-        cuotas = [...[this.generacionResponse.encabezado], ...this.generacionResponse.cuotas];
-      }
-
       if (this.generacionResponse.tipo_archivo === 'EXCEL') {
-        this.exportXLSX(cuotas);
+        this.exportXLSX();
       } else if (this.generacionResponse.tipo_archivo === 'TXT') {
-        expFile(cuotas.join('\n'), 'Archivo_' + this.generacionResponse.id_archivo + '_' + new Date())
+        expFile(this.generacionResponse.cuotas.join('\n'), 'Archivo_' + this.generacionResponse.id_archivo + '_' + new Date())
       }
 
     })
 
   }
 
-  isInvalid(): boolean {
-    if (this.form.get("tipo_cobro").value == "personalizado") {
+  isInvalid():boolean{
+    if(this.form.get("tipo_cobro").value == "personalizado"){
       return this.form.invalid || this.formPersonalizado.invalid;
     }
     return this.form.invalid;
