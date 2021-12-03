@@ -129,11 +129,8 @@
                                     placeholder="Ingresa la descripcion">
                             </mat-form-field>
 
-                            <button mat-raised-button color="accent" *ngIf="!loading; else loadingTmp"
-                                (click)="submit()" [disabled]="isInvalid()" mat-button class="btn-submit">
-                                GENERAR ARCHIVO
-                            </button>
-
+                           <app-action-btn class="btn-submit" (onClick)="submit()" [loading]="loading" [text]="'Generar archivo'" [isDisabled]="isInvalid() || loading"></app-action-btn>
+                           
                         </div>
                     </form>
                 </div>

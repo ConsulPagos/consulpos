@@ -38,6 +38,8 @@ import { MatOptionModule } from '@angular/material/core';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatIconModule} from '@angular/material/icon';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { LoaderComponent } from '../../components/loader/loader.component';
+import { ActionBtnComponent } from '../../components/action-btn/action-btn.component';
 
 @NgModule({
   declarations: [
@@ -57,8 +59,8 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
     FileUploadDirective,
     ProgressComponent,
     BottomFormComponent,
-
-    
+    LoaderComponent,
+    ActionBtnComponent
     
   ],
   imports: [
@@ -87,6 +89,7 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
     MatProgressBarModule,
     MatIconModule,
     NgxIntlTelInputModule
+    
   ],
   exports: [
     TitleComponent,
@@ -127,7 +130,9 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
     BottomFormComponent,
     MatProgressBarModule,
     MatIconModule,
-    NgxIntlTelInputModule
+    NgxIntlTelInputModule,
+    LoaderComponent,
+    ActionBtnComponent
 
   ]
 })
