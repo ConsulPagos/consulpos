@@ -11,10 +11,13 @@ import { TipodocumentoInterface } from '../../../../models/tipo_documento'
 import { TipoclienteInterface } from '../../../../models/tipo_cliente'
 import { RepresentanteInterface } from 'src/app/models/user';
 import { ValidacionclienteDecrypter, ValidacionclienteResponse } from 'src/app/models/validacioncliente_response';
+import { AddClientDecrypter, AddClientResponse } from 'src/app/models/add_clients_response';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { constant } from 'src/app/shared/utils/constant';
+import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
+import { ActividadComercialInterface } from '../../../../models/actividad_comercial'
 
 @Component({
   selector: 'app-add-client',
@@ -26,6 +29,7 @@ export class AddClientComponent implements OnInit {
 
   //----------- VARIABLES GLOBALES -----------\\
   validacionresponse: ValidacionclienteResponse;
+  addClientResponse: AddClientResponse;
   loading = false;
   agents = [];
   search_client: boolean = true;
@@ -36,6 +40,9 @@ export class AddClientComponent implements OnInit {
   parroquias: ParroquiaInterface[];
   ciudades: CiudadInterface[];
   contactos: ContactoInterface[];
+  actividades_comerciales:ActividadComercialInterface[];
+  tipos_clientes: TipoclienteInterface[];
+  tipo_documentos: TipodocumentoInterface[];
 
   constructor(
     private title: Title,
@@ -57,21 +64,32 @@ export class AddClientComponent implements OnInit {
     tipo_cliente: new FormControl('', [Validators.required]),
   });
 
+    ////////////////PHONE///////////////////
+    separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+    CountryISO = CountryISO;
+    PhoneNumberFormat = PhoneNumberFormat;
+    preferredCountries: CountryISO[] = [CountryISO.Venezuela, CountryISO.UnitedStates];
+    ////////////////////////////////////////
+
   //FORM DEL TERCER STEP\\
   client = new FormGroup({
     razon_social: new FormControl('', [Validators.required]),
     nombre_comercial: new FormControl('', [Validators.required]),
-    contribuyente: new FormControl('',[Validators.required]),
-    email: new FormControl('',[Validators.required]),
+    contribuyente: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required]),
     telefono_local: new FormControl('', [Validators.required]),
-    telefono_movil: new FormControl('',[Validators.required]),
+    telefono_movil: new FormControl('', [Validators.required]),
     estado: new FormControl('', [Validators.required]),
     municipio: new FormControl('', [Validators.required]),
     parroquia: new FormControl('', [Validators.required]),
-    ciudad: new FormControl('',[Validators.required] ),
+    ciudad: new FormControl('', [Validators.required]),
     direccion: new FormControl('', [Validators.required]),
     contacto: new FormControl('', [Validators.required]),
     codpostal: new FormControl('', [Validators.required]),
+    act_comercial: new FormControl('', [Validators.required]),
+    pto_referencia: new FormControl('', [Validators.required]),
+    localidad: new FormControl('', [Validators.required]),
   });
 
   //FORM DEL CUARTO STEP\\
@@ -79,53 +97,6 @@ export class AddClientComponent implements OnInit {
     id: new FormControl('', [Validators.required]),
   });
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  tipos_clientes: TipoclienteInterface[] = [{
-    id_tipo_cliente: 1,
-    tipo_cliente: 'Jurídico',
-    letra: 'J',
-  },
-  {
-    id_tipo_cliente: 2,
-    tipo_cliente: 'Natural',
-    letra: 'N',
-  },
-  {
-    id_tipo_cliente: 3,
-    tipo_cliente: 'Fima Perosnal',
-    letra: 'R',
-  }]
-
-  tipo_documentos: TipodocumentoInterface[] = [{
-    t_doc_id: 1,
-    t_doc: 'V',
-    t_doc_desc: 'venezolano',
-  },
-  {
-    t_doc_id: 2,
-    t_doc: 'E',
-    t_doc_desc: 'Extranjero',
-  },
-  {
-    t_doc_id: 3,
-    t_doc: 'P',
-    t_doc_desc: 'Pasaporte',
-  },
-  {
-    t_doc_id: 4,
-    t_doc: 'J',
-    t_doc_desc: 'juridico',
-  },
-  {
-    t_doc_id: 5,
-    t_doc: 'G',
-    t_doc_desc: 'Gubernamental',
-  },
-  {
-    t_doc_id: 6,
-    t_doc: 'C',
-    t_doc_desc: 'Comuna',
-  }]
 
   agent = new FormGroup({
     nombre_representante: new FormControl('', [Validators.required]),
@@ -159,7 +130,7 @@ export class AddClientComponent implements OnInit {
 
   getTipoCliente(): string {
     if (this.client_type.valid) {
-      return this.tipos_clientes.filter(t => t.id_tipo_cliente == this.client_type.get('tipo_cliente').value)[0].letra
+      return this.tipos_clientes.filter(t => t.id == this.client_type.get('tipo_cliente').value)[0].t_c_letra
     } return null
   }
 
@@ -167,14 +138,12 @@ export class AddClientComponent implements OnInit {
     this.formats.splice(index, 1);
   }
 
-  
-
   verificar_usuario() {
     this.search_client = true;
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
     // console.log(rif)
     const data = this.crypto.encryptString(JSON.stringify({
-      u_id: this.crypto.encryptJson("1"),
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
@@ -183,14 +152,15 @@ export class AddClientComponent implements OnInit {
     this.loading = true;
     // console.log("verify")
     this.cliente.doVerificaicon(`${IMEI};${data}`).subscribe(res => {
-      // console.log(JSON.parse(this.crypto.decryptString(res)))
+      console.log(res)
+      console.log(JSON.parse(this.crypto.decryptString(res)))
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      // console.log(this.validacionresponse)
+      console.log(this.validacionresponse)
       this.search_client = this.validacionresponse.value_exists === "true" ? true : false;
-      if(this.search_client){
-        this.identity.controls['rif'].setErrors({'existe': true});
-      }else{
-        this.identity.controls['rif'].setErrors({'existe': null});
+      if (this.search_client) {
+        this.identity.controls['rif'].setErrors({ 'existe': true });
+      } else {
+        this.identity.controls['rif'].setErrors({ 'existe': null });
         this.identity.controls['rif'].updateValueAndValidity()
       }
       this.loading = false
@@ -202,29 +172,49 @@ export class AddClientComponent implements OnInit {
   submit() {
     this.search_client = true;
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
-    // console.log(rif)
+   console.log(rif)
     const data = this.crypto.encryptString(JSON.stringify({
-      u_id: this.crypto.encryptJson("1"),
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
+
+      t_doc_id: this.crypto.encryptJson(this.identity.get('tipo_doc').value),
+      rif: this.crypto.encryptJson(rif),
+
+      t_cliente_id: this.crypto.encryptJson(this.client_type.get('tipo_cliente').value),
+      status_id: this.crypto.encryptJson('1'),
+      fecha_registro: this.crypto.encryptJson('12/02/2021'),
+
+      razon_social: this.crypto.encryptJson(this.client.get('razon_social').value),
+      comercio: this.crypto.encryptJson(this.client.get('nombre_comercial').value),
+      contribuyente_id: this.crypto.encryptJson(this.client.get('contribuyente').value),
+      email: this.crypto.encryptJson(this.client.get('email').value),
+      telefono_local: this.crypto.encryptJson(this.client.get('telefono_local').value),
+      telefono_movil: this.crypto.encryptJson(this.client.get('telefono_movil').value),
+      estados: this.crypto.encryptJson(this.client.get('estado').value),
+      municipios: this.crypto.encryptJson(this.client.get('municipio').value),
+      parroquia_id: this.crypto.encryptJson(this.client.get('parroquia').value),
+      ciudad_id: this.crypto.encryptJson(this.client.get('ciudad').value),
+      cod_postal: this.crypto.encryptJson(this.client.get('codpostal').value),
+      direccion: this.crypto.encryptJson(this.client.get('direccion').value),
+      m_contacto_id: this.crypto.encryptJson(this.client.get('contacto').value),
+      id_actividad_comercial: this.crypto.encryptJson(this.client.get('act_comercial').value),
+      pto_ref: this.crypto.encryptJson(this.client.get('pto_referencia').value),
+      localidad: this.crypto.encryptJson(this.client.get('localidad').value),
     }))
+
     const IMEI = '13256848646454643'
     this.loading = true;
     // console.log("verify")
-    this.cliente.doVerificaicon(`${IMEI};${data}`).subscribe(res => {
-      // console.log(JSON.parse(this.crypto.decryptString(res)))
-      this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      // console.log(this.validacionresponse)
-      this.search_client = this.validacionresponse.value_exists === "true" ? true : false;
-      if(this.search_client){
-        this.identity.controls['rif'].setErrors({'existe': true});
-      }else{
-        this.identity.controls['rif'].setErrors({'existe': null});
-        this.identity.controls['rif'].updateValueAndValidity()
-      }
-      this.loading = false
-      this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
+    this.cliente.doSave(`${IMEI};${data}`).subscribe(res => {
+      console.log(data)
+      console.log(res)
+      console.log(this.crypto.decryptString(res))
+      this.addClientResponse = new AddClientDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.addClientResponse)
+
+      // this.loading = false
+      this.crypto.setKeys(this.addClientResponse.keyS, this.addClientResponse.ivJ, this.addClientResponse.keyJ, this.addClientResponse.ivS)
     })
   }
 
@@ -232,13 +222,21 @@ export class AddClientComponent implements OnInit {
     this.title.setTitle('ConsulPos | Agregar Cliente')
     this.add_agent()
     this.estados = JSON.parse(this.storage.get(constant.ESTADOS)).estados
+    this.contribuyentes = JSON.parse(this.storage.get(constant.CONTRIBUYENTES)).contribuyentes
+    this.municipios = JSON.parse(this.storage.get(constant.MUNICIPIOS)).municipios
+    this.parroquias = JSON.parse(this.storage.get(constant.PARROQUIAS)).parroquias
+    this.ciudades = JSON.parse(this.storage.get(constant.CIUDADES)).ciudades
+    this.contactos = JSON.parse(this.storage.get(constant.M_CONTACTO)).m_contactos
+    this.tipos_clientes = JSON.parse(this.storage.get(constant.T_CLIENTES)).t_clientes
+    this.tipo_documentos = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs
+    this.actividades_comerciales = JSON.parse(this.storage.get(constant.ACTIVIDAD_COMERCIAL)).actividades_comerciales
   }
 
-  getError(){
+  getError() {
     return this.identity.errors?.['existe']
   }
 
-  resetStatus(){
+  resetStatus() {
     this.search_client = true;
   }
 
