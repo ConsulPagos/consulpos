@@ -55,13 +55,13 @@ export class AddClientComponent implements OnInit {
   //FORM DEL PRIMER STEP\\
   identity = new FormGroup({
 
-    rif: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
-    tipo_doc: new FormControl('', [Validators.required]),
+    rif: new FormControl('253826510', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
+    tipo_doc: new FormControl('1', [Validators.required]),
   });
 
   //FORM DEL SEGUNDO STEP\\
   client_type = new FormGroup({
-    tipo_cliente: new FormControl('', [Validators.required]),
+    tipo_cliente: new FormControl('1', [Validators.required]),
   });
 
     ////////////////PHONE///////////////////
@@ -74,22 +74,22 @@ export class AddClientComponent implements OnInit {
 
   //FORM DEL TERCER STEP\\
   client = new FormGroup({
-    razon_social: new FormControl('', [Validators.required]),
-    nombre_comercial: new FormControl('', [Validators.required]),
-    contribuyente: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required]),
-    telefono_local: new FormControl('', [Validators.required]),
-    telefono_movil: new FormControl('', [Validators.required]),
-    estado: new FormControl('', [Validators.required]),
-    municipio: new FormControl('', [Validators.required]),
-    parroquia: new FormControl('', [Validators.required]),
-    ciudad: new FormControl('', [Validators.required]),
-    direccion: new FormControl('', [Validators.required]),
-    contacto: new FormControl('', [Validators.required]),
-    codpostal: new FormControl('', [Validators.required]),
-    act_comercial: new FormControl('', [Validators.required]),
-    pto_referencia: new FormControl('', [Validators.required]),
-    localidad: new FormControl('', [Validators.required]),
+    razon_social: new FormControl('Churreria', [Validators.required]),
+    nombre_comercial: new FormControl('Los Churros Magicos', [Validators.required]),
+    contribuyente: new FormControl('1', [Validators.required]),
+    email: new FormControl('Churreria@gmail.com', [Validators.required]),
+    telefono_local: new FormControl('04242735855', [Validators.required]),
+    telefono_movil: new FormControl('04242735855', [Validators.required]),
+    estado: new FormControl('1', [Validators.required]),
+    municipio: new FormControl('1', [Validators.required]),
+    parroquia: new FormControl('1', [Validators.required]),
+    ciudad: new FormControl('1', [Validators.required]),
+    direccion: new FormControl('Av. Los churros', [Validators.required]),
+    contacto: new FormControl('1', [Validators.required]),
+    codpostal: new FormControl('1080', [Validators.required]),
+    act_comercial: new FormControl('1', [Validators.required]),
+    pto_referencia: new FormControl('Frente a los churros', [Validators.required]),
+    localidad: new FormControl('Mas alla que de aca', [Validators.required]),
   });
 
   //FORM DEL CUARTO STEP\\

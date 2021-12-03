@@ -36,6 +36,8 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
 
   @Input() access_level: number;
   @Output() count = new EventEmitter<number>();
+  @Output() editClient = new EventEmitter<any>();
+
   loading = false;
   error = false;
   resultsLength;
@@ -123,6 +125,10 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+
+  _editClient(client){
+    this.editClient.emit(client)
   }
 
 }
