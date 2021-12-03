@@ -1,8 +1,7 @@
 export interface ModeloInterface {
-    modelo_id:    number;
-    precio:       string;
-    marca_id:     string;
     categoria_id: string;
-    modelo:       string;
-    moneda_id:    string;
+    id: number;
+    id_marca: string;
+    modelo: string;
+    precio: string;
 }

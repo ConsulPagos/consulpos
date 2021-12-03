@@ -50,6 +50,22 @@ export class AdminComponent implements OnInit {
       this.loading = false
       this.storage.store(constant.BANCOS, JSON.stringify(verifyResponse.bancos))
       this.storage.store(constant.ESTADOS, JSON.stringify(verifyResponse.estados))
+      this.storage.store(constant.CIUDADES, JSON.stringify(verifyResponse.ciudades))
+      this.storage.store(constant.CONTRIBUYENTES, JSON.stringify(verifyResponse.contribuyentes))
+      this.storage.store(constant.M_CONTACTO, JSON.stringify(verifyResponse.m_contactos))
+      this.storage.store(constant.MUNICIPIOS, JSON.stringify(verifyResponse.municipios))
+      this.storage.store(constant.PARROQUIAS, JSON.stringify(verifyResponse.parroquias))
+      this.storage.store(constant.T_CLIENTES, JSON.stringify(verifyResponse.t_clientes))
+      this.storage.store(constant.T_DOCS, JSON.stringify(verifyResponse.t_docs))
+      this.storage.store(constant.ACTIVIDAD_COMERCIAL, JSON.stringify(verifyResponse.actividades_comerciales))
+
+      this.storage.store(constant.OPERADORAS, JSON.stringify(verifyResponse.operadoras))
+      this.storage.store(constant.MODELOS, JSON.stringify(verifyResponse.modelos))
+      this.storage.store(constant.PLANES, JSON.stringify(verifyResponse.planes))
+      this.storage.store(constant.PLATAFORMAS, JSON.stringify(verifyResponse.plataformas))
+      this.storage.store(constant.T_COBROS, JSON.stringify(verifyResponse.t_cobros))
+      this.storage.store(constant.FRACCIONES_PAGO, JSON.stringify(verifyResponse.fracciones_pago))
+      
       this.crypto.setKeys(verifyResponse.keyS, verifyResponse.ivJ, verifyResponse.keyJ, verifyResponse.ivS)
     })
   }

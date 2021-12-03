@@ -37,6 +37,7 @@ import { BottomFormComponent } from '../../components/bottom-form/bottom-form.co
 import { MatOptionModule } from '@angular/material/core';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatIconModule} from '@angular/material/icon';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,9 @@ import {MatIconModule} from '@angular/material/icon';
     FileUploadDirective,
     ProgressComponent,
     BottomFormComponent,
+
+    
+    
   ],
   imports: [
     CommonModule,
@@ -82,6 +86,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatSidenavModule,
     MatProgressBarModule,
     MatIconModule,
+    NgxIntlTelInputModule
   ],
   exports: [
     TitleComponent,
@@ -122,6 +127,8 @@ import {MatIconModule} from '@angular/material/icon';
     BottomFormComponent,
     MatProgressBarModule,
     MatIconModule,
+    NgxIntlTelInputModule
+
   ]
 })
 export class SharedModule { }
