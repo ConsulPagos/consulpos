@@ -43,6 +43,9 @@ import { EditAdminComponent } from './pages/edit-admin/edit-admin.component';
 import { EditClientComponent } from './pages/edit-client/edit-client.component';
 import { PrevArchivoComponent } from './pages/prev-archivo/prev-archivo.component';
 import { VerifyKeysGuard } from './guards/verify-keys.guard'
+import { VentaConsulposComponent } from './pages/venta-consulpos/venta-consulpos.component';
+import { FichaClienteComponent } from './pages/ficha-cliente/ficha-cliente.component';
+import { ValidadorVentaComponent } from './pages/validador-venta/validador-venta.component';
 
 const routes: Routes = [
   {
@@ -57,6 +60,7 @@ const routes: Routes = [
       { path: 'aplicar-descuento/:id_afiliado', component: AplicarDescuentoComponent, outlet: 'adr', canActivate: [CrmGuard] },
       { path: 'reportes', component: AplicarCreditoComponent, outlet: 'adr', canActivate: [CrmGuard] },
       { path: 'clientela', component: ClientelaComponent, outlet: 'adr', canActivate: [ClientesGuard] },
+      { path: 'venta-consulpos', component: VentaConsulposComponent, outlet: 'adr'},
       { path: 'inventario', component: InventarioComponent, outlet: 'adr', canActivate: [InventarioGuard] },
       { path: 'inventario/:id_product', component: EditInventarioComponent, outlet: 'adr', canActivate: [InventarioGuard] },
       { path: 'ingresos', component: IngresosComponent, outlet: 'adr', canActivate: [InventarioGuard] },
@@ -79,7 +83,8 @@ const routes: Routes = [
       { path: 'edit-client', component: EditClientComponent, outlet: 'adr' },
       { path: 'ventas', component: VentasComponent, outlet: 'adr' },
       { path: 'previsualizar-archivo', component: PrevArchivoComponent, outlet: 'adr' },
-
+      { path: 'ficha-cliente', component: FichaClienteComponent, outlet: 'adr' },
+      { path: 'validador-venta', component: ValidadorVentaComponent, outlet: 'adr' },
     ],
   }
 ];

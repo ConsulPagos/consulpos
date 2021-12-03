@@ -8,6 +8,8 @@ export interface SesionResponse {
     keyJ?: string;
     ivJ?: string;
     M?: string;
+    u_id?: string;
+    
 }
 
 export interface LogoutResponse {
@@ -17,6 +19,7 @@ export interface LogoutResponse {
     ivS?: string;
     keyJ?: string;
     ivJ?: string;
+    u_id?: string;
 }
 
 export class SesionObject {
@@ -32,6 +35,7 @@ export class SesionObject {
             value.ivS = this.crypto.decryptJsonFixed(value.ivS)
             value.keyJ = this.crypto.decryptJsonFixed(value.keyJ)
             value.ivJ = this.crypto.decryptJsonFixed(value.ivJ)
+            value.u_id = this.crypto.decryptJsonFixed(value.u_id)
             if(value.R == "0"){
                 value.scod = this.crypto.decryptJsonFixed(value.scod)
             }
@@ -49,7 +53,8 @@ export class SesionObject {
             ivS: this.crypto.decryptString(value.ivS),
             keyJ: this.crypto.decryptJson(value.keyJ),
             ivJ: this.crypto.decryptJson(value.ivJ),
-            R:value.R
+            R:value.R,
+            u_id: this.crypto.decryptJson(value.u_id)
         }
         return refresh
     }

@@ -1,4 +1,4 @@
 export interface PlataformaInterface {
-    plat_id: number;
-    plat:    string;
+    id: number;
+    plataforma:    string;
 }

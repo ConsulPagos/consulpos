@@ -68,12 +68,13 @@ export class LoginComponent implements OnInit {
         console.log(res);
         console.log(this.crypto.decryptStringFixed(res))
         var sesionResponse = new SesionObject(this.crypto).deserialize(JSON.parse(this.crypto.decryptStringFixed(res)))
+        console.log(sesionResponse);
         this.loading = false
         this.crypto.setKeys(sesionResponse.keyS, sesionResponse.ivJ, sesionResponse.keyJ, sesionResponse.ivS)
         switch (sesionResponse.R) {
           case constant.R0:
             localStorage.setItem('access_level', "99");
-            this.storage.storeJson(constant.USER, { email: this.authForm.get('email').value, scod: sesionResponse.scod, uid: "1" })
+            this.storage.storeJson(constant.USER, { email: this.authForm.get('email').value, scod: sesionResponse.scod, uid: sesionResponse.u_id })
             this.route.navigateByUrl('/admin/app/(adr:dashboard)')
             break;
           case constant.R1:

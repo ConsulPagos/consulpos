@@ -1,5 +1,5 @@
 export interface CiudadInterface {
-    id_ciudad?: number;
+    ciudad_id?: number;
     ciudad?: string;
-    id_estado?: number;
+    estado_id?: number;
 }

@@ -108,8 +108,8 @@ export class GenerarArchivoComponent implements OnInit {
 
 
   submit() {
-    var data: any = {
-      u_id: this.crypto.encryptJson("1"),
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       banco_id: this.crypto.encryptJson(this.form.get('banco').value),

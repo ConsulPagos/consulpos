@@ -1,5 +1,5 @@
 export interface PaisInterface {
-    pais_id:  number;
+    id:  number;
     cod_pais: string;
     pais:     string;
 }

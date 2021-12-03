@@ -21,9 +21,9 @@
         <!-- ************************************************************************************************** -->
 
         <!-- Operaciones -->
-        <a class="menu_side not-active" *ngIf="access.clientes()" [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]"
+        <a class="menu_side" *ngIf="access.clientes()" [routerLink]="['/admin/app',{ outlets: { adr: ['venta-consulpos'] } }]"
             routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-            <li class="fa fa-users"></li><span class="">Operaciones</span>
+            <li class="fa fa-cart-plus"></li><span class="">Ventas Consulpos</span>
         </a>
         <!-- ************************************************************************************************** -->
 

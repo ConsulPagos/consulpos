@@ -24,21 +24,7 @@ export class EditClientComponent implements OnInit {
   }
 
   tipo_cliente: string;
-  tipos_clientes: TipoclienteInterface[] = [{
-    id_tipo_cliente: 1,
-    tipo_cliente: 'Jurídico',
-    letra: 'J',
-  },
-  {
-    id_tipo_cliente: 2,
-    tipo_cliente: 'Natural',
-    letra: 'N',
-  },
-  {
-    id_tipo_cliente: 3,
-    tipo_cliente: 'Fima Perosnal',
-    letra: 'FP',
-  }]
+  tipos_clientes: TipoclienteInterface[];
 
   client_type = new FormGroup({
     tipo_cliente: new FormControl('', [Validators.required]),

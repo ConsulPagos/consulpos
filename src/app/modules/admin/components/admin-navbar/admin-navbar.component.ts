@@ -38,9 +38,10 @@ export class AdminNavbarComponent implements OnInit {
     this.route.navigateByUrl('') */
     
     const data = this.crypto.encryptString(JSON.stringify({
-      u_id: this.crypto.encryptJson("1"),
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      
     }))
 
     const IMEI = '13256848646454643'

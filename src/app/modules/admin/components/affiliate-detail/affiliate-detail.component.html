@@ -43,7 +43,8 @@
                         Validar Cliente
                     </button>
                     <button mat-raised-button class="mr-2"
-                        [disabled]="affiliate.access_level === 4 || affiliate.access_level === 0 || loading">
+                        [disabled]="affiliate.access_level === 4 || affiliate.access_level === 0 || loading"
+                        [routerLink]="['/admin/app',{ outlets: { adr: ['ficha-cliente'] } }]">
                         Ver Ficha
                     </button>
                     <button mat-raised-button class="mr-2"

@@ -36,7 +36,7 @@ import { ChangePasswordDialogComponent } from './shared/components/change-passwo
 import { EditAddressComponent } from './shared/components/edit-address/edit-address.component';
 import { HagaSuPedidoDialogComponent } from './modules/home/components/haga-su-pedido-dialog/haga-su-pedido-dialog.component';
 import { CarruselLandingComponent } from './modules/home/components/carrusel-landing/carrusel-landing.component';
-
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 @NgModule({
   declarations: [
@@ -85,6 +85,7 @@ import { CarruselLandingComponent } from './modules/home/components/carrusel-lan
       measurementId: "G-9WHJ3FEJ9S"
     }),
     AngularFireStorageModule,
+    NgxIntlTelInputModule,
   ],
   providers: [AffiliateGuard, AdminGuard, HomeGuard, StorageService],
   bootstrap: [AppComponent]
