@@ -49,4 +49,10 @@ p {
     background-color: white;
     color: black;
     font-weight: 800;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
 }

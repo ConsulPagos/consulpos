@@ -15,8 +15,10 @@ import { GeneracionResponse, GeneracionDecrypter } from '../../../../models/gene
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ResultFileComponent } from '../result-file/result-file.component';
 import { ExportService } from '../../services/export.service'
+import { DefaultDecrypter } from '../../../../models/default_response'
 
 import { expFile } from './generartxt'
+import { ToasterService } from 'src/app/shared/services/toaster.service';
 
 @Component({
   selector: 'app-generar-archivo',
@@ -48,7 +50,8 @@ export class GenerarArchivoComponent implements OnInit {
     private routes: ActivatedRoute,
     private router: Router,
     private storage: StorageService,
-    private excelService: ExportService
+    private excelService: ExportService,
+    private toaster: ToasterService
   ) { }
 
   form = new FormGroup({
@@ -108,15 +111,19 @@ export class GenerarArchivoComponent implements OnInit {
 
 
   submit() {
-    const data = this.crypto.encryptString(JSON.stringify({
+    console.log(this.storage.getJson(constant.USER).uid)
+    console.log(this.form.get('banco').value)
+    var data: {} = {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       banco_id: this.crypto.encryptJson(this.form.get('banco').value),
       descripcion: this.crypto.encryptJson(this.form.get('descripcion').value),
       tasa: this.crypto.encryptJson('5'),
-      oper: this.crypto.encryptJson(this.form.get("tipo_cobro").value),
+      oper: this.crypto.encryptJson(this.form.get("tipo_cobro").value)
     }
+
+    console.log(data)
 
     if (this.form.get("tipo_cobro").value == "personalizado") {
       data = {
@@ -134,6 +141,8 @@ export class GenerarArchivoComponent implements OnInit {
           monto_cuota: this.formPersonalizado.get("cashFP").value
         })),
       }
+      console.log(data)
+
     } else {
       data = {
         ...data,
@@ -150,25 +159,39 @@ export class GenerarArchivoComponent implements OnInit {
     console.log("verify")
 
     this.sesion.doGeneracion(`${IMEI};${dataString}`).subscribe(res => {
-      this.generacionResponse = new GeneracionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      console.log(this.generacionResponse)
-      console.log(JSON.parse(this.crypto.decryptString(res)))
+      const json = JSON.parse(this.crypto.decryptString(res));
+
+      switch (json.R) {
+        case constant.R0:
+          this.generacionResponse = new GeneracionDecrypter(this.crypto).deserialize(json)
+          this.crypto.setKeys(this.generacionResponse.keyS, this.generacionResponse.ivJ, this.generacionResponse.keyJ, this.generacionResponse.ivS)
+          this.openDialog();
+          if (this.generacionResponse.tipo_archivo === 'EXCEL') {
+            this.exportXLSX();
+          } else if (this.generacionResponse.tipo_archivo === 'TXT') {
+            expFile(this.generacionResponse.cuotas.join('\n'), 'Archivo_' + this.generacionResponse.id_archivo + '_' + new Date())
+          }
+          break;
+        case constant.R1:
+          const def = new DefaultDecrypter(this.crypto).deserialize(json)
+          this.toaster.error(def.M)
+          this.crypto.setKeys(def.keyS, def.ivJ, def.keyJ, def.ivS)
+          break;
+        default:
+          this.toaster.default_error()
+          break;
+      }
+
 
       this.loading = false
-      this.crypto.setKeys(this.generacionResponse.keyS, this.generacionResponse.ivJ, this.generacionResponse.keyJ, this.generacionResponse.ivS)
-      this.openDialog();
-      if (this.generacionResponse.tipo_archivo === 'EXCEL') {
-        this.exportXLSX();
-      } else if (this.generacionResponse.tipo_archivo === 'TXT') {
-        expFile(this.generacionResponse.cuotas.join('\n'), 'Archivo_' + this.generacionResponse.id_archivo + '_' + new Date())
-      }
+
 
     })
 
   }
 
-  isInvalid():boolean{
-    if(this.form.get("tipo_cobro").value == "personalizado"){
+  isInvalid(): boolean {
+    if (this.form.get("tipo_cobro").value == "personalizado") {
       return this.form.invalid || this.formPersonalizado.invalid;
     }
     return this.form.invalid;

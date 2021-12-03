@@ -1,4 +1,4 @@
-<mat-sidenav-container class="custom-container">
+<mat-sidenav-container class="custom-container" *ngIf="!loading else loader">
 
   <mat-sidenav [(opened)]="opened" mode="side" opened style="background: #fff; border: none;" #drawer>
     <app-admin-sidenav (Toggle)='drawer.toggle()'>
@@ -7,8 +7,10 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
+ 
     <app-admin-navbar></app-admin-navbar>
     <div class="pt-3">
+
       <router-outlet name='adr'></router-outlet>
 
       <button mat-mini-fab aria-label="Example icon button with a home icon" (click)='drawer.toggle()'
@@ -20,8 +22,11 @@
 
 </mat-sidenav-container>
 
-<ng-template #iconclose> <i class="fas fa-chevron-right"></i></ng-template>
 
-<div class="loader" *ngIf="loading">
-  LOADING
-</div>
+
+<ng-template #iconclose> <i class="fas fa-chevron-right"></i></ng-template>
+<ng-template #loader>
+  <div class="loader" *ngIf="loading">
+    Cargando...
+  </div>
+</ng-template>
