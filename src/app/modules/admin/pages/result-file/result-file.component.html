@@ -1,4 +1,4 @@
-<div>
+<div class="container">
     <h3 class="title">
         Resumen de Archivo Generado:
     </h3>
@@ -9,6 +9,14 @@
     <div>
         <h6>Cantidad de Cuotas: </h6>
         <p class="text">{{data.cantidad_cuotas}}</p>
+    </div>
+    <div>
+        <h6>Total $: </h6>
+        <p class="text">{{data.total | currency}}</p>
+    </div>
+    <div>
+        <h6>Total Bolivares: </h6>
+        <p class="text">{{data.total_bolivares | currency}}</p>
     </div>
     <div>
         <h6>Separador decimal: </h6>
@@ -23,8 +31,5 @@
         <p class="text">{{data.decimales}}</p>
     </div>
 
-    <button mat-button color="primary" class='btn_close' (click)="close()">Aceptar</button>
+    <button mat-raised-button color="accent" class='btn_close' (click)="close()">Aceptar</button>
 </div>
-
-
-

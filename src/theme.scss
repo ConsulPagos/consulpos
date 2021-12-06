@@ -220,6 +220,27 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 
 // Specific component overrides, pieces that are not in line with the general theming
 
+
+
+/* Angular Material Overrides */
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #ccc; /* Override outline color. */
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: .65em 0; /* Original top/bottom value was 1em. */
+}
+
+
+.mat-input-element {
+  position: relative;
+}
+
+.mat-form-field-label-wrapper {
+  top: -1.2em; /* Adjust accordingly to keep <mat-label> text vertically centered. */
+}
+
+
 // Handle buttons appropriately, with respect to line-height
 .mat-raised-button, .mat-stroked-button, .mat-flat-button {
   padding: 0 1.15em;

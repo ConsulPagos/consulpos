@@ -37,6 +37,8 @@ import { EditAddressComponent } from './shared/components/edit-address/edit-addr
 import { HagaSuPedidoDialogComponent } from './modules/home/components/haga-su-pedido-dialog/haga-su-pedido-dialog.component';
 import { CarruselLandingComponent } from './modules/home/components/carrusel-landing/carrusel-landing.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { LoaderComponent } from './shared/components/loader/loader.component';
+import { ActionBtnComponent } from './shared/components/action-btn/action-btn.component';
 
 @NgModule({
   declarations: [
@@ -53,9 +55,7 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
     ChangePasswordDialogComponent,
     EditAddressComponent,
     HagaSuPedidoDialogComponent,
-    CarruselLandingComponent,
-
-
+    CarruselLandingComponent
 ],
   imports: [
     BrowserModule,

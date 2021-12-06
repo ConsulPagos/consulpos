@@ -48,5 +48,41 @@ p {
     align-items: center;
     background-color: white;
     color: black;
-    font-weight: 800;
+    font-weight: 500;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
 }
+
+.animated {
+    text-indent: 8px;
+    color:black;
+  }
+  
+  .animated:before {
+    content: "cool.";
+    animation: topToBottom 5s infinite 0s;
+  }
+  
+  @keyframes topToBottom {
+    0% {
+      content: "Calculando ventas";
+    }
+    25% {
+      content: "Verificando datos.";
+    }
+    50% {
+      content: "Procesando archivos";
+    }
+    75% {
+      content: "Creando tablas";
+    }
+    100% {
+      content: "Aplicando estilos.";
+    }
+  }
+
+  
