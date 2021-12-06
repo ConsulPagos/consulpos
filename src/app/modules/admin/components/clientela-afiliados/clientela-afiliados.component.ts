@@ -7,6 +7,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { merge, of as observableOf } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { AffiliateDetailJoinInterface } from 'src/app/models/afiliado';
+import { ShowClientsDecrypter } from 'src/app/models/showclients_response';
+import { ClientesService } from 'src/app/shared/services/clientes.service';
+import { CryptoService } from 'src/app/shared/services/crypto.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
+import { constant } from 'src/app/shared/utils/constant';
 import { AdminService } from "../../services/admin.service";
 
 @Component({
@@ -24,14 +29,8 @@ import { AdminService } from "../../services/admin.service";
 export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
 
   displayedColumns: string[] = ['rif', 'nombre_comercial', 'estatus', 'validado'];
-  affiliate = [{
-    rif:'J253862510',
-    nombre_comercial: 'Los Perros de Joao',
-    email:"cliente@gmail.com",
-    estatus:'Activo',
-    validado: "SI"
-  }];
-  
+  clientes = [];
+
   expandedElement: AffiliateDetailJoinInterface | null;
 
   @Input() access_level: number;
@@ -46,14 +45,14 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<any>(true, []);
-
-  constructor(private admin: AdminService) {
-    this.dataSource = new MatTableDataSource(this.affiliate);
+  showclientResponse: any;
+  constructor(private admin: AdminService, private crypto: CryptoService, private storage: StorageService, private cliente: ClientesService) {
+    this.dataSource = new MatTableDataSource(this.clientes);
   }
 
   ngAfterViewInit() {
-    //this.load();
-    //this.firstLoading = true;
+    this.load();
+    this.firstLoading = true;
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -77,18 +76,29 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
+          const IMEI = '13256848646454643'
           this.error = false;
           this.loading = true;
-          return this.admin.affiliates(this.paginator.pageIndex + 1, this.access_level)
+          const data = this.crypto.encryptString(JSON.stringify({
+            u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+            correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+            scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+            limit_row: this.crypto.encryptJson("25"),
+            init_row: this.crypto.encryptJson((this.paginator.pageIndex + 1).toString()),
+          }))
+          return this.cliente.doAll(`${IMEI};${data}`)
         }),
         map(data => {
           this.firstLoading = false;
           this.loading = false;
-          this.resultsLength = data['total_count'];
-          this.count.emit(data['total_count'])
-          this.paginator.pageIndex = data['current_page'] - 1;
-          console.log(data)
-          return data['data'];
+          this.resultsLength = 100;
+          // this.count.emit(25)
+          // this.paginator.pageIndex = 1;
+          console.log("JSON: " + JSON.parse(this.crypto.decryptString(data)))
+          this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
+          console.log(this.showclientResponse)
+          this.crypto.setKeys(this.showclientResponse.keyS, this.showclientResponse.ivJ, this.showclientResponse.keyJ, this.showclientResponse.ivS)
+          return this.showclientResponse.clientes;
         }),
         catchError((e) => {
           this.firstLoading = false;
@@ -98,7 +108,8 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
           return observableOf([]);
         })
       ).subscribe(data => {
-        this.affiliate = data
+        this.clientes = data
+        this.dataSource = new MatTableDataSource(this.clientes);
       });
   }
 
@@ -127,8 +138,10 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
-  _editClient(client){
+  _editClient(client) {
     this.editClient.emit(client)
   }
+
+
 
 }

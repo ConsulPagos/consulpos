@@ -19,6 +19,7 @@ export class AddClientDecrypter {
 
         const verify: AddClientResponse = {
             M: this.crypto.decryptJson(value.M),
+            R: value.R,
             keyS: this.crypto.decryptString(value.keyS),
             ivS: this.crypto.decryptString(value.ivS),
             keyJ: this.crypto.decryptJson(value.keyJ),

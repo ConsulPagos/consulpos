@@ -212,7 +212,6 @@ export class AddClientComponent implements OnInit {
       console.log(this.crypto.decryptString(res))
       this.addClientResponse = new AddClientDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.addClientResponse)
-
       // this.loading = false
       this.crypto.setKeys(this.addClientResponse.keyS, this.addClientResponse.ivJ, this.addClientResponse.keyJ, this.addClientResponse.ivS)
     })
@@ -239,6 +238,5 @@ export class AddClientComponent implements OnInit {
   resetStatus() {
     this.search_client = true;
   }
-
 
 }

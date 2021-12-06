@@ -217,7 +217,7 @@ export class EditClientComponent implements OnInit {
 
     const IMEI = '13256848646454643'
     this.loading = true;
-    // console.log("verify")
+    console.log("verify")
     this.cliente.doSave(`${IMEI};${data}`).subscribe(res => {
       console.log(data)
       console.log(res)

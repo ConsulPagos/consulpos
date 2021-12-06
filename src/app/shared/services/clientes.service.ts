@@ -47,5 +47,14 @@ export class ClientesService {
     return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
   }
 
+  doAll(data) {
+    var path = `/allClients`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
 
 }
