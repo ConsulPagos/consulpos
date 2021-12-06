@@ -123,7 +123,6 @@ export class GenerarArchivoComponent implements OnInit {
       oper: this.crypto.encryptJson(this.form.get("tipo_cobro").value)
     }
 
-    console.log(data)
 
     if (this.form.get("tipo_cobro").value == "personalizado") {
       data = {
@@ -141,7 +140,6 @@ export class GenerarArchivoComponent implements OnInit {
           monto_cuota: this.formPersonalizado.get("cashFP").value
         })),
       }
-      console.log(data)
 
     } else {
       data = {
@@ -150,7 +148,6 @@ export class GenerarArchivoComponent implements OnInit {
       }
     }
 
-    console.log(data)
     const dataString = this.crypto.encryptString(JSON.stringify(data));
 
     const IMEI = '13256848646454643'
@@ -160,6 +157,8 @@ export class GenerarArchivoComponent implements OnInit {
 
     this.sesion.doGeneracion(`${IMEI};${dataString}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res));
+
+      console.log(json)
 
       switch (json.R) {
         case constant.R0:
