@@ -82,7 +82,7 @@ const routes: Routes = [
       { path: 'edit-admin', component: EditAdminComponent, outlet: 'adr' },
       { path: 'edit-client', component: EditClientComponent, outlet: 'adr' },
       { path: 'ventas', component: VentasComponent, outlet: 'adr' },
-      { path: 'previsualizar-archivo', component: PrevArchivoComponent, outlet: 'adr' },
+      { path: 'previsualizar-archivo/:id', component: PrevArchivoComponent, outlet: 'adr' },
       { path: 'ficha-cliente', component: FichaClienteComponent, outlet: 'adr' },
       { path: 'validador-venta', component: ValidadorVentaComponent, outlet: 'adr' },
     ],

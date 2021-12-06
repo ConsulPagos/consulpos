@@ -17,7 +17,8 @@
                                 <mat-form-field appearance="outline" class="container_box w-100">
                                     <mat-label>Seleccionar Banco</mat-label>
                                     <mat-select formControlName="banco" (selectionChange)="submit()">
-                                        <mat-option *ngFor="let banco of bancos" value={{banco.cod_banco}}>
+                                        <mat-option selected value="null">Seleccionar</mat-option>
+                                        <mat-option *ngFor="let banco of bancos" value={{banco.codigo}}>
                                             {{banco.nombre}} </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -26,7 +27,7 @@
                             <div class="w-100 pl-4 pr-4" *ngIf="archivos; else CargandoArchivos">
                                 <mat-form-field appearance="outline" class="container_box w-100">
                                     <mat-label>Seleccionar archivo</mat-label>
-                                    <mat-select disableRipple formControlName="proceso">
+                                    <mat-select disableRipple formControlName="archivo">
                                         <mat-option *ngFor="let archivo of archivos" value={{archivo.id}}>
                                             {{archivo.id}} | {{archivo.fecha_generacion | date:'dd/MM/yyyy hh:mm:ss'}}
                                         </mat-option>
@@ -34,9 +35,15 @@
                                 </mat-form-field>
                             </div>
 
+                            <ng-template #CargandoArchivos>
+                                <div class="w-100 pl-4 pr-4" *ngIf="loading">
+                                    Cargando
+                                </div>
+                            </ng-template>
+
                             <div class="col-12 ml-3 mr-3 mb-4">
                                 <div class="d-flex align-items-center">
-                                    <button mat-button (click)="load()" mat-button
+                                    <button mat-button (click)="load()" mat-button [disabled]="form.invalid"
                                         class="pr-4 pl-4 pt-1 pb-1 btn btn-success bg-success text-white h5">Nueva
                                         conciliación</button>
                                 </div>
@@ -49,8 +56,3 @@
     </div>
 </section>
 
-<ng-template #CargandoArchivos>
-    <div *ngIf="loading">
-        Cargando
-    </div>
-</ng-template>

@@ -1,5 +1,6 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CuotaInterface } from 'src/app/models/cuota';
 import * as XLSX from "xlsx";
 
@@ -14,12 +15,16 @@ export class PrevArchivoComponent implements OnInit {
   data: CuotaInterface[];
   displayedColumns: any;
   progress: number = 0;
+  id: any;
 
   columns = ["cedulaRif", "numeroCuenta1", "montoTotal", "montoCobrado", "msensajesDetail"]
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(p => {
+      this.id = p.id
+    });
   }
 
   onFileChange(event: any) {
@@ -28,20 +33,24 @@ export class PrevArchivoComponent implements OnInit {
       throw new Error('Cannot use multiple files');
     }
     const reader: FileReader = new FileReader();
+    console.log(target.files[0])
     reader.readAsBinaryString(target.files[0]);
     reader.onload = (e: any) => {
       const binarystr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
-      const wsname: string = wb.SheetNames[1];
+      const wsname: string = wb.SheetNames[0];
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
       this.displayedColumns = ["cedulaRif", "numeroCuenta1", "montoTotal", "montoCobrado", "msensajesDetail"]
       const json = XLSX.utils.sheet_to_json(ws);
+      console.log(json)
       const nData: CuotaInterface[] = []
       json.forEach(cuota => {
+        console.log(cuota)
         const nCuota: CuotaInterface = { doc: cuota[this.columns[0]], cuenta: cuota[this.columns[1]], monto: parseFloat(cuota[this.columns[2]]), cobrado: parseFloat(cuota[this.columns[3]]), mensaje: cuota[this.columns[4]], }
         nData.push(nCuota)
       });
       this.data = nData
+      console.log(nData)
       this.progress = 100
     };
   }

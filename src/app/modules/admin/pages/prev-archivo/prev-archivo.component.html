@@ -10,9 +10,9 @@
         </div>
         <div class="content">
             <div class="mb-2" *ngIf="!data">
-                <h3 class="mb-4">Archivo a conciliar</h3>
+                <h3 class="mb-4">Archivo #{{id}}</h3>
                 <input class="file-input" type="file" title="Seleccionar archivo" style="display: inline-block;"
-                    (change)="onFileChange($event)" placeholder="Upload file" accept=".xls">
+                    (change)="onFileChange($event)" placeholder="Upload file" accept=".xlsx, .xlsx">
             </div>
 
 
