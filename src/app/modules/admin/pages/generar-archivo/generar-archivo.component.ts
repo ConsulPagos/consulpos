@@ -43,7 +43,7 @@ export class GenerarArchivoComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private admin: AdminService,
-    private sesion: SesionService,
+    private session: SesionService,
     private api: ApiService,
     private crypto: CryptoService,
     private auth: AuthService,
@@ -120,6 +120,7 @@ export class GenerarArchivoComponent implements OnInit {
       banco_id: this.crypto.encryptJson(this.form.get('banco').value),
       descripcion: this.crypto.encryptJson(this.form.get('descripcion').value),
       tasa: this.crypto.encryptJson('5'),
+      id_tasa: this.crypto.encryptJson('1'),
       oper: this.crypto.encryptJson(this.form.get("tipo_cobro").value)
     }
 
@@ -150,12 +151,11 @@ export class GenerarArchivoComponent implements OnInit {
 
     const dataString = this.crypto.encryptString(JSON.stringify(data));
 
-    const IMEI = '13256848646454643'
     this.loading = true;
 
     console.log("verify")
 
-    this.sesion.doGeneracion(`${IMEI};${dataString}`).subscribe(res => {
+    this.session.doGeneracion(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res));
 
       console.log(json)

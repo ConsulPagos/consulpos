@@ -10,29 +10,37 @@
         </div>
         <div class="content">
             <div class="mb-2" *ngIf="!data">
-                <h3 class="mb-4">Archivo #{{id}}</h3>
+                <h3 class="mb-4">Archivo #{{archivo.id}}</h3>
                 <input class="file-input" type="file" title="Seleccionar archivo" style="display: inline-block;"
-                    (change)="onFileChange($event)" placeholder="Upload file" accept=".xlsx, .xlsx">
+                    (change)="onFileChange($event)" placeholder="Upload file" accept=".xls, .xlsx">
             </div>
 
 
             <div *ngIf="data">
                 <div>
-                    <h3>Resumen de archivo</h3>
-                    <div class="resumen-container">
-                        <div class="resumen-item">
-                            <div class="resumen-title">Envíado:</div>
-                            <div class="resumen-text">{{data.length}} ( {{getTotalMonto() | currency }} )</div>
+                    <div class="container-archivo">
+                        <div>
+                            <h3>Resumen de archivo</h3>
+                            <div class="resumen-container">
+                                <div class="resumen-item">
+                                    <div class="resumen-title">Envíado:</div>
+                                    <div class="resumen-text">{{archivo.cuotas}} ( {{archivo.monto | currency }} )</div>
+                                </div>
+                                <div class="resumen-item">
+                                    <div class="resumen-title">Cobrado:</div>
+                                    <div class="resumen-text">{{getTotal()}} ( {{getTotalCobrado() | currency}} )</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="resumen-item">
-                            <div class="resumen-title">Cobrado:</div>
-                            <div class="resumen-text">{{getTotal()}} ( {{getTotalCobrado() | currency}} )</div>
+                        <div class="btn-submit">
+                            <app-action-btn (onClick)="save()" [loading]="false" [text]="'Guardar'" [isDisabled]="false"></app-action-btn>
                         </div>
                     </div>
+
                 </div>
-                <mat-divider></mat-divider>
-                <app-previsualizar-archivo [data]="data" [displayedColumns]="displayedColumns" [progress]="progress">
+                <app-previsualizar-archivo  [data]="data" [columns]="columns" [progress]="progress">
                 </app-previsualizar-archivo>
+
             </div>
         </div>
     </div>

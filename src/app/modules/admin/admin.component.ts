@@ -37,13 +37,12 @@ export class AdminComponent implements OnInit {
   verify() {
 
     const data = this.crypto.encryptString(JSON.stringify({ u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid), correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email), scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod) }))
-    const IMEI = '13256848646454643'
 
     this.loading = true;
 
     console.log("verify")
 
-    this.sesion.doVerify(`${IMEI};${data}`).subscribe(res => {
+    this.sesion.doVerify(`${this.sesion.getDeviceId()};${data}`).subscribe(res => {
       var verifyResponse = new VerifyDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(verifyResponse)
       console.log(JSON.parse(this.crypto.decryptString(res)))

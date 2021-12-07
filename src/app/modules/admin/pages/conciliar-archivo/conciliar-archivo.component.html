@@ -29,7 +29,7 @@
                                     <mat-label>Seleccionar archivo</mat-label>
                                     <mat-select disableRipple formControlName="archivo">
                                         <mat-option *ngFor="let archivo of archivos" value={{archivo.id}}>
-                                            {{archivo.id}} | {{archivo.fecha_generacion | date:'dd/MM/yyyy hh:mm:ss'}}
+                                            <span class="id_archivo">{{archivo.id}}</span> - {{archivo.fecha_generacion | date:'dd/MM/yyyy hh:mm:ss'}} {{archivo.cuotas}} {{archivo.monto | currency}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>

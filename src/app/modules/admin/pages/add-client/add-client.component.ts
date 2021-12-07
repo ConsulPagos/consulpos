@@ -18,6 +18,7 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 import { ActividadComercialInterface } from '../../../../models/actividad_comercial'
+import { SesionService } from 'src/app/shared/services/sesion.service';
 
 @Component({
   selector: 'app-add-client',
@@ -49,6 +50,7 @@ export class AddClientComponent implements OnInit {
     private crypto: CryptoService,
     private cliente: ClientesService,
     private storage: StorageService,
+    private session: SesionService
   ) { }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,10 +150,9 @@ export class AddClientComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
     }))
-    const IMEI = '13256848646454643'
     this.loading = true;
     // console.log("verify")
-    this.cliente.doVerificaicon(`${IMEI};${data}`).subscribe(res => {
+    this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(res)
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
@@ -203,10 +204,9 @@ export class AddClientComponent implements OnInit {
       localidad: this.crypto.encryptJson(this.client.get('localidad').value),
     }))
 
-    const IMEI = '13256848646454643'
     this.loading = true;
     // console.log("verify")
-    this.cliente.doSave(`${IMEI};${data}`).subscribe(res => {
+    this.cliente.doSave(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(data)
       console.log(res)
       console.log(this.crypto.decryptString(res))

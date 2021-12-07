@@ -82,4 +82,8 @@ export class SesionService {
     this.scod = scod
   }
 
+getDeviceId():string{
+  return "admin2@gmail.com"
+}
+
 }

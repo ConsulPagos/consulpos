@@ -1,32 +1,11 @@
-<div *ngIf="data && displayedColumns">
+<div *ngIf="data && columns">
     <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
 
-        <ng-container matColumnDef="documento">
-            <th mat-header-cell *matHeaderCellDef> Documento de identidad </th>
-            <td mat-cell *matCellDef="let cuota">{{cuota.doc}} </td>
+        <ng-container matColumnDef={{col}} *ngFor="let col of columns">
+            <th mat-header-cell *matHeaderCellDef> {{col}} </th>
+            <td mat-cell *matCellDef="let data">{{data[col]}} </td>
           </ng-container>
-
-          <ng-container matColumnDef="cuenta">
-            <th mat-header-cell *matHeaderCellDef> Número de cuenta </th>
-            <td mat-cell *matCellDef="let cuota"> {{cuota.cuenta}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="monto">
-            <th mat-header-cell *matHeaderCellDef> Monto Envíado </th>
-            <td mat-cell *matCellDef="let cuota"> {{cuota.monto | currency}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="cobrado">
-            <th mat-header-cell *matHeaderCellDef> Monto Cobrado </th>
-            <td mat-cell *matCellDef="let cuota"> {{cuota.cobrado | currency}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="mensaje">
-            <th mat-header-cell *matHeaderCellDef> Mensaje </th>
-            <td mat-cell *matCellDef="let cuota"> {{cuota.mensaje}} </td>
-
-          </ng-container>
-    
+         
         <tr mat-header-row *matHeaderRowDef="columns"></tr>
         <tr mat-row *matRowDef="let row; columns: columns;"></tr>
 

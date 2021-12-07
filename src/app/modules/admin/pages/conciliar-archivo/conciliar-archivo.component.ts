@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { CrmTableInterface } from 'src/app/models/crm';
 import { AdminService } from '../../services/admin.service';
 import { Title } from '@angular/platform-browser';
@@ -37,7 +37,7 @@ export class ConciliarArchivoComponent implements OnInit {
     private title: Title,
     private storage: StorageService,
     private crypto: CryptoService,
-    private sesion: SesionService,
+    private session: SesionService,
     private toaster: ToasterService
   ) { }
 
@@ -52,10 +52,17 @@ export class ConciliarArchivoComponent implements OnInit {
   });
 
   load() {
+    
     const id = this.form.get("archivo").value;
+    const archivo =  this.archivos.filter(it => it.id == id)[0]
+    const extras : NavigationExtras ={
+      state:{
+        archivo: archivo 
+      }
+    }
     this.loading = true;
     this.error = false;
-    this.router.navigateByUrl(`/admin/app/(adr:previsualizar-archivo/${id})`);
+    this.router.navigateByUrl(`/admin/app/(adr:previsualizar-archivo/${archivo.id})`, extras);
   }
 
   submit() {
@@ -69,10 +76,9 @@ export class ConciliarArchivoComponent implements OnInit {
       id_banco: this.crypto.encryptJson(this.form.get('banco').value),
     }))
 
-    const IMEI = '13256848646454643'
     this.loading = true;
 
-    this.sesion.doGetArchivos(`${IMEI};${data}`).subscribe(res => {
+    this.session.doGetArchivos(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.loading = false
       console.log(JSON.parse(this.crypto.decryptString(res)))
