@@ -44,10 +44,7 @@ export class AdminNavbarComponent implements OnInit {
       
     }))
 
-    const IMEI = '13256848646454643'
-    console.log("logout")
-
-    this.sesion.doLogout(`${IMEI};${data}`).subscribe(res => {
+    this.sesion.doLogout(`${this.sesion.getDeviceId()};${data}`).subscribe(res => {
       this.response = new SesionObject(this.crypto).logOutDecrypter(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.response)
       switch (this.response.R) {

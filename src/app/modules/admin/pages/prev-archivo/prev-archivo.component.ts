@@ -1,6 +1,8 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { CuotaInterface } from 'src/app/models/cuota';
+import { ModalService } from 'src/app/shared/services/modal.service';
 import * as XLSX from "xlsx";
 
 
@@ -12,14 +14,24 @@ import * as XLSX from "xlsx";
 export class PrevArchivoComponent implements OnInit {
 
   data: CuotaInterface[];
-  displayedColumns: any;
   progress: number = 0;
+  id: any;
+  archivo: any;
 
-  columns = ["cedulaRif", "numeroCuenta1", "montoTotal", "montoCobrado", "msensajesDetail"]
+  columns = ["doc", "cuenta", "afiliado", "cobrado", "mensaje"]
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private router: Router, private modal: ModalService) {
+    if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.archivo) {
+      this.archivo = this.router.getCurrentNavigation().extras.state.archivo
+    }
+  }
 
   ngOnInit(): void {
+
+    this.route.params.subscribe(p => {
+      this.id = p.id
+    });
+
   }
 
   onFileChange(event: any) {
@@ -28,20 +40,24 @@ export class PrevArchivoComponent implements OnInit {
       throw new Error('Cannot use multiple files');
     }
     const reader: FileReader = new FileReader();
+    console.log(target.files[0])
     reader.readAsBinaryString(target.files[0]);
     reader.onload = (e: any) => {
       const binarystr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
-      const wsname: string = wb.SheetNames[1];
+      const wsname: string = wb.SheetNames[0];
+      console.log(wsname)
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-      this.displayedColumns = ["cedulaRif", "numeroCuenta1", "montoTotal", "montoCobrado", "msensajesDetail"]
       const json = XLSX.utils.sheet_to_json(ws);
+      console.log(json)
       const nData: CuotaInterface[] = []
       json.forEach(cuota => {
-        const nCuota: CuotaInterface = { doc: cuota[this.columns[0]], cuenta: cuota[this.columns[1]], monto: parseFloat(cuota[this.columns[2]]), cobrado: parseFloat(cuota[this.columns[3]]), mensaje: cuota[this.columns[4]], }
+        console.log(cuota)
+        const nCuota: CuotaInterface = { doc: cuota[this.columns[0]], cuenta: cuota[this.columns[1]], afiliado: cuota[this.columns[2]],  cobrado: parseFloat(cuota[this.columns[3]]), mensaje: cuota[this.columns[4]], }
         nData.push(nCuota)
       });
       this.data = nData
+      console.log(nData)
       this.progress = 100
     };
   }
@@ -73,6 +89,14 @@ export class PrevArchivoComponent implements OnInit {
 
   getTotalCobrado() {
     return this.data.map(t => t.cobrado).reduce((acc, value) => acc + value, 0);
+  }
+
+  save() {
+    this.modal.confirm("Desea guardar el archivo?").subscribe(result => {
+      if (result) {
+        console.log("acciones")
+      }
+    })
   }
 
 }

@@ -24,7 +24,7 @@ import { constant } from "../../../../shared/utils/constant";
 export class LoginComponent implements OnInit {
 
 
-  constructor(private sesion: SesionService, private crypto: CryptoService, private fb: FormBuilder, private route: Router, private toaster: ToasterService, private storage: StorageService) { }
+  constructor(private session: SesionService, private crypto: CryptoService, private fb: FormBuilder, private route: Router, private toaster: ToasterService, private storage: StorageService) { }
   authForm: FormGroup;
   user: UserInterface = {};
   error: ErrorResponse = {};
@@ -57,14 +57,13 @@ export class LoginComponent implements OnInit {
     this.user.modelo_disp = this.crypto.encryptJsonFixed('0')
 
     const data = this.crypto.encryptStringFixed(JSON.stringify(this.user))
-    const IMEI = '13256848646454643';
-    console.log(`${IMEI};${data}`)
+
 
     if (this.authForm.valid) {
 
       this.loading = true;
 
-      this.sesion.doLogin(`${IMEI};${data}`).toPromise().then( res => {
+      this.session.doLogin(`${this.session.getDeviceId()};${data}`).toPromise().then( res => {
         console.log(res);
         console.log(this.crypto.decryptStringFixed(res))
         var sesionResponse = new SesionObject(this.crypto).deserialize(JSON.parse(this.crypto.decryptStringFixed(res)))

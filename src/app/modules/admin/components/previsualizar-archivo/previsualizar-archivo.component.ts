@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CuotaInterface } from "../../../../models/cuota";
+import { ModalService } from "../../../../shared/services/modal.service";
 @Component({
   selector: 'app-previsualizar-archivo',
   templateUrl: './previsualizar-archivo.component.html',
@@ -15,10 +16,10 @@ export class PrevisualizarArchivoComponent implements OnInit {
 
   @Input() data: CuotaInterface[];
   dataSource: MatTableDataSource<CuotaInterface>;
-  @Input() displayedColumns: any;
-  columns: string[] = ['documento', 'cuenta', 'monto','cobrado', 'mensaje' ];
+  @Input() columns: any;
 
-  constructor() { 
+  constructor(private modal:ModalService) { 
+    this.dataSource = new MatTableDataSource(this.data);
   }
 
   ngAfterViewInit() {
@@ -27,6 +28,8 @@ export class PrevisualizarArchivoComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.data);
+    this.dataSource.paginator = this.paginator;
+
   }
 
   getTotalMonto() {
@@ -36,6 +39,8 @@ export class PrevisualizarArchivoComponent implements OnInit {
   getTotalCobrado() {
     return this.data.map(t => t.cobrado).reduce((acc, value) => acc + value, 0);
   }
+
+
 
 
 }

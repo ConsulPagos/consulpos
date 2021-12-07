@@ -9,53 +9,53 @@
         <a class="menu_side" *ngIf="access.dashboard()"
             [routerLink]="['/admin/app',{ outlets: { adr: ['dashboard'] } }]" routerLinkActive="ad-active"
             [routerLinkActiveOptions]="{exact: true}">
-            <li class="fa fa-tachometer-alt"></li> <span class="">Dashboard</span>
+            <li class="fa fa-tachometer-alt"></li> <span class="text_side">Dashboard</span>
         </a>
         <!-- ************************************************************************************************** -->
 
         <!-- Registro de Clientes -->
         <a class="menu_side" *ngIf="access.clientes()" [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]"
             routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-            <li class="fa fa-users"></li><span class="">Clientes</span>
+            <li class="fa fa-users"></li><span class="text_side">Clientes</span>
         </a>
         <!-- ************************************************************************************************** -->
 
         <!-- Operaciones -->
         <a class="menu_side" *ngIf="access.clientes()" [routerLink]="['/admin/app',{ outlets: { adr: ['venta-consulpos'] } }]"
             routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-            <li class="fa fa-cart-plus"></li><span class="">Ventas Consulpos</span>
+            <li class="fa fa-cart-plus"></li><span class="text_side">Ventas Consulpos</span>
         </a>
         <!-- ************************************************************************************************** -->
 
         <!-- Tipos de solicitud -->
         <a class="menu_side" mat-button [matMenuTriggerFor]="solicitud">
             <li class="fa fa-file-alt icon_side"></li>
-            <h6 class="text_side">Tipo de Solicitud</h6>
+            <span class="text_side">Tipo de Solicitud</span>
         </a>
 
         <mat-menu #solicitud="matMenu">
 
             <button class="menu_side" mat-menu-item [matMenuTriggerFor]="venta">
                 <li class="fa fa-file-alt icon_side"></li>
-                <h6 class="text_side">Ventas</h6>
+                <span class="text_side">Ventas</span>
             </button>
 
             <a class="menu_side" *ngIf="access.venta_manual()"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-exchange-alt"></li> <span class="">Traspaso</span>
+                <li class="fa fa-exchange-alt"></li> <span class="text_side">Traspaso</span>
             </a>
 
             <a class="menu_side" *ngIf="access.venta_manual()"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-university"></li> <span class="">Cambio de Banco</span>
+                <li class="fa fa-university"></li> <span class="text_side">Cambio de Banco</span>
             </a>
 
             <a class="menu_side" *ngIf="access.venta_manual()"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-book-dead"></li> <span class="">Desafiliación</span>
+                <li class="fa fa-book-dead"></li> <span class="text_side">Desafiliación</span>
             </a>
         </mat-menu>
 
@@ -63,13 +63,13 @@
             <a class="menu_side" *ngIf="access.venta_manual()"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-cart-plus"></li> <span class="">Pre-ventas</span>
+                <li class="fa fa-cart-plus"></li> <span class="text_side">Pre-ventas</span>
             </a>
 
             <a class="menu_side" *ngIf="access.venta_manual()"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-cart-plus"></li> <span class="">Ventas</span>
+                <li class="fa fa-cart-plus"></li> <span class="text_side">Ventas</span>
             </a>
         </mat-menu>
         <!-- ************************************************************************************************** -->
@@ -77,26 +77,26 @@
         <!-- Cobranza -->
         <a class="menu_side" mat-button [matMenuTriggerFor]="cobranza">
             <li class="fa fa-file icon_side"></li>
-            <h6 class="text_side">Cobranza</h6>
+            <span class="text_side">Cobranza</span>
         </a>
         <mat-menu #cobranza="matMenu">
 
             <a class="menu_side" *ngIf="access.venta_manual()"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-money-bill"></li> <span class="">Validar Pago POS</span>
+                <li class="fa fa-money-bill"></li> <span class="text_side">Validar Pago POS</span>
             </a>
 
             <a class="menu_side" *ngIf="access.venta_manual()"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['generar-archivo'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-file-download"></li> <span class="">Generar Archivo</span>
+                <li class="fa fa-file-download"></li> <span class="text_side">Generar Archivo</span>
             </a>
 
             <a class="menu_side" *ngIf="access.venta_manual()"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-file-upload"></li> <span class="">Conciliar Archivo</span>
+                <li class="fa fa-file-upload"></li> <span class="text_side">Conciliar Archivo</span>
             </a>
         </mat-menu>
         <!-- ************************************************************************************************** -->
@@ -104,23 +104,23 @@
         <!-- Solicitud de Reportes -->
         <!-- <a class="menu_side not-active" *ngIf="access.historial()" [routerLink]="['/admin/app',{ outlets: { adr: ['reportes'] } }]"
             routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-            <li class="fa fa-file-excel"></li><span class="">Reportes</span>
-        </a> -->
+            <li class="fa fa-file-excel"></li><span class="text_side">Reportes</span>
+        </a>
         <!-- ************************************************************************************************** -->
 
         <!-- Registro de Actividad -->
         <!-- <a class="menu_side not-active" *ngIf="access.historial()"
             [routerLink]="['/admin/app',{ outlets: { adr: ['historial-pedidos'] } }]" routerLinkActive="ad-active"
             [routerLinkActiveOptions]="{exact: true}">
-            <li class="fa fa-book"></li><span class="">Actividad</span>
-        </a> -->
+            <li class="fa fa-book"></li><span class="text_side">Actividad</span>
+        </a>
         <!-- ************************************************************************************************** -->
 
         <!-- Roles de Usuarios -->
         <a class="menu_side" *ngIf="access.super()"
             [routerLink]="['/admin/app',{ outlets: { adr: ['super-admin-panel'] } }]" routerLinkActive="ad-active"
             [routerLinkActiveOptions]="{exact: true}">
-            <li class="fa fa-cogs"></li><span class="">Usuarios</span>
+            <li class="fa fa-cogs"></li><span class="text_side">Usuarios</span>
         </a>
         <!-- ************************************************************************************************** -->
     </div>

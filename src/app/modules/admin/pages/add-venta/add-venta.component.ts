@@ -18,6 +18,7 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { ValidacionclienteDecrypter, ValidacionclienteResponse } from '../../../../models/validacioncliente_response';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { FraccionPagoInterface } from 'src/app/models/fraccion_pago';
+import { SesionService } from 'src/app/shared/services/sesion.service';
 
 @Component({
   selector: 'app-add-venta',
@@ -49,7 +50,8 @@ export class AddVentaComponent implements OnInit {
     private title: Title, 
     private crypto: CryptoService, 
     private cliente: ClientesService,
-    private storage: StorageService) { }
+    private storage: StorageService,
+    private session: SesionService) { }
 
   buy = new FormGroup({
     modelo: new FormControl('', [Validators.required]),
@@ -109,10 +111,9 @@ export class AddVentaComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(this.client_type.get('tipo_doc').value + this.client_type.get('rif').value),
     }))
-    const IMEI = '13256848646454643'
     this.loading = true;
     // console.log("verify")
-    this.cliente.doVerificaicon(`${IMEI};${data}`).subscribe(res => {
+    this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(res)
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
@@ -141,13 +142,12 @@ export class AddVentaComponent implements OnInit {
       rif: this.crypto.encryptJson(this.client_type.get('tipo_doc').value + this.client_type.get('rif').value),
     }))
 
-    const IMEI = '13256848646454643'
 
     this.loading = true;
 
     console.log("verify")
 
-    this.cliente.doVerificaicon(`${IMEI};${data}`).subscribe(res => {
+    this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionresponse)
