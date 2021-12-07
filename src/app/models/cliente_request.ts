@@ -1,3 +1,5 @@
+import {TelefonoInterface} from './telefono'
+
 export interface ClienteRequestInterface {
 a_c_des?:string; 
 ciudad?:string; 
@@ -8,11 +10,15 @@ contribuyente?:string;
 contribuyente_id?:string; 
 correo?:string; 
 direccion?:string; 
+estado?:string; 
+estado_id?:string; 
 fecha_registro?:string; 
 id_actividad_comercial?:string; 
 localidad?:string; 
 m_contacto?:string; 
 m_contacto_id?:string; 
+municipio?:string; 
+municipio_id?:string; 
 parroquia?:string; 
 parroquia_id?:string; 
 pto_ref?:string; 
@@ -26,4 +32,5 @@ t_cliente_id?:string;
 t_doc?:string; 
 t_doc_desc?:string; 
 t_doc_id?:string; 
+telefonos?: TelefonoInterface[];
 }

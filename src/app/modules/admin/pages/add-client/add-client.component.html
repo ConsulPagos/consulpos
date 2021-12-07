@@ -232,6 +232,7 @@
                                     (keypress)="onlyNumberKey($event)">
                             </mat-form-field>
                         </div>
+                        
                         <div class="direction_form">
                             <div class="direction">
                                 <mat-form-field class="container_box_direction" appearance="outline">
@@ -272,11 +273,7 @@
                             </mat-form-field>
                         </div>
                     </form>
-
-                    <div>
-                        <strong>Form value:</strong>
-                        <pre>{{ l.form.value | json }}</pre>
-                    </div>
+                    
                     <!-- Bootn de siguiente strepper -->
                     <div>
                         <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>

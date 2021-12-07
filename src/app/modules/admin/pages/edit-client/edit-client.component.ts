@@ -19,7 +19,7 @@ import { constant } from 'src/app/shared/utils/constant';
 import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 import { ActividadComercialInterface } from '../../../../models/actividad_comercial';
 import { Router } from '@angular/router';
-import { ClienteInterface } from '../../../../models/cliente';
+import { ClienteRequestInterface } from '../../../../models/cliente_request';
 
 @Component({
   selector: 'app-edit-client',
@@ -28,7 +28,7 @@ import { ClienteInterface } from '../../../../models/cliente';
 })
 export class EditClientComponent implements OnInit {
 
-  editClient:ClienteInterface={};
+  editClient:ClienteRequestInterface={};
 
   //----------- VARIABLES GLOBALES -----------\\
   validacionresponse: ValidacionclienteResponse;
@@ -57,12 +57,38 @@ export class EditClientComponent implements OnInit {
   ) { 
 
     if(this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.editClient){
-      this.editClient = this.router.getCurrentNavigation().extras.state.editClient as ClienteInterface;
+      this.editClient = this.router.getCurrentNavigation().extras.state.editClient as ClienteRequestInterface;
+    console.log(this.editClient)
+    }else{
+      this.router.navigateByUrl("/admin/app/(adr:clientela)");
     }
-
+    
     this.identity = new FormGroup({
       rif: new FormControl(this.editClient.rif.toString().substr(1), [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
       tipo_doc: new FormControl(this.editClient.rif.toString().substr(0,1), [Validators.required]),
+    });
+
+    this.client = new FormGroup({
+      razon_social: new FormControl(this.editClient.razon_social, [Validators.required]),
+      nombre_comercial: new FormControl(this.editClient.comercio, [Validators.required]),
+      contribuyente: new FormControl(this.editClient.contribuyente_id, [Validators.required]),
+      email: new FormControl(this.editClient.correo, [Validators.required]),
+      // telefono_local: new FormControl(this.editClient.telefonos, [Validators.required]),
+      // telefono_movil: new FormControl(this.editClient.telefonos, [Validators.required]),
+      estado: new FormControl(this.editClient.estado_id, [Validators.required]),
+      municipio: new FormControl(this.editClient.municipio_id, [Validators.required]),
+      parroquia: new FormControl(this.editClient.parroquia_id, [Validators.required]),
+      ciudad: new FormControl(this.editClient.ciudad_id, [Validators.required]),
+      direccion: new FormControl(this.editClient.direccion, [Validators.required]),
+      contacto: new FormControl(this.editClient.m_contacto_id, [Validators.required]),
+      codpostal: new FormControl(this.editClient.cod_postal, [Validators.required]),
+      act_comercial: new FormControl(this.editClient.id_actividad_comercial, [Validators.required]),
+      pto_referencia: new FormControl(this.editClient.pto_ref, [Validators.required]),
+      localidad: new FormControl(this.editClient.localidad, [Validators.required]),
+    });
+
+    this.client_type = new FormGroup({
+      tipo_cliente: new FormControl(this.editClient.t_cliente_id, [Validators.required]),
     });
 
   }
@@ -72,9 +98,7 @@ export class EditClientComponent implements OnInit {
   identity: FormGroup;
 
   //FORM DEL SEGUNDO STEP\\
-  client_type = new FormGroup({
-    tipo_cliente: new FormControl('', [Validators.required]),
-  });
+  client_type: FormGroup;
 
   ////////////////PHONE///////////////////
   separateDialCode = true;
@@ -85,24 +109,7 @@ export class EditClientComponent implements OnInit {
   ////////////////////////////////////////
 
   //FORM DEL TERCER STEP\\
-  client = new FormGroup({
-    razon_social: new FormControl('', [Validators.required]),
-    nombre_comercial: new FormControl('', [Validators.required]),
-    contribuyente: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required]),
-    telefono_local: new FormControl('', [Validators.required]),
-    telefono_movil: new FormControl('', [Validators.required]),
-    estado: new FormControl('', [Validators.required]),
-    municipio: new FormControl('', [Validators.required]),
-    parroquia: new FormControl('', [Validators.required]),
-    ciudad: new FormControl('', [Validators.required]),
-    direccion: new FormControl('', [Validators.required]),
-    contacto: new FormControl('', [Validators.required]),
-    codpostal: new FormControl('', [Validators.required]),
-    act_comercial: new FormControl('', [Validators.required]),
-    pto_referencia: new FormControl('', [Validators.required]),
-    localidad: new FormControl('', [Validators.required]),
-  });
+  client: FormGroup;
 
   //FORM DEL CUARTO STEP\\
   document = new FormGroup({
@@ -136,7 +143,6 @@ export class EditClientComponent implements OnInit {
   }
 
   onlyNumberKey(event) {
-    this.resetStatus()
     return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
   }
 
@@ -150,50 +156,16 @@ export class EditClientComponent implements OnInit {
     this.formats.splice(index, 1);
   }
 
-  verificar_usuario() {
-    this.search_client = true;
-    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
-    // console.log(rif)
-    const data = this.crypto.encryptString(JSON.stringify({
-      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
-    }))
-    const IMEI = '13256848646454643'
-    this.loading = true;
-    // console.log("verify")
-    this.cliente.doVerificaicon(`${IMEI};${data}`).subscribe(res => {
-      console.log(res)
-      console.log(JSON.parse(this.crypto.decryptString(res)))
-      this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      console.log(this.validacionresponse)
-      this.search_client = this.validacionresponse.value_exists === "true" ? true : false;
-      if (this.search_client) {
-        this.identity.controls['rif'].setErrors({ 'existe': true });
-      } else {
-        this.identity.controls['rif'].setErrors({ 'existe': null });
-        this.identity.controls['rif'].updateValueAndValidity()
-      }
-      this.loading = false
-      this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
-    })
-  }
-
-
   submit() {
     this.search_client = true;
-    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
-    console.log(rif)
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-
       t_doc_id: this.crypto.encryptJson(this.identity.get('tipo_doc').value),
-      rif: this.crypto.encryptJson(rif),
-
+      rif: this.crypto.encryptJson(this.editClient.rif),
       t_cliente_id: this.crypto.encryptJson(this.client_type.get('tipo_cliente').value),
+
       status_id: this.crypto.encryptJson('1'),
       fecha_registro: this.crypto.encryptJson('12/02/2021'),
 
@@ -218,22 +190,19 @@ export class EditClientComponent implements OnInit {
     const IMEI = '13256848646454643'
     this.loading = true;
     console.log("verify")
-    this.cliente.doSave(`${IMEI};${data}`).subscribe(res => {
+    this.cliente.doEdit(`${IMEI};${data}`).subscribe(res => {
       console.log(data)
       console.log(res)
       console.log(this.crypto.decryptString(res))
       this.addClientResponse = new AddClientDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.addClientResponse)
-
       // this.loading = false
       this.crypto.setKeys(this.addClientResponse.keyS, this.addClientResponse.ivJ, this.addClientResponse.keyJ, this.addClientResponse.ivS)
     })
   }
 
   ngOnInit(): void {
-
-    
-    this.title.setTitle('ConsulPos | Agregar Cliente')
+    this.title.setTitle('ConsulPos | Editar Cliente')
     this.add_agent()
     this.estados = JSON.parse(this.storage.get(constant.ESTADOS)).estados
     this.contribuyentes = JSON.parse(this.storage.get(constant.CONTRIBUYENTES)).contribuyentes
@@ -245,13 +214,4 @@ export class EditClientComponent implements OnInit {
     this.tipo_documentos = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs
     this.actividades_comerciales = JSON.parse(this.storage.get(constant.ACTIVIDAD_COMERCIAL)).actividades_comerciales
   }
-
-  getError() {
-    return this.identity.errors?.['existe']
-  }
-
-  resetStatus() {
-    this.search_client = true;
-  }
-
 }

@@ -18,17 +18,11 @@ import { AdminService } from "../../services/admin.service";
   selector: 'app-clientela-afiliados',
   templateUrl: './clientela-afiliados.component.html',
   styleUrls: ['./clientela-afiliados.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
 })
+
 export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
 
-  displayedColumns: string[] = ['rif', 'nombre_comercial', 'estatus', 'validado'];
+  displayedColumns: string[] = ['rif', 'nombre_comercial', 'status_desc', 'fecha_registro', 'Acciones'];
   clientes = [];
 
   expandedElement: AffiliateDetailJoinInterface | null;
@@ -59,7 +53,8 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    //this.loading = true;
+/*     this.loading = true;
+    this.load(); */
   }
 
   applyFilter(event: Event) {
@@ -94,7 +89,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
           this.resultsLength = 100;
           // this.count.emit(25)
           // this.paginator.pageIndex = 1;
-          console.log("JSON: " + JSON.parse(this.crypto.decryptString(data)))
+          console.log("JSON: " + data)
           this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
           console.log(this.showclientResponse)
           this.crypto.setKeys(this.showclientResponse.keyS, this.showclientResponse.ivJ, this.showclientResponse.keyJ, this.showclientResponse.ivS)
@@ -140,8 +135,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
 
   _editClient(client) {
     this.editClient.emit(client)
+    console.log(client)
   }
-
-
 
 }
