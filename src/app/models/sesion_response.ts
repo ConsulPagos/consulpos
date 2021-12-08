@@ -48,13 +48,8 @@ export class SesionObject {
 
     logOutDecrypter(value: LogoutResponse): LogoutResponse {
         const refresh: LogoutResponse = {
-            M: value.M,
-            keyS: this.crypto.decryptString(value.keyS),
-            ivS: this.crypto.decryptString(value.ivS),
-            keyJ: this.crypto.decryptJson(value.keyJ),
-            ivJ: this.crypto.decryptJson(value.ivJ),
+            M: this.crypto.decryptJson(value.M),
             R:value.R,
-            u_id: this.crypto.decryptJson(value.u_id)
         }
         return refresh
     }

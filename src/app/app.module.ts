@@ -12,7 +12,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button'
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { HomeGuard } from './guards/home.guard';
 import { AfiliadoNavbarComponent } from './modules/affiliate/components/afiliado-navbar/afiliado-navbar.component'
 import { MatBadgeModule } from '@angular/material/badge'
@@ -23,7 +23,6 @@ import { AffiliateGuard } from './guards/affiliate.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { StorageService } from './shared/services/storage.service';
 import { BottomImageComponent } from './shared/components/bottom-image/bottom-image.component';
-import { AuthInterceptorService } from './shared/interceptors/auth_interceptor';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { CarritoComponent } from './modules/affiliate/pages/carrito/carrito.component';
 import { MatDividerModule } from '@angular/material/divider';
@@ -37,8 +36,6 @@ import { EditAddressComponent } from './shared/components/edit-address/edit-addr
 import { HagaSuPedidoDialogComponent } from './modules/home/components/haga-su-pedido-dialog/haga-su-pedido-dialog.component';
 import { CarruselLandingComponent } from './modules/home/components/carrusel-landing/carrusel-landing.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
-import { LoaderComponent } from './shared/components/loader/loader.component';
-import { ActionBtnComponent } from './shared/components/action-btn/action-btn.component';
 
 @NgModule({
   declarations: [

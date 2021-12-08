@@ -92,12 +92,18 @@
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-file-download"></li> <span class="text_side">Generar Archivo</span>
             </a>
-
+            
             <a class="menu_side" *ngIf="access.venta_manual()"
-                [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]" routerLinkActive="ad-active"
+            [routerLink]="['/admin/app',{ outlets: { adr: ['actualizar-archivo'] } }]" routerLinkActive="ad-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-file-upload"></li> <span class="text_side">Actualizar Archivo</span>
+        </a>
+
+          <!--   <a class="menu_side" *ngIf="access.venta_manual()" 
+                [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]" routerLinkActive="ad-active" 
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-file-upload"></li> <span class="text_side">Conciliar Archivo</span>
-            </a>
+            </a> -->
         </mat-menu>
         <!-- ************************************************************************************************** -->
 

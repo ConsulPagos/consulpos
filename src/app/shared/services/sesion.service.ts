@@ -8,7 +8,7 @@ export class SesionService {
 
   private scod: String
 
-  constructor(private http: HttpClient,) { }
+  constructor(private http: HttpClient) { }
 
   doLogin(data) {
     var path = `/doLogin`;

@@ -46,6 +46,7 @@ import { VerifyKeysGuard } from './guards/verify-keys.guard'
 import { VentaConsulposComponent } from './pages/venta-consulpos/venta-consulpos.component';
 import { FichaClienteComponent } from './pages/ficha-cliente/ficha-cliente.component';
 import { ValidadorVentaComponent } from './pages/validador-venta/validador-venta.component';
+import { ActualizarArchivoComponent } from './pages/actualizar-archivo/actualizar-archivo.component';
 
 const routes: Routes = [
   {
@@ -57,6 +58,7 @@ const routes: Routes = [
       { path: 'sku/:id_product', component: EditProductComponent, outlet: 'adr', canActivate: [SkuGuard] },
       { path: 'crm', component: CrmComponent, outlet: 'adr', canActivate: [CrmGuard] },
       { path: 'conciliar-archivo', component: ConciliarArchivoComponent, outlet: 'adr', canActivate: [CrmGuard] },
+      { path: 'actualizar-archivo', component: ActualizarArchivoComponent, outlet: 'adr', canActivate: [CrmGuard] },
       { path: 'aplicar-descuento/:id_afiliado', component: AplicarDescuentoComponent, outlet: 'adr', canActivate: [CrmGuard] },
       { path: 'reportes', component: AplicarCreditoComponent, outlet: 'adr', canActivate: [CrmGuard] },
       { path: 'clientela', component: ClientelaComponent, outlet: 'adr', canActivate: [ClientesGuard] },

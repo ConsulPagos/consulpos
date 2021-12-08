@@ -3,6 +3,6 @@ export interface CuotaInterface {
     cuenta?: string;
     afiliado?: string;
     monto?: number;
-    cobrado?: number;
+    monto_cobrado?: number;
     mensaje?: string;
 }
