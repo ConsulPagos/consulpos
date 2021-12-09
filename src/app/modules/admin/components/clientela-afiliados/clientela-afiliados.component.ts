@@ -10,6 +10,7 @@ import { AffiliateDetailJoinInterface } from 'src/app/models/afiliado';
 import { ShowClientsDecrypter } from 'src/app/models/showclients_response';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
+import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { AdminService } from "../../services/admin.service";
@@ -22,7 +23,7 @@ import { AdminService } from "../../services/admin.service";
 
 export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
 
-  displayedColumns: string[] = ['rif', 'nombre_comercial', 'status_desc', 'fecha_registro', 'Acciones'];
+  displayedColumns: string[] = ['t_c_letra', 'rif', 'nombre_comercial', 'status_desc', 'fecha_registro', 'Acciones'];
   clientes = [];
 
   expandedElement: AffiliateDetailJoinInterface | null;
@@ -40,7 +41,11 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<any>(true, []);
   showclientResponse: any;
-  constructor(private admin: AdminService, private crypto: CryptoService, private storage: StorageService, private cliente: ClientesService) {
+  constructor(
+    private session: SesionService,
+    private crypto: CryptoService,
+    private storage: StorageService,
+    private cliente: ClientesService) {
     this.dataSource = new MatTableDataSource(this.clientes);
   }
 
@@ -53,8 +58,8 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-/*     this.loading = true;
-    this.load(); */
+    /*     this.loading = true;
+        this.load(); */
   }
 
   applyFilter(event: Event) {
@@ -71,7 +76,6 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          const IMEI = '13256848646454643'
           this.error = false;
           this.loading = true;
           const data = this.crypto.encryptString(JSON.stringify({
@@ -81,7 +85,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
             limit_row: this.crypto.encryptJson("25"),
             init_row: this.crypto.encryptJson((this.paginator.pageIndex + 1).toString()),
           }))
-          return this.cliente.doAll(`${IMEI};${data}`)
+          return this.cliente.doAll(`${this.session.getDeviceId()};${data}`)
         }),
         map(data => {
           this.firstLoading = false;
@@ -131,6 +135,16 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+
+  statusColor(status) {
+    switch (status) {
+      case 0:
+        return "desaffiliate"
+      case 1:
+      default:
+        return "active"
+    }
   }
 
   _editClient(client) {

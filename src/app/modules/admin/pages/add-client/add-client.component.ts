@@ -183,8 +183,6 @@ export class AddClientComponent implements OnInit {
       rif: this.crypto.encryptJson(rif),
 
       t_cliente_id: this.crypto.encryptJson(this.client_type.get('tipo_cliente').value),
-      status_id: this.crypto.encryptJson('1'),
-      fecha_registro: this.crypto.encryptJson('12/02/2021'),
 
       razon_social: this.crypto.encryptJson(this.client.get('razon_social').value),
       comercio: this.crypto.encryptJson(this.client.get('nombre_comercial').value),

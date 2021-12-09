@@ -20,6 +20,7 @@ import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-
 import { ActividadComercialInterface } from '../../../../models/actividad_comercial';
 import { Router } from '@angular/router';
 import { ClienteRequestInterface } from '../../../../models/cliente_request';
+import { SesionService } from 'src/app/shared/services/sesion.service';
 
 @Component({
   selector: 'app-edit-client',
@@ -53,7 +54,8 @@ export class EditClientComponent implements OnInit {
     private crypto: CryptoService,
     private cliente: ClientesService,
     private storage: StorageService,
-    private router:Router
+    private router:Router,
+    private session: SesionService, 
   ) { 
 
     if(this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.editClient){
@@ -75,8 +77,8 @@ export class EditClientComponent implements OnInit {
       email: new FormControl(this.editClient.correo, [Validators.required]),
       // telefono_local: new FormControl(this.editClient.telefonos, [Validators.required]),
       // telefono_movil: new FormControl(this.editClient.telefonos, [Validators.required]),
-      estado: new FormControl(this.editClient.estado_id, [Validators.required]),
-      municipio: new FormControl(this.editClient.municipio_id, [Validators.required]),
+      estado: new FormControl(this.editClient.id_estado, [Validators.required]),
+      municipio: new FormControl(this.editClient.id_municipio, [Validators.required]),
       parroquia: new FormControl(this.editClient.parroquia_id, [Validators.required]),
       ciudad: new FormControl(this.editClient.ciudad_id, [Validators.required]),
       direccion: new FormControl(this.editClient.direccion, [Validators.required]),
@@ -162,19 +164,17 @@ export class EditClientComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+
       t_doc_id: this.crypto.encryptJson(this.identity.get('tipo_doc').value),
       rif: this.crypto.encryptJson(this.editClient.rif),
       t_cliente_id: this.crypto.encryptJson(this.client_type.get('tipo_cliente').value),
-
-      status_id: this.crypto.encryptJson('1'),
-      fecha_registro: this.crypto.encryptJson('12/02/2021'),
 
       razon_social: this.crypto.encryptJson(this.client.get('razon_social').value),
       comercio: this.crypto.encryptJson(this.client.get('nombre_comercial').value),
       contribuyente_id: this.crypto.encryptJson(this.client.get('contribuyente').value),
       email: this.crypto.encryptJson(this.client.get('email').value),
-      telefono_local: this.crypto.encryptJson(this.client.get('telefono_local').value),
-      telefono_movil: this.crypto.encryptJson(this.client.get('telefono_movil').value),
+      // telefono_local: this.crypto.encryptJson(this.client.get('telefono_local').value),
+      // telefono_movil: this.crypto.encryptJson(this.client.get('telefono_movil').value),
       estados: this.crypto.encryptJson(this.client.get('estado').value),
       municipios: this.crypto.encryptJson(this.client.get('municipio').value),
       parroquia_id: this.crypto.encryptJson(this.client.get('parroquia').value),
@@ -187,10 +187,10 @@ export class EditClientComponent implements OnInit {
       localidad: this.crypto.encryptJson(this.client.get('localidad').value),
     }))
 
-    const IMEI = '13256848646454643'
+
     this.loading = true;
     console.log("verify")
-    this.cliente.doEdit(`${IMEI};${data}`).subscribe(res => {
+    this.cliente.doEdit(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(data)
       console.log(res)
       console.log(this.crypto.decryptString(res))

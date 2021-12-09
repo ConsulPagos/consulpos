@@ -81,22 +81,34 @@ th.mat-header-cell {
   margin-right: 5px;
 }
 
-.container_icon{
+.container_icon {
   margin: 0.5rem;
 }
 
-.activate_ban, .activate_edit, .activate_show{
+.activate_ban,
+.activate_edit,
+.activate_show {
   font-size: 1.5rem;
 }
 
-.activate_edit:hover{
+.activate_edit:hover {
   color: blue;
 }
 
-.activate_ban:hover{
+.activate_ban:hover {
   color: red;
 }
 
-.activate_show:hover{
+.activate_show:hover {
   color: rgb(0, 214, 0);
+}
+
+.active {
+  color: rgb(0, 214, 0);
+  font-weight: bold;
+}
+
+.desaffiliate {
+  color: red;
+  font-weight: bold;
 }
