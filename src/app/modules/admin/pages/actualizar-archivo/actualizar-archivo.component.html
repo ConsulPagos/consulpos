@@ -1,0 +1,58 @@
+<section id="crmdetalle">
+    <div class="container-fluid">
+        <div class="title">
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="w-100">
+                <div class="bg-white rounded card p-2">
+                    <form [formGroup]="form">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="box-title d-flex justify-content-center">
+                                    <h4 class="text-uppercase mt-3">Actualizar Archivo</h4>
+                                </div>
+                            </div>
+
+                            <div class="w-100 pl-4 pr-4 pt-4">
+                                <mat-form-field appearance="outline" class="container_box w-100">
+                                    <mat-label>Seleccionar Banco</mat-label>
+                                    <mat-select formControlName="banco" (selectionChange)="submit()">
+                                        <mat-option selected value="null">Seleccionar</mat-option>
+                                        <mat-option *ngFor="let banco of bancos" value={{banco.codigo}}>
+                                            {{banco.nombre}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="w-100 pl-4 pr-4" *ngIf="archivos || loading">
+                                <mat-form-field appearance="outline" class="container_box w-100" [class.spinner]="loading">
+                                    <mat-label>Seleccionar archivo</mat-label>
+                                    <mat-select disableRipple formControlName="archivo" [disabled]="!archivos || loading">
+                                        <mat-option *ngFor="let archivo of archivos" value={{archivo.id}}>
+                                            <span class="id_archivo">{{archivo.id}}</span> - {{archivo.fecha_generacion | date:'dd/MM/yyyy hh:mm:ss'}} {{archivo.cuotas}} {{archivo.monto | currency}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <ng-template #CargandoArchivos>
+                                <div class="w-100 pl-4 pr-4" *ngIf="loading">
+                                    Cargando
+                                </div>
+                            </ng-template>
+
+                            <div class="col-12 ml-3 mr-3 mb-4">
+                                <div class="d-flex align-items-center">
+                                    <button mat-button (click)="load()" mat-button [disabled]="form.invalid"
+                                        class="pr-4 pl-4 pt-1 pb-1 btn btn-success bg-success text-white h5">Nueva
+                                        conciliación</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

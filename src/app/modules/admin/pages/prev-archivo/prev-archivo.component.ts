@@ -1,9 +1,13 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CuotaInterface } from 'src/app/models/cuota';
 import { ModalService } from 'src/app/shared/services/modal.service';
+import { BancarioService } from 'src/app/shared/services/bancario.service';
 import * as XLSX from "xlsx";
+import { CryptoService } from 'src/app/shared/services/crypto.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
+import { constant } from 'src/app/shared/utils/constant';
+import { SesionService } from 'src/app/shared/services/sesion.service';
 
 
 @Component({
@@ -17,24 +21,25 @@ export class PrevArchivoComponent implements OnInit {
   progress: number = 0;
   id: any;
   archivo: any;
+  loading = false;
 
-  columns = ["doc", "cuenta", "afiliado", "cobrado", "mensaje"]
+  columns = ["doc", "cuenta", "afiliado", "monto_cobrado", "mensaje"]
 
-  constructor(private route: ActivatedRoute, private router: Router, private modal: ModalService) {
+  constructor(private route: ActivatedRoute, private router: Router, private modal: ModalService, private bancario:BancarioService, private crypto:CryptoService, private storage:StorageService, private session:SesionService) {
     if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.archivo) {
       this.archivo = this.router.getCurrentNavigation().extras.state.archivo
     }
   }
 
   ngOnInit(): void {
-
     this.route.params.subscribe(p => {
       this.id = p.id
     });
 
   }
 
-  onFileChange(event: any) {
+  onFileChange(event: any) { 
+    this.loading = true;
     const target: DataTransfer = <DataTransfer>(event.target);
     if (target.files.length !== 1) {
       throw new Error('Cannot use multiple files');
@@ -53,12 +58,12 @@ export class PrevArchivoComponent implements OnInit {
       const nData: CuotaInterface[] = []
       json.forEach(cuota => {
         console.log(cuota)
-        const nCuota: CuotaInterface = { doc: cuota[this.columns[0]], cuenta: cuota[this.columns[1]], afiliado: cuota[this.columns[2]],  cobrado: parseFloat(cuota[this.columns[3]]), mensaje: cuota[this.columns[4]], }
+        const nCuota: CuotaInterface = { doc: cuota[this.columns[0]], cuenta: cuota[this.columns[1]], afiliado: cuota[this.columns[2]], monto_cobrado: parseFloat(cuota[this.columns[3]]), mensaje: cuota[this.columns[4]], }
         nData.push(nCuota)
       });
       this.data = nData
       console.log(nData)
-      this.progress = 100
+      this.loading = false;
     };
   }
 
@@ -80,7 +85,7 @@ export class PrevArchivoComponent implements OnInit {
     return headers;
   }
   getTotal() {
-    return this.data.map(t => t.cobrado > 0 ? 1 : 0).reduce((acc, value) => acc + value, 0);
+    return this.data.map(t => t.monto_cobrado > 0 ? 1 : 0).reduce((acc, value) => acc + value, 0);
   }
 
   getTotalMonto() {
@@ -88,15 +93,54 @@ export class PrevArchivoComponent implements OnInit {
   }
 
   getTotalCobrado() {
-    return this.data.map(t => t.cobrado).reduce((acc, value) => acc + value, 0);
+    return this.data.map(t => t.monto_cobrado).reduce((acc, value) => acc + value, 0);
   }
 
   save() {
-    this.modal.confirm("Desea guardar el archivo?").subscribe(result => {
+    this.modal.confirm("Se actualizará el archivo.").subscribe(result => {
       if (result) {
         console.log("acciones")
+        this.submit()
       }
     })
   }
+
+  submit() {
+
+    console.log(JSON.stringify(this.data))
+
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      id_archivo: this.crypto.encryptJson(this.archivo.id),
+      archivo: this.crypto.encryptJson(JSON.stringify(this.data)),
+    }))
+
+    this.loading = true;
+
+    this.bancario.doConciliacion(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      console.log(res)
+      const json = JSON.parse(this.crypto.decryptString(res))
+      this.loading = false
+      console.log(json)
+     /*  switch (json.R) {
+        case constant.R0:
+          this.conciliacionResponse = new ConciliacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+          this.archivos = this.conciliacionResponse.archivos
+          this.crypto.setKeys(this.conciliacionResponse.keyS, this.conciliacionResponse.ivJ, this.conciliacionResponse.keyJ, this.conciliacionResponse.ivS)
+          break;
+        case constant.R1:
+        default:
+          this.form.get("archivo").reset()
+          const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+          this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+          this.toaster.error(response.M)
+          break;
+      } */
+    })
+    //**************************************************************************************************************************//
+  }
+
 
 }

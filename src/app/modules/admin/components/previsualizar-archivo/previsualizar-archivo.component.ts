@@ -16,7 +16,7 @@ export class PrevisualizarArchivoComponent implements OnInit {
 
   @Input() data: CuotaInterface[];
   dataSource: MatTableDataSource<CuotaInterface>;
-  @Input() columns: any;
+  @Input() columns: any;  
 
   constructor(private modal:ModalService) { 
     this.dataSource = new MatTableDataSource(this.data);

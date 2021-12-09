@@ -62,13 +62,26 @@ import { ResultFileComponent } from './pages/result-file/result-file.component';
 import { VentaConsulposComponent } from './pages/venta-consulpos/venta-consulpos.component';
 import { FichaClienteComponent } from './pages/ficha-cliente/ficha-cliente.component';
 import { ValidadorVentaComponent } from './pages/validador-venta/validador-venta.component';
+import { ActualizarArchivoComponent } from './pages/actualizar-archivo/actualizar-archivo.component';
 
 
 @NgModule({
   declarations: [AdminComponent, 
     SkuComponent, 
     CobrosComponent, 
-    ConciliarArchivoComponent, InventarioComponent, ClientelaComponent, CrmComponent, PedidosComponent, LectorComponent, SalidaPedidosComponent, AdminNavbarComponent, AdminSidenavComponent, ClientelaAfiliadosComponent, AffiliateDetailComponent, EditProductComponent, EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, GenerarArchivoComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AddClientComponent, VentasComponent, AddVentaComponent, EditAdminComponent, AdminDetailComponent, EditClientComponent, AdminTitleComponent, PrevArchivoComponent, PrevisualizarArchivoComponent, ResultFileComponent, VentaConsulposComponent, FichaClienteComponent, ValidadorVentaComponent],
+    ConciliarArchivoComponent, 
+    InventarioComponent, 
+    ClientelaComponent, 
+    CrmComponent,
+    PedidosComponent, 
+    LectorComponent, 
+    SalidaPedidosComponent, 
+    AdminNavbarComponent, 
+    AdminSidenavComponent, 
+    ClientelaAfiliadosComponent, 
+    AffiliateDetailComponent, 
+    EditProductComponent,
+    EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, GenerarArchivoComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AddClientComponent, VentasComponent, AddVentaComponent, EditAdminComponent, AdminDetailComponent, EditClientComponent, AdminTitleComponent, PrevArchivoComponent, PrevisualizarArchivoComponent, ResultFileComponent, VentaConsulposComponent, FichaClienteComponent, ValidadorVentaComponent, ActualizarArchivoComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

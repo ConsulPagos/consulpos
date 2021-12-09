@@ -45,6 +45,8 @@ export class AdminNavbarComponent implements OnInit {
     }))
 
     this.sesion.doLogout(`${this.sesion.getDeviceId()};${data}`).subscribe(res => {
+      console.log(res)
+      console.log(JSON.parse(this.crypto.decryptString(res)))
       this.response = new SesionObject(this.crypto).logOutDecrypter(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.response)
       switch (this.response.R) {
