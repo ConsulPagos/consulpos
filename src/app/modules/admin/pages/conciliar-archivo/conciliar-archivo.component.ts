@@ -29,6 +29,7 @@ export class ConciliarArchivoComponent implements OnInit {
   bancos: BancoInterface[];
   conciliacionResponse: ConciliacionResponse;
   archivos: ArchivoInterface[];
+  archivo: any;
 
   constructor(
     private admin: AdminService,
@@ -74,6 +75,7 @@ export class ConciliarArchivoComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       id_banco: this.crypto.encryptJson(this.form.get('banco').value),
+      oper: this.crypto.encryptJson("/conciliar"),
     }))
 
     this.loading = true;
@@ -100,5 +102,8 @@ export class ConciliarArchivoComponent implements OnInit {
     //**************************************************************************************************************************//
   }
 
+  setArchivo(id){
+    this.archivo = this.archivos.filter(it => it.id == id)[0];
+  }
 
 }

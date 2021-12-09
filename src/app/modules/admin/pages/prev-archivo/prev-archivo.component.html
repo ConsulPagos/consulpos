@@ -23,27 +23,24 @@
                             <div class="resumen-container">
                                 <div class="resumen-item">
                                     <div class="resumen-title">Total envíado:</div>
-                                    <div class="resumen-text">{{archivo.cuotas}} lineas ( {{archivo.monto | currency }}
+                                    <div class="resumen-text">{{archivo.cuotas}} lineas ( {{archivo.monto | currency:"VES" }}
                                         )</div>
                                 </div>
                                 <div class="resumen-item">
                                     <div class="resumen-title">Total cobrado:</div>
-                                    <div class="resumen-text">{{getTotal()}} lineas ( {{getTotalCobrado() | currency}} )
+                                    <div class="resumen-text">{{getTotal()}} lineas ( {{getTotalCobrado() | currency:"VES" }} )
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="btn-submit">
                             <app-action-btn
-                                [isDisabled]="getTotal() > archivo.cuotas || getTotalCobrado() > archivo.monto"
-                                (onClick)="save()" [loading]="false" [text]="'Guardar'"></app-action-btn>
+                                [isDisabled]="getTotal() > archivo.cuotas  || loading"
+                                (onClick)="save()" [loading]="loading" [text]="'Guardar'"></app-action-btn>
                         </div>
                     </div>
                     <span class="error" *ngIf="getTotal() > archivo.cuotas">
                         El total de lineas almacenadas es menor a las cargadas.
-                    </span>
-                    <span class="error" *ngIf="getTotalCobrado() > archivo.monto">
-                        El monto total cobrado es mayor al envíado.
                     </span>
                 </div>
                 <app-previsualizar-archivo [data]="data" [columns]="columns" [progress]="progress">

@@ -21,8 +21,9 @@
         <!-- ************************************************************************************************** -->
 
         <!-- Operaciones -->
-        <a class="menu_side" *ngIf="access.clientes()" [routerLink]="['/admin/app',{ outlets: { adr: ['venta-consulpos'] } }]"
-            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+        <a class="menu_side" *ngIf="access.clientes()"
+            [routerLink]="['/admin/app',{ outlets: { adr: ['venta-consulpos'] } }]" routerLinkActive="ad-active"
+            [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-cart-plus"></li><span class="text_side">Ventas Consulpos</span>
         </a>
         <!-- ************************************************************************************************** -->
@@ -92,24 +93,25 @@
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-file-download"></li> <span class="text_side">Generar Archivo</span>
             </a>
-            
-            <a class="menu_side" *ngIf="access.venta_manual()"
-            [routerLink]="['/admin/app',{ outlets: { adr: ['actualizar-archivo'] } }]" routerLinkActive="ad-active"
-            [routerLinkActiveOptions]="{exact: true}">
-            <li class="fa fa-file-upload"></li> <span class="text_side">Actualizar Archivo</span>
-        </a>
 
-          <!--   <a class="menu_side" *ngIf="access.venta_manual()" 
-                [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]" routerLinkActive="ad-active" 
+            <a class="menu_side" *ngIf="access.venta_manual()"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['actualizar-archivo'] } }]" routerLinkActive="ad-active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-file-upload"></li> <span class="text_side">Actualizar Archivo</span>
+            </a>
+
+            <a class="menu_side" *ngIf="access.venta_manual()"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-file-upload"></li> <span class="text_side">Conciliar Archivo</span>
-            </a> -->
+            </a>
         </mat-menu>
         <!-- ************************************************************************************************** -->
 
         <!-- Solicitud de Reportes -->
-        <a class="menu_side not-active" *ngIf="access.historial()" [routerLink]="['/admin/app',{ outlets: { adr: ['reportes'] } }]"
-            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+        <a class="menu_side not-active" *ngIf="access.historial()"
+            [routerLink]="['/admin/app',{ outlets: { adr: ['reportes'] } }]" routerLinkActive="ad-active"
+            [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-file-excel"></li><span class="text_side">Reportes</span>
         </a>
         <!-- ************************************************************************************************** -->

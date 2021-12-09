@@ -33,7 +33,7 @@ export class PrevisualizarArchivoComponent implements OnInit {
   }
 
   getTotalMonto() {
-    return this.data.map(t => t.monto).reduce((acc, value) => acc + value, 0);
+    return this.data.map(t => t.enviado).reduce((acc, value) => acc + value, 0);
   }
 
   getTotalCobrado() {

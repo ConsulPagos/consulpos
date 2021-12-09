@@ -19,6 +19,7 @@ import { DefaultDecrypter } from '../../../../models/default_response'
 
 import { expFile } from './generartxt'
 import { ToasterService } from 'src/app/shared/services/toaster.service';
+import { BancarioService } from 'src/app/shared/services/bancario.service';
 
 @Component({
   selector: 'app-generar-archivo',
@@ -30,6 +31,7 @@ export class GenerarArchivoComponent implements OnInit {
   id;
   id_afiliado;
   loading = false;
+  loadingTasas = false;
   error = false;
   payment: PaymentInterface = {}
   methods;
@@ -39,11 +41,13 @@ export class GenerarArchivoComponent implements OnInit {
   bancos: BancoInterface[];
   meses: MesInterface[];
   generacionResponse: GeneracionResponse;
+  tasas: any;
 
   constructor(
     public dialog: MatDialog,
     private admin: AdminService,
     private session: SesionService,
+    private bancaro: BancarioService,
     private api: ApiService,
     private crypto: CryptoService,
     private auth: AuthService,
@@ -59,6 +63,7 @@ export class GenerarArchivoComponent implements OnInit {
     banco: new FormControl(null, [Validators.required]),
     cash: new FormControl(''),
     descripcion: new FormControl('', [Validators.required]),
+    tasa: new FormControl('', [Validators.required]),
   });
 
   formPersonalizado = new FormGroup({
@@ -76,6 +81,7 @@ export class GenerarArchivoComponent implements OnInit {
     this.payment.admin = this.auth.getIdentity()
     this.loadMethods()
     this.bancos = JSON.parse(this.storage.get(constant.BANCOS)).bancos
+    this.getTasas();
   }
 
   loadMethods() {
@@ -111,16 +117,15 @@ export class GenerarArchivoComponent implements OnInit {
 
 
   submit() {
-    console.log(this.storage.getJson(constant.USER).uid)
-    console.log(this.form.get('banco').value)
+
     var data: {} = {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      banco_id: this.crypto.encryptJson(this.form.get('banco').value),
+      id_banco: this.crypto.encryptJson(this.form.get('banco').value),
       descripcion: this.crypto.encryptJson(this.form.get('descripcion').value),
-      tasa: this.crypto.encryptJson('5'),
-      id_tasa: this.crypto.encryptJson('1'),
+      tasa: this.crypto.encryptJson(this.tasas.filter(t => t.id == this.form.get('tasa').value)[0].monto),
+      id_tasa: this.crypto.encryptJson(this.form.get('tasa').value),
       oper: this.crypto.encryptJson(this.form.get("tipo_cobro").value)
     }
 
@@ -153,12 +158,10 @@ export class GenerarArchivoComponent implements OnInit {
 
     this.loading = true;
 
-    console.log("verify")
 
-    this.session.doGeneracion(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
+    this.bancaro.doGeneracion(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res));
 
-      console.log(json)
 
       switch (json.R) {
         case constant.R0:
@@ -194,6 +197,42 @@ export class GenerarArchivoComponent implements OnInit {
       return this.form.invalid || this.formPersonalizado.invalid;
     }
     return this.form.invalid;
+  }
+
+  getTasas() {
+
+    var data: {} = {
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+    }
+
+    const dataString = this.crypto.encryptString(JSON.stringify(data));
+
+    this.loadingTasas = true;
+
+    this.bancaro.doGetTasas(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
+      console.log(res)
+      const json = JSON.parse(this.crypto.decryptString(res));
+      const response = new DefaultDecrypter(this.crypto).deserialize(json);
+      console.log(json)
+      switch (json.R) {
+        case constant.R0:
+          this.tasas = JSON.parse(this.crypto.decryptJson(json.tasas));
+          console.log(this.tasas)
+          break;
+        case constant.R1:
+        default:
+          this.toaster.error(response.M)
+          break;
+      }
+
+      this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+
+      this.loadingTasas = false
+
+    })
+
   }
 
 }

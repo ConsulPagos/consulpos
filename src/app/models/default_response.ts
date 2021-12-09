@@ -25,7 +25,6 @@ export class DefaultDecrypter {
             ivJ: this.crypto.decryptJson(value.ivJ),
             R: value.R
         }
-
         return data
     }
 }
