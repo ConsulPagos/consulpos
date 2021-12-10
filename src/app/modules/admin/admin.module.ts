@@ -63,6 +63,9 @@ import { VentaConsulposComponent } from './pages/venta-consulpos/venta-consulpos
 import { FichaClienteComponent } from './pages/ficha-cliente/ficha-cliente.component';
 import { ValidadorVentaComponent } from './pages/validador-venta/validador-venta.component';
 import { ActualizarArchivoComponent } from './pages/actualizar-archivo/actualizar-archivo.component';
+import { HistoricoConciliacionComponent } from './pages/historico-conciliacion/historico-conciliacion.component';
+import { TableComponent } from './components/table/table.component';
+import { TablaHistoricoConciliacionComponent } from './components/tabla-historico-conciliacion/tabla-historico-conciliacion.component';
 
 
 @NgModule({
@@ -81,7 +84,7 @@ import { ActualizarArchivoComponent } from './pages/actualizar-archivo/actualiza
     ClientelaAfiliadosComponent, 
     AffiliateDetailComponent, 
     EditProductComponent,
-    EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, GenerarArchivoComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AddClientComponent, VentasComponent, AddVentaComponent, EditAdminComponent, AdminDetailComponent, EditClientComponent, AdminTitleComponent, PrevArchivoComponent, PrevisualizarArchivoComponent, ResultFileComponent, VentaConsulposComponent, FichaClienteComponent, ValidadorVentaComponent, ActualizarArchivoComponent],
+    EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, GenerarArchivoComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AddClientComponent, VentasComponent, AddVentaComponent, EditAdminComponent, AdminDetailComponent, EditClientComponent, AdminTitleComponent, PrevArchivoComponent, PrevisualizarArchivoComponent, ResultFileComponent, VentaConsulposComponent, FichaClienteComponent, ValidadorVentaComponent, ActualizarArchivoComponent, HistoricoConciliacionComponent, TableComponent, TablaHistoricoConciliacionComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

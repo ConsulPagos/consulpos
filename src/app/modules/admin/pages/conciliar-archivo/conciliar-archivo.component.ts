@@ -36,8 +36,6 @@ export class ConciliarArchivoComponent implements OnInit {
   archivo: any;
 
   constructor(
-    private admin: AdminService,
-    private routes: ActivatedRoute,
     private router: Router,
     private title: Title,
     private storage: StorageService,

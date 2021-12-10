@@ -370,3 +370,7 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
   border-top-color: #000000;
   animation: spinner .8s linear infinite;
 }
+
+.bold {
+  font-weight: bold;
+}

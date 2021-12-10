@@ -1,0 +1,54 @@
+<div *ngIf="data && columns">
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="w-100">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let archivo"> {{archivo.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha_generacion">
+            <th mat-header-cell *matHeaderCellDef> FECHA GENERACION </th>
+            <td mat-cell *matCellDef="let archivo"> {{archivo.fecha_generacion | date:"short"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha_respuesta">
+            <th mat-header-cell *matHeaderCellDef> FECHA RESPUESTA </th>
+            <td mat-cell *matCellDef="let archivo"> {{archivo.fecha_respuesta | date:"short"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha_conciliacion">
+            <th mat-header-cell *matHeaderCellDef> FECHA CONCILIACION </th>
+            <td mat-cell *matCellDef="let archivo"> {{archivo.fecha_conciliacion | date:"short"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cuotas">
+            <th mat-header-cell *matHeaderCellDef> LINEAS </th>
+            <td mat-cell *matCellDef="let archivo"> {{archivo.cuotas}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="monto_enviado">
+            <th mat-header-cell *matHeaderCellDef> MONTO ENVIADO </th>
+            <td mat-cell *matCellDef="let archivo"> {{archivo.monto_enviado | currency}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="monto_cobrado">
+            <th mat-header-cell *matHeaderCellDef> MONTO COBRADO </th>
+            <td mat-cell *matCellDef="let archivo"> {{archivo.monto_cobrado | currency}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="efectividad">
+            <th mat-header-cell *matHeaderCellDef> EFECTIVIDAD </th>
+            <td mat-cell *matCellDef="let archivo"> {{ archivo.monto_cobrado / archivo.monto_enviado | number : '1.2-2' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef> DESCRIPCION </th>
+            <td mat-cell *matCellDef="let archivo"> {{archivo.descripcion}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[25, 50, 100]"></mat-paginator>
+
+</div>

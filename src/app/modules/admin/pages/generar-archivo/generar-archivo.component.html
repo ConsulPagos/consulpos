@@ -14,12 +14,6 @@
                                 </div>
                             </div>
 
-                            <div class="divider">
-                                <hr>
-                                <h6 class="divider-text">Caracterisiticas del archivo</h6>
-                                <hr>
-                            </div> 
-
                             <mat-form-field class="w-100" appearance="outline">
                                 <mat-label>Tipo de cobro</mat-label>
                                 <mat-select disableRipple formControlName="tipo_cobro">
@@ -138,12 +132,6 @@
                          
 
                             <div  class="w-100" *ngIf="form.get('banco').value">
-
-                                <div class="divider">
-                                    <hr>
-                                    <h6 class="divider-text">Tasa a aplicar</h6>
-                                    <hr>
-                                </div> 
 
                                 <mat-form-field class="w-100" appearance="outline" *ngIf="tasas">
                                     <mat-label>Seleccionar tasa</mat-label>

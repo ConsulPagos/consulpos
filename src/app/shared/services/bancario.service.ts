@@ -63,5 +63,14 @@ export class BancarioService {
     return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
+  doGetHistoricoConciliacion(data) {
+    var path = `/doGetHistoricoConciliacion`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
 
 }

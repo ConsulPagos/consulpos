@@ -42,13 +42,13 @@
 
                                 <h4>Archivo #{{archivo.id}}</h4>
                                 <div>{{archivo.cuotas}} líneas</div>
-                                <div>Monto envíado: {{archivo.monto_enviado | currency}}</div>
-                                <div>Monto cobrado: {{archivo.monto_cobrado | currency}}</div>
-                                <div>Generado el: {{archivo.fecha_generacion|
+                                <div><span class="bold">Monto envíado:</span> {{archivo.monto_enviado | currency}}</div>
+                                <div><span class="bold">Monto cobrado:</span> {{archivo.monto_cobrado | currency}}</div>
+                                <div><span class="bold">Generado el:</span> {{archivo.fecha_generacion|
                                     date:'dd/MM/yyyy hh:mm:ss'}}</div>
-                                <div>Actualizado el: {{archivo.fecha_respuesta |
+                                <div><span class="bold">Actualizado el:</span> {{archivo.fecha_respuesta |
                                     date:'dd/MM/yyyy hh:mm:ss'}}</div>
-                                <div>Descripción: {{ archivo.descripcion }}</div>
+                                <div><span class="bold">Descripción:</span> {{ archivo.descripcion }}</div>
 
 
                                 <div class="d-flex align-items-center mt-4">
