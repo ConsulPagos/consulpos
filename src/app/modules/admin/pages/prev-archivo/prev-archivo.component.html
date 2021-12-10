@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="btn-submit">
+                        <div class="btn-submit" *ngIf="archivo && !archivo.fecha_respuesta && !archivo.fecha_conciliacion">
                             <app-action-btn
                                 [isDisabled]="getTotal() > archivo.cuotas  || loading"
                                 (onClick)="save()" [loading]="loading" [text]="'Guardar'"></app-action-btn>
@@ -43,7 +43,7 @@
                         El total de lineas almacenadas es menor a las cargadas.
                     </span>
                 </div>
-                <app-previsualizar-archivo [data]="data" [columns]="columns" [progress]="progress">
+                <app-previsualizar-archivo [data]="data" [columns]="columns">
                 </app-previsualizar-archivo>
 
             </div>

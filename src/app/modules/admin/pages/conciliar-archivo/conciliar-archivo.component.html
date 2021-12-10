@@ -16,7 +16,7 @@
                             <div class="w-100 pl-4 pr-4 pt-4">
                                 <mat-form-field appearance="outline" class="container_box w-100">
                                     <mat-label>Seleccionar Banco</mat-label>
-                                    <mat-select formControlName="banco" (selectionChange)="submit()">
+                                    <mat-select formControlName="banco" (selectionChange)="getArchivos()">
                                         <mat-option selected value="null">Seleccionar</mat-option>
                                         <mat-option *ngFor="let banco of bancos" value={{banco.codigo}}>
                                             {{banco.nombre}} </mat-option>
@@ -52,14 +52,14 @@
 
 
                                 <div class="d-flex align-items-center mt-4">
-                                    <button mat-button (click)="load()" mat-button [disabled]="form.invalid"
-                                        class="pr-4 pl-4 pt-1 pb-1 mr-3 btn btn-success bg-success text-white h5">
-                                        Conciliar
-                                    </button>
-                                    <button mat-button (click)="load()" mat-button [disabled]="form.invalid"
-                                        class="pr-4 pl-4 pt-1 pb-1 btn btn-info bg-info text-white h5">
-                                        Descargar
-                                    </button>
+                                    <app-action-btn mat-button (onClick)="conciliar()"
+                                        [isDisabled]="form.invalid || !archivo || loadingUpdate"
+                                        [loading]="loadingUpdate" [text]="'Conciliar'" class="mr-3">
+                                    </app-action-btn>
+                                    <app-action-btn mat-button (onClick)="getArchivo()"
+                                        [isDisabled]="form.invalid || !archivo || loadingGetArchivo"
+                                        [loading]="loadingGetArchivo" [text]="'Ver'" class="mr-3">
+                                    </app-action-btn>
                                 </div>
                             </div>
                         </div>

@@ -19,7 +19,7 @@ import { ToasterService } from 'src/app/shared/services/toaster.service';
 })
 export class PrevArchivoComponent implements OnInit {
 
-  data: CuotaInterface[];
+  data: any[];
   progress: number = 0;
   id: any;
   archivo: any;
@@ -28,9 +28,21 @@ export class PrevArchivoComponent implements OnInit {
   columns = ["rif", "cuenta", "afiliado", "cobrado", "mensaje"]
 
   constructor(private route: ActivatedRoute, private router: Router, private modal: ModalService, private bancario: BancarioService, private crypto: CryptoService, private storage: StorageService, private session: SesionService, private toaster: ToasterService) {
-    if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.archivo) {
+    
+    if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.archivo ) {
+      
       this.archivo = this.router.getCurrentNavigation().extras.state.archivo
+      
+      if(this.router.getCurrentNavigation().extras.state.data){
+        this.data = this.router.getCurrentNavigation().extras.state.data
+      }
+
+      if(this.router.getCurrentNavigation().extras.state.columns){
+        this.columns = this.router.getCurrentNavigation().extras.state.columns
+      }
+
     }
+    
   }
 
   ngOnInit(): void {
