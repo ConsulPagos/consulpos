@@ -27,7 +27,15 @@
 
 .text-tilte{
     display: flex;
-    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+    flex-direction: column;
+    font-size: x-large;
+    font-weight: 500;
+}
+
+.text_rif{
+    font-weight: bold;
 }
 
 .edit-btn {
@@ -71,4 +79,20 @@
 .title_container_file_upload{
     display: flex;
     justify-content: center;
+}
+
+.direction {
+    width: 500px;
+    margin: 0px 20px 0px 0px;
+}
+
+.direction_form {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.container_box_direction {
+    margin-right: 10px;
+    width: 100%;
 }

@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { NavigationExtras, Router } from '@angular/router';
+import { ClientesService } from 'src/app/shared/services/clientes.service';
+import { CryptoService } from 'src/app/shared/services/crypto.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
+
 
 @Component({
   selector: 'app-clientela',
@@ -13,11 +18,35 @@ export class ClientelaComponent implements OnInit {
   countDocumentos;
   countDocumentosReq;
   countException;
-  
-  constructor(private title:Title) { }
+
+  constructor(
+    private title: Title, 
+    private router: Router, 
+    private crypto: CryptoService,
+    private cliente: ClientesService,
+    private storage: StorageService,) { }
 
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Clientes')
   }
 
+  editClient(client) {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        editClient: client
+      }
+    }
+    this.router.navigateByUrl("/admin/app/(adr:edit-client)", navigationExtras)
+  }
+
+  showClient(client) {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        showClient: client
+      }
+    }
+    this.router.navigateByUrl("/admin/app/(adr:ficha-cliente)", navigationExtras)
+  }
+
+  
 }

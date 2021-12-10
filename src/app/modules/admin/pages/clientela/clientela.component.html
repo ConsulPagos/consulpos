@@ -15,10 +15,20 @@
             <mat-tab-group>
                 <mat-tab>
                     <ng-template mat-tab-label>
-                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
-                            matBadgePosition="before">Listado de Clientes</span>
+                        <span 
+                        matBadge={{countNuevos}} 
+                        matBadgeSize="small" 
+                        matBadgeOverlap="false"
+                        matBadgePosition="before">
+                        Listado de Clientes
+                        </span>
                     </ng-template>
-                    <app-clientela-afiliados (count)='countNuevos = $event' class="w-100" [access_level]="0">
+                    <app-clientela-afiliados 
+                    (editClient)="editClient($event)" 
+                    (showClient)="showClient($event)" 
+                    (count)='countNuevos = $event' 
+                    class="w-100" 
+                    [access_level]="0">
                     </app-clientela-afiliados>
                 </mat-tab>
             </mat-tab-group>

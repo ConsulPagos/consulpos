@@ -10,108 +10,142 @@
         </div>
     </div>
 
+
     <!-- Container de los Componentes -->
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
+            <div>
+                <p class="text-tilte text-uppercase">
+                    Editar Cliente:
+                    <span class="text_rif">{{editClient.rif}}</span>
+                </p>
+            </div>
 
-
-            <h5 class="text-tilte text-uppercase">Editar Cliente</h5>
             <!-- Container del Stepper -->
-
-
             <mat-vertical-stepper linear #stepper>
                 <ng-template matStepperIcon="edit">
                     <li class="fa fa-check"></li>
                 </ng-template>
-                <!-- Parte Inicial -->
-                <mat-step>
-                    <!-- [stepControl]="client_type" -->
-                    <form [formGroup]="client_type">
-                        <ng-template matStepLabel>Indique el tipo de cliente</ng-template>
-                        <div>
-                            <h6>Tipo de Cliente</h6>
-                            <mat-radio-group [(ngModel)]="tipo_cliente" formControlName="tipo_cliente">
-                                <mat-radio-button *ngFor="let tipo of tipos_clientes" [value]="tipo.id_tipo_cliente"
-                                    class="container_box_space">
-                                    {{tipo.tipo_cliente}}
-                                </mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                    </form>
-                    <!-- Bootn de siguiente strepper -->
-                    <div>
-                        <button class="stepBtn" mat-raised-button matStepperNext>Siguiente</button>
-                    </div>
-                </mat-step>
 
                 <!-- Parte 1 del Stepper -->
-                <mat-step>
-                    <!-- [stepControl]="client" -->
-                    <form [formGroup]="client">
+                <mat-step [stepControl]="client">
+                    <form [formGroup]="client_type">
+                        <ng-template matStepLabel>Indique el tipo de cliente</ng-template>
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Tipo de Cliente</mat-label>
+                            <mat-select disableRipple formControlName="tipo_cliente">
+                                <mat-option *ngFor="let t_cliente of tipos_clientes" value={{t_cliente.id}}>
+                                    {{t_cliente.t_cliente}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </form>
+                    <form [formGroup]="client" #l="ngForm">
                         <ng-template matStepLabel>Ingresar los datos del cliente</ng-template>
-                        <div>
-                            <h6>Documento de identidad</h6>
-                            <mat-form-field appearance="outline" class="container_box">
-                                <mat-label>Tipo</mat-label>
-                                <mat-select disableRipple formControlName="tipo_doc">
-                                    <mat-option *ngFor="let tipo_documento of tipo_documentos"
-                                        value={{tipo_documento.id_tipo_documento}}>
-                                        {{tipo_documento.tipo_doc}} </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline">
-                                <mat-label>Rif</mat-label>
-                                <input matInput formControlName="rif" placeholder="123456789" type="text">
-                            </mat-form-field>
-                        </div>
                         <!-- Formulario Datos del Cliente -->
-                        <!-- <div *ngIf="getTipoCliente()=='N'"> -->
+
                         <div>
                             <h6>Datos del Cliente</h6>
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Razón Social</mat-label>
-                                <input matInput formControlName="razon_social" placeholder="123456789" type="text">
+                                <input matInput formControlName="razon_social" placeholder="ConsuPagos" type="text"
+                                    maxlength="255">
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Nombre Comercial</mat-label>
-                                <input matInput formControlName="nombre_comercial" placeholder="123456789" type="text">
+                                <input matInput formControlName="nombre_comercial" placeholder="ConsuPagos" type="text"
+                                    maxlength="255">
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline">
+                            <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Tipo de Contribuyente</mat-label>
                                 <mat-select disableRipple formControlName="contribuyente">
-                                    <mat-option *ngFor="let contribuyente of contribuyentes"
-                                        value={{contribuyente.id_contribuyente}}> {{contribuyente.contribuyente}}
+                                    <mat-option *ngFor="let contribuyente of contribuyentes" value={{contribuyente.id}}>
+                                        {{contribuyente.contribuyente}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                        </div>
-                        <!-- Formulario Datos de Contacto -->
-                        <div>
-                            <h6>Datos de Contacto</h6>
+
                             <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Correo electrónico</mat-label>
-                                <input matInput formControlName="email" placeholder="123456789" type="text">
+                                <mat-label>Actividad Comercial</mat-label>
+                                <mat-select disableRipple formControlName="act_comercial">
+                                    <mat-option *ngFor="let actividad_comercial of actividades_comerciales"
+                                        value={{actividad_comercial.id}}> {{actividad_comercial.actividad_comercial}}
+                                    </mat-option>
+                                </mat-select>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Correo electrónico</mat-label>
+                                <input matInput formControlName="email" placeholder="ConsuPagos@gmail.com" type="email"
+                                    maxlength="255">
+                            </mat-form-field>
+                        </div>
+                        <!-- Formulario Datos de Contacto -->
+                        <!-- <div>
+                            <h6>Datos de Contacto</h6> -->
+                        <!-- <div class="phone">
+                            <p>Telefono Local</p>
+                                <ngx-intl-tel-input
+                                  [preferredCountries]="preferredCountries"
+                                  [enableAutoCountrySelect]="true"
+                                  [enablePlaceholder]="true"
+                                  [searchCountryFlag]="true"
+                                  [searchCountryField]="[
+                                    SearchCountryField.Iso2,
+                                    SearchCountryField.Name
+                                  ]"
+                                  [selectFirstCountry]="false"
+                                  [selectedCountryISO]="CountryISO.India"
+                                  [maxLength]="15"
+                                  [phoneValidation]="true"
+                                  [separateDialCode]="separateDialCode"
+                                  [numberFormat]="PhoneNumberFormat.National"
+                                  formControlName="telefono_local"
+                                >
+                                </ngx-intl-tel-input>
+                            </div>
+                                <div class="phone">
+                                    <p>Telefono Movil</p>
+                                <ngx-intl-tel-input
+                                [preferredCountries]="preferredCountries"
+                                [enableAutoCountrySelect]="true"
+                                [enablePlaceholder]="true"
+                                [searchCountryFlag]="true"
+                                [searchCountryField]="[
+                                  SearchCountryField.Iso2,
+                                  SearchCountryField.Name
+                                ]"
+                                [selectFirstCountry]="false"
+                                [selectedCountryISO]="CountryISO.India"
+                                [maxLength]="15"
+                                [phoneValidation]="true"
+                                [separateDialCode]="separateDialCode"
+                                [numberFormat]="PhoneNumberFormat.National"
+                                formControlName="telefono_movil"
+                              >
+                              </ngx-intl-tel-input>
+                            </div> -->
+                        <!-- <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Teléfono Local</mat-label>
-                                <input matInput formControlName="telefono_local" placeholder="123456789" type="text">
+                                <input matInput formControlName="telefono_local" placeholder="2129854552" type="tel"
+                                    maxlength="15" (keypress)="onlyNumberKey($event)">
                             </mat-form-field>
 
                             <mat-form-field appearance="outline">
                                 <mat-label>Teléfono Móvil</mat-label>
-                                <input matInput formControlName="telefono_movil" placeholder="123456789" type="text">
-                            </mat-form-field>
-                        </div>
+                                <input matInput formControlName="telefono_movil" placeholder="4123758226" type="tel"
+                                    maxlength="15" (keypress)="onlyNumberKey($event)">
+                            </mat-form-field> -->
+
+                        <!-- </div> -->
                         <!-- Formulario Datos Geograficos -->
                         <div>
                             <h6>Datos Geográficos</h6>
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Estado</mat-label>
                                 <mat-select disableRipple formControlName="estado">
-                                    <mat-option *ngFor="let estado of estados" value={{estado.id_estado}}>
+                                    <mat-option *ngFor="let estado of estados" value={{estado.id}}>
                                         {{estado.estado}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -119,7 +153,7 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Municipio</mat-label>
                                 <mat-select disableRipple formControlName="municipio">
-                                    <mat-option *ngFor="let municipio of municipios" value={{municipio.id_municipio}}>
+                                    <mat-option *ngFor="let municipio of municipios" value={{municipio.id}}>
                                         {{municipio.municipio}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -127,7 +161,7 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Parroquia</mat-label>
                                 <mat-select disableRipple formControlName="parroquia">
-                                    <mat-option *ngFor="let parroquia of parroquias" value={{parroquia.id_parroquia}}>
+                                    <mat-option *ngFor="let parroquia of parroquias" value={{parroquia.id}}>
                                         {{parroquia.parroquia}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -135,21 +169,45 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Ciudad</mat-label>
                                 <mat-select disableRipple formControlName="ciudad">
-                                    <mat-option *ngFor="let ciudad of ciudades" value={{ciudad.id_ciudad}}>
+                                    <mat-option *ngFor="let ciudad of ciudades" value={{ciudad.id}}>
                                         {{ciudad.ciudad}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Codigo Postal</mat-label>
-                                <input matInput formControlName="codpostal" placeholder="1234" type="text">
+                                <input matInput formControlName="codpostal" placeholder="1080" type="text" maxlength="5"
+                                    (keypress)="onlyNumberKey($event)">
                             </mat-form-field>
+                        </div>
 
-                            <mat-form-field class="container_box_space" appearance="outline">
-                                <mat-label>Dirección</mat-label>
-                                <textarea matInput placeholder="Av. Ernesto Blohm"
-                                    formControlName="direccion"> </textarea>
-                            </mat-form-field>
+                        <div class="direction_form">
+                            <div class="direction">
+                                <mat-form-field class="container_box_direction" appearance="outline">
+                                    <mat-label>Dirección</mat-label>
+                                    <textarea matInput placeholder="Av. Ernesto Blohm" formControlName="direccion"
+                                        type="text" maxlength="510">
+                                </textarea>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="direction">
+                                <mat-form-field class="container_box_direction" appearance="outline">
+                                    <mat-label>Punto de referencia</mat-label>
+                                    <textarea matInput placeholder="Pasando Proteccion animal"
+                                        formControlName="pto_referencia" type="text" maxlength="510">
+                                </textarea>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="direction">
+                                <mat-form-field class="container_box_direction" appearance="outline">
+                                    <mat-label>Localidad</mat-label>
+                                    <textarea matInput placeholder="Pasando Proteccion animal"
+                                        formControlName="localidad" type="text" maxlength="510">
+                                </textarea>
+                                </mat-form-field>
+                            </div>
                         </div>
                         <!-- Formulario Datos Medio de Contacto -->
                         <div>
@@ -157,101 +215,140 @@
                             <mat-form-field appearance="outline">
                                 <mat-label>Via</mat-label>
                                 <mat-select disableRipple formControlName="contacto">
-                                    <mat-option *ngFor="let contacto of contactos" value={{contacto.id_medio_contacto}}>
-                                        {{contacto.contacto}} </mat-option>
+                                    <mat-option *ngFor="let m_contacto of contactos" value={{m_contacto.id}}>
+                                        {{m_contacto.m_contacto}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                     </form>
+
+                    <!-- <div>
+                        <strong>Form value:</strong>
+                        <pre>{{ l.form.value | json }}</pre>
+                    </div> -->
                     <!-- Bootn de siguiente strepper -->
+
                     <div>
-                        <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                        <button class="stepBtn" mat-raised-button matStepperNext>Siguiente</button>
+                        <app-action-btn 
+                        (onClick)="save()" 
+                        [loading]="loading" 
+                        [text]="'Actualizar'" 
+                        [isDisabled]="client.invalid || loading">
+                    </app-action-btn>
                     </div>
+
                 </mat-step>
 
                 <!-- Parte 2 del Strepper -->
-                <mat-step>
-                    <!-- [stepControl]="document" -->
-                    <form [formGroup]="document">
+                <!-- <mat-step [stepControl]="document">
+                    <form>
                         <ng-template matStepLabel>Carga de Documentos</ng-template>
+                        <div class="row">
+                            <div id="doc_rif" class="col-md-6 col-12">
+                                <h6 class="title_container_file_upload">Rif</h6>
+                                <app-file-upload></app-file-upload>
+                            </div>
 
-                        <div id="doc_rif">
-                            <h6 class="title_container_file_upload">Rif</h6>
-                            <app-file-upload></app-file-upload>
+                            <div id="doc_registro_mercantil" class="col-md-6 col-12">
+                                <h6 class="title_container_file_upload">Registro Mercantil</h6>
+                                <app-file-upload></app-file-upload>
+                            </div>
+
+                            <div id="doc_ci_representante_legal" class="col-md-6 col-12">
+                                <h6 class="title_container_file_upload">Cédula Representante Legal</h6>
+                                <app-file-upload></app-file-upload>
+                            </div>
+
+                            <div id="doc_otro" class="col-md-6 col-12">
+                                <h6 class="title_container_file_upload">Otro</h6>
+                                <app-file-upload></app-file-upload>
+                            </div>
                         </div>
-
-                        <div id="doc_registro_mercantil">
-                            <h6 class="title_container_file_upload">Registro Mercantil</h6>
-                            <app-file-upload></app-file-upload>
-                        </div>
-
-                        <div id="doc_ci_representante_legal">
-                            <h6 class="title_container_file_upload">Cédula Representante Legal</h6>
-                            <app-file-upload></app-file-upload>
-                        </div>
-
-                        <div id="doc_otro">
-                            <h6 class="title_container_file_upload">Otro</h6>
-                            <app-file-upload></app-file-upload>
-                        </div>
-
                     </form>
                     <div>
                         <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                        <button class="stepBtn" mat-raised-button matStepperNext>Siguiente</button>
+                        <button class="stepBtn" mat-raised-button matStepperNext (click)="submit()">Siguiente</button>
                     </div>
-                </mat-step>
+                </mat-step> -->
 
                 <!-- Parte 3 del Strepper -->
-                <mat-step>
-                    <ng-template matStepLabel>Datos del Representante Legal</ng-template>
-                    <ng-container>
-                        <form [formGroup]="agent">
+                <div *ngIf="getTipoCliente()=='J'">
+                    <mat-step>
 
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Nombre</mat-label>
-                                <input matInput formControlName="nombre_representante" placeholder="123456789"
-                                    type="text">
-                            </mat-form-field>
+                        <ng-template matStepLabel>Datos del Representante Legal</ng-template>
 
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Apellido</mat-label>
-                                <input matInput formControlName="apellido_representante" placeholder="123456789"
-                                    type="text">
-                            </mat-form-field>
+                        <ng-container>
+                            <div class="container_agent" *ngFor="let format of formats; let i=index">
+                                <form [formGroup]="agents[i]" class="formulario">
 
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Cédula</mat-label>
-                                <input matInput formControlName="cedula_representante" placeholder="123456789"
-                                    type="text">
-                            </mat-form-field>
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Nombre</mat-label>
+                                        <input matInput formControlName="nombre_representante" placeholder="123456789"
+                                            type="text">
+                                    </mat-form-field>
 
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Teléfono Local</mat-label>
-                                <input matInput formControlName="telefono_local_repre" placeholder="123456789"
-                                    type="text">
-                            </mat-form-field>
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Apellido</mat-label>
+                                        <input matInput formControlName="apellido_representante" placeholder="123456789"
+                                            type="text">
+                                    </mat-form-field>
+                                    <div>
+                                        <mat-form-field appearance="outline" class="container_box">
+                                            <mat-label>Tipo</mat-label>
+                                            <mat-select disableRipple formControlName="tipo_doc_rep">
+                                                <mat-option *ngFor="let tipo_documento of tipo_documentos"
+                                                    value={{tipo_documento.t_doc_id}}>
+                                                    {{tipo_documento.tipo_doc}} </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
 
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Teléfono Móvil</mat-label>
-                                <input matInput formControlName="telefono_movil_repre" placeholder="123456789"
-                                    type="text">
-                            </mat-form-field>
+                                        <mat-form-field appearance="outline" class="container_box_space">
+                                            <mat-label>Cédula</mat-label>
+                                            <input matInput formControlName="cedula_representante"
+                                                placeholder="123456789" type="text">
+                                        </mat-form-field>
+                                    </div>
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Teléfono Local</mat-label>
+                                        <input matInput formControlName="telefono_local_repre" placeholder="123456789"
+                                            type="text">
+                                    </mat-form-field>
 
-                            <mat-form-field appearance="outline">
-                                <mat-label>Correo Electrónico</mat-label>
-                                <input matInput formControlName="email" placeholder="123456789" type="text">
-                            </mat-form-field>
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Teléfono Móvil</mat-label>
+                                        <input matInput formControlName="telefono_movil_repre" placeholder="123456789"
+                                            type="text">
+                                    </mat-form-field>
 
-                        </form>
-                    </ng-container>
-                    <div>
-                        <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                        <button class="stepBtn" mat-raised-button>Finalizar</button>
-                    </div>
-                </mat-step>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Correo Electrónico</mat-label>
+                                        <input matInput formControlName="email" placeholder="123456789" type="text">
+                                    </mat-form-field>
 
+                                    <div class="btn_form_add_agent" *ngIf="(i === 0)">
+                                        <button mat-mini-fab color="primary"
+                                            aria-label="Example icon button with a menu icon" (click)="add_agent()"
+                                            *ngIf="(formats.length === 1 ||  formats.length === 0)">
+                                            <i class="fas fa-user-plus"></i>
+                                        </button>
+
+                                        <button mat-mini-fab color="primary"
+                                            aria-label="Example icon button with a menu icon" (click)="deleteAgent()"
+                                            *ngIf="(formats.length === 2)">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </form>
+
+                            </div>
+
+                            <div>
+                                <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
+                                <button class="stepBtn" mat-raised-button (click)="submit()">Finalizar</button>
+                            </div>
+                        </ng-container>
+                    </mat-step>
+                </div>
 
             </mat-vertical-stepper>
         </div>

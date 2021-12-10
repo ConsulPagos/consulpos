@@ -36,9 +36,9 @@ export class PrevisualizarArchivoComponent implements OnInit {
     return this.data.map(t => t.enviado).reduce((acc, value) => acc + value, 0);
   }
 
-  getTotalCobrado() {
-    return this.data.map(t => t.cobrado).reduce((acc, value) => acc + value, 0);
-  }
+  // getTotalCobrado() {
+  //   return this.data.map(t => t.cobrado).reduce((acc, value) => acc + value, 0);
+  // }
 
 
 
