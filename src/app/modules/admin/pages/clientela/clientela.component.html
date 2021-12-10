@@ -25,6 +25,7 @@
                     </ng-template>
                     <app-clientela-afiliados 
                     (editClient)="editClient($event)" 
+                    (showClient)="showClient($event)" 
                     (count)='countNuevos = $event' 
                     class="w-100" 
                     [access_level]="0">

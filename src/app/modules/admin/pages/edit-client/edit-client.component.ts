@@ -21,6 +21,8 @@ import { ActividadComercialInterface } from '../../../../models/actividad_comerc
 import { Router } from '@angular/router';
 import { ClienteRequestInterface } from '../../../../models/cliente_request';
 import { SesionService } from 'src/app/shared/services/sesion.service';
+import { ModalService } from 'src/app/shared/services/modal.service';
+import { ToasterService } from 'src/app/shared/services/toaster.service';
 
 @Component({
   selector: 'app-edit-client',
@@ -29,7 +31,7 @@ import { SesionService } from 'src/app/shared/services/sesion.service';
 })
 export class EditClientComponent implements OnInit {
 
-  editClient:ClienteRequestInterface={};
+  editClient: ClienteRequestInterface = {};
 
   //----------- VARIABLES GLOBALES -----------\\
   validacionresponse: ValidacionclienteResponse;
@@ -54,20 +56,22 @@ export class EditClientComponent implements OnInit {
     private crypto: CryptoService,
     private cliente: ClientesService,
     private storage: StorageService,
-    private router:Router,
-    private session: SesionService, 
-  ) { 
+    private router: Router,
+    private session: SesionService,
+    private modal: ModalService,
+    private toaster: ToasterService,
+  ) {
 
-    if(this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.editClient){
+    if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.editClient) {
       this.editClient = this.router.getCurrentNavigation().extras.state.editClient as ClienteRequestInterface;
-    console.log(this.editClient)
-    }else{
+      console.log(this.editClient)
+    } else {
       this.router.navigateByUrl("/admin/app/(adr:clientela)");
     }
-    
+
     this.identity = new FormGroup({
       rif: new FormControl(this.editClient.rif.toString().substr(1), [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
-      tipo_doc: new FormControl(this.editClient.rif.toString().substr(0,1), [Validators.required]),
+      tipo_doc: new FormControl(this.editClient.rif.toString().substr(0, 1), [Validators.required]),
     });
 
     this.client = new FormGroup({
@@ -196,8 +200,21 @@ export class EditClientComponent implements OnInit {
       console.log(this.crypto.decryptString(res))
       this.addClientResponse = new AddClientDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.addClientResponse)
-      // this.loading = false
+      this.loading = false
       this.crypto.setKeys(this.addClientResponse.keyS, this.addClientResponse.ivJ, this.addClientResponse.keyJ, this.addClientResponse.ivS)
+
+      switch (this.addClientResponse.R) {
+        case constant.R0:
+          this.router.navigateByUrl('/admin/app/(adr:clientela)')
+          this.toaster.success(this.addClientResponse.M)
+          break;
+        case constant.R1:
+          this.toaster.error(this.addClientResponse.M)
+          break;
+        default:
+          this.toaster.default_error()
+          break;
+      }
     })
   }
 
@@ -214,4 +231,18 @@ export class EditClientComponent implements OnInit {
     this.tipo_documentos = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs
     this.actividades_comerciales = JSON.parse(this.storage.get(constant.ACTIVIDAD_COMERCIAL)).actividades_comerciales
   }
+
+  save() {
+    this.modal.confirm("¿Desea actualizar a este cliente?").subscribe(result => {
+      if (result) {
+        console.log("acciones")
+        this.submit()
+      }
+    })
+  }
+
+  /*   isInvalid(): boolean {
+      if
+      return this.client.invalid;
+    } */
 }
