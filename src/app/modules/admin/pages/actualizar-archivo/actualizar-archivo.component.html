@@ -4,7 +4,7 @@
         </div>
         <div class="d-flex justify-content-center">
             <div class="w-100">
-                <div class="bg-white rounded card p-2">
+                <div class="bg-white rounded card p-4">
                     <form [formGroup]="form">
                         <div class="row">
                             <div class="col-12">
@@ -43,8 +43,7 @@
 
                             <div class="col-12 ml-3 mr-3 mb-4">
                                 <div class="d-flex align-items-center">
-                                    <button mat-button (click)="load()" mat-button [disabled]="form.invalid"
-                                        class="pr-4 pl-4 pt-1 pb-1 btn btn-success bg-success text-white h5">Siguiente</button>
+                                    <app-action-btn class="btn-submit" mat-button (onClick)="load()" mat-button [isDisabled]="form.invalid" text="Siguiente"></app-action-btn>
                                 </div>
                             </div>
                         </div>

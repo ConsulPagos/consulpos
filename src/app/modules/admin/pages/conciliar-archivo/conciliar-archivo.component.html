@@ -38,11 +38,11 @@
                                 </mat-form-field>
                             </div>
 
-                            <div class="archivo-prev mb-4 mt-4 card p-4" *ngIf="form.valid">
+                            <div class="archivo-prev mb-4 mt-4 card p-4" *ngIf="form.valid && archivo">
 
                                 <h4>Archivo #{{archivo.id}}</h4>
                                 <div>{{archivo.cuotas}} líneas</div>
-                                <div><span class="bold">Monto envíado:</span> {{archivo.monto_enviado | currency}}</div>
+                                <div><span class="bold">Monto enviado:</span> {{archivo.monto_enviado | currency}}</div>
                                 <div><span class="bold">Monto cobrado:</span> {{archivo.monto_cobrado | currency}}</div>
                                 <div><span class="bold">Generado el:</span> {{archivo.fecha_generacion|
                                     date:'dd/MM/yyyy hh:mm:ss'}}</div>

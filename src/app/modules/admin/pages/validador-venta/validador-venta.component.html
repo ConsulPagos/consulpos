@@ -1,1 +1,78 @@
-<p>validador-venta works!</p>
+<section id="ventaConsulpos">
+    <div class="container-fluid">
+        <div>
+            <h5 class="bold">Venta N° {{data.numero_venta}}</h5>
+            <h6>{{data.rif}}</h6>
+            <h6>{{data.razon}}</h6>
+            <h6>{{data.estatus}}</h6>
+        </div>
+        <div class="devices">
+            <hr>
+            <div class="device" *ngFor="let equipo of equipos">
+                <h6 class="bold uppercase">{{equipo.title}}</h6>
+                <table>
+                    <tr>
+                        <th>Dato</th>
+                        <th>Valor</th>
+                    </tr>
+                    <tr>
+                        <td>Marca </td>
+                        <td>{{equipo.marca}}</td>
+                    </tr>
+                    <tr>
+                        <td>Modelo </td>
+                        <td>{{equipo.modelo}}</td>
+                    </tr>
+                    <tr>
+                        <td>Cuenta </td>
+                        <td>{{equipo.cuenta}}</td>
+                    </tr>
+                    <tr>
+                        <td>Banco </td>
+                        <td>{{equipo.banco}}</td>
+                    </tr>
+                    <tr>
+                        <td>Comunicacion </td>
+                        <td>{{equipo.comunicacion}}</td>
+                    </tr>
+                    <tr>
+                        <td>Modo Pago Plan </td>
+                        <td>{{equipo.modo_pago_plan}}</td>
+                    </tr>
+                    <tr>
+                        <td>Nombre plan </td>
+                        <td>{{equipo.nombre_plan}}</td>
+                    </tr>
+                    <tr>
+                        <td>Operadora </td>
+                        <td>{{equipo.operadora}}</td>
+                    </tr>
+                    <tr>
+                        <td>Precio </td>
+                        <td>{{equipo.precio}}</td>
+                    </tr>
+                    <tr>
+                        <td>Serial </td>
+                        <td>{{equipo.serial_pos}}</td>
+                    </tr>
+                    <tr>
+                        <td>Serial Sim</td>
+                        <td>{{equipo.serial_sim}}</td>
+                    </tr>
+                    <tr>
+                        <td>Terminal</td>
+                        <td>{{equipo.terminal}}</td>
+                    </tr>
+                    <tr>
+                        <td>Plataforma</td>
+                        <td>{{equipo.mp}}</td>
+                    </tr>
+                    <tr>
+                        <td>Afiliado</td>
+                        <td>{{equipo.numero}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

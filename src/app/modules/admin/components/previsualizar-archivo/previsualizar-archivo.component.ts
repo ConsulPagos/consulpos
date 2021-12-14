@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ChangeDetectorRef  } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,15 +10,16 @@ import { ModalService } from "../../../../shared/services/modal.service";
   styleUrls: ['./previsualizar-archivo.component.scss']
 })
 
+
+
 export class PrevisualizarArchivoComponent implements OnInit {
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   @Input() data: CuotaInterface[];
-  dataSource: MatTableDataSource<CuotaInterface>;
   @Input() columns: any;  
+  dataSource: MatTableDataSource<any>;
 
-  constructor(private modal:ModalService) { 
+  constructor(private cdr: ChangeDetectorRef){
     this.dataSource = new MatTableDataSource(this.data);
   }
 
@@ -28,18 +29,8 @@ export class PrevisualizarArchivoComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.data);
-    this.dataSource.paginator = this.paginator;
-
+    this.cdr.detectChanges();
   }
-
-  getTotalMonto() {
-    return this.data.map(t => t.enviado).reduce((acc, value) => acc + value, 0);
-  }
-
-  // getTotalCobrado() {
-  //   return this.data.map(t => t.cobrado).reduce((acc, value) => acc + value, 0);
-  // }
-
 
 
 

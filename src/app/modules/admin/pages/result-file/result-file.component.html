@@ -4,31 +4,35 @@
     </h3>
     <div>
         <h6>Identificador de Archivo: </h6>
-        <p class="text">{{data.id_archivo}}</p>
+        <p class="text">{{data.archivo.id_archivo}}</p>
     </div>
     <div>
         <h6>Cantidad de Cuotas: </h6>
-        <p class="text">{{data.cantidad_cuotas}}</p>
+        <p class="text">{{data.archivo.cantidad_cuotas}}</p>
     </div>
     <div>
         <h6>Total $: </h6>
-        <p class="text">{{data.total | currency : 'USD' : true : '1.2-2'}}</p>
+        <p class="text">{{data.archivo.total | currency : 'USD' : true : '1.2-2'}}</p>
     </div>
     <div>
         <h6>Total Bolivares: </h6>
-        <p class="text">{{data.total_bolivares | currency : 'Bs.' : true : '1.2-2'}}</p>
+        <p class="text">{{data.archivo.total_bolivares | currency : 'Bs.' : true : '1.2-2'}}</p>
     </div>
     <div>
         <h6>Separador decimal: </h6>
-        <p class="text">{{getSeparador(data.usar_coma)}}</p>
+        <p class="text">{{getSeparador(data.archivo.usar_coma)}}</p>
     </div>
     <div>
         <h6>Tipo de Archivo: </h6>
-        <p class="text">{{data.tipo_archivo}}</p>
+        <p class="text">{{data.archivo.tipo_archivo}}</p>
     </div>
     <div>
         <h6>Cantidad de Decimales: </h6>
-        <p class="text">{{data.decimales}}</p>
+        <p class="text">{{data.archivo.decimales}}</p>
+    </div>
+    <div>
+        <h6>Tiempo de procesamiento: </h6>
+        <p class="text">{{transform(data.time)}}</p>
     </div>
 
     <button mat-raised-button color="accent" class='btn_close' (click)="close()">Aceptar</button>

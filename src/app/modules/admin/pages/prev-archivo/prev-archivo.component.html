@@ -22,25 +22,27 @@
                             <h3>Vista previa</h3>
                             <div class="resumen-container">
                                 <div class="resumen-item">
-                                    <div class="resumen-title">Total envíado:</div>
-                                    <div class="resumen-text">{{archivo.cuotas}} lineas ( {{archivo.monto | currency:"VES" }}
+                                    <div class="resumen-title">Total enviado:</div>
+                                    <div class="resumen-text">{{archivo.cuotas}} lineas ( {{archivo.monto_enviado |
+                                        currency:"USD" }}
                                         )</div>
                                 </div>
                                 <div class="resumen-item">
                                     <div class="resumen-title">Total cobrado:</div>
-                                    <div class="resumen-text">{{getTotal()}} lineas ( {{getTotalCobrado() | currency:"VES" }} )
+                                    <div class="resumen-text">{{getTotal()}} lineas ( {{getTotalCobrado() |
+                                        currency:"VES" }} )
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="btn-submit" *ngIf="archivo && !archivo.fecha_respuesta && !archivo.fecha_conciliacion">
-                            <app-action-btn
-                                [isDisabled]="getTotal() > archivo.cuotas  || loading"
-                                (onClick)="save()" [loading]="loading" [text]="'Guardar'"></app-action-btn>
+                        <div class="btn-submit"
+                            *ngIf="archivo && !archivo.fecha_respuesta && !archivo.fecha_conciliacion">
+                            <app-action-btn [isDisabled]="getTotal() != archivo.cuotas  || loading" (onClick)="save()"
+                                [loading]="loading" [text]="'Guardar'"></app-action-btn>
                         </div>
                     </div>
-                    <span class="error" *ngIf="getTotal() > archivo.cuotas">
-                        El total de lineas almacenadas es menor a las cargadas.
+                    <span class="error" *ngIf="getTotal() != archivo.cuotas">
+                        La cantidad de líneas en el archivo no concuerda.
                     </span>
                 </div>
                 <app-previsualizar-archivo [data]="data" [columns]="columns">
@@ -51,5 +53,7 @@
     </div>
 </section>
 <ng-template #loader>
-    <div *ngIf="loading"><app-loader></app-loader></div>
+    <div *ngIf="loading">
+        <app-loader></app-loader>
+    </div>
 </ng-template>

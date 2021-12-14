@@ -88,7 +88,7 @@ const routes: Routes = [
       { path: 'ventas', component: VentasComponent, outlet: 'adr' },
       { path: 'previsualizar-archivo/:id', component: PrevArchivoComponent, outlet: 'adr' },
       { path: 'ficha-cliente', component: FichaClienteComponent, outlet: 'adr' },
-      { path: 'validador-venta', component: ValidadorVentaComponent, outlet: 'adr' },
+      { path: 'validador-venta/:id', component: ValidadorVentaComponent, outlet: 'adr' },
     ],
   }
 ];
