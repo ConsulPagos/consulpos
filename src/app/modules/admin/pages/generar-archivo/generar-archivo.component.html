@@ -124,24 +124,19 @@
                             </ng-template>
 
                             <mat-form-field class="form" appearance="outline" *ngIf="form.get('banco').value">
-                                <mat-label>Descripción</mat-label>
+                                <mat-label>Concepto</mat-label>
                                 <input matInput type="text" formControlName="descripcion"
-                                    placeholder="Ingresa la descripcion">
+                                    placeholder="Ingresa el concepto">
                             </mat-form-field>
 
-                         
-
-                            <div  class="w-100" *ngIf="form.get('banco').value">
-
-                                <mat-form-field class="w-100" appearance="outline" *ngIf="tasas">
-                                    <mat-label>Seleccionar tasa</mat-label>
-                                    <mat-select disableRipple formControlName="tasa">
-                                        <mat-option *ngFor="let tasa of tasas" value={{tasa.id}}>
-                                            {{tasa.fecha_inicio | date:'short'}} ( {{tasa.monto | currency:'VEF'}} )
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
+                            <mat-form-field class="form" appearance="outline" *ngIf="form.get('banco').value && tasas">
+                                <mat-label>Seleccionar tasa</mat-label>
+                                <mat-select disableRipple formControlName="tasa">
+                                    <mat-option *ngFor="let tasa of tasas" value={{tasa.id}}>
+                                        {{tasa.fecha_inicio | date:'short'}} ( {{tasa.monto | currency:'VEF'}} )
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
 
                             <app-action-btn class="btn-submit" (onClick)="submit()" [loading]="loading"
                                 [text]="'Generar archivo'" [isDisabled]="isInvalid() || loading"></app-action-btn>

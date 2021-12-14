@@ -18,7 +18,7 @@ import { constant } from 'src/app/shared/utils/constant';
 export class HistoricoConciliacionComponent implements OnInit {
   loading = false;
   data;
-  columns = ["id", "fecha_generacion", "fecha_respuesta", "fecha_conciliacion", "cuotas", "monto_cobrado", "monto_enviado", "efectividad", "descripcion"]
+  columns = ["id", "fecha_generacion", "fecha_respuesta", "fecha_conciliacion", "cuotas",  "monto_enviado", "monto_cobrado", "efectividad", "descripcion"]
   constructor(
     private router: Router,
     private title: Title,

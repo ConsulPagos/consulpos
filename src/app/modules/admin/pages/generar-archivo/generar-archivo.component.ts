@@ -47,7 +47,7 @@ export class GenerarArchivoComponent implements OnInit {
     public dialog: MatDialog,
     private admin: AdminService,
     private session: SesionService,
-    private bancaro: BancarioService,
+    private bancario: BancarioService,
     private api: ApiService,
     private crypto: CryptoService,
     private auth: AuthService,
@@ -159,7 +159,7 @@ export class GenerarArchivoComponent implements OnInit {
     this.loading = true;
 
 
-    this.bancaro.doGeneracion(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
+    this.bancario.doGeneracion(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res));
 
 
@@ -168,6 +168,7 @@ export class GenerarArchivoComponent implements OnInit {
           this.generacionResponse = new GeneracionDecrypter(this.crypto).deserialize(json)
           this.crypto.setKeys(this.generacionResponse.keyS, this.generacionResponse.ivJ, this.generacionResponse.keyJ, this.generacionResponse.ivS)
           this.openDialog();
+          this.form.reset();
           if (this.generacionResponse.tipo_archivo === 'EXCEL') {
             this.exportXLSX();
           } else if (this.generacionResponse.tipo_archivo === 'TXT') {
@@ -211,7 +212,7 @@ export class GenerarArchivoComponent implements OnInit {
 
     this.loadingTasas = true;
 
-    this.bancaro.doGetTasas(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
+    this.bancario.doGetTasas(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
       console.log(res)
       const json = JSON.parse(this.crypto.decryptString(res));
       const response = new DefaultDecrypter(this.crypto).deserialize(json);
