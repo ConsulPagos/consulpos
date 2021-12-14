@@ -26,12 +26,11 @@
 }
 
 .text-tilte{
-    display: flex;
     padding: 1rem;
     text-align: center;
-    flex-direction: column;
-    font-size: x-large;
+    font-size: 20px;
     font-weight: 500;
+    min-width: 300px;
 }
 
 .text_rif{
@@ -61,6 +60,7 @@
     text-decoration: none;
     font-size: 22px;
     transition: 0.3s;
+    z-index: 99;
 }
 
 .nav-btn:hover {
@@ -95,4 +95,19 @@
 .container_box_direction {
     margin-right: 10px;
     width: 100%;
+}
+
+.title_edit{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.title_mother{
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 25px;
+    padding-top: 0.25rem;
+    text-align: center;
 }

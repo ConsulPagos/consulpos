@@ -40,6 +40,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { ActionBtnComponent } from '../../components/action-btn/action-btn.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -88,7 +90,9 @@ import { ActionBtnComponent } from '../../components/action-btn/action-btn.compo
     MatSidenavModule,
     MatProgressBarModule,
     MatIconModule,
-    NgxIntlTelInputModule
+    NgxIntlTelInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule
     
   ],
   exports: [
@@ -132,7 +136,9 @@ import { ActionBtnComponent } from '../../components/action-btn/action-btn.compo
     MatIconModule,
     NgxIntlTelInputModule,
     LoaderComponent,
-    ActionBtnComponent
+    ActionBtnComponent,
+    MatDatepickerModule,
+    MatNativeDateModule
 
   ]
 })

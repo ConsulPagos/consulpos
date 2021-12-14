@@ -36,6 +36,8 @@ export const constant = {
     MUNICIPIOS:'municipio',
     MUNICIPIO_ID:'municipio_id',
 
+    GENEROS:'genero',
+
     PARROQUIAS:'parroquias',
     PARROQUIA_ID:'parroquia_id',
 

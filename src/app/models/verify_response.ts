@@ -50,6 +50,7 @@ export interface VerifyResponse {
     t_docs: TipodocumentoInterface[];
     marcas: MarcaInterface[];
     fracciones_pago: FraccionPagoInterface[];
+    generos:GeneroInterface[];
 
     R: string;
     M: string;
@@ -62,6 +63,7 @@ export interface VerifyResponse {
 import { CryptoService } from "../shared/services/crypto.service";
 import { ActividadComercialInterface } from './actividad_comercial';
 import { TipoclienteInterface } from './tipo_cliente';
+import { GeneroInterface } from './genero';
 
 export class VerifyDecrypter {
 
@@ -105,6 +107,7 @@ export class VerifyDecrypter {
             marcas: JSON.parse(this.crypto.decryptJson(value.marcas)),
             actividades_comerciales: JSON.parse(this.crypto.decryptJson(value.actividades_comerciales)),
             fracciones_pago: JSON.parse(this.crypto.decryptJson(value.fracciones_pago)),
+            generos: JSON.parse(this.crypto.decryptJson(value.generos)),
 
 
 

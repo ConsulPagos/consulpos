@@ -1,4 +1,5 @@
-import {TelefonoInterface} from './telefono'
+import {TelefonoInterface} from './telefono';
+import {ClienteNaturalInterface} from './cliente_natural';
 
 export interface ClienteRequestInterface {
 a_c_des?:string; 
@@ -33,4 +34,5 @@ t_doc?:string;
 t_doc_desc?:string; 
 t_doc_id?:string; 
 telefonos?: TelefonoInterface[];
+c_natural?: ClienteNaturalInterface;
 }

@@ -10,41 +10,111 @@
         </div>
     </div>
 
-
-    <!-- Container de los Componentes -->
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
-            <div>
+            <p class="title_mother text-uppercase">
+                Editar Cliente
+            </p>
+            <div class="title_edit">
                 <p class="text-tilte text-uppercase">
-                    Editar Cliente:
+                    Rif:
                     <span class="text_rif">{{editClient.rif}}</span>
+                </p>
+                <p class="text-tilte text-uppercase">
+                    Cliente:
+                    <span class="text_rif">{{editClient.t_cliente}}</span>
                 </p>
             </div>
 
-            <!-- Container del Stepper -->
             <mat-vertical-stepper linear #stepper>
                 <ng-template matStepperIcon="edit">
                     <li class="fa fa-check"></li>
                 </ng-template>
 
-                <!-- Parte 1 del Stepper -->
-                <mat-step [stepControl]="client">
-                    <form [formGroup]="client_type">
-                        <ng-template matStepLabel>Indique el tipo de cliente</ng-template>
-                        <mat-form-field appearance="outline" class="container_box_space">
-                            <mat-label>Tipo de Cliente</mat-label>
-                            <mat-select disableRipple formControlName="tipo_cliente">
-                                <mat-option *ngFor="let t_cliente of tipos_clientes" value={{t_cliente.id}}>
-                                    {{t_cliente.t_cliente}} </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </form>
-                    <form [formGroup]="client" #l="ngForm">
-                        <ng-template matStepLabel>Ingresar los datos del cliente</ng-template>
-                        <!-- Formulario Datos del Cliente -->
+                <div *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'">
+                    <mat-step [stepControl]="client_type">
+                        <form [formGroup]="data_vr">
+                            <ng-template matStepLabel>Ingrese los datos personales</ng-template>
+
+                            <h6>Datos del Cliente</h6>
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Primer Nombre</mat-label>
+                                <input matInput formControlName="primer_nombre" placeholder="ConsuPagos" type="text"
+                                    maxlength="255">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Segundo Nombre</mat-label>
+                                <input matInput formControlName="segundo_nombre" placeholder="ConsuPagos" type="text"
+                                    maxlength="255">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Primer Apellido</mat-label>
+                                <input matInput formControlName="primer_apellido" placeholder="ConsuPagos" type="text"
+                                    maxlength="255">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Segundo Apellido</mat-label>
+                                <input matInput formControlName="segundo_apellido" placeholder="ConsuPagos" type="text"
+                                    maxlength="255">
+                            </mat-form-field>
+
+                            <div>
+                                <mat-form-field appearance="outline" class="container_box">
+                                    <mat-label>Tipo</mat-label>
+                                    <mat-select disableRipple formControlName="tipo_doc_cedula">
+                                        <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
+                                            {{t_doc.t_doc}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline">
+                                    <mat-label>
+                                        Cédula
+                                    </mat-label>
+                                    <input matInput formControlName="cedula" placeholder="123456789" type="text"
+                                        (keypress)="onlyNumberKey($event)" maxlength="9">
+                                </mat-form-field>
+                            </div>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Genero</mat-label>
+                                <mat-select disableRipple formControlName="genero">
+                                    <mat-option *ngFor="let genero of generos" value={{genero.genero}}>
+                                        {{genero.genero}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Fecha de Nacimiento</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="fecha_nacimiento">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Profesión</mat-label>
+                                <input matInput formControlName="profesion" placeholder="Comerciante" type="text"
+                                    maxlength="255">
+                            </mat-form-field>
+
+                        </form>
 
                         <div>
-                            <h6>Datos del Cliente</h6>
+                            <button class="stepBtn" mat-raised-button matStepperNext
+                                [disabled]="data_vr.invalid">Siguiente</button>
+                        </div>
+                    </mat-step>
+                </div>
+
+                <mat-step [stepControl]="client">
+                    <form [formGroup]="client" #l="ngForm">
+                        <ng-template matStepLabel>Ingresar los datos del cliente</ng-template>
+                        <div>
+                            <h6>Datos del Comercio</h6>
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Razón Social</mat-label>
                                 <input matInput formControlName="razon_social" placeholder="ConsuPagos" type="text"
@@ -81,65 +151,14 @@
                                     maxlength="255">
                             </mat-form-field>
                         </div>
-                        <!-- Formulario Datos de Contacto -->
+
                         <!-- <div>
-                            <h6>Datos de Contacto</h6> -->
-                        <!-- <div class="phone">
-                            <p>Telefono Local</p>
-                                <ngx-intl-tel-input
-                                  [preferredCountries]="preferredCountries"
-                                  [enableAutoCountrySelect]="true"
-                                  [enablePlaceholder]="true"
-                                  [searchCountryFlag]="true"
-                                  [searchCountryField]="[
-                                    SearchCountryField.Iso2,
-                                    SearchCountryField.Name
-                                  ]"
-                                  [selectFirstCountry]="false"
-                                  [selectedCountryISO]="CountryISO.India"
-                                  [maxLength]="15"
-                                  [phoneValidation]="true"
-                                  [separateDialCode]="separateDialCode"
-                                  [numberFormat]="PhoneNumberFormat.National"
-                                  formControlName="telefono_local"
-                                >
-                                </ngx-intl-tel-input>
+                            <h6>Datos de Contacto / Numero de telefono:</h6>
+                            <div *ngFor="let telefono of editClient.telefonos" class="phone_number">
+                                {{telefono.identificador}}-{{telefono.telefono}}
                             </div>
-                                <div class="phone">
-                                    <p>Telefono Movil</p>
-                                <ngx-intl-tel-input
-                                [preferredCountries]="preferredCountries"
-                                [enableAutoCountrySelect]="true"
-                                [enablePlaceholder]="true"
-                                [searchCountryFlag]="true"
-                                [searchCountryField]="[
-                                  SearchCountryField.Iso2,
-                                  SearchCountryField.Name
-                                ]"
-                                [selectFirstCountry]="false"
-                                [selectedCountryISO]="CountryISO.India"
-                                [maxLength]="15"
-                                [phoneValidation]="true"
-                                [separateDialCode]="separateDialCode"
-                                [numberFormat]="PhoneNumberFormat.National"
-                                formControlName="telefono_movil"
-                              >
-                              </ngx-intl-tel-input>
-                            </div> -->
-                        <!-- <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Teléfono Local</mat-label>
-                                <input matInput formControlName="telefono_local" placeholder="2129854552" type="tel"
-                                    maxlength="15" (keypress)="onlyNumberKey($event)">
-                            </mat-form-field>
+                        </div> -->
 
-                            <mat-form-field appearance="outline">
-                                <mat-label>Teléfono Móvil</mat-label>
-                                <input matInput formControlName="telefono_movil" placeholder="4123758226" type="tel"
-                                    maxlength="15" (keypress)="onlyNumberKey($event)">
-                            </mat-form-field> -->
-
-                        <!-- </div> -->
-                        <!-- Formulario Datos Geograficos -->
                         <div>
                             <h6>Datos Geográficos</h6>
                             <mat-form-field appearance="outline" class="container_box_space">
@@ -209,7 +228,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <!-- Formulario Datos Medio de Contacto -->
+
                         <div>
                             <h6>Medio de Contacto</h6>
                             <mat-form-field appearance="outline">
@@ -222,83 +241,62 @@
                         </div>
                     </form>
 
-                    <!-- <div>
-                        <strong>Form value:</strong>
-                        <pre>{{ l.form.value | json }}</pre>
-                    </div> -->
-                    <!-- Bootn de siguiente strepper -->
-
                     <div>
-                        <app-action-btn 
-                        (onClick)="save()" 
-                        [loading]="loading" 
-                        [text]="'Actualizar'" 
-                        [isDisabled]="client.invalid || loading">
-                    </app-action-btn>
-                    </div>
+                        <button class="stepBtn" mat-raised-button matStepperPrevious>
+                            Anterior
+                        </button>
 
+                        <button class="stepBtn" *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'" mat-raised-button
+                            matStepperNext [disabled]="client.invalid" (click)="submit()">
+                            Finalizar
+                        </button>
+
+                        <button class="stepBtn" *ngIf="getTipoCliente()=='J'" mat-raised-button matStepperNext
+                            [disabled]="client.invalid">
+                            Siguiente
+                        </button>
+                    </div>
                 </mat-step>
 
-                <!-- Parte 2 del Strepper -->
-                <!-- <mat-step [stepControl]="document">
-                    <form>
-                        <ng-template matStepLabel>Carga de Documentos</ng-template>
-                        <div class="row">
-                            <div id="doc_rif" class="col-md-6 col-12">
-                                <h6 class="title_container_file_upload">Rif</h6>
-                                <app-file-upload></app-file-upload>
-                            </div>
-
-                            <div id="doc_registro_mercantil" class="col-md-6 col-12">
-                                <h6 class="title_container_file_upload">Registro Mercantil</h6>
-                                <app-file-upload></app-file-upload>
-                            </div>
-
-                            <div id="doc_ci_representante_legal" class="col-md-6 col-12">
-                                <h6 class="title_container_file_upload">Cédula Representante Legal</h6>
-                                <app-file-upload></app-file-upload>
-                            </div>
-
-                            <div id="doc_otro" class="col-md-6 col-12">
-                                <h6 class="title_container_file_upload">Otro</h6>
-                                <app-file-upload></app-file-upload>
-                            </div>
-                        </div>
-                    </form>
-                    <div>
-                        <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                        <button class="stepBtn" mat-raised-button matStepperNext (click)="submit()">Siguiente</button>
-                    </div>
-                </mat-step> -->
-
-                <!-- Parte 3 del Strepper -->
                 <div *ngIf="getTipoCliente()=='J'">
-                    <mat-step>
-
+                    <mat-step [stepControl]="agents">
                         <ng-template matStepLabel>Datos del Representante Legal</ng-template>
-
+                        <h6></h6>
                         <ng-container>
-                            <div class="container_agent" *ngFor="let format of formats; let i=index">
-                                <form [formGroup]="agents[i]" class="formulario">
+                            <div class="container_agent">
+                                <form [formGroup]="agents[i]" class="formulario"
+                                    *ngFor="let format of formats; let i=index">
 
                                     <mat-form-field appearance="outline" class="container_box_space">
-                                        <mat-label>Nombre</mat-label>
-                                        <input matInput formControlName="nombre_representante" placeholder="123456789"
+                                        <mat-label>Primer Nombre</mat-label>
+                                        <input matInput formControlName="p_nombre_representante" placeholder="123456789"
                                             type="text">
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" class="container_box_space">
-                                        <mat-label>Apellido</mat-label>
-                                        <input matInput formControlName="apellido_representante" placeholder="123456789"
+                                        <mat-label>Segundo Nombre</mat-label>
+                                        <input matInput formControlName="s_nombre_representante" placeholder="123456789"
                                             type="text">
                                     </mat-form-field>
+
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Primer Apellido</mat-label>
+                                        <input matInput formControlName="p_apellido_representante"
+                                            placeholder="123456789" type="text">
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Segundo Apellido</mat-label>
+                                        <input matInput formControlName="s_apellido_representante"
+                                            placeholder="123456789" type="text">
+                                    </mat-form-field>
+
                                     <div>
                                         <mat-form-field appearance="outline" class="container_box">
                                             <mat-label>Tipo</mat-label>
                                             <mat-select disableRipple formControlName="tipo_doc_rep">
-                                                <mat-option *ngFor="let tipo_documento of tipo_documentos"
-                                                    value={{tipo_documento.t_doc_id}}>
-                                                    {{tipo_documento.tipo_doc}} </mat-option>
+                                                <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
+                                                    {{t_doc.t_doc}} </mat-option>
                                             </mat-select>
                                         </mat-form-field>
 
@@ -308,6 +306,7 @@
                                                 placeholder="123456789" type="text">
                                         </mat-form-field>
                                     </div>
+
                                     <mat-form-field appearance="outline" class="container_box_space">
                                         <mat-label>Teléfono Local</mat-label>
                                         <input matInput formControlName="telefono_local_repre" placeholder="123456789"
@@ -322,35 +321,46 @@
 
                                     <mat-form-field appearance="outline">
                                         <mat-label>Correo Electrónico</mat-label>
-                                        <input matInput formControlName="email" placeholder="123456789" type="text">
+                                        <input matInput formControlName="email_repre" placeholder="123456789"
+                                            type="text">
                                     </mat-form-field>
 
-                                    <div class="btn_form_add_agent" *ngIf="(i === 0)">
-                                        <button mat-mini-fab color="primary"
-                                            aria-label="Example icon button with a menu icon" (click)="add_agent()"
-                                            *ngIf="(formats.length === 1 ||  formats.length === 0)">
-                                            <i class="fas fa-user-plus"></i>
-                                        </button>
-
-                                        <button mat-mini-fab color="primary"
-                                            aria-label="Example icon button with a menu icon" (click)="deleteAgent()"
-                                            *ngIf="(formats.length === 2)">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
                                 </form>
+                                <div>
+                                    <button class="btn_form_add_agent" mat-icon-button color="primary"
+                                        aria-label="Example icon button with a menu icon" (click)="add_agent()"
+                                        *ngIf="(formats.length === 1 ||  formats.length === 0)">
+                                        <i class="fas fa-user-plus icon_sell"></i>
+                                        Agregar un Representante Legal
+                                    </button>
+
+                                    <button mat-icon-button class="btn_form_add_agent" color="primary"
+                                        aria-label="Example icon button with a menu icon" (click)="deleteAgent(1)"
+                                        *ngIf="(formats.length === 2)">
+                                        <i class="fas fa-user-minus icon_sell"></i>
+                                        Eliminar un Representante Legal
+                                    </button>
+                                </div>
 
                             </div>
 
                             <div>
                                 <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                                <button class="stepBtn" mat-raised-button (click)="submit()">Finalizar</button>
+                                <app-action-btn (onClick)="save()" [loading]="loading" [text]="'Actualizar'"
+                                    [isDisabled]="client.invalid || loading">
+                                </app-action-btn>
                             </div>
                         </ng-container>
                     </mat-step>
                 </div>
 
+
             </mat-vertical-stepper>
         </div>
     </div>
 </section>
+<!-- <div>
+                        <strong>Form value:</strong>
+                        <pre>{{ l.form.value | json }}</pre>
+                    </div> -->
+<!-- Bootn de siguiente strepper -->

@@ -23,6 +23,7 @@ import { ClienteRequestInterface } from '../../../../models/cliente_request';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
+import { GeneroInterface } from '../../../../models/genero';
 
 @Component({
   selector: 'app-edit-client',
@@ -32,6 +33,8 @@ import { ToasterService } from 'src/app/shared/services/toaster.service';
 export class EditClientComponent implements OnInit {
 
   editClient: ClienteRequestInterface = {};
+
+  
 
   //----------- VARIABLES GLOBALES -----------\\
   validacionresponse: ValidacionclienteResponse;
@@ -49,7 +52,7 @@ export class EditClientComponent implements OnInit {
   actividades_comerciales: ActividadComercialInterface[];
   tipos_clientes: TipoclienteInterface[];
   tipo_documentos: TipodocumentoInterface[];
-
+  generos: GeneroInterface[];
 
   constructor(
     private title: Title,
@@ -73,14 +76,14 @@ export class EditClientComponent implements OnInit {
       rif: new FormControl(this.editClient.rif.toString().substr(1), [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
       tipo_doc: new FormControl(this.editClient.rif.toString().substr(0, 1), [Validators.required]),
     });
-
+    console.log(this.editClient)
     this.client = new FormGroup({
       razon_social: new FormControl(this.editClient.razon_social, [Validators.required]),
       nombre_comercial: new FormControl(this.editClient.comercio, [Validators.required]),
       contribuyente: new FormControl(this.editClient.contribuyente_id, [Validators.required]),
       email: new FormControl(this.editClient.correo, [Validators.required]),
-      // telefono_local: new FormControl(this.editClient.telefonos, [Validators.required]),
-      // telefono_movil: new FormControl(this.editClient.telefonos, [Validators.required]),
+      telefono_local: new FormControl(this.editClient.telefonos, [Validators.required]),
+      telefono_movil: new FormControl(this.editClient.telefonos, [Validators.required]),
       estado: new FormControl(this.editClient.id_estado, [Validators.required]),
       municipio: new FormControl(this.editClient.id_municipio, [Validators.required]),
       parroquia: new FormControl(this.editClient.parroquia_id, [Validators.required]),
@@ -97,14 +100,41 @@ export class EditClientComponent implements OnInit {
       tipo_cliente: new FormControl(this.editClient.t_cliente_id, [Validators.required]),
     });
 
+    this.data_vr = new FormGroup({
+      primer_nombre: new FormControl(this.editClient.c_natural.p_nombre, [Validators.required]),
+      segundo_nombre: new FormControl(this.editClient.c_natural.s_nombre,),
+      primer_apellido: new FormControl(this.editClient.c_natural.p_apellido, [Validators.required]),
+      segundo_apellido: new FormControl(this.editClient.c_natural.s_apellido,),
+      tipo_doc_cedula: new FormControl(this.editClient.c_natural, [Validators.required]),
+      cedula: new FormControl(this.editClient.c_natural.cedula, [Validators.required]),
+      genero: new FormControl(this.editClient.c_natural.id_genero, [Validators.required]),
+      fecha_nacimiento: new FormControl(this.editClient.c_natural.fecha_nacimiento, [Validators.required]),
+      profesion: new FormControl(this.editClient.c_natural.profesion, [Validators.required]),
+    });
+
+    this.agent = new FormGroup({
+      p_nombre_representante: new FormControl(this.editClient, [Validators.required]),
+      s_nombre_representante: new FormControl(this.editClient, [Validators.required]),
+      p_apellido_representante: new FormControl(this.editClient, [Validators.required]),
+      s_apellido_representante: new FormControl(this.editClient, [Validators.required]),
+      cedula_representante: new FormControl(this.editClient, [Validators.required]),
+      telefono_local_repre: new FormControl(this.editClient, [Validators.required]),
+      telefono_movil_repre: new FormControl(this.editClient, [Validators.required]),
+      email_repre: new FormControl(this.editClient, [Validators.required]),
+      tipo_doc_rep: new FormControl(this.editClient, [Validators.required]),
+    });
+
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //FORM DEL PRIMER STEP\\
   identity: FormGroup;
+  agent: FormGroup;
 
   //FORM DEL SEGUNDO STEP\\
   client_type: FormGroup;
+  data_vr: FormGroup;
+
 
   ////////////////PHONE///////////////////
   separateDialCode = true;
@@ -123,25 +153,17 @@ export class EditClientComponent implements OnInit {
   });
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  agent = new FormGroup({
-    nombre_representante: new FormControl('', [Validators.required]),
-    apellido_representante: new FormControl('', [Validators.required]),
-    cedula_representante: new FormControl('', [Validators.required]),
-    telefono_local_repre: new FormControl('', [Validators.required]),
-    telefono_movil_repre: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required]),
-    tipo_doc_rep: new FormControl('', [Validators.required]),
-  });
-
   add_agent() {
     var newFormat: RepresentanteInterface = {};
     var agente = new FormGroup({
-      nombre_representante: new FormControl(newFormat.nombre_representante, [Validators.required]),
-      apellido_representante: new FormControl(newFormat.apellido_representante, [Validators.required]),
-      cedula_representante: new FormControl(newFormat.cedula_representante, [Validators.required]),
-      telefono_local_repre: new FormControl(newFormat.telefono_local_repre, [Validators.required]),
-      telefono_movil_repre: new FormControl(newFormat.telefono_movil_repre, [Validators.required]),
-      email: new FormControl(newFormat.email, [Validators.required]),
+      p_nombre_representante: new FormControl('', [Validators.required]),
+      s_nombre_representante: new FormControl('', [Validators.required]),
+      p_apellido_representante: new FormControl('', [Validators.required]),
+      s_apellido_representante: new FormControl('', [Validators.required]),
+      cedula_representante: new FormControl('', [Validators.required]),
+      telefono_local_repre: new FormControl('', [Validators.required]),
+      telefono_movil_repre: new FormControl('', [Validators.required]),
+      email_repre: new FormControl('', [Validators.required]),
       tipo_doc_rep: new FormControl('', [Validators.required]),
     });
     this.agents.push(agente);
@@ -160,6 +182,7 @@ export class EditClientComponent implements OnInit {
 
   deleteAgent(index: number) {
     this.formats.splice(index, 1);
+    this.agents.splice(index, 1);
   }
 
   submit() {
@@ -177,8 +200,8 @@ export class EditClientComponent implements OnInit {
       comercio: this.crypto.encryptJson(this.client.get('nombre_comercial').value),
       contribuyente_id: this.crypto.encryptJson(this.client.get('contribuyente').value),
       email: this.crypto.encryptJson(this.client.get('email').value),
-      // telefono_local: this.crypto.encryptJson(this.client.get('telefono_local').value),
-      // telefono_movil: this.crypto.encryptJson(this.client.get('telefono_movil').value),
+      telefono_local: this.crypto.encryptJson(this.client.get('telefono_local').value),
+      telefono_movil: this.crypto.encryptJson(this.client.get('telefono_movil').value),
       estados: this.crypto.encryptJson(this.client.get('estado').value),
       municipios: this.crypto.encryptJson(this.client.get('municipio').value),
       parroquia_id: this.crypto.encryptJson(this.client.get('parroquia').value),
@@ -189,6 +212,26 @@ export class EditClientComponent implements OnInit {
       id_actividad_comercial: this.crypto.encryptJson(this.client.get('act_comercial').value),
       pto_ref: this.crypto.encryptJson(this.client.get('pto_referencia').value),
       localidad: this.crypto.encryptJson(this.client.get('localidad').value),
+
+      primer_nombre: this.crypto.encryptJson(this.data_vr.get('primer_nombre').value),
+      segundo_nombre: this.crypto.encryptJson(this.data_vr.get('segundo_nombre').value),
+      primer_apellido: this.crypto.encryptJson(this.data_vr.get('primer_apellido').value),
+      segundo_apellido: this.crypto.encryptJson(this.data_vr.get('segundo_apellido').value),
+      tipo_doc_cedula: this.crypto.encryptJson(this.data_vr.get('tipo_doc_cedula').value),
+      cedula: this.crypto.encryptJson(this.data_vr.get('cedula').value),
+      genero: this.crypto.encryptJson(this.data_vr.get('genero').value),
+      fecha_nacimiento: this.crypto.encryptJson(this.data_vr.get('profesion').value),
+      profesion: this.crypto.encryptJson(this.data_vr.get('profesion').value),
+
+      p_nombre_representante: this.crypto.encryptJson(this.agent.get('p_nombre_representante').value),
+      s_nombre_representante: this.crypto.encryptJson(this.agent.get('s_nombre_representante').value),
+      p_apellido_representante: this.crypto.encryptJson(this.agent.get('p_apellido_representante').value),
+      s_apellido_representante: this.crypto.encryptJson(this.agent.get('s_apellido_representante').value),
+      tipo_doc_rep: this.crypto.encryptJson(this.agent.get('tipo_doc_rep').value),
+      cedula_representante: this.crypto.encryptJson(this.agent.get('cedula_representante').value),
+      telefono_local_repre: this.crypto.encryptJson(this.agent.get('telefono_local_repre').value),
+      telefono_movil_repre: this.crypto.encryptJson(this.agent.get('telefono_movil_repre').value),
+      email_repre: this.crypto.encryptJson(this.agent.get('email_repre').value),
     }))
 
 
