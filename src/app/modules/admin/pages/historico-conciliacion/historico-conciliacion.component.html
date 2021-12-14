@@ -1,0 +1,18 @@
+<section id="historico">
+    <div class="container-fluid">
+        <div class="title">
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="w-100">
+                <div class="bg-white rounded p-2">
+                    <div *ngIf="data">
+                        <div>
+                            <h3 class="title">Historico de Conciliación</h3>
+                            <app-tabla-historico-conciliacion [data]="data" [columns]="columns"></app-tabla-historico-conciliacion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

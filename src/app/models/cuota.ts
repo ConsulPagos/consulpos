@@ -1,8 +1,8 @@
 export interface CuotaInterface {
-    doc?: string;
+    rif?: string;
     cuenta?: string;
     afiliado?: string;
-    monto?: number;
-    monto_cobrado?: number;
+    enviado?: number;
+    cobrado?: number;
     mensaje?: string;
 }

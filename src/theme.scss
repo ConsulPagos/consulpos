@@ -237,7 +237,7 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 }
 
 .mat-form-field-label-wrapper {
-  top: -1.2em; /* Adjust accordingly to keep <mat-label> text vertically centered. */
+  top: -1.0em; /* Adjust accordingly to keep <mat-label> text vertically centered. */
 }
 
 
@@ -369,4 +369,8 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
   border: 2px solid #ffffff;
   border-top-color: #000000;
   animation: spinner .8s linear infinite;
+}
+
+.bold {
+  font-weight: bold;
 }

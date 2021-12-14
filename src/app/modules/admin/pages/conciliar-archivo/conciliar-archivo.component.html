@@ -16,7 +16,7 @@
                             <div class="w-100 pl-4 pr-4 pt-4">
                                 <mat-form-field appearance="outline" class="container_box w-100">
                                     <mat-label>Seleccionar Banco</mat-label>
-                                    <mat-select formControlName="banco" (selectionChange)="submit()">
+                                    <mat-select formControlName="banco" (selectionChange)="getArchivos()">
                                         <mat-option selected value="null">Seleccionar</mat-option>
                                         <mat-option *ngFor="let banco of bancos" value={{banco.codigo}}>
                                             {{banco.nombre}} </mat-option>
@@ -24,28 +24,42 @@
                                 </mat-form-field>
                             </div>
 
-                            <div class="w-100 pl-4 pr-4" *ngIf="archivos; else CargandoArchivos">
-                                <mat-form-field appearance="outline" class="container_box w-100">
+                            <div class="w-100 pl-4 pr-4" *ngIf="archivos || loading">
+                                <mat-form-field appearance="outline" class="container_box w-100"
+                                    [class.spinner]="loading">
                                     <mat-label>Seleccionar archivo</mat-label>
-                                    <mat-select disableRipple formControlName="archivo">
-                                        <mat-option *ngFor="let archivo of archivos" value={{archivo.id}}>
-                                            <span class="id_archivo">{{archivo.id}}</span> - {{archivo.fecha_generacion | date:'dd/MM/yyyy hh:mm:ss'}} {{archivo.cuotas}} {{archivo.monto | currency}}
+                                    <mat-select disableRipple formControlName="archivo"
+                                        (selectionChange)="setArchivo($event.value)" [disabled]="!archivos || loading">
+                                        <mat-option *ngFor="let arch of archivos" value={{arch.id}}>
+                                            <span class="id_archivo">{{arch.id}}</span> - {{arch.fecha_respuesta |
+                                            date:'dd/MM/yyyy hh:mm:ss'}} {{arch.cuotas}} líneas
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
 
-                            <ng-template #CargandoArchivos>
-                                <div class="w-100 pl-4 pr-4" *ngIf="loading">
-                                    Cargando
-                                </div>
-                            </ng-template>
+                            <div class="archivo-prev mb-4 mt-4 card p-4" *ngIf="form.valid">
 
-                            <div class="col-12 ml-3 mr-3 mb-4">
-                                <div class="d-flex align-items-center">
-                                    <button mat-button (click)="load()" mat-button [disabled]="form.invalid"
-                                        class="pr-4 pl-4 pt-1 pb-1 btn btn-success bg-success text-white h5">Nueva
-                                        conciliación</button>
+                                <h4>Archivo #{{archivo.id}}</h4>
+                                <div>{{archivo.cuotas}} líneas</div>
+                                <div><span class="bold">Monto envíado:</span> {{archivo.monto_enviado | currency}}</div>
+                                <div><span class="bold">Monto cobrado:</span> {{archivo.monto_cobrado | currency}}</div>
+                                <div><span class="bold">Generado el:</span> {{archivo.fecha_generacion|
+                                    date:'dd/MM/yyyy hh:mm:ss'}}</div>
+                                <div><span class="bold">Actualizado el:</span> {{archivo.fecha_respuesta |
+                                    date:'dd/MM/yyyy hh:mm:ss'}}</div>
+                                <div><span class="bold">Descripción:</span> {{ archivo.descripcion }}</div>
+
+
+                                <div class="d-flex align-items-center mt-4">
+                                    <app-action-btn mat-button (onClick)="conciliar()"
+                                        [isDisabled]="form.invalid || !archivo || loadingUpdate"
+                                        [loading]="loadingUpdate" [text]="'Conciliar'" class="mr-3">
+                                    </app-action-btn>
+                                    <app-action-btn mat-button (onClick)="getArchivo()"
+                                        [isDisabled]="form.invalid || !archivo || loadingGetArchivo"
+                                        [loading]="loadingGetArchivo" [text]="'Ver'" class="mr-3">
+                                    </app-action-btn>
                                 </div>
                             </div>
                         </div>
@@ -55,4 +69,3 @@
         </div>
     </div>
 </section>
-

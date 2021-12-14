@@ -47,6 +47,7 @@ import { VentaConsulposComponent } from './pages/venta-consulpos/venta-consulpos
 import { FichaClienteComponent } from './pages/ficha-cliente/ficha-cliente.component';
 import { ValidadorVentaComponent } from './pages/validador-venta/validador-venta.component';
 import { ActualizarArchivoComponent } from './pages/actualizar-archivo/actualizar-archivo.component';
+import { HistoricoConciliacionComponent } from './pages/historico-conciliacion/historico-conciliacion.component';
 
 const routes: Routes = [
   {
@@ -57,8 +58,10 @@ const routes: Routes = [
       { path: 'sku', component: SkuComponent, outlet: 'adr', canActivate: [SkuGuard] },
       { path: 'sku/:id_product', component: EditProductComponent, outlet: 'adr', canActivate: [SkuGuard] },
       { path: 'crm', component: CrmComponent, outlet: 'adr', canActivate: [CrmGuard] },
-      { path: 'conciliar-archivo', component: ConciliarArchivoComponent, outlet: 'adr', canActivate: [CrmGuard] },
+      { path: 'generar-archivo', component: GenerarArchivoComponent, outlet: 'adr', canActivate: [CobrosGuard] },
       { path: 'actualizar-archivo', component: ActualizarArchivoComponent, outlet: 'adr', canActivate: [CrmGuard] },
+      { path: 'conciliar-archivo', component: ConciliarArchivoComponent, outlet: 'adr', canActivate: [CrmGuard] },
+      { path: 'historico-conciliacion', component: HistoricoConciliacionComponent, outlet: 'adr', canActivate: [CrmGuard] },
       { path: 'aplicar-descuento/:id_afiliado', component: AplicarDescuentoComponent, outlet: 'adr', canActivate: [CrmGuard] },
       { path: 'reportes', component: AplicarCreditoComponent, outlet: 'adr', canActivate: [CrmGuard] },
       { path: 'clientela', component: ClientelaComponent, outlet: 'adr', canActivate: [ClientesGuard] },
@@ -73,7 +76,6 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent, outlet: 'adr', canActivate: [DashboardGuard] },
       { path: 'cobros', component: CobrosComponent, outlet: 'adr', canActivate: [CobrosGuard] },
       { path: 'cobros/:id_afiliado', component: DetalleCobrosComponent, outlet: 'adr', canActivate: [CobrosGuard] },
-      { path: 'generar-archivo', component: GenerarArchivoComponent, outlet: 'adr', canActivate: [CobrosGuard] },
       { path: 'historial-cobros', component: HistorialCobrosComponent, outlet: 'adr', canActivate: [CobrosGuard] },
       { path: 'historial-pedidos', component: HistorialPedidosComponent, outlet: 'adr', canActivate: [HistorialGuard] },
       { path: 'super-admin-panel', component: SuperAdminComponent, outlet: 'adr', canActivate: [SuperGuard] },

@@ -38,10 +38,10 @@ export class GeneracionDecrypter {
             tipo_archivo: this.crypto.decryptJson(value.tipo_archivo),
             usar_coma: parseInt(this.crypto.decryptJson(value.usar_coma)),
             id_archivo: parseInt(this.crypto.decryptJson(value.id_archivo)),
-            total: parseInt(this.crypto.decryptJson(value.total)),
-            total_bolivares: parseInt(this.crypto.decryptJson(value.total_bolivares)),
+            total: parseFloat(this.crypto.decryptJson(value.total)),
+            total_bolivares: parseFloat(this.crypto.decryptJson(value.total_bolivares)),
         }
-        console.log(verify)
+        //console.log(verify)
         return verify
     }
 }
