@@ -18,6 +18,7 @@ import { ModalService } from 'src/app/shared/services/modal.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-clientela-afiliados',
@@ -29,6 +30,8 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
 
   displayedColumns: string[] = ['t_c_letra', 'rif', 'nombre_comercial', 'status_desc', 'fecha_registro', 'Acciones'];
   clientes = [];
+
+  isLoadingResults = false;
 
   expandedElement: AffiliateDetailJoinInterface | null;
 
@@ -46,6 +49,9 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<any>(true, []);
   showclientResponse: any;
+
+  PAGESIZE = 12
+
   constructor(
     private session: SesionService,
     private crypto: CryptoService,
@@ -57,6 +63,11 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
   ) {
     this.dataSource = new MatTableDataSource(this.clientes);
   }
+
+  identity = new FormGroup({
+    rif: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
+    tipo_doc: new FormControl('', [Validators.required]),
+  });
 
   ngAfterViewInit() {
     this.load();
@@ -83,26 +94,28 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
         startWith({}),
         switchMap(() => {
           this.error = false;
-          this.loading = true;
+          this.isLoadingResults = true;
           const data = this.crypto.encryptString(JSON.stringify({
             u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
             correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
             scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-            limit_row: this.crypto.encryptJson("25"),
-            init_row: this.crypto.encryptJson((this.paginator.pageIndex + 1).toString()),
+            init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
+            limit_row: this.crypto.encryptJson(((this.paginator.pageIndex + 1) * this.PAGESIZE).toString()),
           }))
           return this.cliente.doAll(`${this.session.getDeviceId()};${data}`)
         }),
         map(data => {
           this.firstLoading = false;
-          this.loading = false;
+          this.isLoadingResults = false;
           this.resultsLength = 100;
           // this.count.emit(25)
           // this.paginator.pageIndex = 1;
+
           console.log("JSON: " + data)
           console.log("string: " + this.crypto.decryptString(data))
           this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
           this.crypto.setKeys(this.showclientResponse.keyS, this.showclientResponse.ivJ, this.showclientResponse.keyJ, this.showclientResponse.ivS)
+          console.log(this.showclientResponse)
           return this.showclientResponse.clientes;
         }),
         catchError((e) => {
@@ -150,7 +163,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
     }
   }
 
-  disable(client:any) {
+  disable(client: any) {
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
@@ -179,7 +192,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
     })
   }
 
-  activate(client:any) {
+  activate(client: any) {
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
@@ -209,6 +222,27 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
     })
   }
 
+  _findClient() {
+    var rif = this.identity.get('rif').value
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      rif: this.crypto.encryptJson(rif),
+      status_desc: this.crypto.encryptJson('ACTIVO'),
+    }))
+    this.loading = true;
+    this.cliente.doFind(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      console.log(this.crypto.decryptString(res))
+      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.loading = false
+      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
+      
+      this.toaster.success(this.defaultResponse.M)
+
+    })
+  }
+
   _editClient(client) {
     this.editClient.emit(client)
   }
@@ -217,7 +251,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
     this.showClient.emit(client)
   }
 
-  saveDesativate(client:any) {
+  saveDesativate(client: any) {
     this.modal.confirm("¿Desea desabilitar a este cliente?").subscribe(result => {
       if (result) {
         this.disable(client)
@@ -225,7 +259,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
     })
   }
 
-  saveActive(client:any) {
+  saveActive(client: any) {
     this.modal.confirm("¿Desea Activar a este cliente?").subscribe(result => {
       if (result) {
         this.activate(client)

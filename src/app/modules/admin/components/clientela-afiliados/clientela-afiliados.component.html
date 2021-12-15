@@ -2,11 +2,16 @@
   <!-- *ngIf="!loading && !error; else loadingTable" -->
   <div>
     <mat-form-field appearance="outline" class="mt-4 mx-4">
-      <mat-label>Buscar</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Spider-Man" #input>
+      <form [formGroup]="identity">
+      <input matInput 
+      (keyup.enter)="_findClient()"
+      placeholder="Buscar" 
+      formControlName="rif"
+      #input>
+    </form>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="mt-4 mx-4">
+    <!-- <mat-form-field appearance="outline" class="mt-4 mx-4">
       <mat-label>Acciones</mat-label>
       <mat-select>
         <mat-option value="option">Activar</mat-option>
@@ -22,10 +27,17 @@
         <mat-option value="option">Firma Personal</mat-option>
         <mat-option value="option">Jurídico</mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
   </div>
 
   <mat-divider></mat-divider>
+
+
+    <div class="example-loading-shade"
+         *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+
   <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
 
     <!-- Checkbox Column -->
@@ -127,7 +139,7 @@
   </table>
 </div>
 
-<mat-paginator  [length]="resultsLength" [pageSize]="25" showFirstLastButtons></mat-paginator>
+<mat-paginator  [length]="resultsLength" [pageSize]="25" showFirstLastButtons ></mat-paginator>
 
 <ng-template #loadingTable>
   <div class="loading d-flex justify-content-center align-items-center p-4">

@@ -105,7 +105,7 @@ export class AddVentaComponent implements OnInit {
   // *** FUNCION VALIDADORA DE EXISTENCIA DE USUARIOS *** \\
   verificar_usuario() {
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
-    console.log(rif)
+    // console.log(rif)
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
@@ -121,21 +121,13 @@ export class AddVentaComponent implements OnInit {
       console.log(this.validacionresponse)
       this.search_client = this.validacionresponse.value_exists === "false" ? true : false;
       if (!this.search_client) {
-        console.log("NO tiene error")
-
         this.identity.controls['rif'].setErrors({ 'existe': null });
         this.identity.controls['rif'].updateValueAndValidity()
       } else {
-        console.log("tiene error")
         this.identity.controls['rif'].setErrors({ 'existe': true });
-        
       }
       this.loading = false
       this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
-
-      console.log(this.identity.get('rif').errors)
-      console.log(this.identity.get('rif').hasError('existe'))
-
     })
   }
 //****************************************************************************************//
