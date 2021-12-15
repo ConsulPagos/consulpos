@@ -1,4 +1,7 @@
-<mat-sidenav-container class="custom-container" *ngIf="!loading else loader">
+<div *ngIf="!loading else loader">
+
+</div>
+<mat-sidenav-container class="custom-container" >
 
   <mat-sidenav [(opened)]="opened" mode="side" opened style="background: #fff; border: none;" #drawer>
     <app-admin-sidenav (Toggle)='drawer.toggle()'>
@@ -28,9 +31,9 @@
 <ng-template #loader>
   <div class="loader" *ngIf="loading">
     <app-loader></app-loader>
-    <h6>
+   <!--  <h6>
       <span class="animated">
       </span>
-    </h6>
+    </h6> -->
   </div>
 </ng-template>

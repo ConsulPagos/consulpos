@@ -19,22 +19,13 @@
                 <div>
                     <div class="container-archivo">
                         <div>
-                            <h6 class="mb-4 bold uppercase">Archivo  #{{archivo.id}}</h6>
+                            <h6 class="mb-4 bold uppercase">Archivo  #{{archivo.id}} ({{archivo.cuotas}} lineas)</h6>
                             <h6>Vista previa del archivo sleccionado:</h6>
-                            <div class="resumen-container">
+                            <!-- <div class="resumen-container">
                                 <div class="resumen-item">
-                                    <div class="resumen-title">Enviado:</div>
-                                    <div class="resumen-text">{{archivo.cuotas}} lineas ( {{archivo.monto_enviado |
-                                        currency:"USD" }}
-                                        )</div>
+                                    <div class="resumen-text">{{archivo.cuotas}} lineas </div>
                                 </div>
-                                <div class="resumen-item">
-                                    <div class="resumen-title">Cobrado:</div>
-                                    <div class="resumen-text">{{getTotal()}} lineas ( {{getTotalCobrado() |
-                                        currency:"VES" }} )
-                                    </div>
-                                </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="btn-submit"
                             *ngIf="archivo && !archivo.fecha_respuesta && !archivo.fecha_conciliacion">
