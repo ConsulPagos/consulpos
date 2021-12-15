@@ -13,12 +13,12 @@ const EXCEL_EXT = '.xlsx';
 })
 export class ExportService {
 
-  constructor() {}
+  constructor() { }
 
-  exportExcel(json: any[0], excelName: string): void {
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+  exportExcel(json: any[], excelName: string): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json, {header: [], skipHeader: true});
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-    const excelBuffer: any = XLSX.write(workbook, {bookType: 'xlsx', type: 'array' });
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     this.saveExcel(excelBuffer, excelName)
   };
 

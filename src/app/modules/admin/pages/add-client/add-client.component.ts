@@ -67,15 +67,7 @@ export class AddClientComponent implements OnInit {
     tipo_cliente: new FormControl('', [Validators.required]),
   });
 
-    ////////////////PHONE///////////////////
-    separateDialCode = true;
-    SearchCountryField = SearchCountryField;
-    CountryISO = CountryISO;
-    PhoneNumberFormat = PhoneNumberFormat;
-    preferredCountries: CountryISO[] = [CountryISO.Venezuela, CountryISO.UnitedStates];
-    ////////////////////////////////////////
-
-  //FORM DEL TERCER STEP\\
+  // *** FORM DEL TERCER STEP *** \\
   client = new FormGroup({
     razon_social: new FormControl('', [Validators.required]),
     nombre_comercial: new FormControl('', [Validators.required]),
@@ -167,7 +159,7 @@ export class AddClientComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
+      rif: this.crypto.encryptJson(rif),
     }))
     this.loading = true;
     // console.log("verify")

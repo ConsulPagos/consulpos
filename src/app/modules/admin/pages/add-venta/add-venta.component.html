@@ -21,21 +21,17 @@
                 </ng-template>
 
                 <mat-step>
-                    <!-- [stepControl]="client_type" -->
-                    <form [formGroup]="client_type">
+                    <!-- [stepControl]="identity" -->
+                    <form [formGroup]="identity">
                         <ng-template matStepLabel>Ingrese documento de identidad</ng-template>
                         <div>
                             <h6>Documento de identidad</h6>
 
                             <mat-form-field appearance="outline" class="container_box">
                                 <mat-label>Tipo</mat-label>
-                                <mat-select disableRipple 
-                                formControlName="tipo_doc" 
-                                (selectionChange)="resetStatus()">
-                                    <mat-option 
-                                    *ngFor="let t_doc of tipo_documentos" 
-                                    value={{t_doc.id}}>
-                                    {{t_doc.t_doc}} 
+                                <mat-select disableRipple formControlName="tipo_doc" (selectionChange)="resetStatus()">
+                                    <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
+                                        {{t_doc.t_doc}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -44,45 +40,28 @@
                                 <mat-label>
                                     Rif
                                 </mat-label>
-                                <input matInput 
-                                formControlName="rif" 
-                                placeholder="123456789" 
-                                type="text"
-                                (keypress)="onlyNumberKey($event)" maxlength="9"
-                                (keyup.enter)="verificar_usuario()">
+                                <input matInput formControlName="rif" placeholder="123456789" type="text"
+                                    (keypress)="onlyNumberKey($event)" maxlength="9"
+                                    (keyup.enter)="verificar_usuario()">
                             </mat-form-field>
 
                             <div class="container_error_sell"
-                                *ngIf="client_type.get('rif').errors && client_type.get('rif').hasError('existe')">
-                                <span class="error">El cliente ya existe.</span>
-                                <button class="btn_space" mat-button color='accent'>
-                                    <li class="fa fa-cart-plus icon_sell"></li><span>Crear Venta</span>
+                                *ngIf="identity.get('rif').errors && identity.get('rif').hasError('existe')">
+                                <span class="error">El cliente no existe.</span>
+                                <button class="btn_space" mat-button color='accent'
+                                    [routerLink]="['/admin/app',{ outlets: { adr: ['add-client'] } }]">
+                                    <li class="fa fa-cart-plus icon_sell"></li><span>Registrar Cliente</span>
+
                                 </button>
                             </div>
                         </div>
                     </form>
                     <!-- Bootn de siguiente strepper -->
                     <div>
-                        <button class="stepBtn" mat-raised-button matStepperNext (click)="verificar_usuario()">Siguiente</button>
+                        <button class="stepBtn" mat-raised-button matStepperNext
+                            [disabled]="identity.invalid || search_client">Siguiente</button>
                     </div>
                 </mat-step>
-
-                <mat-step>
-                    <form [formGroup]="venta">
-                        <ng-template matStepLabel>Seleccione el tipo de venta</ng-template>
-                        <mat-form-field appearance="outline" class="container_box_space">
-                            <mat-label>Tipo de Cliente</mat-label>
-                            <mat-select disableRipple formControlName="tipo_venta">
-                                <mat-option *ngFor="let nombre of fraccion_pagos" value={{nombre.id}}>
-                                    {{nombre.nombre}} </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </form>
-                    <div>
-                        <button class="stepBtn" mat-raised-button matStepperNext>Siguiente</button>
-                    </div>
-                </mat-step>
-
 
                 <!-- Parte 1 del Stepper -->
                 <mat-step>
@@ -102,8 +81,7 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Tipo de Comunicación</mat-label>
                                 <mat-select disableRipple formControlName="comunicacion">
-                                    <mat-option *ngFor="let comunicacion of comunicaciones"
-                                        value={{comunicacion.id}}>
+                                    <mat-option *ngFor="let comunicacion of comunicaciones" value={{comunicacion.id}}>
                                         {{comunicacion.comunicacion}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -129,8 +107,7 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Plataforma de Pago</mat-label>
                                 <mat-select disableRipple formControlName="plataforma">
-                                    <mat-option *ngFor="let plataforma of plataformas"
-                                        value={{plataforma.id}}>
+                                    <mat-option *ngFor="let plataforma of plataformas" value={{plataforma.id}}>
                                         {{plataforma.plataforma}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -151,7 +128,7 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Precio USD</mat-label>
                                 <input matInput disabled value={{price_model()}}>
-                                
+
                             </mat-form-field>
 
                             <h6>Otros</h6>
@@ -180,6 +157,14 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Código de afiliado</mat-label>
                                 <input matInput formControlName="cod_afiliado" placeholder="1234" type="number">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Tipo de Cliente</mat-label>
+                                <mat-select disableRipple formControlName="tipo_venta">
+                                    <mat-option *ngFor="let nombre of fraccion_pagos" value={{nombre.id}}>
+                                        {{nombre.nombre}} </mat-option>
+                                </mat-select>
                             </mat-form-field>
 
                         </div>

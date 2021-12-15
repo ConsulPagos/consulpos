@@ -56,5 +56,31 @@ export class ClientesService {
     return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
   }
 
+  doItem(data) {
+    var path = `/itemsByClients`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  doFind(data) {
+    var path = `/findClients`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  doEditPhone(data) {
+    var path = `/editPhoneByClients`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
+  }
 
 }
