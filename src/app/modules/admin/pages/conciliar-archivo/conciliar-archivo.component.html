@@ -9,7 +9,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="box-title d-flex justify-content-center">
-                                    <h4 class="text-uppercase mt-3">Conciliar Archivo</h4>
+                                    <h5 class="bold uppercase mt-3">Conciliar Archivo</h5>
                                 </div>
                             </div>
 
@@ -40,15 +40,15 @@
 
                             <div class="archivo-prev mb-4 mt-4 card p-4" *ngIf="form.valid && archivo">
 
-                                <h4>Archivo #{{archivo.id}}</h4>
+                                <h6 class="uppercase bold">Archivo #{{archivo.id}}</h6>
                                 <div>{{archivo.cuotas}} líneas</div>
-                                <div><span class="bold">Monto enviado:</span> {{archivo.monto_enviado | currency}}</div>
-                                <div><span class="bold">Monto cobrado:</span> {{archivo.monto_cobrado | currency}}</div>
-                                <div><span class="bold">Generado el:</span> {{archivo.fecha_generacion|
+                                <div><span>Monto enviado:</span> {{archivo.monto_enviado | currency}}</div>
+                                <div><span>Monto cobrado:</span> {{archivo.monto_cobrado | currency}}</div>
+                                <div><span>Generado el:</span> {{archivo.fecha_generacion|
                                     date:'dd/MM/yyyy hh:mm:ss'}}</div>
-                                <div><span class="bold">Actualizado el:</span> {{archivo.fecha_respuesta |
+                                <div><span>Actualizado el:</span> {{archivo.fecha_respuesta |
                                     date:'dd/MM/yyyy hh:mm:ss'}}</div>
-                                <div><span class="bold">Descripción:</span> {{ archivo.descripcion }}</div>
+                                <div><span>Descripción:</span> {{ archivo.descripcion }}</div>
 
 
                                 <div class="d-flex align-items-center mt-4">
