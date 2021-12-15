@@ -1,10 +1,10 @@
 export interface ClienteNaturalInterface {
-    s_apellido?: string;
-    cedula?: string;
+    c_doc?: string;
+    c_p_apellido?: string;
+    c_p_nombre?: string;
+    c_s_apellido?: string;
+    c_s_nombre?: string;
     fecha_nacimiento?: string;
     id_genero?: string;
-    p_apellido?: string;
-    s_nombre?: string;
-    p_nombre?: string;
     profesion?: string;
 }

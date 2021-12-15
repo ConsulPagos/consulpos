@@ -101,12 +101,12 @@ export class EditClientComponent implements OnInit {
     });
 
     this.data_vr = new FormGroup({
-      primer_nombre: new FormControl(this.editClient.c_natural.p_nombre, [Validators.required]),
-      segundo_nombre: new FormControl(this.editClient.c_natural.s_nombre,),
-      primer_apellido: new FormControl(this.editClient.c_natural.p_apellido, [Validators.required]),
-      segundo_apellido: new FormControl(this.editClient.c_natural.s_apellido,),
-      tipo_doc_cedula: new FormControl(this.editClient.c_natural, [Validators.required]),
-      cedula: new FormControl(this.editClient.c_natural.cedula, [Validators.required]),
+      primer_nombre: new FormControl(this.editClient.c_natural.c_p_nombre, [Validators.required]),
+      segundo_nombre: new FormControl(this.editClient.c_natural.c_s_nombre,),
+      primer_apellido: new FormControl(this.editClient.c_natural.c_p_apellido, [Validators.required]),
+      segundo_apellido: new FormControl(this.editClient.c_natural.c_s_apellido,),
+      // tipo_doc_cedula: new FormControl(this.editClient.c_natural, [Validators.required]),
+      cedula: new FormControl(this.editClient.c_natural.c_doc, [Validators.required]),
       genero: new FormControl(this.editClient.c_natural.id_genero, [Validators.required]),
       fecha_nacimiento: new FormControl(this.editClient.c_natural.fecha_nacimiento, [Validators.required]),
       profesion: new FormControl(this.editClient.c_natural.profesion, [Validators.required]),
@@ -213,13 +213,13 @@ export class EditClientComponent implements OnInit {
       pto_ref: this.crypto.encryptJson(this.client.get('pto_referencia').value),
       localidad: this.crypto.encryptJson(this.client.get('localidad').value),
 
-      primer_nombre: this.crypto.encryptJson(this.data_vr.get('primer_nombre').value),
-      segundo_nombre: this.crypto.encryptJson(this.data_vr.get('segundo_nombre').value),
-      primer_apellido: this.crypto.encryptJson(this.data_vr.get('primer_apellido').value),
-      segundo_apellido: this.crypto.encryptJson(this.data_vr.get('segundo_apellido').value),
-      tipo_doc_cedula: this.crypto.encryptJson(this.data_vr.get('tipo_doc_cedula').value),
-      cedula: this.crypto.encryptJson(this.data_vr.get('cedula').value),
-      genero: this.crypto.encryptJson(this.data_vr.get('genero').value),
+      c_p_nombre: this.crypto.encryptJson(this.data_vr.get('primer_nombre').value),
+      c_s_nombre: this.crypto.encryptJson(this.data_vr.get('segundo_nombre').value),
+      c_p_apellido: this.crypto.encryptJson(this.data_vr.get('primer_apellido').value),
+      c_s_apellido: this.crypto.encryptJson(this.data_vr.get('segundo_apellido').value),
+      // tipo_doc_cedula: this.crypto.encryptJson(this.data_vr.get('tipo_doc_cedula').value),
+      c_doc: this.crypto.encryptJson(this.data_vr.get('cedula').value),
+      id_genero: this.crypto.encryptJson(this.data_vr.get('genero').value),
       fecha_nacimiento: this.crypto.encryptJson(this.data_vr.get('profesion').value),
       profesion: this.crypto.encryptJson(this.data_vr.get('profesion').value),
 
@@ -273,6 +273,7 @@ export class EditClientComponent implements OnInit {
     this.tipos_clientes = JSON.parse(this.storage.get(constant.T_CLIENTES)).t_clientes
     this.tipo_documentos = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs
     this.actividades_comerciales = JSON.parse(this.storage.get(constant.ACTIVIDAD_COMERCIAL)).actividades_comerciales
+    this.generos = JSON.parse(this.storage.get(constant.GENEROS)).generos
   }
 
   save() {

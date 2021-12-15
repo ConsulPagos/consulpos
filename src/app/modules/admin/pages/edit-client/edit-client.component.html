@@ -62,14 +62,14 @@
                             </mat-form-field>
 
                             <div>
-                                <mat-form-field appearance="outline" class="container_box">
+                                <!-- <mat-form-field appearance="outline" class="container_box">
                                     <mat-label>Tipo</mat-label>
                                     <mat-select disableRipple formControlName="tipo_doc_cedula">
                                         <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
                                             {{t_doc.t_doc}}
                                         </mat-option>
                                     </mat-select>
-                                </mat-form-field>
+                                </mat-form-field> -->
 
                                 <mat-form-field appearance="outline">
                                     <mat-label>
@@ -83,7 +83,7 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Genero</mat-label>
                                 <mat-select disableRipple formControlName="genero">
-                                    <mat-option *ngFor="let genero of generos" value={{genero.genero}}>
+                                    <mat-option *ngFor="let genero of generos" value={{genero.id}}>
                                         {{genero.genero}} </mat-option>
                                 </mat-select>
                             </mat-form-field>

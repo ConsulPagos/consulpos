@@ -83,7 +83,7 @@ export class SesionService {
   }
 
   getDeviceId(): string {
-    return "admin2@gmail.com"
+    return "admin@gmail.com"
   }
 
 }
