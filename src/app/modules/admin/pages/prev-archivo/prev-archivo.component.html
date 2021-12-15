@@ -10,8 +10,8 @@
         </div>
         <div class="content">
             <div class="mb-2" *ngIf="!data">
-                <h3 class="mb-4">Seleccionar archivo respuesta</h3>
-                <h6 class="mb-4">Archivo a actualizar #{{archivo.id}}</h6>
+                <h6 class="mb-4 bold uppercase">Archivo  #{{archivo.id}}</h6>
+                <h6>Selecciona el archivo respuesta</h6>
                 <input class="file-input" type="file" title="Seleccionar archivo" style="display: inline-block;"
                     (change)="onFileChange($event)" placeholder="Upload file" accept=".xls, .xlsx">
             </div>
@@ -19,28 +19,31 @@
                 <div>
                     <div class="container-archivo">
                         <div>
-                            <h3>Vista previa</h3>
+                            <h6 class="mb-4 bold uppercase">Archivo  #{{archivo.id}}</h6>
+                            <h6>Vista previa del archivo sleccionado:</h6>
                             <div class="resumen-container">
                                 <div class="resumen-item">
-                                    <div class="resumen-title">Total envíado:</div>
-                                    <div class="resumen-text">{{archivo.cuotas}} lineas ( {{archivo.monto | currency:"VES" }}
+                                    <div class="resumen-title">Enviado:</div>
+                                    <div class="resumen-text">{{archivo.cuotas}} lineas ( {{archivo.monto_enviado |
+                                        currency:"USD" }}
                                         )</div>
                                 </div>
                                 <div class="resumen-item">
-                                    <div class="resumen-title">Total cobrado:</div>
-                                    <div class="resumen-text">{{getTotal()}} lineas ( {{getTotalCobrado() | currency:"VES" }} )
+                                    <div class="resumen-title">Cobrado:</div>
+                                    <div class="resumen-text">{{getTotal()}} lineas ( {{getTotalCobrado() |
+                                        currency:"VES" }} )
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="btn-submit" *ngIf="archivo && !archivo.fecha_respuesta && !archivo.fecha_conciliacion">
-                            <app-action-btn
-                                [isDisabled]="getTotal() > archivo.cuotas  || loading"
-                                (onClick)="save()" [loading]="loading" [text]="'Guardar'"></app-action-btn>
+                        <div class="btn-submit"
+                            *ngIf="archivo && !archivo.fecha_respuesta && !archivo.fecha_conciliacion">
+                            <app-action-btn [isDisabled]="getTotal() != archivo.cuotas  || loading" (onClick)="save()"
+                                [loading]="loading" [text]="'Guardar'"></app-action-btn>
                         </div>
                     </div>
-                    <span class="error" *ngIf="getTotal() > archivo.cuotas">
-                        El total de lineas almacenadas es menor a las cargadas.
+                    <span class="error" *ngIf="getTotal() != archivo.cuotas">
+                        La cantidad de líneas en el archivo no concuerda.
                     </span>
                 </div>
                 <app-previsualizar-archivo [data]="data" [columns]="columns">
@@ -51,5 +54,7 @@
     </div>
 </section>
 <ng-template #loader>
-    <div *ngIf="loading"><app-loader></app-loader></div>
+    <div *ngIf="loading">
+        <app-loader></app-loader>
+    </div>
 </ng-template>

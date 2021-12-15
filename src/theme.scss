@@ -374,3 +374,7 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 .bold {
   font-weight: bold;
 }
+
+.uppercase{
+  text-transform: uppercase;
+}

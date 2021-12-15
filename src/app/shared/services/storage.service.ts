@@ -43,7 +43,13 @@ export class StorageService implements OnDestroy {
     }
 
     public get(key: string): any {
-        return JSON.parse(this.crypto.decryptStringStorage(localStorage.getItem(key)))
+        var data;
+        try {
+            data = JSON.parse(this.crypto.decryptStringStorage(localStorage.getItem(key)))
+        } catch (error) {
+            data = null
+        }
+        return data
     }
 
     public getJson(key: string): any {

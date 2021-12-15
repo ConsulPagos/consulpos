@@ -27,7 +27,10 @@ export class AdminComponent implements OnInit {
   constructor(private sesion: SesionService, private crypto: CryptoService, private storage: StorageService) { }
 
   ngOnInit(): void {
-    this.verify()
+    console.log(this.storage.get(constant.USER))
+    if(this.storage.get(constant.BANCOS) == null){
+      this.verify()
+    }
   }
 
   loggout() {

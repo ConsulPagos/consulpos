@@ -32,6 +32,7 @@ export class PrevArchivoComponent implements OnInit {
     if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.archivo ) {
       
       this.archivo = this.router.getCurrentNavigation().extras.state.archivo
+      console.log(this.archivo)
       
       if(this.router.getCurrentNavigation().extras.state.data){
         this.data = this.router.getCurrentNavigation().extras.state.data
@@ -41,6 +42,8 @@ export class PrevArchivoComponent implements OnInit {
         this.columns = this.router.getCurrentNavigation().extras.state.columns
       }
 
+    }else{
+      this.router.navigateByUrl("/admin/app/(adr:actualizar-archivo)")
     }
     
   }
