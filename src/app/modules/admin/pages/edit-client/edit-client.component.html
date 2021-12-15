@@ -24,6 +24,10 @@
                     Cliente:
                     <span class="text_rif">{{editClient.t_cliente}}</span>
                 </p>
+                <p class="text-tilte text-uppercase">
+                    Cedula:
+                    <span class="text_rif">{{editClient.c_natural.c_doc}}</span>
+                </p>
             </div>
 
             <mat-vertical-stepper linear #stepper>
@@ -60,25 +64,6 @@
                                 <input matInput formControlName="segundo_apellido" placeholder="ConsuPagos" type="text"
                                     maxlength="255">
                             </mat-form-field>
-
-                            <div>
-                                <!-- <mat-form-field appearance="outline" class="container_box">
-                                    <mat-label>Tipo</mat-label>
-                                    <mat-select disableRipple formControlName="tipo_doc_cedula">
-                                        <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
-                                            {{t_doc.t_doc}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field> -->
-
-                                <mat-form-field appearance="outline">
-                                    <mat-label>
-                                        Cédula
-                                    </mat-label>
-                                    <input matInput formControlName="cedula" placeholder="123456789" type="text"
-                                        (keypress)="onlyNumberKey($event)" maxlength="9">
-                                </mat-form-field>
-                            </div>
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Genero</mat-label>

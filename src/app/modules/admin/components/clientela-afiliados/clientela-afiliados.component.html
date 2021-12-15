@@ -127,8 +127,7 @@
   </table>
 </div>
 
-<mat-paginator [hidden]="true" [length]="resultsLength" [pageSize]="25" showFirstLastButtons
-  (page)="load()"></mat-paginator>
+<mat-paginator  [length]="resultsLength" [pageSize]="25" showFirstLastButtons></mat-paginator>
 
 <ng-template #loadingTable>
   <div class="loading d-flex justify-content-center align-items-center p-4">
