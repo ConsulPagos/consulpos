@@ -1,0 +1,55 @@
+<section id="add-tasas">
+    <div class="title">
+        <div class="d-flex">
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['tasas'] } }]">
+                <li class="fas fa-arrow-left"></li>
+            </a>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <div class="box-title d-flex justify-content-center">
+                <h5 class="bold uppercase mt-3">Agregar Tasa</h5>
+            </div>
+            <form [formGroup]="form">
+                <div class="container">
+                    <mat-form-field appearance="outline" class="container_box_space container_input">
+                        <mat-label>Moneda</mat-label>
+                        <mat-select disableRipple formControlName="moneda">
+                            <mat-option *ngFor="let cod_moneda of monedas" value={{cod_moneda.id}}>
+                                {{cod_moneda.cod_moneda}} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="container_box_space container_input">
+                        <mat-label>Tipo de Tasa</mat-label>
+                        <mat-select disableRipple formControlName="tipo_tasas">
+                            <mat-option *ngFor="let tipo of tipo_tasas" value={{tipo.id}}>
+                                {{tipo.tipo}} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="container_input container_box_space" appearance="outline">
+                        <mat-label>Tasa</mat-label>
+                        <input matInput type="text" (keypress)="onlyNumberKey($event)"
+                            formControlName="tasa">
+                    </mat-form-field>
+                </div>
+            </form>
+
+            <div class="btn_form">
+                <button (click)="clear()" class="btn btn-danger bg-danger text-white w-25 mt-3 mb-3 text-uppercase" mat-button>
+                    Limpiar
+                </button>
+
+                <button (click)="save()" class="btn btn-success bg-success text-white w-25 mt-3 mb-3 text-uppercase" 
+                mat-button 
+                [disabled]="form.invalid">
+                    Guardar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</section>

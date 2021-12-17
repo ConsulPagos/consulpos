@@ -16,7 +16,6 @@ import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { constant } from 'src/app/shared/utils/constant';
-import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 import { ActividadComercialInterface } from '../../../../models/actividad_comercial'
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { GeneroInterface } from '../../../../models/genero';
@@ -234,7 +233,7 @@ export class AddClientComponent implements OnInit {
     }))
 
     this.loading = true;
-    // console.log("verify")
+    console.log("verify")
     this.cliente.doSave(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(data)
       console.log(res)

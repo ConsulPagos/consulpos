@@ -2,11 +2,18 @@
   <!-- *ngIf="!loading && !error; else loadingTable" -->
   <div>
     <mat-form-field appearance="outline" class="mt-4 mx-4">
-      <mat-label>Buscar</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Spider-Man" #input>
+      <form [formGroup]="identity">
+        <input matInput (keyup.enter)="_findClient()" placeholder="Buscar" formControlName="rif" #input>
+      </form>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="mt-4 mx-4">
+    <button (click)="load()" mat-raised-button *ngIf="statusFilter">
+      <i class="fas fa-broom broom"></i>
+      Limpiar filtro
+    </button>
+
+
+    <!-- <mat-form-field appearance="outline" class="mt-4 mx-4">
       <mat-label>Acciones</mat-label>
       <mat-select>
         <mat-option value="option">Activar</mat-option>
@@ -22,10 +29,16 @@
         <mat-option value="option">Firma Personal</mat-option>
         <mat-option value="option">Jurídico</mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
   </div>
 
   <mat-divider></mat-divider>
+
+
+  <div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+
   <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
 
     <!-- Checkbox Column -->
@@ -74,47 +87,25 @@
     <ng-container matColumnDef="Acciones">
       <th mat-header-cell *matHeaderCellDef> Acciones</th>
       <td mat-cell *matCellDef="let client">
-        <button 
-        #tooltip="matTooltip"
-        matTooltip="Ver Ficha"
-        matTooltipHideDelay="10"
-
-        mat-icon-button 
-        (click)="_showClient(client)" 
-        class="container_icon">
+        <button #tooltip="matTooltip" matTooltip="Ver Ficha" matTooltipHideDelay="10" mat-icon-button
+          (click)="_showClient(client)" class="container_icon">
           <i class="fas fa-id-card activate_show"></i>
         </button>
 
-        <button 
-        #tooltip="matTooltip"
-        matTooltip="Editar Cliente"
-        matTooltipHideDelay="10"
-
-        mat-icon-button 
-        (click)="_editClient(client)" 
-        class="container_icon">
+        <button #tooltip="matTooltip" matTooltip="Editar Cliente" matTooltipHideDelay="10" mat-icon-button
+          (click)="_editClient(client)" class="container_icon">
           <i class="fas fa-user-edit activate_edit"></i>
         </button>
 
-        <button 
-        #tooltip="matTooltip"
-        matTooltip="Desafiliar"
-        matTooltipHideDelay="10"
-
-        *ngIf="client.status_desc == 'ACTIVO'" 
-        mat-icon-button class="container_icon"
-        (click)="saveDesativate(client)">
+        <button #tooltip="matTooltip" matTooltip="Desafiliar" matTooltipHideDelay="10"
+          *ngIf="client.status_desc == 'ACTIVO'" mat-icon-button class="container_icon"
+          (click)="saveDesativate(client)">
           <i class="fas fa-ban activate_ban"></i>
         </button>
 
-        <button 
-        #tooltip="matTooltip"
-        matTooltip="Activar"
-        matTooltipHideDelay="10"
-
-        *ngIf="client.status_desc == 'DESAFILIADO'" 
-        mat-icon-button class="container_icon"
-        (click)="saveActive(client)">
+        <button #tooltip="matTooltip" matTooltip="Activar" matTooltipHideDelay="10"
+          *ngIf="client.status_desc == 'DESAFILIADO'" mat-icon-button class="container_icon"
+          (click)="saveActive(client)">
           <i class="fas fa-check-square activate_check"></i>
         </button>
 
@@ -127,7 +118,7 @@
   </table>
 </div>
 
-<mat-paginator  [length]="resultsLength" [pageSize]="25" showFirstLastButtons></mat-paginator>
+<mat-paginator [length]="resultsLength" [pageSize]="25" showFirstLastButtons></mat-paginator>
 
 <ng-template #loadingTable>
   <div class="loading d-flex justify-content-center align-items-center p-4">

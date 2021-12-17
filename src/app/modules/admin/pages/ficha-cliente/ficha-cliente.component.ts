@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ClienteRequestInterface } from 'src/app/models/cliente_request';
-import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
+import { ShowItemDecrypter, ShowItemResponse } from 'src/app/models/showitem';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
@@ -11,6 +11,8 @@ import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { constant } from 'src/app/shared/utils/constant';
+
+import {ItemRequestInterface} from '../../../../models/item_request';
 
 @Component({
   selector: 'app-ficha-cliente',
@@ -21,7 +23,7 @@ export class FichaClienteComponent implements OnInit {
 
   showClient: ClienteRequestInterface = {};
   loading: boolean;
-  showItemClient: DefaultResponse;
+  showItemClient: ShowItemResponse;
 
   constructor(
     private title: Title,
@@ -56,9 +58,9 @@ export class FichaClienteComponent implements OnInit {
     console.log(this.showClient.rif)
     this.loading = true;
     this.cliente.doItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      console.log(this.crypto.decryptJson(JSON.parse(this.crypto.decryptString(res)).items))
-      this.showItemClient = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.showItemClient = new ShowItemDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.showItemClient)
+      console.log(this.crypto.decryptString(res))
       // this.loading = false
       this.crypto.setKeys(this.showItemClient.keyS, this.showItemClient.ivJ, this.showItemClient.keyJ, this.showItemClient.ivS)
     })

@@ -66,10 +66,15 @@ import { ActualizarArchivoComponent } from './pages/actualizar-archivo/actualiza
 import { HistoricoConciliacionComponent } from './pages/historico-conciliacion/historico-conciliacion.component';
 import { TableComponent } from './components/table/table.component';
 import { TablaHistoricoConciliacionComponent } from './components/tabla-historico-conciliacion/tabla-historico-conciliacion.component';
+import { TasasComponent } from './pages/tasas/tasas.component';
+import { ConfigComponent } from './pages/config/config.component';
+import {MatCardModule} from '@angular/material/card';
+import { AddTasasComponent } from './pages/add-tasas/add-tasas.component';
 
 
 @NgModule({
-  declarations: [AdminComponent, 
+  declarations: [
+    AdminComponent, 
     SkuComponent, 
     CobrosComponent, 
     ConciliarArchivoComponent, 
@@ -84,7 +89,46 @@ import { TablaHistoricoConciliacionComponent } from './components/tabla-historic
     ClientelaAfiliadosComponent, 
     AffiliateDetailComponent, 
     EditProductComponent,
-    EditInventarioComponent, IngresosComponent, SalidasComponent, TablaCobrosComponent, TablaPedidosComponent, DetalleCobrosComponent, HistorialCobrosComponent, DashboardComponent, TablaAfiliadosCrmComponent, AplicarDescuentoComponent, AplicarCreditoComponent, TablaAfiliadosCobrosComponent, GenerarArchivoComponent, HistorialPedidosComponent, SuperAdminComponent, TablaSuperAdminComponent, NuevoAdminComponent, AdminChangePwdComponent, VentaManualComponent, AddClientComponent, VentasComponent, AddVentaComponent, EditAdminComponent, AdminDetailComponent, EditClientComponent, AdminTitleComponent, PrevArchivoComponent, PrevisualizarArchivoComponent, ResultFileComponent, VentaConsulposComponent, FichaClienteComponent, ValidadorVentaComponent, ActualizarArchivoComponent, HistoricoConciliacionComponent, TableComponent, TablaHistoricoConciliacionComponent],
+    EditInventarioComponent, 
+    IngresosComponent, 
+    SalidasComponent, 
+    TablaCobrosComponent, 
+    TablaPedidosComponent, 
+    DetalleCobrosComponent, 
+    HistorialCobrosComponent, 
+    DashboardComponent, 
+    TablaAfiliadosCrmComponent, 
+    AplicarDescuentoComponent, 
+    AplicarCreditoComponent, 
+    TablaAfiliadosCobrosComponent, 
+    GenerarArchivoComponent, 
+    HistorialPedidosComponent, 
+    SuperAdminComponent, 
+    TablaSuperAdminComponent, 
+    NuevoAdminComponent, 
+    AdminChangePwdComponent, 
+    VentaManualComponent, 
+    AddClientComponent, 
+    VentasComponent, 
+    AddVentaComponent, 
+    EditAdminComponent, 
+    AdminDetailComponent, 
+    EditClientComponent, 
+    AdminTitleComponent, 
+    PrevArchivoComponent, 
+    PrevisualizarArchivoComponent, 
+    ResultFileComponent, 
+    VentaConsulposComponent, 
+    FichaClienteComponent, 
+    ValidadorVentaComponent, 
+    ActualizarArchivoComponent, 
+    HistoricoConciliacionComponent, 
+    TableComponent, 
+    TablaHistoricoConciliacionComponent, 
+    TasasComponent, 
+    ConfigComponent, 
+    AddTasasComponent],
+    
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -100,7 +144,8 @@ import { TablaHistoricoConciliacionComponent } from './components/tabla-historic
     ChartsModule,
     MatCheckboxModule,
     MatButtonToggleModule,
-    OwlModule
+    OwlModule,
+    MatCardModule
   ]
 })
 export class AdminModule { }

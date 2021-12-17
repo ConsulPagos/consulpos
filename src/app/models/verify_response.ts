@@ -51,6 +51,7 @@ export interface VerifyResponse {
     marcas: MarcaInterface[];
     fracciones_pago: FraccionPagoInterface[];
     generos:GeneroInterface[];
+    tipo_tasas: TipoTasasInterface[];
 
     R: string;
     M: string;
@@ -64,6 +65,7 @@ import { CryptoService } from "../shared/services/crypto.service";
 import { ActividadComercialInterface } from './actividad_comercial';
 import { TipoclienteInterface } from './tipo_cliente';
 import { GeneroInterface } from './genero';
+import { TipoTasasInterface } from './tipo_tasas';
 
 export class VerifyDecrypter {
 
@@ -108,6 +110,7 @@ export class VerifyDecrypter {
             actividades_comerciales: JSON.parse(this.crypto.decryptJson(value.actividades_comerciales)),
             fracciones_pago: JSON.parse(this.crypto.decryptJson(value.fracciones_pago)),
             generos: JSON.parse(this.crypto.decryptJson(value.generos)),
+            tipo_tasas: JSON.parse(this.crypto.decryptJson(value.tipo_tasas)),
 
 
 

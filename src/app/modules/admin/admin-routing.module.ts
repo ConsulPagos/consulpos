@@ -48,6 +48,9 @@ import { FichaClienteComponent } from './pages/ficha-cliente/ficha-cliente.compo
 import { ValidadorVentaComponent } from './pages/validador-venta/validador-venta.component';
 import { ActualizarArchivoComponent } from './pages/actualizar-archivo/actualizar-archivo.component';
 import { HistoricoConciliacionComponent } from './pages/historico-conciliacion/historico-conciliacion.component';
+import { ConfigComponent } from './pages/config/config.component';
+import { TasasComponent } from './pages/tasas/tasas.component';
+import { AddTasasComponent } from './pages/add-tasas/add-tasas.component';
 
 const routes: Routes = [
   {
@@ -89,6 +92,9 @@ const routes: Routes = [
       { path: 'previsualizar-archivo/:id', component: PrevArchivoComponent, outlet: 'adr' },
       { path: 'ficha-cliente', component: FichaClienteComponent, outlet: 'adr' },
       { path: 'validador-venta/:id', component: ValidadorVentaComponent, outlet: 'adr' },
+      { path: 'config', component: ConfigComponent, outlet: 'adr' },
+      { path: 'tasas', component: TasasComponent, outlet: 'adr' },
+      { path: 'add-tasas', component: AddTasasComponent, outlet: 'adr' },
     ],
   }
 ];

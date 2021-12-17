@@ -34,7 +34,7 @@ export class EditClientComponent implements OnInit {
 
   editClient: ClienteRequestInterface = {};
 
-  
+
 
   //----------- VARIABLES GLOBALES -----------\\
   validacionresponse: ValidacionclienteResponse;
@@ -186,8 +186,9 @@ export class EditClientComponent implements OnInit {
   }
 
   submit() {
+
     this.search_client = true;
-    const data = this.crypto.encryptString(JSON.stringify({
+    var data: any = {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
@@ -212,32 +213,56 @@ export class EditClientComponent implements OnInit {
       id_actividad_comercial: this.crypto.encryptJson(this.client.get('act_comercial').value),
       pto_ref: this.crypto.encryptJson(this.client.get('pto_referencia').value),
       localidad: this.crypto.encryptJson(this.client.get('localidad').value),
+    }
 
-      c_p_nombre: this.crypto.encryptJson(this.data_vr.get('primer_nombre').value),
-      c_s_nombre: this.crypto.encryptJson(this.data_vr.get('segundo_nombre').value),
-      c_p_apellido: this.crypto.encryptJson(this.data_vr.get('primer_apellido').value),
-      c_s_apellido: this.crypto.encryptJson(this.data_vr.get('segundo_apellido').value),
-      // tipo_doc_cedula: this.crypto.encryptJson(this.data_vr.get('tipo_doc_cedula').value),
-      c_doc: this.crypto.encryptJson(this.data_vr.get('cedula').value),
-      id_genero: this.crypto.encryptJson(this.data_vr.get('genero').value),
-      fecha_nacimiento: this.crypto.encryptJson(this.data_vr.get('profesion').value),
-      profesion: this.crypto.encryptJson(this.data_vr.get('profesion').value),
+    if (this.getTipoCliente() == 'J') {
+      data = {
+        ...data,        
+        legal: this.crypto.encryptJson(JSON.stringify(
+          {
+            p_nombre_representante: this.agent.get('p_nombre_representante').value,
+            s_nombre_representante: this.agent.get('s_nombre_representante').value,
+            p_apellido_representante: this.agent.get('p_apellido_representante').value,
+            s_apellido_representante: this.agent.get('s_apellido_representante').value,
+            tipo_doc_rep: this.agent.get('tipo_doc_rep').value,
+            cedula_representante: this.agent.get('cedula_representante').value,
+            telefono_local_repre: this.agent.get('telefono_local_repre').value,
+            telefono_movil_repre: this.agent.get('telefono_movil_repre').value,
+            email_repre:this.agent.get('email_repre').value,
+          }
+        )),
+        if_natural: this.crypto.encryptJson("false"),
+        if_legal: this.crypto.encryptJson("true"),
+      }
+    } else if (this.getTipoCliente() == 'N' || this.getTipoCliente() == 'R') {
+      data = {
+        ...data,
+        c_natural: this.crypto.encryptJson(JSON.stringify(
+          {
+            c_p_nombre: this.data_vr.get('primer_nombre').value,
+            c_s_nombre: this.data_vr.get('segundo_nombre').value,
+            c_p_apellido: this.data_vr.get('primer_apellido').value,
+            c_s_apellido: this.data_vr.get('segundo_apellido').value,
+            // tipo_doc_cedula: this.crypto.encryptJson(this.data_vr.get('tipo_doc_cedula').value),
+            c_doc: this.data_vr.get('cedula').value,
+            id_genero: this.data_vr.get('genero').value,
+            fecha_nacimiento: this.data_vr.get('profesion').value,
+            profesion: this.data_vr.get('profesion').value,
+          }
+        )),
+        if_natural: this.crypto.encryptJson("true"),
+        if_legal: this.crypto.encryptJson("false"),
+      }
+    }
+    
 
-      p_nombre_representante: this.crypto.encryptJson(this.agent.get('p_nombre_representante').value),
-      s_nombre_representante: this.crypto.encryptJson(this.agent.get('s_nombre_representante').value),
-      p_apellido_representante: this.crypto.encryptJson(this.agent.get('p_apellido_representante').value),
-      s_apellido_representante: this.crypto.encryptJson(this.agent.get('s_apellido_representante').value),
-      tipo_doc_rep: this.crypto.encryptJson(this.agent.get('tipo_doc_rep').value),
-      cedula_representante: this.crypto.encryptJson(this.agent.get('cedula_representante').value),
-      telefono_local_repre: this.crypto.encryptJson(this.agent.get('telefono_local_repre').value),
-      telefono_movil_repre: this.crypto.encryptJson(this.agent.get('telefono_movil_repre').value),
-      email_repre: this.crypto.encryptJson(this.agent.get('email_repre').value),
-    }))
+    console.log(data)
 
+    const dataS = this.crypto.encryptString(JSON.stringify(data));
 
     this.loading = true;
     console.log("verify")
-    this.cliente.doEdit(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.cliente.doEdit(`${this.session.getDeviceId()};${dataS}`).subscribe(res => {
       console.log(data)
       console.log(res)
       console.log(this.crypto.decryptString(res))
@@ -284,9 +309,4 @@ export class EditClientComponent implements OnInit {
       }
     })
   }
-
-  /*   isInvalid(): boolean {
-      if
-      return this.client.invalid;
-    } */
 }

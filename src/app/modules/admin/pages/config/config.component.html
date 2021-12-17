@@ -1,0 +1,62 @@
+<section id="config">
+    <div class="container-fluid">
+        <div class="title">
+            <!-- Botones Navbar -->
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="form-container">
+                <div class="bg-white rounded card">
+                    <div class="row pl-4 pr-4">
+                        <div class="col-12 mb-4">
+                            <div class="box-title d-flex justify-content-center">
+                                <h5 class="bold uppercase mt-3">Configuración</h5>
+                            </div>
+                        </div>
+
+                        <div class="conatiner_box_config">
+
+                            <mat-card class="example-card">
+                                <mat-card-title class="container_default">
+                                    Usuarios
+                                </mat-card-title>
+                                <mat-card-subtitle></mat-card-subtitle>
+                                <mat-card-content class="container_default">
+                                    <p>Apartado para agregar nuevos usuarios</p>
+                                </mat-card-content>
+                                <mat-card-actions class="container_default">
+                                    <button mat-button
+                                        [routerLink]="['/admin/app',{ outlets: { adr: ['nuevo-admin'] } }]">
+                                        Agregar
+                                    </button>
+                                    <button mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['super-admin-panel'] } }]">
+                                        Ver Más
+                                    </button>
+                                </mat-card-actions>
+                            </mat-card>
+
+                            <mat-card class="example-card">
+                                <mat-card-title class="container_default">
+                                    Tasa
+                                </mat-card-title>
+                                <mat-card-subtitle></mat-card-subtitle>
+                                <mat-card-content class="container_default">
+                                    <p>Tipo de cambio referencial al valor del VES</p>
+                                </mat-card-content>
+                                <mat-card-actions class="container_default">
+                                    <button mat-button
+                                        [routerLink]="['/admin/app',{ outlets: { adr: ['add-tasas'] } }]">
+                                        Agregar
+                                    </button>
+                                    <button mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['tasas'] } }]">
+                                        Ver Más
+                                    </button>
+                                </mat-card-actions>
+                            </mat-card>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
