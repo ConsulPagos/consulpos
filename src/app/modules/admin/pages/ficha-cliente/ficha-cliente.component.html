@@ -10,6 +10,7 @@
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
             <mat-tab-group>
+                
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <mat-icon>assignment_ind</mat-icon>
@@ -190,17 +191,20 @@
                                         </a>
                                     </div>
 
-                                    <div class="col-md-12 container_module">
-                                        <label class="labels title_data">
-                                            Telefonos:
-                                        </label>
-                                        <div *ngFor="let telefono of showClient.telefonos"
-                                            class="phone_number text-capitalize">
-                                            {{telefono.identificador}}-{{telefono.telefono}}
+                                    <div class="container_tlf">
+                                        <div class="col-md-12 container_module">
+                                            <label class="labels title_data">
+                                                Telefonos:
+                                            </label>
+                                            <div *ngFor="let telefono of showClient.telefonos"
+                                                class="phone_number text-capitalize">
+                                                {{telefono.identificador}}-{{telefono.telefono}}
+                                            </div>
                                         </div>
+                                        <!-- <button mat-raised-button>
+                                            Editar Telefono
+                                        </button> -->
                                     </div>
-                                    <button>Editar Telefono</button>
-
                                     <div class="col-md-12 container_module">
                                         <label class="labels title_data">
                                             Nos Contactó Por:
@@ -332,7 +336,7 @@
                             <label class="labels title_data">
                                 item:
                             </label>
-                            
+
                             <div *ngFor="let item of showItemClient.items" class="phone_number text-capitalize">
                                 {{item.cod_serial}}
                                 {{item.marca}}

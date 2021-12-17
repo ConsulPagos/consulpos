@@ -246,7 +246,7 @@ export class EditClientComponent implements OnInit {
             // tipo_doc_cedula: this.crypto.encryptJson(this.data_vr.get('tipo_doc_cedula').value),
             c_doc: this.data_vr.get('cedula').value,
             id_genero: this.data_vr.get('genero').value,
-            fecha_nacimiento: this.data_vr.get('profesion').value,
+            fecha_nacimiento: this.data_vr.get('fecha_nacimiento').value,
             profesion: this.data_vr.get('profesion').value,
           }
         )),
