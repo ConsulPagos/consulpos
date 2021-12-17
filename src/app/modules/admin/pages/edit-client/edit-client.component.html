@@ -231,10 +231,16 @@
                             Anterior
                         </button>
 
-                        <button class="stepBtn" *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'" mat-raised-button
+                        <!-- <button class="stepBtn" *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'" mat-raised-button
                             matStepperNext [disabled]="client.invalid" (click)="submit()">
                             Finalizar
-                        </button>
+                        </button> -->
+
+                        <div>
+                            <app-action-btn (onClick)="save()" [loading]="loading" [text]="'Actualizar'"
+                                [isDisabled]="client.invalid || loading">
+                            </app-action-btn>
+                        </div>
 
                         <button class="stepBtn" *ngIf="getTipoCliente()=='J'" mat-raised-button matStepperNext
                             [disabled]="client.invalid">

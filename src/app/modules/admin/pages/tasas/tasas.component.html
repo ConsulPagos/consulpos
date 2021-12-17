@@ -1,0 +1,60 @@
+<section id="clientela">
+    <div class="title">
+        <div class="d-flex">
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['config'] } }]">
+                <li class="fas fa-arrow-left"></li>
+            </a>
+
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Tasa"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['add-tasas'] } }]">
+                <li class="fas fa-file-invoice-dollar"></li>
+            </a>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">
+                            Listado de Tasas
+                        </span>
+                    </ng-template>
+
+                    <div *ngIf="tasas && columns">
+                        <table mat-table [dataSource]="tasas" multiTemplateDataRows class="container_table">
+                            <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef> ID </th>
+                                <td mat-cell *matCellDef="let data"> {{data.id}} </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="fecha_inicio">
+                                <th mat-header-cell *matHeaderCellDef> Fehca de Inicio </th>
+                                <td mat-cell *matCellDef="let data"> {{data.fecha_inicio}} </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="fecha_fin">
+                                <th mat-header-cell *matHeaderCellDef> Fecha Caducidad </th>
+                                <td mat-cell *matCellDef="let data"> {{data.fecha_fin}} </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="monto">
+                                <th mat-header-cell *matHeaderCellDef> Monto </th>
+                                <td mat-cell *matCellDef="let data"> {{data.monto | currency:'Bs.' }} </td>
+                              </ng-container>
+
+                              <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                              <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+                        </table>
+                        <mat-paginator *ngIf="data" #paginator [pageSizeOptions]="[12, 50, 100]"
+                            aria-label="Seleccionar un pagina"></mat-paginator>
+
+                    </div>
+                </mat-tab>
+
+            </mat-tab-group>
+        </div>
+    </div>
+</section>

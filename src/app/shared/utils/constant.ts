@@ -51,4 +51,7 @@ export const constant = {
     M_CONTACTO_ID: 'medio_contacto_id',
 
     BANCOS: 'bancos',
+
+    MONEDAS: 'monedas',
+    TIPO_TASAS: 'tipo_tasas',
 };

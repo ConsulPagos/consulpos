@@ -235,13 +235,9 @@ getTasas() {
         this.toaster.error(response.M)
         break;
     }
-
     this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
-
     this.loadingTasas = false
-
   })
-
 }
 
 startTimer() {

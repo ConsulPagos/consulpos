@@ -107,11 +107,11 @@
             </a>
 
             <a class="menu_side" *ngIf="access.venta_manual()"
-                [routerLink]="['/admin/app',{ outlets: { adr: ['historico-conciliacion'] } }]" routerLinkActive="ad-active"
-                [routerLinkActiveOptions]="{exact: true}">
+                [routerLink]="['/admin/app',{ outlets: { adr: ['historico-conciliacion'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-book"></li> <span class="text_side">Histórico de Conciliación</span>
             </a>
-            
+
         </mat-menu>
         <!-- ************************************************************************************************** -->
 
@@ -130,11 +130,10 @@
         </a>
         <!- ************************************************************************************************** -->
 
-        <!-- Roles de Usuarios -->
-        <a class="menu_side" *ngIf="access.super()"
-            [routerLink]="['/admin/app',{ outlets: { adr: ['super-admin-panel'] } }]" routerLinkActive="ad-active"
-            [routerLinkActiveOptions]="{exact: true}">
-            <li class="fa fa-cogs"></li><span class="text_side">Usuarios</span>
+        <!-- Condiguracion -->
+        <a class="menu_side" *ngIf="access.super()" [routerLink]="['/admin/app',{ outlets: { adr: ['config'] } }]"
+            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-cogs"></li><span class="text_side">Configuración</span>
         </a>
         <!-- ************************************************************************************************** -->
     </div>

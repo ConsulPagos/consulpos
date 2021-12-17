@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { merge, of as observableOf } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { AffiliateDetailJoinInterface } from 'src/app/models/afiliado';
-import { ShowClientsDecrypter } from 'src/app/models/showclients_response';
+import { ShowClientsDecrypter, ShowClientsResponse } from 'src/app/models/showclients_response';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
@@ -48,7 +48,8 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<any>(true, []);
-  showclientResponse: any;
+  showclientResponse: ShowClientsResponse;
+  statusFilter = false;
 
   PAGESIZE = 12
 
@@ -65,8 +66,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
   }
 
   identity = new FormGroup({
-    rif: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
-    tipo_doc: new FormControl('', [Validators.required]),
+    rif: new FormControl(''),
   });
 
   ngAfterViewInit() {
@@ -128,6 +128,8 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
       ).subscribe(data => {
         this.clientes = data
         this.dataSource = new MatTableDataSource(this.clientes);
+        this.identity.reset();
+        this.statusFilter = false;
       });
   }
 
@@ -223,24 +225,34 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
   }
 
   _findClient() {
-    var rif = this.identity.get('rif').value
+    var filter = this.identity.get('rif').value
+    this.statusFilter = true;
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      rif: this.crypto.encryptJson(rif),
       status_desc: this.crypto.encryptJson('ACTIVO'),
+      filter: this.crypto.encryptJson(filter),
+
     }))
-    this.loading = true;
+    this.isLoadingResults = true;
     this.cliente.doFind(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(this.crypto.decryptString(res))
-      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.loading = false
-      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
-      
-      this.toaster.success(this.defaultResponse.M)
+      this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.isLoadingResults = false;
+      this.crypto.setKeys(this.showclientResponse.keyS, this.showclientResponse.ivJ, this.showclientResponse.keyJ, this.showclientResponse.ivS)
+      this.toaster.success(this.showclientResponse.M)
+
+      this.clientes = this.showclientResponse.clientes
+      this.dataSource = new MatTableDataSource(this.clientes);
+
 
     })
+  }
+
+  clear() {
+    this.identity.reset();
+    this.statusFilter = false;
   }
 
   _editClient(client) {
