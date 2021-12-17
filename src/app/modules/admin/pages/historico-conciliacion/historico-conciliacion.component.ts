@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { DefaultDecrypter } from 'src/app/models/default_response';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
@@ -27,6 +28,7 @@ export class HistoricoConciliacionComponent implements OnInit {
     private session: SesionService,
     private toaster: ToasterService,
     private bancario: BancarioService,
+    private loader:LoaderService,
     private modal: ModalService,) { }
 
   ngOnInit(): void {
@@ -35,7 +37,7 @@ export class HistoricoConciliacionComponent implements OnInit {
 
   get(){
 
-    this.loading = true;
+    this.loader.loading();
 
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
@@ -48,7 +50,7 @@ export class HistoricoConciliacionComponent implements OnInit {
 
     this.bancario.doGetHistoricoConciliacion(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
-      this.loading = false
+      this.loader.stop();
       console.log(json.archivos)
       switch (json.R) {
         case constant.R0:

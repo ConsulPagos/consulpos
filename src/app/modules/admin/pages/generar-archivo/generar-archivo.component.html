@@ -133,7 +133,7 @@
                                 <mat-label>Seleccionar tasa</mat-label>
                                 <mat-select disableRipple formControlName="tasa">
                                     <mat-option *ngFor="let tasa of tasas" value={{tasa.id}}>
-                                        {{tasa.fecha_inicio | date:'short'}} ( {{tasa.monto | currency:'VEF'}} )
+                                        {{tasa.monto | currency:'Bs.'}} {{tasa.fecha_inicio | date:'short'}} 
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
