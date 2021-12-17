@@ -23,7 +23,7 @@ export class TasasComponent implements OnInit {
   countNuevos;
   loadingTasas = false;
   tasas: any;
-  columns =['id','fecha_inicio', 'fecha_fin', 'monto'];
+  columns =['id','fecha_inicio', 'fecha_fin', 'tipo', 'monto'];
 
 
   constructor(

@@ -12,48 +12,61 @@
                                 <h5 class="bold uppercase mt-3">Configuración</h5>
                             </div>
                         </div>
-
-                        <div class="conatiner_box_config">
-
-                            <mat-card class="example-card">
-                                <mat-card-title class="container_default">
+                        
+                        <div class="cards">
+                            <div class="card_box card-1">
+                                <div class="card__icon">
+                                    <i class="fas fa-users"></i>
                                     Usuarios
-                                </mat-card-title>
-                                <mat-card-subtitle></mat-card-subtitle>
-                                <mat-card-content class="container_default">
-                                    <p>Apartado para agregar nuevos usuarios</p>
-                                </mat-card-content>
-                                <mat-card-actions class="container_default">
-                                    <button mat-button
-                                        [routerLink]="['/admin/app',{ outlets: { adr: ['nuevo-admin'] } }]">
-                                        Agregar
-                                    </button>
-                                    <button mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['super-admin-panel'] } }]">
-                                        Ver Más
-                                    </button>
-                                </mat-card-actions>
-                            </mat-card>
+                                </div>
+                                <div class="sub_title">
+                                    <p class="p_card">Apartado para agregar nuevos usuarios</p>
+                                </div>
+                                <div class="menu_card">
+                                    <p class="card__apply">
+                                        <a class="card__link"
+                                            [routerLink]="['/admin/app',{ outlets: { adr: ['nuevo-admin'] } }]">
+                                            <i class="fas fa-user-plus"></i>
+                                            Agregar
+                                        </a>
+                                    </p>
+                                    <p class="card__apply">
+                                        <a class="card__link"
+                                            [routerLink]="['/admin/app',{ outlets: { adr: ['super-admin-panel'] } }]">
+                                            <i class="fas fa-address-book"></i>
+                                            Listar
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
 
-                            <mat-card class="example-card">
-                                <mat-card-title class="container_default">
+                            <div class="card_box card-1">
+                                <div class="card__icon">
+                                    <i class="fas fa-coins"></i>
                                     Tasa
-                                </mat-card-title>
-                                <mat-card-subtitle></mat-card-subtitle>
-                                <mat-card-content class="container_default">
-                                    <p>Tipo de cambio referencial al valor del VES</p>
-                                </mat-card-content>
-                                <mat-card-actions class="container_default">
-                                    <button mat-button
-                                        [routerLink]="['/admin/app',{ outlets: { adr: ['add-tasas'] } }]">
-                                        Agregar
-                                    </button>
-                                    <button mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['tasas'] } }]">
-                                        Ver Más
-                                    </button>
-                                </mat-card-actions>
-                            </mat-card>
-
+                                </div>
+                                <div class="sub_title">
+                                    <p class="p_card">Tipo de cambio referencial al valor del VES</p>
+                                </div>
+                                <div class="menu_card">
+                                    <p class="card__apply">
+                                        <a class="card__link"
+                                            [routerLink]="['/admin/app',{ outlets: { adr: ['add-tasas'] } }]">
+                                            <i class="fas fa-money-bill-wave-alt"></i>
+                                            Agregar
+                                        </a>
+                                    </p>
+                                    <p class="card__apply">
+                                        <a class="card__link"
+                                            [routerLink]="['/admin/app',{ outlets: { adr: ['tasas'] } }]">
+                                            <i class="fas fa-file-invoice-dollar"></i>
+                                            Listar
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
