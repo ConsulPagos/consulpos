@@ -63,7 +63,7 @@ export class GenerarArchivoComponent implements OnInit {
   form = new FormGroup({
     tipo_cobro: new FormControl(null, [Validators.required]),
     banco: new FormControl(null, [Validators.required]),
-    cash: new FormControl(''),
+    cash: new FormControl('', [Validators.min(0.01)]),
     descripcion: new FormControl('', [Validators.required]),
     tasa: new FormControl('', [Validators.required]),
   });

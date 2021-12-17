@@ -132,6 +132,7 @@ export class PrevArchivoComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       id_archivo: this.crypto.encryptJson(this.archivo.id),
       archivo: this.crypto.encryptJson(JSON.stringify(this.data)),
+      id_banco: this.crypto.encryptJson(this.archivo.id_banco),
     }))
 
     this.loading = true;

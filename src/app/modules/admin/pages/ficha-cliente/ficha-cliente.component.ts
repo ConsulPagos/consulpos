@@ -56,6 +56,7 @@ export class FichaClienteComponent implements OnInit {
     console.log(this.showClient.rif)
     this.loading = true;
     this.cliente.doItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      console.log(this.crypto.decryptJson(JSON.parse(this.crypto.decryptString(res)).items))
       this.showItemClient = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.showItemClient)
       // this.loading = false
