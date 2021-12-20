@@ -38,7 +38,7 @@ export class SesionService {
   }
 
 
-  doGeneracion(data) {
+  /* doGeneracion(data) {
     var path = `/doGeneracion`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
@@ -54,7 +54,7 @@ export class SesionService {
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
     return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
-  }
+  } */
 
   doGetUsuarios(data) {
     var path = `/doGetUsuarios`;

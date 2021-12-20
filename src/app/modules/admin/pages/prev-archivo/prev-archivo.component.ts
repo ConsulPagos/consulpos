@@ -10,6 +10,8 @@ import { constant } from 'src/app/shared/utils/constant';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { DefaultDecrypter } from 'src/app/models/default_response';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
+import { PlantillaRespuestaInterface } from 'src/app/models/plantilla_respuesta';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 
 @Component({
@@ -23,29 +25,34 @@ export class PrevArchivoComponent implements OnInit {
   progress: number = 0;
   id: any;
   archivo: any;
+  tipo_archivo: String;
+  n_pagina: number;
   loading = false;
+  plantilla: PlantillaRespuestaInterface[] = null;
+  loadingRespuesta = false;
 
-  columns = ["rif", "cuenta", "afiliado", "cobrado", "mensaje"]
+  columns = []
 
-  constructor(private route: ActivatedRoute, private router: Router, private modal: ModalService, private bancario: BancarioService, private crypto: CryptoService, private storage: StorageService, private session: SesionService, private toaster: ToasterService) {
-    
-    if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.archivo ) {
-      
+  constructor(private route: ActivatedRoute, private router: Router, private modal: ModalService, private bancario: BancarioService, private crypto: CryptoService, private storage: StorageService, private session: SesionService, private toaster: ToasterService, private loader: LoaderService) {
+
+    if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.archivo) {
+
       this.archivo = this.router.getCurrentNavigation().extras.state.archivo
-      console.log(this.archivo)
-      
-      if(this.router.getCurrentNavigation().extras.state.data){
+      this.tipo_archivo = this.router.getCurrentNavigation().extras.state.tipo_archivo
+      this.n_pagina = this.router.getCurrentNavigation().extras.state.n_pagina
+
+      if (this.router.getCurrentNavigation().extras.state.data) {
         this.data = this.router.getCurrentNavigation().extras.state.data
       }
 
-      if(this.router.getCurrentNavigation().extras.state.columns){
+      if (this.router.getCurrentNavigation().extras.state.columns) {
         this.columns = this.router.getCurrentNavigation().extras.state.columns
       }
 
-    }else{
+    } else {
       this.router.navigateByUrl("/admin/app/(adr:actualizar-archivo)")
     }
-    
+
   }
 
   ngOnInit(): void {
@@ -53,10 +60,66 @@ export class PrevArchivoComponent implements OnInit {
       this.id = p.id
     });
 
+    this.getPlantillaRespuesta();
+
   }
 
   onFileChange(event: any) {
+
+    const columns = []
+
+    this.plantilla.forEach(p => {
+      columns.push(p.columna)
+    })
+
     this.loading = true;
+    const target: DataTransfer = <DataTransfer>(event.target);
+    if (target.files.length !== 1) {
+      throw new Error('Cannot use multiple files');
+    }
+    const reader: FileReader = new FileReader();
+
+    reader.readAsBinaryString(target.files[0]);
+
+    reader.onload = (e: any) => {
+      const binarystr: string = e.target.result;
+      const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
+
+      const wsname: string = wb.SheetNames[this.n_pagina];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+      const json = XLSX.utils.sheet_to_json(ws);
+      const nData: any = []
+
+      json.forEach(cuota => {
+        var data = {};
+        for (let index = 0; index < this.plantilla.length; index++) {
+          const col = this.plantilla[index];
+          data[col.columna] = this.parseValue(col.tipo, cuota[col.nombre], col.decimales);
+        }
+
+        nData.push(data)
+
+      });
+
+      console.log(nData)
+      console.log(columns)
+
+      this.data = nData;
+      this.columns = columns;
+      this.loading = false;
+
+    };
+  }
+
+  onFileChangeTXT(event: any) {
+
+    const data = []
+    const columns = []
+
+    this.plantilla.forEach(p => {
+      columns.push(p.nombre);
+    })
+
     const target: DataTransfer = <DataTransfer>(event.target);
     if (target.files.length !== 1) {
       throw new Error('Cannot use multiple files');
@@ -65,22 +128,32 @@ export class PrevArchivoComponent implements OnInit {
     console.log(target.files[0])
     reader.readAsBinaryString(target.files[0]);
     reader.onload = (e: any) => {
-      const binarystr: string = e.target.result;
-      const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
-      const wsname: string = wb.SheetNames[0];
-      console.log(wsname)
-      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-      const json = XLSX.utils.sheet_to_json(ws);
-      console.log(json)
-      const nData: CuotaInterface[] = []
-      json.forEach(cuota => {
-        console.log(cuota)
-        const nCuota: CuotaInterface = { rif: cuota[this.columns[0]], cuenta: cuota[this.columns[1]], afiliado: cuota[this.columns[2]], cobrado: parseFloat(cuota[this.columns[3]]), mensaje: cuota[this.columns[4]], }
-        nData.push(nCuota)
+      var lines = e.target.result.split('\n');
+
+      lines.forEach((l: string) => {
+
+        var json = {};
+        for (let index = 0; index < this.plantilla.length; index++) {
+
+          const col = this.plantilla[index];
+
+
+          console.log(col.inicia)
+          console.log(col.longitud)
+
+          const value = l.substring(col.inicia, col.inicia + col.longitud);
+          json[`${col.nombre}`] = this.parseValue(col.tipo, value, col.decimales);
+
+        }
+
+        data.push(json);
+
       });
-      this.data = nData
-      console.log(nData)
-      this.loading = false;
+
+
+      this.data = data;
+      this.columns = columns;
+
     };
   }
 
@@ -138,7 +211,7 @@ export class PrevArchivoComponent implements OnInit {
     this.loading = true;
 
     this.bancario.doConciliacion(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      
+
       const json = JSON.parse(this.crypto.decryptString(res))
       this.loading = false
 
@@ -160,5 +233,61 @@ export class PrevArchivoComponent implements OnInit {
     //**************************************************************************************************************************//
   }
 
+  getPlantillaRespuesta() {
+
+    this.plantilla = null;
+
+    this.loader.loading()
+
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      id_banco: this.crypto.encryptJson(this.archivo.id_banco),
+    }))
+
+    this.bancario.doGetPlantillaRespuesta(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+
+      const json = JSON.parse(this.crypto.decryptString(res))
+
+      console.log(json)
+
+      this.loader.stop()
+
+      switch (json.R) {
+        case constant.R0:
+          const response0 = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+          this.plantilla = JSON.parse(this.crypto.decryptJson(json.plantilla)) as PlantillaRespuestaInterface[];
+          this.crypto.setKeys(response0.keyS, response0.ivJ, response0.keyJ, response0.ivS)
+          break;
+        case constant.R1:
+        default:
+          const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+          this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+          this.toaster.error(response.M)
+          break;
+      }
+
+      console.log(this.plantilla)
+    })
+    //**************************************************************************************************************************//
+  }
+
+  parseValue(type: string, value: string, d: number) {
+    var data: any = value;
+    switch (type) {
+      case "int":
+        data = parseInt(value);
+        break;
+      case "double":
+        data = parseFloat(value) / Math.pow(10, d);
+        break;
+      default:
+        data = value;
+        break;
+    }
+
+    return data;
+  }
 
 }

@@ -19,19 +19,12 @@ export class PrevisualizarArchivoComponent implements OnInit {
   @Input() columns: any;  
   dataSource: MatTableDataSource<any>;
 
-  constructor(private cdr: ChangeDetectorRef){
-    this.dataSource = new MatTableDataSource(this.data);
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  constructor(){
   }
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.data);
-    this.cdr.detectChanges();
+    setTimeout(() => this.dataSource.paginator = this.paginator);
   }
-
-
 
 }

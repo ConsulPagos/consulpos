@@ -85,7 +85,7 @@ export class ConciliarArchivoComponent implements OnInit {
 
     this.loader.loading()
 
-    this.session.doGetArchivos(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.bancario.doGetArchivos(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.loader.stop()
 

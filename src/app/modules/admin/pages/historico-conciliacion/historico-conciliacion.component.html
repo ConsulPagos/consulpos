@@ -2,10 +2,24 @@
 
     <div class="w-100">
         <div class="bg-white rounded p-2 ml-3 mr-3">
-            <div *ngIf="data">
-                <h5 class="bold uppercase ml-3 mt-3">Historico de Conciliación</h5>
-                <app-tabla-historico-conciliacion [data]="data" [columns]="columns">
-                </app-tabla-historico-conciliacion>
+            <div>
+                <h5 class="bold uppercase ml-3 mt-3 text-center">Historico de Conciliación</h5>
+                <div class="w-100 pl-4 pr-4 pt-4">
+                   <form [formGroup]="form">
+                    <mat-form-field appearance="outline" class="container_box w-100">
+                        <mat-label>Seleccionar Banco</mat-label>
+                        <mat-select formControlName="banco" (selectionChange)="submit()">
+                            <mat-option selected value="null">Seleccionar</mat-option>
+                            <mat-option *ngFor="let banco of bancos" value={{banco.codigo}}>
+                                {{banco.codigo}} - {{banco.nombre}} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                   </form>
+                </div>
+                <div *ngIf="data">
+                    <app-tabla-historico-conciliacion [data]="data" [columns]="columns">
+                    </app-tabla-historico-conciliacion>
+                </div>
             </div>
         </div>
     </div>

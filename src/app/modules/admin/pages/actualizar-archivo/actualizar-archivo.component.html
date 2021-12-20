@@ -19,7 +19,7 @@
                                     <mat-select formControlName="banco" (selectionChange)="submit()">
                                         <mat-option selected value="null">Seleccionar</mat-option>
                                         <mat-option *ngFor="let banco of bancos" value={{banco.codigo}}>
-                                            {{banco.nombre}} </mat-option>
+                                            {{banco.codigo}} - {{banco.nombre}} </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
