@@ -113,7 +113,7 @@ export class PrevArchivoComponent implements OnInit {
 
   onFileChangeTXT(event: any) {
 
-    const data = []
+    var data: [{}];
     const columns = []
 
     this.plantilla.forEach(p => {
@@ -131,26 +131,30 @@ export class PrevArchivoComponent implements OnInit {
       var lines = e.target.result.split('\n');
 
       lines.forEach((l: string) => {
-
+        const line = l.trim();
         var json = {};
         for (let index = 0; index < this.plantilla.length; index++) {
 
           const col = this.plantilla[index];
 
 
-          console.log(col.inicia)
-          console.log(col.longitud)
-
-          const value = l.substring(col.inicia, col.inicia + col.longitud);
-          json[`${col.nombre}`] = this.parseValue(col.tipo, value, col.decimales);
-
+          if (line.length > 0) {
+            const value = line.substring(col.inicia, col.inicia + col.longitud);
+            json[`${col.nombre}`] = this.parseValue(col.tipo, value, col.decimales);
+          }
         }
 
-        data.push(json);
+        if (line.length > 0) {
+          if (data == undefined) {
+            data = [json]
+          } else {
+            data.push(json);
+          }
+        }
 
       });
 
-
+      console.log(data)
       this.data = data;
       this.columns = columns;
 
@@ -280,10 +284,16 @@ export class PrevArchivoComponent implements OnInit {
         data = parseInt(value);
         break;
       case "double":
-        data = parseFloat(value) / Math.pow(10, d);
+        if (d > 0) {
+          data = (parseFloat(value.trim().replace(".", '').replace(",", '.')) / Math.pow(10, d)).toFixed(d)
+        } else {
+          console.log(value);
+          data = parseFloat(value.trim().replace(".", '').replace(",", '.')).toFixed(2);
+          console.log(data)
+        }
         break;
       default:
-        data = value;
+        data = value.trim();
         break;
     }
 

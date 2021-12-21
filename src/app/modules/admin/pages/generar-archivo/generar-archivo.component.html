@@ -33,7 +33,7 @@
                                 <mat-label>Seleccionar Banco</mat-label>
                                 <mat-select disableRipple formControlName="banco">
                                     <mat-option *ngFor="let banco of bancos" value={{banco.codigo}}>
-                                        {{banco.nombre}} </mat-option>
+                                        {{banco.codigo}} - {{banco.nombre}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
 
