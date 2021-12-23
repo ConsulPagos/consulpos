@@ -1,192 +1,99 @@
 <section id="dashboard">
     <div class="container-fluid">
-        <div class="row"> <!-- *ngIf="!loading && !error; else loadingTmp" -->
-            <div class="col-3">
-                <div class="tile-box card bg-white d-flex flex-column">
-                    <div class="tile-title text-dark">
-                        Total clientes
+        <div class="row conatiner_master_graph">
+
+            <div class="cards">
+
+                <div class="card_box card-1">
+                    <div class="card__icon">
+                        <i class="fas fa-users"></i>
+                        Número de Ventas Totales
                     </div>
-                    <div class="tile-body d-flex flex-fill justify-content-center align-items-center">
-                        <div class="tile-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="tile-content text-center">
-                            <span class="tile-number text-dark">3800</span>
-                        </div>
+                    <div class="menu_card">
+                        <p class="card__apply">
+                            <a class="card__link">
+                                7,500
+                            </a>
+                        </p>
                     </div>
                 </div>
+
+                <div class="card_box card-1">
+                    <div class="card__icon">
+                        <i class="fas fa-users"></i>
+                        Cantidad de Clientes
+                    </div>
+                    <div class="menu_card">
+                        <p class="card__apply">
+                            <a class="card__link">
+                                10,885
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card_box card-1">
+                    <div class="card__icon">
+                        <i class="fas fa-users"></i>
+                        Cantidad de Equipos
+                    </div>
+                    <div class="menu_card">
+                        <p class="card__apply">
+                            <a class="card__link">
+                                11,595
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+
             </div>
-            <div class="col-3">
-                <div class="tile-box card bg-white d-flex flex-column">
-                    <div class="tile-title text-dark">
-                        Nuevos Esta semana
-                    </div>
-                    <div class="tile-body d-flex flex-fill justify-content-center align-items-center">
-                        <div class="tile-icon">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
-                        <div class="tile-content text-center">
-                            <span class="tile-number text-dark">55</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="tile-box card bg-white d-flex flex-column">
-                    <div class="tile-title text-dark">
-                        Total ventas
-                    </div>
-                    <div class="tile-body d-flex flex-fill justify-content-center align-items-center">
-                        <div class="tile-icon">
-                            <i class="fas fa-truck"></i>
-                        </div>
-                        <div class="tile-content text-center">
-                            <span class="tile-number text-dark">5600</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="tile-box card bg-white d-flex flex-column">
-                    <div class="tile-title text-dark">
-                        Ventas Hoy
-                    </div>
-                    <div class="tile-body d-flex flex-fill justify-content-center align-items-center">
-                        <div class="tile-icon">
-                            <i class="fas fa-parachute-box"></i>
-                        </div>
-                        <div class="tile-content text-center">
-                            <span class="tile-number text-dark">23</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--<div class="col-6">
-                 <div class="tile-box card bg-white" style="display: block">
-                    <div class="tile-title">
-                        Facturación este mes
-                    </div>
-                    <canvas baseChart [datasets]="STMBarChartData" [labels]="STMBarChartLabels" [options]="barChartOptions"
-                        [legend]="true" [chartType]="barChartType" [colors]="orangeChartColors">
-                    </canvas>
-                </div>
-            </div> -->
-           <!--  <div class="col-6">
-                <div class="tile-box card bg-white" style="display: block">
-                    <div class="tile-title">
-                        Nuevos afiliados por mes
-                    </div>
-                    <canvas baseChart [datasets]="NABMBarChartData" [labels]="NABMBarChartLabels" [options]="barChartOptions"
-                        [legend]="false" [chartType]="barChartType" [colors]="blueChartColors">
-                    </canvas>
-                </div>
-            </div> -->
-           <!--  <div class="col-3">
-                <div class="tile-box card bg-white d-flex flex-column">
-                    <div class="tile-title text-dark">
-                        Programados para Hoy
-                    </div>
-                    <div class="tile-body d-flex flex-fill justify-content-center align-items-center">
-                        <div class="tile-icon">
-                            <i class="fas fa-calendar-day"></i>
-                        </div>
-                        <div class="tile-content text-center">
-                            <span class="tile-number text-dark">{{dashboard.scheduled_orders_today}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="tile-box card bg-white d-flex flex-column">
-                    <div class="tile-title text-dark">
-                        Facturado Hoy
-                    </div>
-                    <div class="tile-body d-flex flex-fill justify-content-center align-items-center">
-                        <div class="tile-icon">
-                            <i class="fas fa-money-bill-wave-alt"></i>
-                        </div>
-                        <div class="tile-content text-center">
-                            <h3 class="text-dark">{{(dashboard.sells_today || 0) | currency : 'USD' : true : '1.2-2'}}</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-6">
-                <div class="tile-box card bg-white d-flex flex-column">
-                    <div class="tile-title text-dark">
-                        Total facturado
-                    </div>
-                    <div class="tile-body d-flex flex-fill justify-content-center align-items-center">
-                        <div class="tile-icon">
-                            <i class="fas fa-coins"></i>
-                        </div>
-                        <div class="tile-content text-center text-dark">
-                            <h3>{{dashboard.total_sells | currency : 'USD' : true : '1.2-2'}}</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="tile-box card bg-white d-flex flex-column">
-                    <div class="tile-title text-dark">
-                        Cobros pendientes
-                    </div>
-                    <div class="tile-body d-flex flex-fill justify-content-center align-items-center">
-                        <div class="tile-icon">
-                            <i class="fas fa-file-invoice-dollar"></i>
-                        </div>
-                        <div class="tile-content text-center">
-                            <span class="tile-number text-dark">{{dashboard.pending_charges}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="tile-box card bg-white d-flex flex-column">
-                    <div class="tile-title text-dark">
-                        Producto más vendido
-                    </div>
-                    <div class="tile-body d-flex flex-fill justify-content-center align-items-center">
-                        <div class="tile-icon">
-                           <img src={{dashboard.leader_product[3]}} width="60px" height="100px">
-                        </div>
-                        <div class="tile-content text-center">
-                            <div class="d-flex flex-column text-dark">
-                                <h6>{{dashboard.leader_product[2]}}</h6>
-                                <span>{{dashboard.leader_product[0]}} ventas</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="tile-box card bg-white d-flex flex-column">
-                    <div class="tile-title text-dark">
-                        Affiliado estrella
-                    </div>
-                    <div class="tile-body d-flex flex-fill justify-content-center align-items-center">
-                        <div class="tile-icon">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <div class="tile-content text-center text-dark">
-                            <h5>{{dashboard.best_affiliate[1]}}</h5>
-                            <h6>{{dashboard.best_affiliate[2] | currency : 'USD' : true : '1.2-2'}} facturado</h6>
-                            <h6>{{dashboard.best_affiliate[3]}} pedidos</h6>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
+
         </div>
     </div>
+    <div class="conatiner_master_graph row">
+        <div class="conatiner_graph col-6">
+            <div>
+                <p class="title_graph">Cobro Diario</p>
+            </div>
+            <canvas baseChart [datasets]="datos" [labels]="dia" [options]="barChartOptions" [legend]="leyenda"
+                [chartType]="type">
+            </canvas>
+        </div>
+
+        <div class="conatiner_graph col-6">
+            <div>
+                <p class="title_graph">Cobro Mensual</p>
+            </div>
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                [legend]="barChartLegend" [chartType]="barChartType">
+            </canvas>
+        </div>
+
+        <div class="conatiner_graph col-6">
+            <div>
+                <p class="title_graph">Efectividad de Cobro por banco</p>
+            </div>
+            <canvas baseChart [data]="pieChartData" [labels]="pieDeudaLabels" [chartType]="pieChartType">>
+            </canvas>
+        </div>
+
+        <div class="conatiner_graph col-6">
+            <div>
+                <p class="title_graph">Deuda total por banco</p>
+            </div>
+            <canvas baseChart [data]="pieDeuda" [labels]="pieChartLabels" [chartType]="pieDeudaType">>
+            </canvas>
+        </div>
+
+        <div class="conatiner_graph col-12">
+            <div>
+                <p class="title_graph">Equipos Activos vs Equipos Desafiliados</p>
+            </div>
+            <canvas baseChart [labels]="a" [chartType]="b" [legend]="c" [datasets]="d" [options]="barChartOptions">
+            </canvas>
+        </div>
+
+    </div>
+
 </section>
-<ng-template #loadingTmp>
-    <div class="loading d-flex justify-content-center align-items-center p-4">
-        <div class="p-1" mat-raised-button *ngIf="loading">
-            <mat-spinner [diameter]="30"></mat-spinner>
-        </div>
-        <button class="loading-btn" *ngIf="error" (click)="load()" mat-raised-button>
-            <li class="fa fa-redo-alt"></li>
-        </button>
-    </div>
-</ng-template>

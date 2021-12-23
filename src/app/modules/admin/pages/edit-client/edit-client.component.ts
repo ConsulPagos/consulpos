@@ -34,8 +34,6 @@ export class EditClientComponent implements OnInit {
 
   editClient: ClienteRequestInterface = {};
 
-
-
   //----------- VARIABLES GLOBALES -----------\\
   validacionresponse: ValidacionclienteResponse;
   addClientResponse: AddClientResponse;
@@ -67,7 +65,6 @@ export class EditClientComponent implements OnInit {
 
     if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.editClient) {
       this.editClient = this.router.getCurrentNavigation().extras.state.editClient as ClienteRequestInterface;
-      console.log(this.editClient)
     } else {
       this.router.navigateByUrl("/admin/app/(adr:clientela)");
     }
@@ -76,14 +73,12 @@ export class EditClientComponent implements OnInit {
       rif: new FormControl(this.editClient.rif.toString().substr(1), [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
       tipo_doc: new FormControl(this.editClient.rif.toString().substr(0, 1), [Validators.required]),
     });
-    console.log(this.editClient)
+
     this.client = new FormGroup({
       razon_social: new FormControl(this.editClient.razon_social, [Validators.required]),
       nombre_comercial: new FormControl(this.editClient.comercio, [Validators.required]),
       contribuyente: new FormControl(this.editClient.contribuyente_id, [Validators.required]),
       email: new FormControl(this.editClient.correo, [Validators.required]),
-      telefono_local: new FormControl(this.editClient.telefonos, [Validators.required]),
-      telefono_movil: new FormControl(this.editClient.telefonos, [Validators.required]),
       estado: new FormControl(this.editClient.id_estado, [Validators.required]),
       municipio: new FormControl(this.editClient.id_municipio, [Validators.required]),
       parroquia: new FormControl(this.editClient.parroquia_id, [Validators.required]),
@@ -201,8 +196,6 @@ export class EditClientComponent implements OnInit {
       comercio: this.crypto.encryptJson(this.client.get('nombre_comercial').value),
       contribuyente_id: this.crypto.encryptJson(this.client.get('contribuyente').value),
       email: this.crypto.encryptJson(this.client.get('email').value),
-      telefono_local: this.crypto.encryptJson(this.client.get('telefono_local').value),
-      telefono_movil: this.crypto.encryptJson(this.client.get('telefono_movil').value),
       estados: this.crypto.encryptJson(this.client.get('estado').value),
       municipios: this.crypto.encryptJson(this.client.get('municipio').value),
       parroquia_id: this.crypto.encryptJson(this.client.get('parroquia').value),
@@ -255,9 +248,6 @@ export class EditClientComponent implements OnInit {
       }
     }
     
-
-    console.log(data)
-
     const dataS = this.crypto.encryptString(JSON.stringify(data));
 
     this.loading = true;

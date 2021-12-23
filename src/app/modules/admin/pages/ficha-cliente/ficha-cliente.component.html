@@ -10,250 +10,278 @@
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
             <mat-tab-group>
-                
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon>assignment_ind</mat-icon>
+                <mat-tab label="First">
+                    <ng-template matTabContent>
+                        <!-- <mat-icon>assignment_ind</mat-icon>
                         <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
                             matBadgePosition="before">
                             Datos del cliente
-                        </span>
-                    </ng-template>
-                    <div class="d-flex justify-content-center align-items-center mb-3" style="padding-top: 2rem;">
-                        <h4 class="text-right">
-                            RIF: {{showClient.rif}}</h4>
-                    </div>
-                    <hr>
-                    <div class="container-fluid rounded bg-white mb-5">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-12 border-right">
-                                <div class="p-3 py-5">
-                                    <h4 class="text-center">Información del Cliente</h4>
-                                    <div class="row mt-3">
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Nombre Comercial:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.comercio}}
-                                            </span>
-                                        </div>
+                        </span> -->
 
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Razón Social:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.razon_social}}
-                                            </span>
-                                        </div>
+                        <div class="d-flex justify-content-center align-items-center mb-3" style="padding-top: 2rem;">
+                            <h4 class="text-right">
+                                RIF: {{showClient.rif}}</h4>
+                        </div>
+                        <hr>
+                        <div class="container-fluid rounded bg-white mb-5">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-12 border-right">
+                                    <div class="p-3 py-5">
+                                        <h4 class="text-center">Información del Cliente</h4>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Nombre Comercial:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.comercio}}
+                                                </span>
+                                            </div>
 
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Actividad Comercial:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.a_c_des}}
-                                            </span>
-                                        </div>
-                                    </div>
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Razón Social:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.razon_social}}
+                                                </span>
+                                            </div>
 
-                                    <div class="row mt-3">
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Tipo de Contribuyente:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.contribuyente}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Tipo de Cliente:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.t_cliente}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Tipo de Documento:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.t_doc_desc}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Estatus del cliente:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.status_desc}}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- //////////////////////////////////////////////////////////////// -->
-                            <div class="col-lg-4 col-md-12 border-right">
-                                <div class="p-3 py-5">
-                                    <h4 class="text-center">Información de Localización</h4>
-                                    <div class="row mt-3">
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Estado:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.estado}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Ciudad:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.ciudad}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Municipio:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.municipio}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Parroquia:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.parroquia}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Localidad:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.localidad}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Direccion:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.direccion}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Codigo Postal:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.cod_postal}}
-                                            </span>
-                                        </div>
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Punto de referencia:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{showClient.pto_ref}}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- //////////////////////////////////////////////////////////////// -->
-                            <div class="col-lg-4 col-md-12">
-                                <div class="p-3 py-5">
-                                    <h4 class="text-center">Información de Contacto</h4>
-
-
-                                    <div class="col-md-12 col-sm-12 container_module">
-                                        <label class="labels title_data">
-                                            Correo Electrónico:
-                                        </label>
-                                        <a href="mailto:{{showClient.correo}}" class="text-lowercase">
-                                            {{showClient.correo}}
-                                        </a>
-                                    </div>
-
-                                    <div class="container_tlf">
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Telefonos:
-                                            </label>
-                                            <div *ngFor="let telefono of showClient.telefonos"
-                                                class="phone_number text-capitalize">
-                                                {{telefono.identificador}}-{{telefono.telefono}}
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Actividad Comercial:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.a_c_des}}
+                                                </span>
                                             </div>
                                         </div>
-                                        <!-- <button mat-raised-button>
-                                            Editar Telefono
-                                        </button> -->
-                                    </div>
-                                    <div class="col-md-12 container_module">
-                                        <label class="labels title_data">
-                                            Nos Contactó Por:
-                                        </label>
-                                        <span class="text-capitalize">
-                                            {{showClient.m_contacto}}
-                                        </span>
-                                    </div>
 
-                                    <div class="col-md-12 container_module">
-                                        <label class="labels title_data">
-                                            Fecha de Registro:
-                                        </label>
-                                        <span class="text-capitalize">
-                                            {{showClient.fecha_registro}}
-                                        </span>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Tipo de Contribuyente:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.contribuyente}}
+                                                </span>
+                                            </div>
+
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Tipo de Cliente:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.t_cliente}}
+                                                </span>
+                                            </div>
+
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Tipo de Documento:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.t_doc_desc}}
+                                                </span>
+                                            </div>
+
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Estatus del cliente:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.status_desc}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- //////////////////////////////////////////////////////////////// -->
+                                <div class="col-lg-4 col-md-12 border-right">
+                                    <div class="p-3 py-5">
+                                        <h4 class="text-center">Información de Localización</h4>
+                                        <div class="row mt-3">
+
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Estado:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.estado}}
+                                                </span>
+                                            </div>
+
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Ciudad:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.ciudad}}
+                                                </span>
+                                            </div>
+
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Municipio:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.municipio}}
+                                                </span>
+                                            </div>
+
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Parroquia:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.parroquia}}
+                                                </span>
+                                            </div>
+
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Localidad:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.localidad}}
+                                                </span>
+                                            </div>
+
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Direccion:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.direccion}}
+                                                </span>
+                                            </div>
+
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Codigo Postal:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.cod_postal}}
+                                                </span>
+                                            </div>
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Punto de referencia:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showClient.pto_ref}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- //////////////////////////////////////////////////////////////// -->
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="p-3 py-5">
+                                        <h4 class="text-center">Información de Contacto</h4>
+
+
+                                        <div class="col-md-12 col-sm-12 container_module">
+                                            <label class="labels title_data">
+                                                Correo Electrónico:
+                                            </label>
+                                            <a href="mailto:{{showClient.correo}}" class="text-lowercase">
+                                                {{showClient.correo}}
+                                            </a>
+                                        </div>
+
+                                        <div class="container_tlf">
+                                            <div class="col-md-12 container_module">
+                                                <label class="labels title_data">
+                                                    Telefonos:
+                                                </label>
+                                                <div *ngFor="let telefono of showClient.telefonos"
+                                                    class="phone_number text-capitalize">
+                                                    {{telefono.identificador}}-{{telefono.telefono}}
+                                                </div>
+                                            </div>
+                                            <!-- <button mat-raised-button>
+                                                Editar Telefono
+                                            </button> -->
+                                        </div>
+                                        <div class="col-md-12 container_module">
+                                            <label class="labels title_data">
+                                                Nos Contactó Por:
+                                            </label>
+                                            <span class="text-capitalize">
+                                                {{showClient.m_contacto}}
+                                            </span>
+                                        </div>
+
+                                        <div class="col-md-12 container_module">
+                                            <label class="labels title_data">
+                                                Fecha de Registro:
+                                            </label>
+                                            <span class="text-capitalize">
+                                                {{showClient.fecha_registro}}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </ng-template>
                 </mat-tab>
 
                 <!-- ////////////////////////////////////////////////////////////////////////// -->
 
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon>request_quote</mat-icon>
+                <mat-tab label="Second">
+                    <ng-template matTabContent>
+                        <!-- <mat-icon>request_quote</mat-icon>
                         <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
                             matBadgePosition="before">
                             Estado de cuenta
-                        </span>
+                        </span> -->
+
+                        <app-estado-cuenta [rif]="showClient.rif">
+                            
+                        </app-estado-cuenta>
                     </ng-template>
-                    <div class="d-flex justify-content-center align-items-center mb-3" style="padding-top: 2rem;">
-                        <h4 class="text-right">RIF: {{showClient.rif}}</h4>
-                    </div>
-                    <hr>
-                    <div class="container-fluid rounded bg-white mb-5">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-12 border-right">
-                                <div class="p-3 py-5">
-                                    <h4 class="text-center">Datos del Equipo</h4>
-                                    <div class="row mt-3">
+                </mat-tab>
+
+
+                <mat-tab label="Third">
+                    <ng-template matTabContent>
+                        <!-- <mat-icon>sim_card</mat-icon>
+                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">
+                            Equipos asociados
+                        </span> -->
+                        <div class="d-flex justify-content-center align-items-center mb-3" style="padding-top: 2rem;">
+                            <h4 class="text-right">RIF: {{showClient.rif}}</h4>
+                        </div>
+                        <hr>
+                        <div class="container-fluid rounded bg-white mb-5">
+                            <label class="labels title_data">
+
+                            </label>
+                            <div class="col-md-12 container_module container_items" *ngIf="showItemClient">
+                                <div *ngFor="let item of showItemClient.items; let equipo = index"
+                                    class="text-capitalize">
+                                    <h4 class="labels title_data">Equipo {{equipo + 1}}:</h4>
+
+                                    <!-- Serial: <span *ngIf="item.complemento_de == 'null'"> Pos </span> {{item.cod_serial}}
+                                    {{item.complemento_de}} -->
+                                    <div>
+                                        <div class="col-md-12 container_module">
+                                            <label class="labels title_data">
+                                                Serial:
+                                            </label>
+                                            <span class="text-capitalize">
+                                                {{item.cod_serial}}
+                                            </span>
+                                        </div>
                                         <div class="col-md-12 container_module">
                                             <label class="labels title_data">
                                                 Marca:
                                             </label>
                                             <span class="text-capitalize">
-                                                MOREFUN
+                                                {{item.marca}}
                                             </span>
                                         </div>
 
@@ -262,91 +290,32 @@
                                                 Modelo:
                                             </label>
                                             <span class="text-capitalize">
-                                                MF919
+                                                {{item.modelo}}
                                             </span>
                                         </div>
 
                                         <div class="col-md-12 container_module">
                                             <label class="labels title_data">
-                                                Serial:
+                                                Precio:
                                             </label>
                                             <span class="text-capitalize">
-                                                98210614990069
+                                                {{item.precio}}
+                                            </span>
+                                        </div>
+
+                                        <div class="col-md-12 container_module">
+                                            <label class="labels title_data">
+                                                Estatus del Equipo:
+                                            </label>
+                                            <span class="text-capitalize">
+                                                {{item.status_desc}}
                                             </span>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
-                            <!-- //////////////////////////////////////////////////////////////// -->
-                            <div class="col-lg-4 col-md-12 border-right">
-                                <div class="p-3 py-5">
-                                    <h4 class="text-center">Datos Bancarios</h4>
-                                    <div class="row mt-3">
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Banco:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                Banco de Venezuela S.A
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                N° Afiliación:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                83281448
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Terminal:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                N/A
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
                         </div>
-                    </div>
-                </mat-tab>
-
-
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon>sim_card</mat-icon>
-                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
-                            matBadgePosition="before">
-                            Equipos asociados
-                        </span>
                     </ng-template>
-                    <div class="d-flex justify-content-center align-items-center mb-3" style="padding-top: 2rem;">
-                        <h4 class="text-right">RIF: {{showClient.rif}}</h4>
-                    </div>
-                    <hr>
-                    <div class="container-fluid rounded bg-white mb-5">
-                        <div class="col-md-12 container_module" *ngIf="showItemClient">
-                            <label class="labels title_data">
-                                item:
-                            </label>
-
-                            <div *ngFor="let item of showItemClient.items" class="phone_number text-capitalize">
-                                {{item.cod_serial}}
-                                {{item.marca}}
-                                {{item.modelo}}
-                                {{item.precio}}
-                                {{item.status_desc}}
-                            </div>
-                        </div>
-
-                    </div>
                 </mat-tab>
 
             </mat-tab-group>
