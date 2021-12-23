@@ -1,83 +1,202 @@
-.tile-box{
-    margin-bottom: 20px;
-    min-height: 140px;
+// .tile-box{
+//     margin-bottom: 20px;
+//     min-height: 140px;
+// }
+
+// .tile-title{
+//     padding: 5px;
+//     width: 100%;
+//     font-size: 10px;
+//     font-weight: 400;
+//     color: gray;
+//     text-transform: uppercase;
+// }
+// .tile-icon{
+//     font-size: 50px;
+//     color: #33aaaabb;
+//     padding: 10px;
+//     margin-left: 10px;
+// }
+// .tile-content{
+//     display: flex;
+//     flex-direction: column;
+//     padding: 20px;
+//     font-size: 14px;
+//     font-weight: 400;
+//     color: gray;
+// }
+
+// .text-bold{
+//     font-weight: 600;
+//     color: teal;
+// }
+
+// .card{
+//     border: none;
+//     border-radius: 10px;
+// }
+
+// .tile-number{
+//     font-size: 40px;
+//     font-weight: 600;
+// }
+
+// .loading-btn{
+//     padding-left: 30px;
+//     padding-right: 30px;
+//     border-radius: 20px;
+//     height: 40px;
+//     background-color: whitesmoke;
+//     margin-left: 5px;
+//     margin-right: 5px;
+//   }
+
+//   .bg-blue{
+//       background-color: #15BACF;
+//   }
+//   .bg-green{
+//     background-color: #4EA952;
+//   }
+//   .bg-red{
+//       background-color: #E73E3A;
+//   }
+//   .bg-orange{
+//       background-color: #FC940C;
+//   }
+
+// .text-blue{
+//     color: #15BACF;
+// }
+// .text-green{
+//     color: #05828E;
+// }
+// .text-red{
+//     color: #E73E3A;
+// }
+// .text-orange{
+//     color: #FE6625;
+// }
+
+// .text-winner{
+//     color: #FB9334;
+// }
+
+.conatiner_graph {
+    max-height: 1000px;
+    max-width: 700px;
 }
 
-.tile-title{
-    padding: 5px;
-    width: 100%;
-    font-size: 10px;
-    font-weight: 400;
-    color: gray;
-    text-transform: uppercase;
+.conatiner_master_graph {
+    justify-content: center;
+    margin-right: 0;
+    margin-left: 0;
 }
-.tile-icon{
-    font-size: 50px;
-    color: #33aaaabb;
-    padding: 10px;
-    margin-left: 10px;
-}
-.tile-content{
+
+.title_graph{
+    padding: 0.5rem;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+    margin: 0;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+////////////////////////////////////////////////////////
+
+/////////////////////////////
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card_box {
+    margin: 20px;
     padding: 20px;
-    font-size: 14px;
-    font-weight: 400;
-    color: gray;
-}
-
-.text-bold{
-    font-weight: 600;
-    color: teal;
-}
-
-.card{
-    border: none;
-    border-radius: 10px;
-}
-
-.tile-number{
-    font-size: 40px;
-    font-weight: 600;
-}
-
-
-.loading-btn{
-    padding-left: 30px;
-    padding-right: 30px;
+    width: 400px;
+    min-height: 200px;
+    display: grid;
     border-radius: 20px;
-    height: 40px;
-    background-color: whitesmoke;
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-
-  .bg-blue{
-      background-color: #15BACF;
-  }
-  .bg-green{
-    background-color: #4EA952;
-  }
-  .bg-red{
-      background-color: #E73E3A;
-  }
-  .bg-orange{
-      background-color: #FC940C;
-  }
-
-.text-blue{
-    color: #15BACF;
-}
-.text-green{
-    color: #05828E;
-}
-.text-red{
-    color: #E73E3A;
-}
-.text-orange{
-    color: #FE6625;
+    box-shadow: 0px 6px 10px rgb(0 0 0 / 25%);
+    transition: all 0.2s;
 }
 
-.text-winner{
-    color: #FB9334;
+.card_box:hover {
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+    transform: scale(1.01);
+}
+
+.card__link,
+.card__exit,
+.card__icon {
+    position: relative;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: bold;
+}
+
+.card__link::after {
+    position: absolute;
+    top: 25px;
+    left: 0;
+    content: "";
+    width: 0%;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: all 0.5s;
+}
+
+.card__link:hover::after {
+    width: 100%;
+}
+
+.card__exit {
+    justify-self: end;
+}
+
+.card__icon {
+    font-size: 30px;
+    text-align: center;
+}
+
+.card__title {
+    font-weight: 400;
+    color: #ffffff;
+}
+
+.card__apply {
+    align-self: center;
+}
+
+/* CARD BACKGROUNDS */
+
+.card-1 {
+    background: linear-gradient(45deg, #c78debfc, #072697);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1600px) {
+    .cards {
+        justify-content: center;
+    }
+}
+
+.menu_card {
+    display: flex;
+    justify-content: space-around;
+    font-size: 25px;
+}
+
+.sub_title {
+    display: flex;
+    justify-content: center;
+}
+
+.p_card {
+    margin: 0;
+    color: white;
+    font-weight: 400;
 }

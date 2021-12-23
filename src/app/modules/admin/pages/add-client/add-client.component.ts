@@ -19,6 +19,9 @@ import { constant } from 'src/app/shared/utils/constant';
 import { ActividadComercialInterface } from '../../../../models/actividad_comercial'
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { GeneroInterface } from '../../../../models/genero';
+import { ToasterService } from 'src/app/shared/services/toaster.service';
+import { Router } from '@angular/router';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 
 @Component({
   selector: 'app-add-client',
@@ -42,16 +45,18 @@ export class AddClientComponent implements OnInit {
   ciudades: CiudadInterface[];
   contactos: ContactoInterface[];
   generos: GeneroInterface[];
-  actividades_comerciales:ActividadComercialInterface[];
+  actividades_comerciales: ActividadComercialInterface[];
   tipos_clientes: TipoclienteInterface[];
   tipo_documentos: TipodocumentoInterface[];
-//****************************************************************************************//
+  //****************************************************************************************//
   constructor(
     private title: Title,
     private crypto: CryptoService,
     private cliente: ClientesService,
     private storage: StorageService,
-    private session: SesionService
+    private session: SesionService,
+    private toaster: ToasterService,
+    private router: Router,
   ) { }
 
   //FORM DEL PRIMER STEP\\
@@ -72,8 +77,8 @@ export class AddClientComponent implements OnInit {
     nombre_comercial: new FormControl('', [Validators.required]),
     contribuyente: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required]),
-    telefono_local: new FormControl('', [Validators.required]),
-    telefono_movil: new FormControl('', [Validators.required]),
+    phone_1: new FormControl('', [Validators.required]),
+    phone_2: new FormControl('', [Validators.required]),
     estado: new FormControl('', [Validators.required]),
     municipio: new FormControl('', [Validators.required]),
     parroquia: new FormControl('', [Validators.required]),
@@ -92,7 +97,7 @@ export class AddClientComponent implements OnInit {
     segundo_nombre: new FormControl('',),
     primer_apellido: new FormControl('', [Validators.required]),
     segundo_apellido: new FormControl('',),
-    // tipo_doc_cedula: new FormControl('', [Validators.required]),
+    c_t_doc_cedula: new FormControl('', [Validators.required]),
     cedula: new FormControl('', [Validators.required]),
     genero: new FormControl('', [Validators.required]),
     fecha_nacimiento: new FormControl('', [Validators.required]),
@@ -103,6 +108,14 @@ export class AddClientComponent implements OnInit {
   document = new FormGroup({
     id: new FormControl('', [Validators.required]),
   });
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  separateDialCode = false;
+	SearchCountryField = SearchCountryField;
+	CountryISO = CountryISO;
+  PhoneNumberFormat = PhoneNumberFormat;
+	preferredCountries: CountryISO[] = [CountryISO.Venezuela, CountryISO.UnitedStates];
+
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   agent = new FormGroup({
@@ -182,9 +195,10 @@ export class AddClientComponent implements OnInit {
 
   submit() {
     this.search_client = true;
-    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
-   console.log(rif)
-    const data = this.crypto.encryptString(JSON.stringify({
+    var letra = this.tipo_documentos.filter(t => t.id == this.identity.get("tipo_doc").value)[0].t_doc
+    var rif = letra + this.identity.get('rif').value
+
+    var data: any = {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
@@ -198,8 +212,6 @@ export class AddClientComponent implements OnInit {
       comercio: this.crypto.encryptJson(this.client.get('nombre_comercial').value),
       contribuyente_id: this.crypto.encryptJson(this.client.get('contribuyente').value),
       email: this.crypto.encryptJson(this.client.get('email').value),
-      telefono_local: this.crypto.encryptJson(this.client.get('telefono_local').value),
-      telefono_movil: this.crypto.encryptJson(this.client.get('telefono_movil').value),
       estados: this.crypto.encryptJson(this.client.get('estado').value),
       municipios: this.crypto.encryptJson(this.client.get('municipio').value),
       parroquia_id: this.crypto.encryptJson(this.client.get('parroquia').value),
@@ -210,31 +222,65 @@ export class AddClientComponent implements OnInit {
       id_actividad_comercial: this.crypto.encryptJson(this.client.get('act_comercial').value),
       pto_ref: this.crypto.encryptJson(this.client.get('pto_referencia').value),
       localidad: this.crypto.encryptJson(this.client.get('localidad').value),
+      telefonos:this.crypto.encryptJson(JSON.stringify([
+        {
+            number: this.client.get("phone_1").value.number,
+            cod_area:this.client.get("phone_1").value.dialCode,
+            iso: this.client.get("phone_1").value.countryCode
+        },
+        {
+          number: this.client.get("phone_2").value.number,
+          cod_area:this.client.get("phone_2").value.dialCode,
+          iso: this.client.get("phone_2").value.countryCode
+        }
+      ]))
+    }
 
-      c_p_nombre: this.crypto.encryptJson(this.data_vr.get('primer_nombre').value),
-      c_s_nombre: this.crypto.encryptJson(this.data_vr.get('segundo_nombre').value),
-      c_p_apellido: this.crypto.encryptJson(this.data_vr.get('primer_apellido').value),
-      c_s_apellido: this.crypto.encryptJson(this.data_vr.get('segundo_apellido').value),
-      // tipo_doc_cedula: this.crypto.encryptJson(this.data_vr.get('tipo_doc_cedula').value),
-      c_doc: this.crypto.encryptJson(this.data_vr.get('cedula').value),
-      id_genero: this.crypto.encryptJson(this.data_vr.get('genero').value),
-      fecha_nacimiento: this.crypto.encryptJson(this.data_vr.get('profesion').value),
-      profesion: this.crypto.encryptJson(this.data_vr.get('profesion').value),
+    if (this.getTipoCliente() == 'J') {
+      data = {
+        ...data,
+        legal: this.crypto.encryptJson(JSON.stringify(
+          {
+            p_nombre_representante: this.agent.get('p_nombre_representante').value,
+            s_nombre_representante: this.agent.get('s_nombre_representante').value,
+            p_apellido_representante: this.agent.get('p_apellido_representante').value,
+            s_apellido_representante: this.agent.get('s_apellido_representante').value,
+            tipo_doc_rep: this.agent.get('tipo_doc_rep').value,
+            cedula_representante: this.agent.get('cedula_representante').value,
+            telefono_local_repre: this.agent.get('telefono_local_repre').value,
+            telefono_movil_repre: this.agent.get('telefono_movil_repre').value,
+            email_repre: this.agent.get('email_repre').value,
+          }
+        )),
+        if_natural: this.crypto.encryptJson("false"),
+        if_legal: this.crypto.encryptJson("true"),
+      }
+    } else if (this.getTipoCliente() == 'N' || this.getTipoCliente() == 'R') {
+      data = {
+        ...data,
+        c_natural: this.crypto.encryptJson(JSON.stringify(
+          {
+            c_p_nombre: this.data_vr.get('primer_nombre').value,
+            c_s_nombre: this.data_vr.get('segundo_nombre').value,
+            c_p_apellido: this.data_vr.get('primer_apellido').value,
+            c_s_apellido: this.data_vr.get('segundo_apellido').value,
+            c_t_doc_id: this.data_vr.get('c_t_doc_cedula').value,
+            c_doc: this.data_vr.get('cedula').value,
+            id_genero: this.data_vr.get('genero').value,
+            fecha_nacimiento: this.data_vr.get('fecha_nacimiento').value,
+            profesion: this.data_vr.get('profesion').value,
+          }
+        )),
+        if_natural: this.crypto.encryptJson("true"),
+        if_legal: this.crypto.encryptJson("false"),
+      }
+    }
 
-      p_nombre_representante: this.crypto.encryptJson(this.agent.get('p_nombre_representante').value),
-      s_nombre_representante: this.crypto.encryptJson(this.agent.get('s_nombre_representante').value),
-      p_apellido_representante: this.crypto.encryptJson(this.agent.get('p_apellido_representante').value),
-      s_apellido_representante: this.crypto.encryptJson(this.agent.get('s_apellido_representante').value),
-      tipo_doc_rep: this.crypto.encryptJson(this.agent.get('tipo_doc_rep').value),
-      cedula_representante: this.crypto.encryptJson(this.agent.get('cedula_representante').value),
-      telefono_local_repre: this.crypto.encryptJson(this.agent.get('telefono_local_repre').value),
-      telefono_movil_repre: this.crypto.encryptJson(this.agent.get('telefono_movil_repre').value),
-      email_repre: this.crypto.encryptJson(this.agent.get('email_repre').value),
-    }))
+    const dataS = this.crypto.encryptString(JSON.stringify(data));
 
     this.loading = true;
     console.log("verify")
-    this.cliente.doSave(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.cliente.doSave(`${this.session.getDeviceId()};${dataS}`).subscribe(res => {
       console.log(data)
       console.log(res)
       console.log(this.crypto.decryptString(res))
@@ -242,6 +288,19 @@ export class AddClientComponent implements OnInit {
       console.log(this.addClientResponse)
       // this.loading = false
       this.crypto.setKeys(this.addClientResponse.keyS, this.addClientResponse.ivJ, this.addClientResponse.keyJ, this.addClientResponse.ivS)
+
+      switch (this.addClientResponse.R) {
+        case constant.R0:
+          this.router.navigateByUrl('/admin/app/(adr:clientela)')
+          this.toaster.success(this.addClientResponse.M)
+          break;
+        case constant.R1:
+          this.toaster.error(this.addClientResponse.M)
+          break;
+        default:
+          this.toaster.default_error()
+          break;
+      }
     })
   }
 

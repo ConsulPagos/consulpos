@@ -75,9 +75,9 @@
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Fecha de Nacimiento</mat-label>
-                                <input matInput [matDatepicker]="picker" formControlName="fecha_nacimiento">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
+                                <input matInput  type="date" formControlName="fecha_nacimiento">
+                                <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker> -->
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="container_box_space">
@@ -136,13 +136,6 @@
                                     maxlength="255">
                             </mat-form-field>
                         </div>
-
-                        <!-- <div>
-                            <h6>Datos de Contacto / Numero de telefono:</h6>
-                            <div *ngFor="let telefono of editClient.telefonos" class="phone_number">
-                                {{telefono.identificador}}-{{telefono.telefono}}
-                            </div>
-                        </div> -->
 
                         <div>
                             <h6>Datos Geográficos</h6>
@@ -226,23 +219,18 @@
                         </div>
                     </form>
 
-                    <div>
-                        <button class="stepBtn" mat-raised-button matStepperPrevious>
+                    <div class="container_btn">
+                        <button class="stepBtn btn_margin" mat-raised-button matStepperPrevious>
                             Anterior
                         </button>
 
-                        <!-- <button class="stepBtn" *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'" mat-raised-button
-                            matStepperNext [disabled]="client.invalid" (click)="submit()">
-                            Finalizar
-                        </button> -->
-
-                        <div>
+                        <div class="btn_margin">
                             <app-action-btn (onClick)="save()" [loading]="loading" [text]="'Actualizar'"
                                 [isDisabled]="client.invalid || loading">
                             </app-action-btn>
                         </div>
 
-                        <button class="stepBtn" *ngIf="getTipoCliente()=='J'" mat-raised-button matStepperNext
+                        <button class="stepBtn btn_margin" *ngIf="getTipoCliente()=='J'" mat-raised-button matStepperNext
                             [disabled]="client.invalid">
                             Siguiente
                         </button>
