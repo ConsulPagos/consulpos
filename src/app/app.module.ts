@@ -37,6 +37,13 @@ import { HagaSuPedidoDialogComponent } from './modules/home/components/haga-su-p
 import { CarruselLandingComponent } from './modules/home/components/carrusel-landing/carrusel-landing.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { BlockcpDirective } from './shared/directives/blockcp.directive';
+import { ChartsModule } from 'ng2-charts';
+import { RouterModule, Routes} from '@angular/router';
+import { DashboardComponent } from './modules/admin/pages/dashboard/dashboard.component';
+
+const routes: Routes = [
+  { path: '', component: DashboardComponent },
+]
 
 @NgModule({
   declarations: [
@@ -85,6 +92,8 @@ import { BlockcpDirective } from './shared/directives/blockcp.directive';
     }),
     AngularFireStorageModule,
     NgxIntlTelInputModule,
+    RouterModule.forRoot(routes),
+    ChartsModule
   ],
   providers: [AffiliateGuard, AdminGuard, HomeGuard, StorageService],
   bootstrap: [AppComponent]

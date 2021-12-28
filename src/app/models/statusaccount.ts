@@ -1,28 +1,27 @@
-import {ClienteRequestInterface} from '../models/cliente_request';
 import { CryptoService } from "../shared/services/crypto.service";
+import { EstadoCuentaInterface } from "./estadocuenta";
 
-export interface ShowClientsResponse {
-    value_exists: string;
+export interface StatusAccountResponse {
     R?: string;
+    value_exists: string;
+    session_valid: string;
     M?: string;
     keyS: string;
     ivS: string;
     keyJ: string;
     ivJ: string;
-    session_valid: string;
-    clientes: ClienteRequestInterface[];
-    total_row: string;
+    estado_de_cuenta:EstadoCuentaInterface[];
 }
 
-export class ShowClientsDecrypter {
+export class StatusAccountDecrypter {
 
     constructor(private crypto: CryptoService) {
 
     }
 
-    deserialize(value: any): ShowClientsResponse {
+    deserialize(value: any): StatusAccountResponse {
 
-        const verify: ShowClientsResponse = {
+        const verify: StatusAccountResponse = {
             R: value.R,
             M: this.crypto.decryptJson(value.M),
             keyS: this.crypto.decryptString(value.keyS),
@@ -31,8 +30,7 @@ export class ShowClientsDecrypter {
             ivJ: this.crypto.decryptJson(value.ivJ),
             value_exists: this.crypto.decryptJson(value.value_exists),
             session_valid: this.crypto.decryptJson(value.session_valid),
-            clientes:JSON.parse(this.crypto.decryptJson(value.clientes)) as ClienteRequestInterface[],
-            total_row: this.crypto.decryptJson(value.total_row),
+            estado_de_cuenta:JSON.parse(this.crypto.decryptJson(value.estado_de_cuenta)) as EstadoCuentaInterface[],
         }
         
         console.log(verify)

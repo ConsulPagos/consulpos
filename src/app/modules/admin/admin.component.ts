@@ -76,6 +76,9 @@ export class AdminComponent implements OnInit {
       this.storage.store(constant.GENEROS, JSON.stringify(verifyResponse.generos))
       this.storage.store(constant.MONEDAS, JSON.stringify(verifyResponse.monedas))
       this.storage.store(constant.TIPO_TASAS, JSON.stringify(verifyResponse.tipo_tasas))
+
+      this.storage.store(constant.OCCS, JSON.stringify(verifyResponse.occs))
+      this.storage.store(constant.T_PAGOS, JSON.stringify(verifyResponse.t_pagos))
       
       this.crypto.setKeys(verifyResponse.keyS, verifyResponse.ivJ, verifyResponse.keyJ, verifyResponse.ivS)
     })

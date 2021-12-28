@@ -17,6 +17,10 @@ export const constant = {
     PLANES: 'plan',
     PLATAFORMAS: 'plataformas',
     T_COBROS: 't_cobros',
+
+    OCCS: 'occs',
+
+    T_PAGOS:'t_pagos',
     
 
     RAZON_SOCIAL: 'razon_social',

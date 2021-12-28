@@ -1,116 +1,111 @@
 <section id="estado-cuenta">
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
-            <mat-tab-group>
-                <mat-tab>
-                    <ng-template matTabContent>
-                        <div class="d-flex justify-content-center align-items-center mb-3" style="padding-top: 2rem;">
-                            <h4 class="text-right">RIF: {{rif}}</h4>
-                        </div>
-                        <hr>
-                        <div class="col-md-12 container_module container_items" *ngIf="showStatusAccount">
-                            <div *ngFor="let estado_de_cuenta of showStatusAccount.estado_de_cuenta.items; let equipo = index"
-                                class="text-capitalize">
-                                <h4 class="labels title_data">Cuotas {{equipo + 1}}:</h4>
 
-                                <!-- Serial: <span *ngIf="item.complemento_de == 'null'"> Pos </span> {{item.cod_serial}}
+            <div class="d-flex justify-content-center align-items-center mb-3" style="padding-top: 2rem;">
+                <h4 class="text-right">RIF: {{rif}}</h4>
+            </div>
+            <hr>
+            <div class="col-md-12 container_module container_items" *ngIf="showStatusAccount">
+                <div *ngFor="let estado_de_cuenta of showStatusAccount.estado_de_cuenta.items; let equipo = index"
+                    class="text-capitalize">
+                    <h4 class="labels title_data">Cuotas {{equipo + 1}}:</h4>
+
+                    <!-- Serial: <span *ngIf="item.complemento_de == 'null'"> Pos </span> {{item.cod_serial}}
                                 {{item.complemento_de}} -->
-                                
-                                <div>
-                                    <div class="col-md-12 container_module">
-                                        <label class="labels title_data">
-                                            Serial:
-                                        </label>
-                                        <span class="text-capitalize">
-                                            {{estado_de_cuenta.cod_serial}}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="col-md-12 container_module">
-                                        <label class="labels title_data">
-                                            Concepto:
-                                        </label>
-                                        <span class="text-capitalize">
-                                            {{estado_de_cuenta.concepto}}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="col-md-12 container_module">
-                                        <label class="labels title_data">
-                                            Fecha:
-                                        </label>
-                                        <span class="text-capitalize">
-                                            {{estado_de_cuenta.fecha}}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="col-md-12 container_module">
-                                        <label class="labels title_data">
-                                            Serial:
-                                        </label>
-                                        <span class="text-capitalize">
-                                            {{estado_de_cuenta.total_debito}}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="col-md-12 container_module">
-                                        <label class="labels title_data">
-                                            Saldo:
-                                        </label>
-                                        <span class="text-capitalize">
-                                            {{estado_de_cuenta.saldo}}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="col-md-12 container_module">
-                                        <label class="labels title_data">
-                                            Tipo de Cobro:
-                                        </label>
-                                        <span class="text-capitalize">
-                                            {{estado_de_cuenta.t_cobro}}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="col-md-12 container_module">
-                                        <label class="labels title_data">
-                                            Total de Credito:
-                                        </label>
-                                        <span class="text-capitalize">
-                                            {{estado_de_cuenta.total_credito}}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="col-md-12 container_module">
-                                        <label class="labels title_data">
-                                            Total Debito:
-                                        </label>
-                                        <span class="text-capitalize">
-                                            {{estado_de_cuenta.total_debito}}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="col-md-12 container_module">
-                                        <label class="labels title_data">
-                                            Total Deuda:
-                                        </label>
-                                        <span class="text-capitalize">
-                                            {{estado_de_cuenta.total_deuda}}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+
+                    <div>
+                        <div class="col-md-12 container_module">
+                            <label class="labels title_data">
+                                Serial:
+                            </label>
+                            <span class="text-capitalize">
+                                {{estado_de_cuenta.cod_serial}}
+                            </span>
                         </div>
-                    </ng-template>
-                </mat-tab>
-            </mat-tab-group>
+                    </div>
+                    <div>
+                        <div class="col-md-12 container_module">
+                            <label class="labels title_data">
+                                Concepto:
+                            </label>
+                            <span class="text-capitalize">
+                                {{estado_de_cuenta.concepto}}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-12 container_module">
+                            <label class="labels title_data">
+                                Fecha:
+                            </label>
+                            <span class="text-capitalize">
+                                {{estado_de_cuenta.fecha}}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-12 container_module">
+                            <label class="labels title_data">
+                                Serial:
+                            </label>
+                            <span class="text-capitalize">
+                                {{estado_de_cuenta.total_debito}}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-12 container_module">
+                            <label class="labels title_data">
+                                Saldo:
+                            </label>
+                            <span class="text-capitalize">
+                                {{estado_de_cuenta.saldo}}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-12 container_module">
+                            <label class="labels title_data">
+                                Tipo de Cobro:
+                            </label>
+                            <span class="text-capitalize">
+                                {{estado_de_cuenta.t_cobro}}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-12 container_module">
+                            <label class="labels title_data">
+                                Total de Credito:
+                            </label>
+                            <span class="text-capitalize">
+                                {{estado_de_cuenta.total_credito}}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-12 container_module">
+                            <label class="labels title_data">
+                                Total Debito:
+                            </label>
+                            <span class="text-capitalize">
+                                {{estado_de_cuenta.total_debito}}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-12 container_module">
+                            <label class="labels title_data">
+                                Total Deuda:
+                            </label>
+                            <span class="text-capitalize">
+                                {{estado_de_cuenta.total_deuda}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

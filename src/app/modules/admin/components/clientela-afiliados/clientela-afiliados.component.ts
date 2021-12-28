@@ -107,7 +107,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
         map(data => {
           this.firstLoading = false;
           this.isLoadingResults = false;
-          this.resultsLength = 100;
+          
           // this.count.emit(25)
           // this.paginator.pageIndex = 1;
 
@@ -115,6 +115,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
           console.log("string: " + this.crypto.decryptString(data))
           this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
           this.crypto.setKeys(this.showclientResponse.keyS, this.showclientResponse.ivJ, this.showclientResponse.keyJ, this.showclientResponse.ivS)
+          this.resultsLength = parseInt(this.showclientResponse.total_row);
           console.log(this.showclientResponse)
           return this.showclientResponse.clientes;
         }),
