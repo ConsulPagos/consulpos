@@ -111,12 +111,6 @@ export class VerifyDecrypter {
             fracciones_pago: JSON.parse(this.crypto.decryptJson(value.fracciones_pago)),
             generos: JSON.parse(this.crypto.decryptJson(value.generos)),
             tipo_tasas: JSON.parse(this.crypto.decryptJson(value.tipo_tasas)),
-
-
-
-
-
-
         }
         console.log(verify)
         return verify

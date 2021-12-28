@@ -22,6 +22,10 @@ import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
+import { OccInterface } from 'src/app/models/occ';
+import { ToasterService } from 'src/app/shared/services/toaster.service';
+import { Router } from '@angular/router';
+import { TipoPagoInterface } from 'src/app/models/tipo_pago';
 //****************************************************************************************//
 
 @Component({
@@ -47,22 +51,42 @@ export class AddVentaComponent implements OnInit {
   planes: PlanInterface[];
   tipo_documentos: TipodocumentoInterface[];
   tipos_ventas: TipoventaInterface[];
-//****************************************************************************************//
+  occs: OccInterface[];   
+  t_pagos: TipoPagoInterface[];
+
+
+  //****************************************************************************************//
   constructor(
     private title: Title,
     private crypto: CryptoService,
     private cliente: ClientesService,
     private storage: StorageService,
     private session: SesionService,
+    private toaster: ToasterService,
+    private router: Router,
   ) {
 
   }
-//****************************************************************************************//
+  //****************************************************************************************//
+
+  identity = new FormGroup({
+    rif: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
+    tipo_doc: new FormControl('', [Validators.required]),
+  });
+
+  solicitud = new FormGroup({
+    occ: new FormControl('', [Validators.required]),
+    t_pago_id: new FormControl('', [Validators.required]),
+    t_pago_desc: new FormControl('', [Validators.required]),
+    monto: new FormControl('', [Validators.required]),
+  });
+
+
   buy = new FormGroup({
     modelo: new FormControl('', [Validators.required]),
     plataforma: new FormControl('', [Validators.required]),
     banco: new FormControl('', [Validators.required]),
-    Numero_cuenta_pos: new FormControl('', [Validators.required]),
+    numero_cuenta_pos: new FormControl('', [Validators.required]),
     precio_usd: new FormControl('', [Validators.required]),
     lugar_entrega: new FormControl('', [Validators.required]),
     comunicacion: new FormControl('', [Validators.required]),
@@ -71,23 +95,18 @@ export class AddVentaComponent implements OnInit {
     plan: new FormControl('', [Validators.required]),
     cod_afiliado: new FormControl('', [Validators.required]),
     tipo_venta: new FormControl('', [Validators.required]),
-
+    serial_pos: new FormControl('', [Validators.required]),
+    almacen: new FormControl('', [Validators.required]),
+    terminal: new FormControl('', [Validators.required]),
   });
 
   model = new FormGroup({
-
+    acta: new FormControl('', [Validators.required]),
+    contrato: new FormControl('', [Validators.required]),
+    domiciliacion: new FormControl('', [Validators.required]),
   });
 
-  file = new FormGroup({
-    id: new FormControl('', [Validators.required]),
-  });
-
-  identity = new FormGroup({
-    rif: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
-    tipo_doc: new FormControl('', [Validators.required]),
-  });
-
-//****************************************************************************************//
+  //****************************************************************************************//
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Agregar Venta')
 
@@ -99,8 +118,13 @@ export class AddVentaComponent implements OnInit {
     this.tipocobros = JSON.parse(this.storage.get(constant.T_COBROS)).t_cobros
     this.tipo_documentos = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs
     this.bancos = JSON.parse(this.storage.get(constant.BANCOS)).bancos
+    this.occs = JSON.parse(this.storage.get(constant.OCCS)).occs
+    this.t_pagos = JSON.parse(this.storage.get(constant.T_PAGOS)).t_pagos
+
   }
-//****************************************************************************************//
+
+
+  //****************************************************************************************//
 
   // *** FUNCION VALIDADORA DE EXISTENCIA DE USUARIOS *** \\
   verificar_usuario() {
@@ -113,7 +137,7 @@ export class AddVentaComponent implements OnInit {
       rif: this.crypto.encryptJson(rif),
     }))
     this.loading = true;
-    // console.log("verify")
+    console.log("verify")
     this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       // console.log(res)
       // console.log(JSON.parse(this.crypto.decryptString(res)))
@@ -130,7 +154,7 @@ export class AddVentaComponent implements OnInit {
       this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
     })
   }
-//****************************************************************************************//
+  //****************************************************************************************//
 
 
   submit() {
@@ -142,15 +166,63 @@ export class AddVentaComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
+
+      occ_id: this.crypto.encryptJson(this.solicitud.get('occ').value),
+      t_sol_id: this.crypto.encryptJson("1"),
+      pago: this.crypto.encryptJson(JSON.stringify([
+        {
+          t_pago_id: this.solicitud.get("t_pago_id").value,
+          t_pago_desc: this.solicitud.get("t_pago_desc").value,
+          monto: this.solicitud.get("monto").value,
+        }
+      ])),
+
+      id_t_cobro: this.crypto.encryptJson(this.solicitud.get('tipocobro').value),
+      monto_cuota: this.crypto.encryptJson("30"),
+      fraccion_pago_id: this.crypto.encryptJson(this.solicitud.get('tipo_venta').value),
+      plan_id: this.crypto.encryptJson(this.solicitud.get('plan').value),
+      modelo_id: this.crypto.encryptJson(this.solicitud.get('modelo').value),
+      terminal: this.crypto.encryptJson(this.solicitud.get('terminal').value),
+      afiliado: this.crypto.encryptJson(this.solicitud.get('cod_afiliado').value),
+      cuenta: this.crypto.encryptJson(this.solicitud.get('numero_cuenta_pos').value),
+      banco_id: this.crypto.encryptJson(this.solicitud.get('banco').value),
+      
+      items: this.crypto.encryptJson(JSON.stringify([
+        {
+          cod_serial: this.solicitud.get("serial_pos").value,
+          pedido_id: this.solicitud.get("").value,
+          almacen_id: this.solicitud.get("occ").value,
+          status_id: this.solicitud.get("1").value,
+          complemento_d: this.solicitud.get("").value,
+          reservado: this.solicitud.get("1").value,
+        }
+      ]))
+
+
+
+
     }))
     this.loading = true;
-    // console.log("verify")
+    console.log("verify")
     this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      // console.log(JSON.parse(this.crypto.decryptString(res)))
-      // this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      // // console.log(this.validacionresponse)
-      // this.loading = false
-      // this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
+      console.log(JSON.parse(this.crypto.decryptString(res)))
+      this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      // console.log(this.validacionresponse)
+      this.loading = false
+      this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
+
+      switch (this.validacionresponse.R) {
+        case constant.R0:
+          this.router.navigateByUrl('/admin/app/(adr:clientela)')
+          this.toaster.success(this.validacionresponse.M)
+          break;
+        case constant.R1:
+          this.toaster.error(this.validacionresponse.M)
+          break;
+        default:
+          this.toaster.default_error()
+          break;
+      }
     })
   }
 

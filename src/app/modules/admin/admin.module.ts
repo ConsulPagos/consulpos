@@ -70,6 +70,7 @@ import { TasasComponent } from './pages/tasas/tasas.component';
 import { ConfigComponent } from './pages/config/config.component';
 import {MatCardModule} from '@angular/material/card';
 import { AddTasasComponent } from './pages/add-tasas/add-tasas.component';
+import { EstadoCuentaComponent } from './pages/estado-cuenta/estado-cuenta.component';
 
 
 @NgModule({
@@ -127,7 +128,7 @@ import { AddTasasComponent } from './pages/add-tasas/add-tasas.component';
     TablaHistoricoConciliacionComponent, 
     TasasComponent, 
     ConfigComponent, 
-    AddTasasComponent],
+    AddTasasComponent, EstadoCuentaComponent],
     
   imports: [
     CommonModule,
