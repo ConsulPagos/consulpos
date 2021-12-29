@@ -293,7 +293,7 @@ export class PrevArchivoComponent implements OnInit {
         }
         break;
       default:
-        data = value.trim();
+        data = value;
         break;
     }
 
