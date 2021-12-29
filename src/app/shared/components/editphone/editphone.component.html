@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>
+    <li class="fa fa-edit mr-2"></li>
+    <span class="field">
+        EDITAR TELEFONO
+    </span>
+</h1>
+<div mat-dialog-content class="mat-dialog-content">
+    <div class="pt-2 pb-1 less-padding">
+        <form [formGroup]="phones">
+        <div class="btn_tlf">
+            <ngx-intl-tel-input
+              [preferredCountries]="preferredCountries"
+              [enableAutoCountrySelect]="true"
+              [enablePlaceholder]="true"
+              [searchCountryFlag]="true"
+              [searchCountryField]="[
+                SearchCountryField.Iso2,
+                SearchCountryField.Name
+              ]"
+              [selectFirstCountry]="false"
+              [selectedCountryISO]="CountryISO.Venezuela"
+              [maxLength]="15"
+              [phoneValidation]="true"
+              [separateDialCode]="true"
+              [numberFormat]="PhoneNumberFormat.National"
+              formControlName="phone"
+            >
+            </ngx-intl-tel-input>
+          </div>
+        </form>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <div class="d-flex w-100">
+        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null">
+            <li class="fa fa-times text-dark"></li>
+        </button>
+        <button class="flex-fill confirm action_button" [disabled]="phones.invalid" mat-button cdkFocusInitial
+            [mat-dialog-close]="phones.get('phone').value">
+            <li class="fa fa-check"></li>
+        </button>
+    </div>
+</div>
