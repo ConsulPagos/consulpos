@@ -22,8 +22,6 @@ export class VentaConsulposComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private title: Title, private consulpos: ConsulposService) {
-
-
     this.dataSource = new MatTableDataSource();
   }
 

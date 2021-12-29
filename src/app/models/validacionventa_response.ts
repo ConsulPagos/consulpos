@@ -1,28 +1,25 @@
-import { CryptoService } from "../shared/services/crypto.service";
-import { EstadoCuentaInterface } from "./estadocuenta";
-
-export interface StatusAccountResponse {
-    R?: string;
+export interface ValidacionventaResponse {
     value_exists: string;
-    session_valid: string;
+    R?: string;
     M?: string;
     keyS: string;
     ivS: string;
     keyJ: string;
     ivJ: string;
-    estado_de_cuenta:EstadoCuentaInterface;
+    session_valid: string;
 }
 
-export class StatusAccountDecrypter {
+import { CryptoService } from "../shared/services/crypto.service";
+
+export class ValidacionventaDecrypter {
 
     constructor(private crypto: CryptoService) {
 
     }
 
-    deserialize(value: any): StatusAccountResponse {
+    deserialize(value: any): ValidacionventaResponse {
 
-        const verify: StatusAccountResponse = {
-            R: value.R,
+        const verify: ValidacionventaResponse = {
             M: this.crypto.decryptJson(value.M),
             keyS: this.crypto.decryptString(value.keyS),
             ivS: this.crypto.decryptString(value.ivS),
@@ -30,9 +27,7 @@ export class StatusAccountDecrypter {
             ivJ: this.crypto.decryptJson(value.ivJ),
             value_exists: this.crypto.decryptJson(value.value_exists),
             session_valid: this.crypto.decryptJson(value.session_valid),
-            estado_de_cuenta:JSON.parse(this.crypto.decryptJson(value.estado_de_cuenta)) as EstadoCuentaInterface,
         }
-        
         console.log(verify)
         return verify
     }

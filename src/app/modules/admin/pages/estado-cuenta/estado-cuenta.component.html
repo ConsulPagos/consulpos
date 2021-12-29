@@ -1,19 +1,74 @@
 <section id="estado-cuenta">
     <div class="container-fluid">
-        <div style="background-color: #fff; border-radius: 10px;">
+        <div style="background-color: #fff; border-radius: 10px;" class="w-100">
 
             <div class="d-flex justify-content-center align-items-center mb-3" style="padding-top: 2rem;">
                 <h4 class="text-right">RIF: {{rif}}</h4>
             </div>
             <hr>
-            <div class="col-md-12 container_module container_items" *ngIf="showStatusAccount">
-                <div *ngFor="let estado_de_cuenta of showStatusAccount.estado_de_cuenta.items; let equipo = index"
+            <div class="col-md-12 container_module w-100" *ngIf="showStatusAccount" >
+                <div 
                     class="text-capitalize">
-                    <h4 class="labels title_data">Cuotas {{equipo + 1}}:</h4>
+                    <h4 class="labels title_data">
+                        Deuda: {{(showStatusAccount.estado_de_cuenta.total_debito-showStatusAccount.estado_de_cuenta.total_credito) | currency }}
+                    </h4>
 
-                    <!-- Serial: <span *ngIf="item.complemento_de == 'null'"> Pos </span> {{item.cod_serial}}
-                                {{item.complemento_de}} -->
+                    <!-- ////////////////////////////////////////////////////////////////////////// -->
 
+                    <div class="w-100">
+                        <table  class="w-100" mat-table [dataSource]="dataSource" matSort>
+
+                            <ng-container matColumnDef="serial">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> serial </th>
+                                <td mat-cell *matCellDef="let row"> {{row.cod_serial}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="concepto">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> concepto</th>
+                                <td mat-cell *matCellDef="let row"> {{row.concepto}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="fecha">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> fecha </th>
+                                <td mat-cell *matCellDef="let row"> {{row.fecha}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="total_debito">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> total_debito </th>
+                                <td mat-cell *matCellDef="let row"> {{row.total_debito}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="saldo">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> saldo </th>
+                                <td mat-cell *matCellDef="let row"> {{row.saldo}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="tipo_cobro">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> tipo_cobro </th>
+                                <td mat-cell *matCellDef="let row"> {{row.t_cobro}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="total_credito">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> total_credito </th>
+                                <td mat-cell *matCellDef="let row"> {{row.total_credito}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="total_deuda">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> total_deuda </th>
+                                <td mat-cell *matCellDef="let row"> {{row.total_deuda}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                        </table>
+
+                        <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users">
+                        </mat-paginator>
+                    </div>
+
+                    <!-- /////////////////////////////////////////////////////////////////////////// -->
+                    <!-- 
                     <div>
                         <div class="col-md-12 container_module">
                             <label class="labels title_data">
@@ -47,7 +102,7 @@
                     <div>
                         <div class="col-md-12 container_module">
                             <label class="labels title_data">
-                                Serial:
+                                Total Debito:
                             </label>
                             <span class="text-capitalize">
                                 {{estado_de_cuenta.total_debito}}
@@ -87,23 +142,13 @@
                     <div>
                         <div class="col-md-12 container_module">
                             <label class="labels title_data">
-                                Total Debito:
-                            </label>
-                            <span class="text-capitalize">
-                                {{estado_de_cuenta.total_debito}}
-                            </span>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="col-md-12 container_module">
-                            <label class="labels title_data">
                                 Total Deuda:
                             </label>
                             <span class="text-capitalize">
                                 {{estado_de_cuenta.total_deuda}}
                             </span>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
