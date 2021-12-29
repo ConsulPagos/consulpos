@@ -5,7 +5,7 @@ export interface ItemInterface {
     id_status: number;
     complemento_de: string;
     email_token: number;
-    reservado: string;
+
     saldo_anterior: string;
     id_solicitud_banco: number;
 }

@@ -101,8 +101,9 @@
                     </form>
                     <!-- Bootn de siguiente strepper -->
                     <div>
-                            <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                            <button class="stepBtn" mat-raised-button matStepperNext [disabled]="solicitud.invalid" >Siguiente</button>
+                        <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
+                        <button class="stepBtn" mat-raised-button matStepperNext
+                            [disabled]="solicitud.invalid">Siguiente</button>
                     </div>
                 </mat-step>
 
@@ -122,32 +123,16 @@
 
                             <!-- <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Serial POS</mat-label>
-                                <input matInput formControlName="serial_pos" placeholder="1234" type="number">
-                            </mat-form-field> -->
+                                <input matInput formControlName="serial_pos" placeholder="1234" type="text" (keypress)="onlyNumberKey($event)">
+                            </mat-form-field>
 
-                            <mat-form-field appearance="outline" class="container_box_space">
+                           <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Tipo de Comunicación</mat-label>
                                 <mat-select disableRipple formControlName="comunicacion">
                                     <mat-option *ngFor="let comunicacion of comunicaciones" value={{comunicacion.id}}>
                                         {{comunicacion.comunicacion}} </mat-option>
                                 </mat-select>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Operadora Tlf. Linea 1</mat-label>
-                                <mat-select disableRipple formControlName="operadora">
-                                    <mat-option *ngFor="let telefonica of operadoras" value={{telefonica.id}}>
-                                        {{telefonica.telefonica}} </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Operadora Tlf. Linea 2</mat-label>
-                                <mat-select disableRipple>
-                                    <mat-option *ngFor="let telefonica of operadoras" value={{telefonica.id}}>
-                                        {{telefonica.telefonica}} </mat-option>
-                                </mat-select>
-                            </mat-form-field>
+                            </mat-form-field> -->
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Almacen</mat-label>
@@ -227,19 +212,66 @@
                                         {{nombre.nombre}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
-
                         </div>
+
+                        <h6>SimCard</h6>
+
+                        <div class="container_agent">
+                            <form [formGroup]="sims[i]" class="formulario" *ngFor="let format of formats; let i=index">
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Operadora Tlf.</mat-label>
+                                    <mat-select disableRipple formControlName="operadora">
+                                        <mat-option *ngFor="let telefonica of operadoras" value={{telefonica.id}}>
+                                            {{telefonica.telefonica}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Serial Operadora Tlf.</mat-label>
+                                    <input matInput formControlName="serial_operadora" placeholder="1234"
+                                        type="text">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Almacen</mat-label>
+                                    <mat-select disableRipple formControlName="almacen_operadora">
+                                        <mat-option *ngFor="let nombre of occs" value={{nombre.id}}>
+                                            {{nombre.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                            </form>
+
+                            <div>
+                                <button class="btn_form_add_agent" mat-icon-button color="primary"
+                                    aria-label="Example icon button with a menu icon" (click)="add_sim()"
+                                    *ngIf="(formats.length === 1 ||  formats.length === 0)">
+                                    <i class="fas fa-user-plus icon_sell"></i>
+                                    Agregar Sim
+                                </button>
+
+                                <button mat-icon-button class="btn_form_add_agent" color="primary"
+                                    aria-label="Example icon button with a menu icon" (click)="deleteSim(1)"
+                                    *ngIf="(formats.length === 2)">
+                                    <i class="fas fa-user-minus icon_sell"></i>
+                                    Eliminar una Sim
+                                </button>
+                            </div>
+                        </div>
+
                     </form>
                     <!-- Bootn de siguiente strepper -->
                     <div>
                         <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                        <button class="stepBtn" mat-raised-button matStepperNext>Siguiente</button>
+                        <button class="stepBtn" mat-raised-button matStepperNext >Siguiente</button>
                     </div>
                 </mat-step>
 
                 <mat-step>
                     <!-- [stepControl]="client" -->
-                    <form [formGroup]="model">
+                    <form [formGroup]="document">
                         <ng-template matStepLabel>Carga de Documentos</ng-template>
 
                         <div>
@@ -278,7 +310,7 @@
                     <!-- Bootn de siguiente strepper -->
                     <div>
                         <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                        <button class="stepBtn" mat-raised-button>Finalizar</button>
+                        <button class="stepBtn" mat-raised-button (click)="submit()">Finalizar</button>
                     </div>
                 </mat-step>
             </mat-vertical-stepper>
