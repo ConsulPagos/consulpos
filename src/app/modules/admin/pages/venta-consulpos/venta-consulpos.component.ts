@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConsulposService } from "../../../../shared/services/consulpos.service";
 import { VentaFirebase } from "../../../../models/venta_firebase";
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 
 
@@ -21,13 +22,15 @@ export class VentaConsulposComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private title: Title, private consulpos: ConsulposService) {
+  constructor(private title: Title, private consulpos: ConsulposService, private loader:LoaderService) {
     this.dataSource = new MatTableDataSource();
   }
 
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Ventas Consulpos')
+    this.loader.loading();
     this.consulpos.getSalesList().subscribe(data => {
+      this.loader.stop();
       this.dataSource = new MatTableDataSource(data as VentaFirebase[]);
       this.countNuevos = (data as VentaFirebase[]).length;
     })

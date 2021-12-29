@@ -15,6 +15,7 @@ import { DefaultDecrypter } from 'src/app/models/default_response';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'app-conciliar-archivo',
@@ -25,7 +26,6 @@ export class ConciliarArchivoComponent implements OnInit {
 
   data: any = { 'affiliate': {} };
   affiliate: CrmTableInterface;
-  loading = false;
   loadingUpdate = false;
   loadingGetArchivo = false;
   error = false;
@@ -44,7 +44,7 @@ export class ConciliarArchivoComponent implements OnInit {
     private toaster: ToasterService,
     private bancario: BancarioService,
     private modal: ModalService,
-
+    private loader: LoaderService,
 
   ) { }
 
@@ -67,7 +67,6 @@ export class ConciliarArchivoComponent implements OnInit {
         archivo: archivo
       }
     }
-    this.loading = true;
     this.error = false;
     this.router.navigateByUrl(`/admin/app/(adr:previsualizar-archivo/${archivo.id})`, extras);
   }
@@ -84,11 +83,12 @@ export class ConciliarArchivoComponent implements OnInit {
       oper: this.crypto.encryptJson("/conciliar"),
     }))
 
-    this.loading = true;
+    this.loader.loading()
 
-    this.session.doGetArchivos(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.bancario.doGetArchivos(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
-      this.loading = false
+      this.loader.stop()
+
       console.log(JSON.parse(this.crypto.decryptString(res)))
       switch (json.R) {
         case constant.R0:
@@ -125,11 +125,11 @@ export class ConciliarArchivoComponent implements OnInit {
       id_archivo: this.crypto.encryptJson(this.archivo.id),
     }))
 
-    this.loadingUpdate = true;
+    this.loader.loading()
 
     this.bancario.doUpdateEC(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
-      this.loadingUpdate = false
+      this.loader.stop()
       console.log(res)
       console.log(JSON.parse(this.crypto.decryptString(res)))
       switch (json.R) {
@@ -154,7 +154,6 @@ export class ConciliarArchivoComponent implements OnInit {
     })
 
     this.loadingUpdate = false;
-    this.loading = false;
     this.loadingGetArchivo = false;
 
     //**************************************************************************************************************************//

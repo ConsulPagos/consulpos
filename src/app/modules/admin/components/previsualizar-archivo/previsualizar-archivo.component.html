@@ -2,7 +2,7 @@
     <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
 
         <ng-container matColumnDef={{col}} *ngFor="let col of columns">
-            <th mat-header-cell *matHeaderCellDef> {{col}} </th>
+            <th mat-header-cell *matHeaderCellDef> <div class="text-uppercase">{{col}}</div> </th>
             <td mat-cell *matCellDef="let data">{{data[col]}} </td>
           </ng-container>
          
@@ -11,7 +11,7 @@
 
 
     </table>
-    <mat-paginator *ngIf="data" #paginator [pageSizeOptions]="[12, 50, 100]" aria-label="Seleccionar un pagina"></mat-paginator>
+    <mat-paginator *ngIf="data" #paginator [pageSizeOptions]="[12, 50, 100]" aria-label="Seleccionar un pagina" showFirstLastButtons></mat-paginator>
 
 </div>
 

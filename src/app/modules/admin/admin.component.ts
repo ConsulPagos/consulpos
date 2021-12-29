@@ -6,6 +6,7 @@ import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { constant } from 'src/app/shared/utils/constant';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 import { VerifyDecrypter, VerifyResponse } from '../../models/verify_response';
 
@@ -22,15 +23,20 @@ export class AdminComponent implements OnInit {
   user: UserInterface = {};
   error: ErrorResponse = {};
   loading: Boolean = false;
+  
   submitted: boolean = false;
 
-  constructor(private sesion: SesionService, private crypto: CryptoService, private storage: StorageService) { }
+  constructor(private sesion: SesionService, private crypto: CryptoService, private storage: StorageService, private loader: LoaderService) { }
 
   ngOnInit(): void {
-    console.log(this.storage.get(constant.USER))
-    if(this.storage.get(constant.BANCOS) == null){
+
+    if (this.storage.get(constant.BANCOS) == null) {
       this.verify()
     }
+    
+    this.loader.changes.subscribe(loading => {
+      this.loading = loading;
+    })
   }
 
   loggout() {
@@ -77,5 +83,5 @@ export class AdminComponent implements OnInit {
       this.crypto.setKeys(verifyResponse.keyS, verifyResponse.ivJ, verifyResponse.keyJ, verifyResponse.ivS)
     })
   }
-  
+
 }
