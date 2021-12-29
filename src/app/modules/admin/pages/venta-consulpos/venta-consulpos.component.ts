@@ -22,7 +22,7 @@ export class VentaConsulposComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private title: Title, private consulpos: ConsulposService) {
+  constructor(private title: Title, private consulpos: ConsulposService, private loader:LoaderService) {
     this.dataSource = new MatTableDataSource();
   }
 
