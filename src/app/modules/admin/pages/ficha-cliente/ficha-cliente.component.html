@@ -10,14 +10,8 @@
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
             <mat-tab-group>
-                <mat-tab label="First">
+                <mat-tab label="Información">
                     <ng-template matTabContent>
-                        <!-- <mat-icon>assignment_ind</mat-icon>
-                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
-                            matBadgePosition="before">
-                            Datos del cliente
-                        </span> -->
-
                         <div class="d-flex justify-content-center align-items-center mb-3" style="padding-top: 2rem;">
                             <h4 class="text-right">
                                 RIF: {{showClient.rif}}</h4>
@@ -200,9 +194,9 @@
                                                     {{telefono.identificador}}-{{telefono.telefono}}
                                                 </div>
                                             </div>
-                                            <!-- <button mat-raised-button>
-                                                Editar Telefono
-                                            </button> -->
+                                            <button mat-raised-button style="margin-left: 1rem;" (click)="openDialog()">
+                                                Editar
+                                            </button>
                                         </div>
                                         <div class="col-md-12 container_module">
                                             <label class="labels title_data">
@@ -228,9 +222,7 @@
                     </ng-template>
                 </mat-tab>
 
-                <!-- ////////////////////////////////////////////////////////////////////////// -->
-
-                <mat-tab label="Second">
+                <mat-tab label="Estado de Cuenta">
                     <ng-template matTabContent>
                         <!-- <mat-icon>request_quote</mat-icon>
                         <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
@@ -245,8 +237,7 @@
                     </ng-template>
                 </mat-tab>
 
-
-                <mat-tab label="Third">
+                <mat-tab label="Equipos Asociados">
                     <ng-template matTabContent>
                         <!-- <mat-icon>sim_card</mat-icon>
                         <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"

@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
+import { TelefonoInterface } from 'src/app/models/telefono';
 import { DialogData } from '../confirm-dialog/confirm-dialog.component';
 import { EditFieldDialogComponent } from '../edit-field-dialog/edit-field-dialog.component';
 
@@ -12,7 +13,8 @@ import { EditFieldDialogComponent } from '../edit-field-dialog/edit-field-dialog
 })
 export class EditphoneComponent implements OnInit {
 
-  
+  editPhone: TelefonoInterface;
+
   separateDialCode = false;
 	SearchCountryField = SearchCountryField;
 	CountryISO = CountryISO;
@@ -20,13 +22,16 @@ export class EditphoneComponent implements OnInit {
 	preferredCountries: CountryISO[] = [CountryISO.Venezuela, CountryISO.UnitedStates];
 
   constructor(public dialogRef: MatDialogRef<EditFieldDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
   }
 
   phones = new FormGroup({
-    phone: new FormControl('', [Validators.required]),
+    phone_1: new FormControl(this.data.value[0].identificador + this.data.value[0].telefono, [Validators.required]),
+    phone_1_id : new FormControl(this.data.value[0].telefono_id, [Validators.required]),
+    phone_2: new FormControl(this.data.value[1].identificador + this.data.value[1].telefono, [Validators.required]),
+    phone_2_id : new FormControl(this.data.value[1].telefono_id, [Validators.required]),
   });
 
 }

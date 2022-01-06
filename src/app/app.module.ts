@@ -40,6 +40,7 @@ import { BlockcpDirective } from './shared/directives/blockcp.directive';
 import { ChartsModule } from 'ng2-charts';
 import { RouterModule, Routes} from '@angular/router';
 import { DashboardComponent } from './modules/admin/pages/dashboard/dashboard.component';
+import { EditphoneComponent } from './shared/components/editphone/editphone.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -61,7 +62,8 @@ const routes: Routes = [
     EditAddressComponent,
     HagaSuPedidoDialogComponent,
     CarruselLandingComponent,
-    BlockcpDirective
+    BlockcpDirective,
+    EditphoneComponent
 ],
   imports: [
     BrowserModule,

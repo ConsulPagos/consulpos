@@ -25,7 +25,7 @@ import {StatusAccountDecrypter, StatusAccountResponse} from '../../../../models/
 })
 export class EstadoCuentaComponent implements OnInit {
 
-  displayedColumns: string[] = ['serial', "concepto",'fecha', "total_debito", "saldo", "tipo_cobro", "total_credito","total_deuda"];
+  displayedColumns: string[] = ['serial', "concepto",'fecha', "deuda", "abono"];
   dataSource: MatTableDataSource<any>;
   countNuevos = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;

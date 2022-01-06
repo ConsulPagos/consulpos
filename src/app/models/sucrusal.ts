@@ -1,5 +1,5 @@
 export interface SucursalInterface {
-    id_occ?: number;
+    id?: number;
     nombre?: string;
     codigo_postal?: number;
     direccion?: string;

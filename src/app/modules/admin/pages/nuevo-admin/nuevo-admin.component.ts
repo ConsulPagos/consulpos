@@ -8,6 +8,17 @@ import { EstadoInterface } from '../../../../models/estado';
 import { RolInterface } from '../../../../models/rol';
 // import { UserFormInterface } from '../../../../models/user';
 import { Title } from '@angular/platform-browser';
+import { SesionService } from 'src/app/shared/services/sesion.service';
+import { ValidacionventadosDecrypter, ValidacionventaRese } from 'src/app/models/validacionventa_res';
+import { ClientesService } from 'src/app/shared/services/clientes.service';
+import { CryptoService } from 'src/app/shared/services/crypto.service';
+import { ModalService } from 'src/app/shared/services/modal.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
+import { VentasService } from 'src/app/shared/services/ventas.service';
+import { constant } from 'src/app/shared/utils/constant';
+import { UsuariosService } from 'src/app/shared/services/usuarios.service';
+import { TipodocumentoInterface } from 'src/app/models/tipo_documento';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 
 @Component({
   selector: 'app-nuevo-admin',
@@ -16,21 +27,11 @@ import { Title } from '@angular/platform-browser';
 })
 export class NuevoAdminComponent implements OnInit {
 
-  // user: UserFormInterface = {
-  //   id_usuario:null,
-  //   email :'',
-  //   primer_nombre :'',
-  //   segundo_nombre :'',
-  //   primer_apellido :'',
-  //   segundo_apellido :'',
-  //   cedula :'',
-  //   id_rol :null,
-  //   telefono :'',
-  //   direccion :'',
-  //   id_estado:null,
-  //   id_sucursal :null,
-  // }
   hide = true;
+  estados: EstadoInterface[];
+  roles: RolInterface[];
+  sucursales: SucursalInterface[];
+  tipo_documentos: TipodocumentoInterface[];
 
   email = new FormControl('', [Validators.required, Validators.email]);
 
@@ -38,17 +39,10 @@ export class NuevoAdminComponent implements OnInit {
     if (this.email.hasError('required')) {
       return 'Debe ingresar un correo';
     }
-
     return this.email.hasError('email') ? 'Ingrese un correo valido' : '';
   }
 
-    // usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
-    // nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-    // password: /^.{4,12}$/, // 4 a 12 digitos.
-    // correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    // telefono: /^\d{7,14}$/ // 7 a 14 numeros.
-
-  form = new FormGroup({
+  adminForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     primer_nombre: new FormControl('', [Validators.required, Validators.min(90), Validators.max(99)]),
     segundo_nombre: new FormControl('', [Validators.required]),
@@ -60,65 +54,111 @@ export class NuevoAdminComponent implements OnInit {
     direccion: new FormControl('', [Validators.required]),
     estado: new FormControl('', [Validators.required]),
     sucursal: new FormControl('', [Validators.required]),
+    occ: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
+    codpostal: new FormControl('', [Validators.required]),
+    tipo_doc_user: new FormControl('', [Validators.required]),
+    phone_user: new FormControl('', [Validators.required]),
+    localidad: new FormControl('', [Validators.required]),
   });
 
   loading = false;
   error = false;
+  validacionres: ValidacionventaRese;
 
-  constructor(private admin: AdminService, private router: Router, private toaster: ToasterService, private title: Title) { }
+  constructor(
+    private admin: AdminService,
+    private router: Router,
+    private toaster: ToasterService,
+    private title: Title,
+    private crypto: CryptoService,
+    private cliente: ClientesService,
+    private storage: StorageService,
+    private session: SesionService,
+    private venta: VentasService,
+    private modal: ModalService,
+    private usuario: UsuariosService,
+  ) { }
 
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Crear Usuario')
+    this.estados = JSON.parse(this.storage.get(constant.ESTADOS)).estados
+    this.sucursales = JSON.parse(this.storage.get(constant.OCCS)).occs
+    this.tipo_documentos = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs
   }
 
   clear() {
-    this.form.reset();
+    this.adminForm.reset();
   }
 
-  estados: EstadoInterface[];
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  roles: RolInterface[];
+  separateDialCode = false;
+  SearchCountryField = SearchCountryField;
+  CountryISO = CountryISO;
+  PhoneNumberFormat = PhoneNumberFormat;
+  preferredCountries: CountryISO[] = [CountryISO.Venezuela, CountryISO.UnitedStates];
 
-  sucursales: SucursalInterface[] = [{
-    id_occ: 1,
-    nombre: 'Caracas CCCT',
-    codigo_postal: 1080,
-    direccion: 'Av. NewYork',
-    localidad: 'no se',
-    punto_referencia: 'por USA',
-    email: 'metaverso@gmail.com',
-    id_parroquia: 1,
-    id_ciudad: 1,
-  },
-  {
-    id_occ: 2,
-    nombre: 'Pricipal IBM',
-    codigo_postal: 1080,
-    direccion: 'Av. York',
-    localidad: 'no se',
-    punto_referencia: 'por USA',
-    email: 'metaverso@gmail.com',
-    id_parroquia: 1,
-    id_ciudad: 1,
-  }]
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  onlyNumberKey(event) {
+    return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
+  }
 
   submit() {
+
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+
+      p_nombre: this.crypto.encryptJson(this.adminForm.get('primer_nombre').value),
+      s_nombre: this.crypto.encryptJson(this.adminForm.get('segundo_nombre').value),
+      p_apellido: this.crypto.encryptJson(this.adminForm.get('primer_apellido').value),
+      s_apellido: this.crypto.encryptJson(this.adminForm.get('segundo_apellido').value),
+      t_doc_id: this.crypto.encryptJson(this.adminForm.get('tipo_doc_user').value),
+      cedula: this.crypto.encryptJson(this.adminForm.get('cedula').value),
+
+      rol_id: this.crypto.encryptJson(this.adminForm.get('rol').value),
+      email: this.crypto.encryptJson(this.adminForm.get('email').value),
+      telefonos: this.crypto.encryptJson(JSON.stringify([
+        {
+          number: this.adminForm.get("phone_user").value.number,
+          cod_area: this.adminForm.get("phone_user").value.dialCode,
+          iso: this.adminForm.get("phone_user").value.countryCode
+        }
+      ])),
+
+      direccion: this.crypto.encryptJson(this.adminForm.get('direccion').value),
+      cod_postal: this.crypto.encryptJson(this.adminForm.get('codpostal').value),
+      estado: this.crypto.encryptJson(this.adminForm.get('estado').value),
+      occ_id: this.crypto.encryptJson(this.adminForm.get('occ').value),
+      psw: this.crypto.encryptJson(this.adminForm.get('password').value),
+      // comisionable: this.crypto.encryptJson(this.adminForm.get('estado').value),
+      localidad: this.crypto.encryptJson(this.adminForm.get('localidad').value),
+      app_id: this.crypto.encryptJson("1"),
+
+    }))
+
     this.loading = true;
-    this.admin.new_admin_users(this.form.value).subscribe(res => {
-      this.loading = false;
-      this.router.navigateByUrl(`/admin/app/(adr:super-admin-panel)`)
-    }, e => {
+    console.log("verify")
+    this.usuario.doSaveUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      console.log(JSON.parse(this.crypto.decryptString(res)))
+      this.validacionres = new ValidacionventadosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.validacionres)
+      this.loading = false
+      this.crypto.setKeys(this.validacionres.keyS, this.validacionres.ivJ, this.validacionres.keyJ, this.validacionres.ivS)
 
-      this.error = true;
-      this.loading = false;
-
-      if (e.error['error']) {
-        this.toaster.error(e.error['error'].msg);
-      } else {
-        this.toaster.default_error();
+      switch (this.validacionres.R) {
+        case constant.R0:
+          this.toaster.success(this.validacionres.M)
+          console.log('HOLA MANO')
+          break;
+        case constant.R1:
+          this.toaster.error(this.validacionres.M)
+          console.log('HOLA PIE')
+          break;
       }
-
     })
   }
 

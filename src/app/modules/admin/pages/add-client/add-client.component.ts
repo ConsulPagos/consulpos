@@ -22,6 +22,8 @@ import { GeneroInterface } from '../../../../models/genero';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { Router } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
+import { LoaderService } from 'src/app/shared/services/loader.service';
+import { TelefonoInterface } from 'src/app/models/telefono';
 
 @Component({
   selector: 'app-add-client',
@@ -48,6 +50,7 @@ export class AddClientComponent implements OnInit {
   actividades_comerciales: ActividadComercialInterface[];
   tipos_clientes: TipoclienteInterface[];
   tipo_documentos: TipodocumentoInterface[];
+
   //****************************************************************************************//
   constructor(
     private title: Title,
@@ -57,6 +60,7 @@ export class AddClientComponent implements OnInit {
     private session: SesionService,
     private toaster: ToasterService,
     private router: Router,
+    private loader: LoaderService,
   ) { }
 
   //FORM DEL PRIMER STEP\\
@@ -70,13 +74,18 @@ export class AddClientComponent implements OnInit {
   client_type = new FormGroup({
     tipo_cliente: new FormControl('', [Validators.required]),
   });
+  
 
   // *** FORM DEL TERCER STEP *** \\
   client = new FormGroup({
     razon_social: new FormControl('', [Validators.required]),
     nombre_comercial: new FormControl('', [Validators.required]),
     contribuyente: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required]),
+    email: new FormControl('', [
+      Validators.required, 
+      Validators.email,
+      Validators.pattern('^[a-zA-Z0-9.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')
+    ]),
     phone_1: new FormControl('', [Validators.required]),
     phone_2: new FormControl('', [Validators.required]),
     estado: new FormControl('', [Validators.required]),
@@ -89,7 +98,6 @@ export class AddClientComponent implements OnInit {
     act_comercial: new FormControl('', [Validators.required]),
     pto_referencia: new FormControl('', [Validators.required]),
     localidad: new FormControl('', [Validators.required]),
-
   });
 
   data_vr = new FormGroup({
@@ -173,7 +181,7 @@ export class AddClientComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(rif),
     }))
-    this.loading = true;
+    // this.loader.loading()
     // console.log("verify")
     this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(res)

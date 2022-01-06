@@ -60,28 +60,7 @@ export class EditAdminComponent implements OnInit {
 
   roles: RolInterface[];
 
-  sucursales: SucursalInterface[] = [{
-    id_occ: 1,
-    nombre: 'Caracas CCCT',
-    codigo_postal: 1080,
-    direccion: 'Av. NewYork',
-    localidad: 'no se',
-    punto_referencia: 'por USA',
-    email: 'metaverso@gmail.com',
-    id_parroquia: 1,
-    id_ciudad: 1,
-  },
-  {
-    id_occ: 2,
-    nombre: 'Pricipal IBM',
-    codigo_postal: 1080,
-    direccion: 'Av. York',
-    localidad: 'no se',
-    punto_referencia: 'por USA',
-    email: 'metaverso@gmail.com',
-    id_parroquia: 1,
-    id_ciudad: 1,
-  }]
+  sucursales: SucursalInterface[];
 
   constructor(private admin: AdminService, private router: Router, private toaster: ToasterService, private title: Title) { }
 

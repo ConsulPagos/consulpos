@@ -33,29 +33,14 @@
                                 <td mat-cell *matCellDef="let row"> {{row.fecha}} </td>
                             </ng-container>
 
-                            <ng-container matColumnDef="total_debito">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> total_debito </th>
-                                <td mat-cell *matCellDef="let row"> {{row.total_debito}} </td>
+                            <ng-container matColumnDef="deuda">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> DEBITO </th>
+                                <td mat-cell *matCellDef="let row"> <span *ngIf="row.t_cobro == 'DEBITO'">{{row.saldo | currency}}</span> </td>
                             </ng-container>
 
-                            <ng-container matColumnDef="saldo">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> saldo </th>
-                                <td mat-cell *matCellDef="let row"> {{row.saldo}} </td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="tipo_cobro">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> tipo_cobro </th>
-                                <td mat-cell *matCellDef="let row"> {{row.t_cobro}} </td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="total_credito">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> total_credito </th>
-                                <td mat-cell *matCellDef="let row"> {{row.total_credito}} </td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="total_deuda">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> total_deuda </th>
-                                <td mat-cell *matCellDef="let row"> {{row.total_deuda}} </td>
+                            <ng-container matColumnDef="abono">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> ABONO </th>
+                                <td mat-cell *matCellDef="let row"> <span *ngIf="row.t_cobro == 'ABONO'">{{row.saldo | currency}}</span> </td>
                             </ng-container>
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
