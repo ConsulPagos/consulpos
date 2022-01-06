@@ -34,3 +34,36 @@
 .container_box_space {
     margin-right: 10px;
 }
+
+.container_box {
+    width: 80px;
+    margin-right: 10px;
+}
+
+.btn_tlf{
+    margin-bottom: 1rem;
+}
+
+.form_tlf{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+::ng-deep .mat-form-field-flex {
+    display: inline-flex;
+    align-items: baseline;
+    box-sizing: border-box;
+    width: 100%;
+    align-items: center !important;
+}
+
+.direction {
+    // width: 500px;
+    margin: 0px 20px 0px 0px;
+}
+
+.direction_form {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}

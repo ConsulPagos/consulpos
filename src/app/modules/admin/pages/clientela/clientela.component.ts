@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NavigationExtras, Router } from '@angular/router';
+import { ClienteRequestInterface } from 'src/app/models/cliente_request';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
+import { ExportService } from '../../services/export.service';
 
 
 @Component({
@@ -13,21 +15,27 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 })
 export class ClientelaComponent implements OnInit {
 
-  countPrimeraCompra;
+
   countNuevos;
-  countDocumentos;
-  countDocumentosReq;
-  countException;
+
+  client: ClienteRequestInterface;
+  clientes = []
 
   constructor(
     private title: Title, 
     private router: Router, 
     private crypto: CryptoService,
     private cliente: ClientesService,
-    private storage: StorageService,) { }
+    private storage: StorageService,
+    private excelService: ExportService,
+    ) { }
 
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Clientes')
+  }
+
+  exportXLSX(): void {
+    this.excelService.exportExcel(this.clientes, 'Archivo_' + new Date());
   }
 
   editClient(client) {

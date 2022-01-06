@@ -29,6 +29,8 @@ import { Router } from '@angular/router';
 import { TipoPagoInterface } from 'src/app/models/tipo_pago';
 import { VentasService } from 'src/app/shared/services/ventas.service';
 import { ValidacionclienteDecrypter, ValidacionclienteResponse } from '../../../../models/validacioncliente_response';
+import { ValidacionventaRese, ValidacionventadosDecrypter } from '../../../../models/validacionventa_res';
+import { ModalService } from 'src/app/shared/services/modal.service';
 //****************************************************************************************//
 
 @Component({
@@ -45,6 +47,7 @@ export class AddVentaComponent implements OnInit {
   modelos: ModeloInterface[];
   fraccion_pagos: FraccionPagoInterface[];
   validacionresponse: ValidacionclienteResponse;
+  validacionres: ValidacionventaRese;
   tipos_clientes: TipoclienteInterface[];
   plataformas: PlataformaInterface[];
   bancos: BancoInterface[];
@@ -71,6 +74,7 @@ export class AddVentaComponent implements OnInit {
     private toaster: ToasterService,
     private router: Router,
     private venta: VentasService,
+    private modal: ModalService,
   ) {
 
   }
@@ -175,7 +179,9 @@ export class AddVentaComponent implements OnInit {
       if (!this.search_client) {
         this.identity.controls['rif'].setErrors({ 'existe': null });
         this.identity.controls['rif'].updateValueAndValidity()
-      } else {
+      } 
+      else 
+      {
         this.identity.controls['rif'].setErrors({ 'existe': true });
       }
       this.loading = false
@@ -240,7 +246,6 @@ export class AddVentaComponent implements OnInit {
           cuenta: this.buy.get('numero_cuenta_pos').value,
           banco_id: this.buy.get('banco').value,
           items: JSON.stringify(items),
-
         }]
       )),
 
@@ -259,27 +264,25 @@ export class AddVentaComponent implements OnInit {
         },
       ]))
     }))
-    // verifica
 
     this.loading = true;
     console.log("verify")
     this.venta.doSale(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(JSON.parse(this.crypto.decryptString(res)))
-      this.validacionresponse = new ValidacionventaDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      console.log(this.validacionresponse)
+      this.validacionres = new ValidacionventadosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.validacionres)
       this.loading = false
-      this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
+      this.crypto.setKeys(this.validacionres.keyS, this.validacionres.ivJ, this.validacionres.keyJ, this.validacionres.ivS)
 
-      switch (this.validacionresponse.R) {
+      switch (this.validacionres.R) {
         case constant.R0:
-          this.router.navigateByUrl('/admin/app/(adr:clientela)')
-          this.toaster.success(this.validacionresponse.M)
+          this.toaster.success(this.validacionres.M)
+          console.log('HOLA MANO')
+          this.router.navigateByUrl('/admin/app/(adr:ventas)')
           break;
         case constant.R1:
-          this.toaster.error(this.validacionresponse.M)
-          break;
-        default:
-          this.toaster.default_error()
+          this.toaster.error(this.validacionres.M)
+          console.log('HOLA PIE')
           break;
       }
     })
@@ -306,6 +309,16 @@ export class AddVentaComponent implements OnInit {
       }
     }
     return precio
+  }
+
+  save() {
+    this.modal.confirm("Desea confirmar el registro de la venta").subscribe(result => {
+      if (result) {
+        console.log("acciones")
+        this.submit()
+
+      }
+    })
   }
 
 }

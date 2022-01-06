@@ -121,12 +121,12 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <!-- <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Serial POS</mat-label>
                                 <input matInput formControlName="serial_pos" placeholder="1234" type="text" (keypress)="onlyNumberKey($event)">
                             </mat-form-field>
 
-                           <mat-form-field appearance="outline" class="container_box_space">
+                           <!-- <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Tipo de Comunicación</mat-label>
                                 <mat-select disableRipple formControlName="comunicacion">
                                     <mat-option *ngFor="let comunicacion of comunicaciones" value={{comunicacion.id}}>
@@ -310,7 +310,7 @@
                     <!-- Bootn de siguiente strepper -->
                     <div>
                         <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                        <button class="stepBtn" mat-raised-button (click)="submit()">Finalizar</button>
+                        <button class="stepBtn" mat-raised-button (click)="save()">Finalizar</button>
                     </div>
                 </mat-step>
             </mat-vertical-stepper>

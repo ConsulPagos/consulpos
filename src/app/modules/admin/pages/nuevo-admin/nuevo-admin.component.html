@@ -15,7 +15,7 @@
             <div class="col-12 bg-white text-justify p-3">
                 <h5 class="text-uppercase">Crear usuario</h5>
 
-                <form [formGroup]="form">
+                <form [formGroup]="adminForm">
 
                     <h6>Datos del Usuario</h6>
 
@@ -39,16 +39,27 @@
                         <input matInput placeholder="123456789" formControlName="segundo_apellido" type="text">
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Cédula</mat-label>
-                        <input matInput placeholder="123456789" formControlName="cedula" type="text">
-                    </mat-form-field>
+                    <div>
+                        <mat-form-field appearance="outline" class="container_box">
+                            <mat-label>Tipo</mat-label>
+                            <mat-select disableRipple formControlName="tipo_doc_user">
+                                <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
+                                    {{t_doc.t_doc}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Cédula</mat-label>
+                            <input matInput formControlName="cedula" placeholder="123456789" type="text">
+                        </mat-form-field>
+                    </div>
 
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Rol</mat-label>
                         <mat-select disableRipple formControlName="rol">
                             <mat-option *ngFor="let rol of roles" value={{rol.id_rol}}>
-                                {{rol.rol}} </mat-option>
+                                {{rol.rol}}
+                            </mat-option>
                         </mat-select>
                     </mat-form-field>
 
@@ -56,34 +67,65 @@
 
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Correo Electrónico</mat-label>
-                        <input matInput placeholder="consulpagos@example.com" [formControl]="email" required>
+                        <input matInput placeholder="consulpagos@example.com" [formControl]="email" required
+                            formControlName="email">
                         <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
                     </mat-form-field>
 
+                    <div class="direction_form">
+                        <div class="direction">
+                            <mat-form-field class="container_box_direction" appearance="outline">
+                                <mat-label>Dirección</mat-label>
+                                <textarea matInput placeholder="Av. Ernesto Blohm" formControlName="direccion"
+                                    type="text" maxlength="510" minlength="20">
+                            </textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="direction">
+                            <mat-form-field class="container_box_direction" appearance="outline">
+                                <mat-label>Localidad</mat-label>
+                                <textarea matInput placeholder="Pasando Proteccion animal"
+                                    formControlName="localidad" type="text" maxlength="510" minlength="20">
+                            </textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
                     <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Teléfono</mat-label>
-                        <input matInput placeholder="123456789" formControlName="telefono" type="text">
+                        <mat-label>Codigo Postal</mat-label>
+                        <input matInput formControlName="codpostal" placeholder="1080" type="text" maxlength="5"
+                            (keypress)="onlyNumberKey($event)">
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Dirección</mat-label>
-                        <input matInput placeholder="123456789" formControlName="direccion" type="text">
-                    </mat-form-field>
+                    <div class="form_tlf">
+                        <div class="btn_tlf">
+                            <ngx-intl-tel-input [preferredCountries]="preferredCountries"
+                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                [searchCountryField]="[
+                              SearchCountryField.Iso2,
+                              SearchCountryField.Name
+                            ]" [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.Venezuela"
+                                [maxLength]="15" [phoneValidation]="true" [separateDialCode]="true"
+                                [numberFormat]="PhoneNumberFormat.National" formControlName="phone_user">
+                            </ngx-intl-tel-input>
+                        </div>
+                    </div>
 
                     <h6>Datos de la Sucursal</h6>
 
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Estado</mat-label>
                         <mat-select disableRipple formControlName="estado">
-                            <mat-option *ngFor="let estado of estados" value={{estado.id_estado}}>
+                            <mat-option *ngFor="let estado of estados" value={{estado.id}}>
                                 {{estado.estado}} </mat-option>
                         </mat-select>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Sucursal / OCC</mat-label>
-                        <mat-select disableRipple formControlName="estado">
-                            <mat-option *ngFor="let sucrusal of sucursales" value={{sucrusal.id_occ}}>
+                        <mat-select disableRipple formControlName="occ">
+                            <mat-option *ngFor="let sucrusal of sucursales" value={{sucrusal.id}}>
                                 {{sucrusal.nombre}} </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -91,14 +133,14 @@
 
                         <h6>Contraseña para el Usuario</h6>
 
-                        <mat-form-field appearance="outline" >
+                        <mat-form-field appearance="outline">
                             <mat-label>Contraseña</mat-label>
-                            <input matInput [type]="hide ? 'password' : 'text'">
+                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" type="password">
                             <button mat-icon-button matSuffix (click)="hide = !hide">
                                 <i class="fas fa-eye-slash"></i>
                             </button>
                         </mat-form-field>
-            
+
                         <app-bottom-form (onClear)='clear()' (onSubmit)='submit()'>
                         </app-bottom-form>
                     </div>

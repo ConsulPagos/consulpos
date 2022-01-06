@@ -1,5 +1,4 @@
-export interface ValidacionclienteResponse {
-    value_exists: string;
+export interface ValidacionventaRese {
     R?: string;
     M?: string;
     keyS: string;
@@ -11,22 +10,21 @@ export interface ValidacionclienteResponse {
 
 import { CryptoService } from "../shared/services/crypto.service";
 
-export class ValidacionclienteDecrypter {
+export class ValidacionventadosDecrypter {
 
     constructor(private crypto: CryptoService) {
 
     }
 
-    deserialize(value: any): ValidacionclienteResponse {
+    deserialize(value: any): ValidacionventaRese {
 
-        const verify: ValidacionclienteResponse = {
+        const verify: ValidacionventaRese = {
             R: value.R,
             M: this.crypto.decryptJson(value.M),
             keyS: this.crypto.decryptString(value.keyS),
             ivS: this.crypto.decryptString(value.ivS),
             keyJ: this.crypto.decryptJson(value.keyJ),
             ivJ: this.crypto.decryptJson(value.ivJ),
-            value_exists: this.crypto.decryptJson(value.value_exists),
             session_valid: this.crypto.decryptJson(value.session_valid),
         }
         console.log(verify)
