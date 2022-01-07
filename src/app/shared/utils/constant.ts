@@ -59,4 +59,7 @@ export const constant = {
 
     MONEDAS: 'monedas',
     TIPO_TASAS: 'tipo_tasas',
+
+    TIPOS_DIFERIDO: 'tipos_diferido',
+
 };

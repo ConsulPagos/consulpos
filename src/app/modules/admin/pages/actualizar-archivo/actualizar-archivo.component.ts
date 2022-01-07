@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { ArchivoInterface } from 'src/app/models/archivo';
 import { BancoInterface } from 'src/app/models/banco';
-import { ConciliacionResponse, ConciliacionDecrypter } from 'src/app/models/conciliacion_response';
+import { ActualizacionResponse, ActualizacionDecrypter } from 'src/app/models/actualizacion_response';
 import { CrmTableInterface } from 'src/app/models/crm';
 import { DefaultDecrypter } from 'src/app/models/default_response';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
@@ -15,6 +15,7 @@ import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { AdminService } from '../../services/admin.service';
 import { PlantillaRespuestaInterface } from 'src/app/models/plantilla_respuesta';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'app-actualizar-archivo',
@@ -29,7 +30,7 @@ export class ActualizarArchivoComponent implements OnInit {
   error = false;
   id;
   bancos: BancoInterface[];
-  conciliacionResponse: ConciliacionResponse;
+  actualizacionResponse: ActualizacionResponse;
   archivos: any[];
 
 
@@ -40,7 +41,8 @@ export class ActualizarArchivoComponent implements OnInit {
     private crypto: CryptoService,
     private session: SesionService,
     private bancario: BancarioService,
-    private toaster: ToasterService
+    private toaster: ToasterService,
+    private loader:LoaderService
   ) { }
 
   ngOnInit(): void {
@@ -60,8 +62,8 @@ export class ActualizarArchivoComponent implements OnInit {
     const extras : NavigationExtras ={
       state:{
         archivo: archivo,
-        tipo_archivo: this.conciliacionResponse.tipo_archivo,
-        n_pagina: this.conciliacionResponse.n_pagina 
+        tipo_archivo: this.actualizacionResponse.tipo_archivo,
+        n_pagina: this.actualizacionResponse.n_pagina 
       }
     }
     this.loading = true;
@@ -82,16 +84,18 @@ export class ActualizarArchivoComponent implements OnInit {
     }))
 
     this.loading = true;
+    this.loader.loading()
 
     this.bancario.doGetArchivos(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.loading = false
-      
+      this.loader.stop()
+
       switch (json.R) {
         case constant.R0:
-          this.conciliacionResponse = new ConciliacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-          this.archivos = this.conciliacionResponse.archivos
-          this.crypto.setKeys(this.conciliacionResponse.keyS, this.conciliacionResponse.ivJ, this.conciliacionResponse.keyJ, this.conciliacionResponse.ivS)
+          this.actualizacionResponse = new ActualizacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+          this.archivos = this.actualizacionResponse.archivos
+          this.crypto.setKeys(this.actualizacionResponse.keyS, this.actualizacionResponse.ivJ, this.actualizacionResponse.keyJ, this.actualizacionResponse.ivS)
           break;
         case constant.R1:
         default:

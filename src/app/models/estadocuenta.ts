@@ -1,8 +1,8 @@
 import { ItemEstadoCuentaInterface } from "./itemestadocuenta";
 
 export interface EstadoCuentaInterface {
-    total_debito: string;
-    total_credito: string;
+    total_debito: number;
+    total_credito: number;
     items: ItemEstadoCuentaInterface[];
     rif: string;
 }

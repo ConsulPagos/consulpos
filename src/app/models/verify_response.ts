@@ -20,6 +20,7 @@ import { BancoInterface } from '../models/banco';
 import { TipoPagoInterface } from '../models/tipo_pago';
 import { OccInterface } from '../models/occ';
 import { FraccionPagoInterface } from '../models/fraccion_pago';
+import { TipoDiferidoInterface } from '../models/tipo_diferido';
 
 
 
@@ -52,7 +53,7 @@ export interface VerifyResponse {
     fracciones_pago: FraccionPagoInterface[];
     generos:GeneroInterface[];
     tipo_tasas: TipoTasasInterface[];
-
+    tipos_diferido: TipoDiferidoInterface[];
     R: string;
     M: string;
     keyS: string;
@@ -111,6 +112,8 @@ export class VerifyDecrypter {
             fracciones_pago: JSON.parse(this.crypto.decryptJson(value.fracciones_pago)),
             generos: JSON.parse(this.crypto.decryptJson(value.generos)),
             tipo_tasas: JSON.parse(this.crypto.decryptJson(value.tipo_tasas)),
+            tipos_diferido: JSON.parse(this.crypto.decryptJson(value.tipos_diferido)),
+
         }
         console.log(verify)
         return verify

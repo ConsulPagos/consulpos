@@ -20,6 +20,7 @@ import { DefaultDecrypter } from '../../../../models/default_response'
 import { expFile } from './generartxt'
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'app-generar-archivo',
@@ -57,13 +58,14 @@ export class GenerarArchivoComponent implements OnInit {
     private router: Router,
     private storage: StorageService,
     private excelService: ExportService,
-    private toaster: ToasterService
+    private toaster: ToasterService,
+    private  loader:LoaderService
   ) { }
 
   form = new FormGroup({
     tipo_cobro: new FormControl(null, [Validators.required]),
     banco: new FormControl(null, [Validators.required]),
-    cash: new FormControl('', [Validators.min(0.01)]),
+    cash: new FormControl(null, [Validators.min(0.01)]),
     descripcion: new FormControl('', [Validators.required]),
     tasa: new FormControl('', [Validators.required]),
   });
@@ -164,11 +166,15 @@ submit() {
   const dataString = this.crypto.encryptString(JSON.stringify(data));
 
   this.loading = true;
+  this.loader.loading()
 
 
   this.bancario.doGeneracion(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
 
     this.pauseTimer()
+    this.loader.stop()
+    this.loading = false;
+
     const json = JSON.parse(this.crypto.decryptString(res));
 
     switch (json.R) {
@@ -194,9 +200,6 @@ submit() {
     }
 
 
-    this.loading = false
-
-
   })
 
 }
@@ -205,7 +208,7 @@ isInvalid(): boolean {
   if (this.form.get("tipo_cobro").value == "personalizado") {
     return this.form.invalid || this.formPersonalizado.invalid;
   }
-  return this.form.invalid;
+  return this.form.invalid || this.form.get("cash").value == null;
 }
 
 getTasas() {
@@ -218,10 +221,10 @@ getTasas() {
 
   const dataString = this.crypto.encryptString(JSON.stringify(data));
 
-  this.loadingTasas = true;
+  this.loader.loading();
 
   this.bancario.doGetTasas(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
-    console.log(res)
+    this.loader.stop();
     const json = JSON.parse(this.crypto.decryptString(res));
     const response = new DefaultDecrypter(this.crypto).deserialize(json);
     console.log(json)

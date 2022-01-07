@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CuotaInterface } from 'src/app/models/cuota';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
 import * as XLSX from "xlsx";
@@ -33,7 +32,14 @@ export class PrevArchivoComponent implements OnInit {
 
   columns = []
 
-  constructor(private route: ActivatedRoute, private router: Router, private modal: ModalService, private bancario: BancarioService, private crypto: CryptoService, private storage: StorageService, private session: SesionService, private toaster: ToasterService, private loader: LoaderService) {
+  constructor(private route: ActivatedRoute, 
+    private router: Router, private modal: ModalService, 
+    private bancario: BancarioService, 
+    private crypto: CryptoService, 
+    private storage: StorageService, 
+    private session: SesionService, 
+    private toaster: ToasterService, 
+    private loader: LoaderService) {
 
     if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.archivo) {
 
@@ -213,11 +219,13 @@ export class PrevArchivoComponent implements OnInit {
     }))
 
     this.loading = true;
+    this.loader.loading()
 
     this.bancario.doConciliacion(`${this.session.getDeviceId()};${data}`).subscribe(res => {
 
       const json = JSON.parse(this.crypto.decryptString(res))
       this.loading = false
+      this.loader.stop()
 
       switch (json.R) {
         case constant.R0:

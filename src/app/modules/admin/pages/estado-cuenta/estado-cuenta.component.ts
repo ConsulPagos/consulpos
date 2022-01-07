@@ -1,21 +1,28 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ClienteRequestInterface } from 'src/app/models/cliente_request';
+import { DefaultDecrypter } from 'src/app/models/default_response';
+import { ItemEstadoCuentaInterface } from 'src/app/models/itemestadocuenta';
 import { ShowItemDecrypter, ShowItemResponse } from 'src/app/models/showitem';
 import { VentaFirebase } from 'src/app/models/venta_firebase';
+import { BancarioService } from 'src/app/shared/services/bancario.service';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { constant } from 'src/app/shared/utils/constant';
-import {StatusAccountDecrypter, StatusAccountResponse} from '../../../../models/statusaccount';
+import { StatusAccountDecrypter, StatusAccountResponse } from '../../../../models/statusaccount';
+import { DiferirDeudaComponent } from '../../components/diferir-deuda/diferir-deuda.component';
 
 
 @Component({
@@ -25,7 +32,7 @@ import {StatusAccountDecrypter, StatusAccountResponse} from '../../../../models/
 })
 export class EstadoCuentaComponent implements OnInit {
 
-  displayedColumns: string[] = ['serial', "concepto",'fecha', "deuda", "abono"];
+  displayedColumns: string[] = ["select", 'serial', "concepto", 'fecha', "deuda", "abono"];
   dataSource: MatTableDataSource<any>;
   countNuevos = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -35,22 +42,26 @@ export class EstadoCuentaComponent implements OnInit {
   loading: boolean;
   showItemClient: ShowItemResponse;
   showStatusAccount: StatusAccountResponse;
-  @Input() rif
+  @Input() rif;
+  selection = new SelectionModel<ItemEstadoCuentaInterface>(true, []);
+
 
   constructor(
     private title: Title,
     private crypto: CryptoService,
     private cliente: ClientesService,
+    private bancario: BancarioService,
     private storage: StorageService,
     private router: Router,
     private session: SesionService,
-    private modal: ModalService,
-    private toaster: ToasterService,
+    private dialog: MatDialog,
+    private loader: LoaderService,
+    private toaster: ToasterService
   ) {
     if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.showClient) {
       this.showClient = this.router.getCurrentNavigation().extras.state.showClient as ClienteRequestInterface;
-      console.log(this.showClient) 
-    } 
+
+    }
     // else {
     //   this.router.navigateByUrl("/admin/app/(adr:clientela)");
     // }
@@ -63,7 +74,7 @@ export class EstadoCuentaComponent implements OnInit {
     this.doStatusAccount()
   }
 
-  doStatusAccount(){
+  doStatusAccount() {
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
@@ -71,19 +82,113 @@ export class EstadoCuentaComponent implements OnInit {
       rif: this.crypto.encryptJson(this.rif),
     }))
     this.loading = true;
+    this.loader.loading()
     this.cliente.doStatusAccount(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.showStatusAccount = new StatusAccountDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.loader.stop()
       console.log(this.showStatusAccount)
-      this.dataSource=new MatTableDataSource(this.showStatusAccount.estado_de_cuenta.items)
+      this.dataSource = new MatTableDataSource(this.showStatusAccount.estado_de_cuenta.items)
       console.log(this.crypto.decryptString(res))
-      // this.loading = false
+      this.loading = false
       this.crypto.setKeys(this.showStatusAccount.keyS, this.showStatusAccount.ivJ, this.showStatusAccount.keyJ, this.showStatusAccount.ivS)
+    })
+  }
+
+  doDiferir(id_diferido: string, cuotas) {
+
+
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      id_diferido: this.crypto.encryptJson(id_diferido),
+      cuotas: this.crypto.encryptJson(JSON.stringify(cuotas)),
+    }))
+
+    this.loading = true;
+    this.loader.loading()
+    this.bancario.doDiferir(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      
+      const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.loader.stop()
+      this.loading = false
+      console.log(response)
+      
+      this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+
+      if (response.R === "0") {
+        this.selection.clear()
+        this.doStatusAccount()
+      } else {
+        this.toaster.success(response.M)
+      }
+
+      
     })
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  deuda() { return this.showStatusAccount.estado_de_cuenta.total_debito - this.showStatusAccount.estado_de_cuenta.total_credito }
+  hasDeuda() { return this.deuda() > 0 }
+
+  openDialogDiferir(): void {
+
+    const dialogRef = this.dialog.open(DiferirDeudaComponent, {
+      height: 'auto',
+      panelClass: 'custom-dialog',
+      data: { selected: this.selection.selected },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const cuotas = result.cuotas.map(c => {
+          const aux = { id: c.id_estado_cuenta }
+          return aux
+        })
+        console.log(cuotas)
+        this.doDiferir(result.id_diferido, cuotas)
+      }
+    });
+  }
+
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource.data);
+  }
+
+  canDiferir() {
+    var valid = true
+    for (let index = 0; index < this.selection.selected.length; index++) {
+      const s = this.selection.selected[index];
+      if (s.t_cobro != "DEBITO") {
+        valid = false;
+        break;
+      } else {
+        if (s.id_diferido) {
+          valid = false;
+          break;
+        }
+      }
+
+    }
+    return valid
   }
 
 }

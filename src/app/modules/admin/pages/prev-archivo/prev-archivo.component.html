@@ -38,6 +38,9 @@
                                 </div>
                             </div> -->
                         </div>
+                        {{archivo.fecha_respuesta | date}}
+                        {{archivo.fecha_conciliacion | date}}
+
                         <div class="btn-submit"
                             *ngIf="archivo && !archivo.fecha_respuesta && !archivo.fecha_conciliacion">
                             <app-action-btn [isDisabled]="getTotal() != archivo.cuotas  || loading" (onClick)="save()"

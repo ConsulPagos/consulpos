@@ -162,6 +162,7 @@ export class ConciliarArchivoComponent implements OnInit {
   getArchivo() {
 
     this.loadingGetArchivo = true;
+    this.loader.loading()
 
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
@@ -174,6 +175,7 @@ export class ConciliarArchivoComponent implements OnInit {
     this.bancario.doGetArchivo(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.loadingGetArchivo = false
+      this.loader.stop()
       console.log(JSON.parse(this.crypto.decryptString(res)))
       switch (json.R) {
         case constant.R0:
