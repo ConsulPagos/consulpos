@@ -20,6 +20,7 @@ import { UsuariosService } from 'src/app/shared/services/usuarios.service';
 import { TipodocumentoInterface } from 'src/app/models/tipo_documento';
 import { ComisionableInterface } from 'src/app/models/comisionable';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
+import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
 
 @Component({
   selector: 'app-nuevo-admin',
@@ -31,7 +32,7 @@ export class NuevoAdminComponent implements OnInit {
   hide = true;
   loading = false;
   error = false;
-  validacionres: ValidacionventaRese;
+  validacionres: DefaultResponse;
   estados: EstadoInterface[];
   roles: RolInterface[];
   sucursales: SucursalInterface[];
@@ -56,22 +57,24 @@ export class NuevoAdminComponent implements OnInit {
   // }
 
   adminForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    primer_nombre: new FormControl('', [Validators.required, Validators.min(90), Validators.max(99)]),
-    segundo_nombre: new FormControl('', [Validators.required]),
-    primer_apellido: new FormControl('', [Validators.required]),
-    segundo_apellido: new FormControl('', [Validators.required]),
-    cedula: new FormControl('', [Validators.required]),
+    email: new FormControl('admin@gmail.com', [Validators.required, Validators.email]),
+    primer_nombre: new FormControl('ar', [Validators.required, Validators.min(90), Validators.max(99)]),
+    segundo_nombre: new FormControl('da', [Validators.required]),
+    primer_apellido: new FormControl('asd', [Validators.required]),
+    segundo_apellido: new FormControl('asdasd', [Validators.required]),
+    cedula: new FormControl('25386251', [Validators.required]),
     // rol: new FormControl('', [Validators.required]),
-    direccion: new FormControl('', [Validators.required]),
-    estado: new FormControl('', [Validators.required]),
-    occ: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-    codpostal: new FormControl('', [Validators.required]),
-    tipo_doc_user: new FormControl('', [Validators.required]),
-    phone_user: new FormControl('', [Validators.required]),
-    localidad: new FormControl('', [Validators.required]),
-    comisionable: new FormControl('', [Validators.required]),
+    direccion: new FormControl('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', [Validators.required]),
+    localidad: new FormControl('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', [Validators.required]),
+    pto_referencia: new FormControl('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', [Validators.required]),
+    estado: new FormControl('1', [Validators.required]),
+    occ: new FormControl('1', [Validators.required]),
+    password: new FormControl('123456789', [Validators.required]),
+    codpostal: new FormControl('1020', [Validators.required]),
+    tipo_doc_user: new FormControl('2', [Validators.required]),
+    phone_user: new FormControl('4242735855', [Validators.required]),
+
+    comisionable: new FormControl('1', [Validators.required]),
   });
 
   constructor(
@@ -150,13 +153,18 @@ export class NuevoAdminComponent implements OnInit {
       ])),
 
       direccion: this.crypto.encryptJson(this.adminForm.get('direccion').value),
+      pto_ref: this.crypto.encryptJson(this.adminForm.get('pto_referencia').value),
       cod_postal: this.crypto.encryptJson(this.adminForm.get('codpostal').value),
       estado: this.crypto.encryptJson(this.adminForm.get('estado').value),
       occ_id: this.crypto.encryptJson(this.adminForm.get('occ').value),
       psw: this.crypto.encryptJson(this.adminForm.get('password').value),
       comisionable: this.crypto.encryptJson(this.adminForm.get('comisionable').value),
       localidad: this.crypto.encryptJson(this.adminForm.get('localidad').value),
-      app_id: this.crypto.encryptJson("1"),
+      apps: this.crypto.encryptJson(JSON.stringify([
+        {
+          app_id: "1",
+        }
+      ])),
 
     }))
 
@@ -164,7 +172,7 @@ export class NuevoAdminComponent implements OnInit {
     console.log("verify")
     this.usuario.doSaveUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(JSON.parse(this.crypto.decryptString(res)))
-      this.validacionres = new ValidacionventadosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.validacionres = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionres)
       this.loading = false
       this.crypto.setKeys(this.validacionres.keyS, this.validacionres.ivJ, this.validacionres.keyJ, this.validacionres.ivS)

@@ -43,7 +43,7 @@
                         <mat-form-field appearance="outline" class="container_box">
                             <mat-label>Tipo</mat-label>
                             <mat-select disableRipple formControlName="tipo_doc_user">
-                                <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
+                                <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.id}}>
                                     {{t_doc.t_doc}} </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -78,6 +78,15 @@
                                 <mat-label>Dirección</mat-label>
                                 <textarea matInput placeholder="Av. Ernesto Blohm" formControlName="direccion"
                                     type="text" maxlength="510" minlength="20">
+                            </textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="direction">
+                            <mat-form-field class="container_box_direction" appearance="outline">
+                                <mat-label>Punto de referencia</mat-label>
+                                <textarea matInput placeholder="Pasando Proteccion animal"
+                                    formControlName="pto_referencia" type="text" maxlength="510" minlength="20">
                             </textarea>
                             </mat-form-field>
                         </div>

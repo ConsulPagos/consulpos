@@ -65,7 +65,6 @@ export class AddClientComponent implements OnInit {
 
   //FORM DEL PRIMER STEP\\
   identity = new FormGroup({
-
     rif: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
     tipo_doc: new FormControl('', [Validators.required]),
   });
@@ -75,7 +74,6 @@ export class AddClientComponent implements OnInit {
     tipo_cliente: new FormControl('', [Validators.required]),
   });
   
-
   // *** FORM DEL TERCER STEP *** \\
   client = new FormGroup({
     razon_social: new FormControl('', [Validators.required]),
@@ -116,6 +114,7 @@ export class AddClientComponent implements OnInit {
   document = new FormGroup({
     id: new FormControl('', [Validators.required]),
   });
+
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   separateDialCode = false;
@@ -199,8 +198,7 @@ export class AddClientComponent implements OnInit {
       this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
     })
   }
-
-
+  
   submit() {
     this.search_client = true;
     var letra = this.tipo_documentos.filter(t => t.id == this.identity.get("tipo_doc").value)[0].t_doc
