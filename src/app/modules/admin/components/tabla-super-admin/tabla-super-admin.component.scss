@@ -197,3 +197,40 @@ th.mat-header-cell {
     margin-left: 5px;
     margin-right: 5px;
   }
+
+  .active {
+    color: rgb(0, 214, 0);
+    font-weight: bold;
+  }
+  
+  .desaffiliate {
+    color: red;
+    font-weight: bold;
+  }
+
+  .activate_edit:hover {
+    color: blue;
+  }
+  
+  .activate_ban:hover {
+    color: red;
+  }
+  
+  .activate_show:hover {
+    color: rgb(0, 214, 0);
+  }
+  
+  .activate_check:hover {
+    color: rgb(0, 255, 0);
+  }
+
+  .container_icon {
+    margin: 0.5rem;
+  }
+  
+  .activate_ban,
+  .activate_edit,
+  .activate_show,
+  .activate_check {
+    font-size: 1.5rem;
+  }

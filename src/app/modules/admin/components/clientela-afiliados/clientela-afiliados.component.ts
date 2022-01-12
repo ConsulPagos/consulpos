@@ -61,7 +61,8 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
     private modal: ModalService,
     private toaster: ToasterService,
     private router: Router,
-  ) {
+  ) 
+  {
     this.dataSource = new MatTableDataSource(this.clientes);
   }
 
@@ -107,10 +108,6 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
         map(data => {
           this.firstLoading = false;
           this.isLoadingResults = false;
-          
-          // this.count.emit(25)
-          // this.paginator.pageIndex = 1;
-
           console.log("JSON: " + data)
           console.log("string: " + this.crypto.decryptString(data))
           this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
@@ -243,11 +240,8 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
       this.isLoadingResults = false;
       this.crypto.setKeys(this.showclientResponse.keyS, this.showclientResponse.ivJ, this.showclientResponse.keyJ, this.showclientResponse.ivS)
       this.toaster.success(this.showclientResponse.M)
-
       this.clientes = this.showclientResponse.clientes
       this.dataSource = new MatTableDataSource(this.clientes);
-
-
     })
   }
 
@@ -279,5 +273,4 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
       }
     })
   }
-
 }

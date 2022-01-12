@@ -13,9 +13,17 @@
     <div class="container-fluid">
         <div class="row pl-3 pr-3">
             <div class="col-12 bg-white text-justify p-3">
-                <h5 class="text-uppercase">Editar usuario</h5>
+                <p class="title_mother text-uppercase">
+                    Editar Usuario
+                </p>
+                <div class="title_edit">
+                    <p class="text-tilte text-uppercase">
+                        Cedula:
+                        <span class="text_rif">{{editUser.cedula}}</span>
+                    </p>
+                </div>
 
-                <form [formGroup]="form">
+                <form [formGroup]="adminForm">
 
                     <h6>Datos del Usuario</h6>
 
@@ -39,59 +47,96 @@
                         <input matInput placeholder="123456789" formControlName="segundo_apellido" type="text">
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Cédula</mat-label>
-                        <input matInput placeholder="123456789" formControlName="cedula" type="text">
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline" class="container_box_space">
+                    <!-- <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Rol</mat-label>
                         <mat-select disableRipple formControlName="rol">
                             <mat-option *ngFor="let rol of roles" value={{rol.id_rol}}>
-                                {{rol.rol}} </mat-option>
+                                {{rol.rol}}
+                            </mat-option>
                         </mat-select>
-                    </mat-form-field>
+                    </mat-form-field> -->
 
                     <h6>Información de contacto</h6>
 
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Correo Electrónico</mat-label>
-                        <input matInput placeholder="123456789" formControlName="email" type="text">
+                        <input matInput placeholder="consulpagos@example.com" required
+                            formControlName="email">
                     </mat-form-field>
+
+                    <div class="direction_form">
+                        <div class="direction">
+                            <mat-form-field class="container_box_direction" appearance="outline">
+                                <mat-label>Dirección</mat-label>
+                                <textarea matInput placeholder="Av. Ernesto Blohm" formControlName="direccion"
+                                    type="text" maxlength="510" minlength="20">
+                            </textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="direction">
+                            <mat-form-field class="container_box_direction" appearance="outline">
+                                <mat-label>Punto de referencia</mat-label>
+                                <textarea matInput placeholder="Pasando Proteccion animal"
+                                    formControlName="pto_referencia" type="text" maxlength="510" minlength="20">
+                            </textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="direction">
+                            <mat-form-field class="container_box_direction" appearance="outline">
+                                <mat-label>Localidad</mat-label>
+                                <textarea matInput placeholder="Pasando Proteccion animal" formControlName="localidad"
+                                    type="text" maxlength="510" minlength="20">
+                            </textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
 
                     <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Teléfono</mat-label>
-                        <input matInput placeholder="123456789" formControlName="telefono" type="text">
+                        <mat-label>Codigo Postal</mat-label>
+                        <input matInput formControlName="codpostal" placeholder="1080" type="text" maxlength="5"
+                            (keypress)="onlyNumberKey($event)">
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Dirección</mat-label>
-                        <input matInput placeholder="123456789" formControlName="direccion" type="text">
-                    </mat-form-field>
 
                     <h6>Datos de la Sucursal</h6>
 
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Estado</mat-label>
                         <mat-select disableRipple formControlName="estado">
-                            <mat-option *ngFor="let estado of estados" value={{estado.id_estado}}>
+                            <mat-option *ngFor="let estado of estados" value={{estado.id}}>
                                 {{estado.estado}} </mat-option>
                         </mat-select>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Sucursal / OCC</mat-label>
-                        <mat-select disableRipple formControlName="estado">
-                            <mat-option *ngFor="let sucrusal of sucursales" value={{sucrusal.id_occ}}>
+                        <mat-select disableRipple formControlName="occ">
+                            <mat-option *ngFor="let sucrusal of sucursales" value={{sucrusal.id}}>
                                 {{sucrusal.nombre}} </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <div class="btn_form">
 
-                        <app-bottom-form (onClear)='clear()' (onSubmit)='submit()'>
-                        </app-bottom-form>
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Comisionable</mat-label>
+                            <mat-select disableRipple formControlName="comisionable">
+                                <mat-option *ngFor="let id of comisionables" value={{id.id}}>
+                                    {{id.nombre}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <app-action-btn (onClick)="save()" [loading]="loading" [text]="'Actualizar'"
+                            [isDisabled]="adminForm.invalid || loading">
+                        </app-action-btn>
+
                     </div>
                 </form>
+                <div>
+                    <strong>Form value:</strong>
+                    <pre>{{ adminForm.value | json }}</pre>
+                  </div>
             </div>
         </div>
     </div>

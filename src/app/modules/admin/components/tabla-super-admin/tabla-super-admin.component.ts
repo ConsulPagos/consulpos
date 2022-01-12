@@ -1,57 +1,97 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { merge, of as observableOf } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
-import { TransactionInterface } from 'src/app/models/transaction';
+import { AffiliateDetailJoinInterface } from 'src/app/models/afiliado';
+import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
+import { ShowUsersDecrypter, ShowUsersResponse } from 'src/app/models/showusers_response';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { ClientesService } from 'src/app/shared/services/clientes.service';
+import { CryptoService } from 'src/app/shared/services/crypto.service';
+import { ModalService } from 'src/app/shared/services/modal.service';
+import { SesionService } from 'src/app/shared/services/sesion.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
+import { ToasterService } from 'src/app/shared/services/toaster.service';
+import { UsuariosService } from 'src/app/shared/services/usuarios.service';
+import { constant } from 'src/app/shared/utils/constant';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-tabla-super-admin',
   templateUrl: './tabla-super-admin.component.html',
   styleUrls: ['./tabla-super-admin.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
 })
+
 export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
 
-  expandedElement;
+  displayedColumns: string[] = ['nombre', 'cedula', 'email', 'sucursal', 'status_desc', 'fecha_registro', 'Acciones'];
+  usuarios = [];
 
-  displayedColumns: string[] = ['id', 'access_level', 'email'];
-  users = [{
-    id:1,
-    access_level: 99,
-    email:"john@gmail.com"
-  }];
+  identity = new FormGroup({
+    cedula: new FormControl(''),
+  });
 
-  
+  isLoadingResults = false;
+
+  expandedElement: AffiliateDetailJoinInterface | null;
+
+  @Input() access_level: number;
+  @Output() count = new EventEmitter<number>();
+
+  defaultResponse: DefaultResponse;
   loading = false;
   error = false;
   resultsLength;
   firstLoading = false;
-  @Output() count = new EventEmitter<number>();
-  @Input() id: number;
-  dataSource = new MatTableDataSource<TransactionInterface>();
+  dataSource = new MatTableDataSource<AffiliateDetailJoinInterface>();
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  selection = new SelectionModel<any>(true, []);
+  statusFilter = false;
+  ShowUserResponse: ShowUsersResponse;
 
-  constructor(private admin: AdminService, private auth: AuthService) { }
+  @Output() editUser = new EventEmitter<any>();
+  @Output() showUser = new EventEmitter<any>();
+
+  PAGESIZE = 12
+
+  constructor(
+    private admin: AdminService,
+    private auth: AuthService,
+    private session: SesionService,
+    private crypto: CryptoService,
+    private storage: StorageService,
+    private modal: ModalService,
+    private toaster: ToasterService,
+    private router: Router,
+    private usuario: UsuariosService
+  ) {
+    this.dataSource = new MatTableDataSource(this.usuarios);
+  }
 
   ngAfterViewInit() {
-    //this.load();
-    //this.firstLoading = true;
+    this.load();
+    this.firstLoading = true;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   ngOnInit() {
-    //this.loading = true
+
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   load() {
@@ -60,42 +100,166 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
         startWith({}),
         switchMap(() => {
           this.error = false;
-          this.loading = true;
-          return this.admin.get_admin_users(this.paginator.pageIndex + 1, this.auth.getUserId())
+          this.isLoadingResults = true;
+          const data = this.crypto.encryptString(JSON.stringify({
+            u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+            correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+            scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+            init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
+            limit_row: this.crypto.encryptJson(((this.paginator.pageIndex + 1) * this.PAGESIZE).toString()),
+          }))
+          return this.usuario.doAllUser(`${this.session.getDeviceId()};${data}`)
         }),
+
         map(data => {
           this.firstLoading = false;
-          this.loading = false;
-          this.resultsLength = data['total_count'];
-          this.count.emit(data['total_count'])
-          this.paginator.pageIndex = data['current_page'] - 1;
-          return data['data'];
+          this.isLoadingResults = false;
+          console.log("JSON: " + data)
+          console.log("string: " + this.crypto.decryptString(data))
+
+          this.ShowUserResponse = new ShowUsersDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
+          this.crypto.setKeys(this.ShowUserResponse.keyS, this.ShowUserResponse.ivJ, this.ShowUserResponse.keyJ, this.ShowUserResponse.ivS)
+          this.resultsLength = parseInt(this.ShowUserResponse.total_row);
+          console.log(this.ShowUserResponse)
+          return this.ShowUserResponse.usuarios;
         }),
-        catchError(e => {
+
+        catchError((e) => {
           this.firstLoading = false;
           this.loading = false;
-
-          if (e && e.status == 404) {
-            this.error = false;
-          } else {
-            this.error = true;
-          }
-
+          this.error = true;
+          console.log(e)
           return observableOf([]);
         })
       ).subscribe(data => {
-        this.users = data
+        this.usuarios = data
+        this.dataSource = new MatTableDataSource(this.usuarios);
+        this.identity.reset();
+        this.statusFilter = false;
       });
   }
 
-  getAccess(access_level){
-    switch (access_level) {
-      case 99:
-        return 'Super admin'
-      case 98:
-        return 'Vendedor'
-      case 97:
-        return 'Depositario'
+
+  _findClient() {
+    var filter = this.identity.get('cedula').value
+    this.statusFilter = true;
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      status_desc: this.crypto.encryptJson('ACTIVO'),
+      filter: this.crypto.encryptJson(filter),
+
+    }))
+    this.isLoadingResults = true;
+    this.usuario.doFindUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      console.log(this.crypto.decryptString(res))
+      
+      this.ShowUserResponse = new ShowUsersDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.isLoadingResults = false;
+      this.crypto.setKeys(this.ShowUserResponse.keyS, this.ShowUserResponse.ivJ, this.ShowUserResponse.keyJ, this.ShowUserResponse.ivS)
+      this.toaster.success(this.ShowUserResponse.M)
+
+      this.usuarios = this.ShowUserResponse.usuarios
+      this.dataSource = new MatTableDataSource(this.usuarios);
+    })
+  }
+
+  statusColor(status) {
+    switch (status) {
+      case 'ACTIVO':
+        return "active"
+      case 'DESAFILIADO':
+      default:
+        return "desaffiliate"
     }
   }
+
+  disable(user: any) {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      cedula: this.crypto.encryptJson(user.cedula),
+      status_desc: this.crypto.encryptJson('DESAFILIADO'),
+    }))
+    this.loading = true;
+    this.usuario.doDeleteUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.loading = false
+      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
+
+      switch (this.defaultResponse.R) {
+        case constant.R0:
+          window.location.reload();
+          this.toaster.success(this.defaultResponse.M)
+          break;
+        case constant.R1:
+          this.toaster.error(this.defaultResponse.M)
+          break;
+        default:
+          this.toaster.default_error()
+          break;
+      }
+    })
+  }
+
+  activate(user: any) {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      cedula: this.crypto.encryptJson(user.cedula),
+      status_desc: this.crypto.encryptJson('ACTIVO'),
+    }))
+    this.loading = true;
+    this.usuario.doDeleteUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.loading = false
+      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
+
+      switch (this.defaultResponse.R) {
+        case constant.R0:
+          // this.router.navigateByUrl('/admin/app/(adr:clientela)')
+          window.location.reload();
+          this.toaster.success(this.defaultResponse.M)
+          break;
+        case constant.R1:
+          this.toaster.error(this.defaultResponse.M)
+          break;
+        default:
+          this.toaster.default_error()
+          break;
+      }
+    })
+  }
+
+  clear() {
+    this.identity.reset();
+  }
+
+  _editUser(user) {
+    this.editUser.emit(user)
+  }
+
+  _showUser(user) {
+    this.showUser.emit(user)
+  }
+
+  saveDesativate(user: any) {
+    this.modal.confirm("¿Desea desabilitar a este usuario?").subscribe(result => {
+      if (result) {
+        this.disable(user)
+      }
+    })
+  }
+
+  saveActive(user: any) {
+    this.modal.confirm("¿Desea Activar a este usuario?").subscribe(result => {
+      if (result) {
+        this.activate(user)
+      }
+    })
+  }
+
 }

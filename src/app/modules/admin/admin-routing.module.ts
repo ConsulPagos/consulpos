@@ -51,6 +51,7 @@ import { HistoricoConciliacionComponent } from './pages/historico-conciliacion/h
 import { ConfigComponent } from './pages/config/config.component';
 import { TasasComponent } from './pages/tasas/tasas.component';
 import { AddTasasComponent } from './pages/add-tasas/add-tasas.component';
+import { FichaUserComponent } from './pages/ficha-user/ficha-user.component';
 
 const routes: Routes = [
   {
@@ -91,6 +92,7 @@ const routes: Routes = [
       { path: 'ventas', component: VentasComponent, outlet: 'adr' },
       { path: 'previsualizar-archivo/:id', component: PrevArchivoComponent, outlet: 'adr' },
       { path: 'ficha-cliente', component: FichaClienteComponent, outlet: 'adr' },
+      { path: 'ficha-user', component: FichaUserComponent, outlet: 'adr' },
       { path: 'validador-venta/:id', component: ValidadorVentaComponent, outlet: 'adr' },
       { path: 'config', component: ConfigComponent, outlet: 'adr' },
       { path: 'tasas', component: TasasComponent, outlet: 'adr' },

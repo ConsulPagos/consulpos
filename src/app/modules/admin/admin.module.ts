@@ -72,6 +72,7 @@ import {MatCardModule} from '@angular/material/card';
 import { AddTasasComponent } from './pages/add-tasas/add-tasas.component';
 import { EstadoCuentaComponent } from './pages/estado-cuenta/estado-cuenta.component';
 import { DiferirDeudaComponent } from './components/diferir-deuda/diferir-deuda.component';
+import { FichaUserComponent } from './pages/ficha-user/ficha-user.component';
 
 
 @NgModule({
@@ -129,7 +130,9 @@ import { DiferirDeudaComponent } from './components/diferir-deuda/diferir-deuda.
     TablaHistoricoConciliacionComponent, 
     TasasComponent, 
     ConfigComponent, 
-    AddTasasComponent, EstadoCuentaComponent, DiferirDeudaComponent],
+    AddTasasComponent, EstadoCuentaComponent, DiferirDeudaComponent,
+     FichaUserComponent
+  ],
     
   imports: [
     CommonModule,

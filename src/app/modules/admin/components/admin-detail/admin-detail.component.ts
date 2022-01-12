@@ -15,21 +15,15 @@ export class AdminDetailComponent implements OnInit {
   @Output() reload = new EventEmitter<boolean>();
   loading = false;
 
-  constructor(private admin: AdminService, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
+  constructor(
+    private admin: AdminService, 
+    public dialog: MatDialog, 
+
+    ) { }
 
   ngOnInit(): void {
   }
 
-  openDialog(type): void {
-    switch (type) {
-      case 1:
-        var body = 'Se aprobará el acceso del afiliado #' + this.affiliate.id_usuario;
-        break;
-      case 2:
-        var body = 'Se verificará la cuenta del afiliado #' + this.affiliate.id_usuario;
-        break;
-    }
-  }
 
 
 
