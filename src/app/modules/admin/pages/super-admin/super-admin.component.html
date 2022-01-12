@@ -1,19 +1,39 @@
 <section id="superadmin">
     <div class="title">
         <div class="d-flex">
-            <a class="nav-btn pl-3 pr-3" #tooltip="matTooltip" [matTooltipPosition]="'right'"
-                matTooltip="Agregar Usuario" [routerLink]="['/admin/app',{ outlets: { adr: ['nuevo-admin'] } }]">
-                <li class="fa fa-user-plus"></li>
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Usuario"  
+            [routerLink]="['/admin/app',{ outlets: { adr: ['nuevo-admin'] } }]" >
+                <li class="fas fa-user-plus"></li>
             </a>
             <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'"
-                matTooltip="Exportar en formato Excel">
+                matTooltip="Exportar en formato Excel" (click)="exportXLSX()">
                 <li class="fas fa-file-download"></li>
             </a>
         </div>
     </div>
     <div class="container-fluid">
-        <div class="table-container">
-            <app-tabla-super-admin></app-tabla-super-admin>
+        <div style="background-color: #fff; border-radius: 10px;">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span 
+                        matBadge={{countNuevos}} 
+                        matBadgeSize="small" 
+                        matBadgeOverlap="false"
+                        matBadgePosition="before">
+                        Listado de Usuarios
+                        </span>
+                    </ng-template>
+                    <app-tabla-super-admin
+                    (editUser)="editUser($event)" 
+                    (showUser)="showUser($event)" 
+                    (count)='countNuevos = $event' 
+                    class="w-100" 
+                    [access_level]="0">
+        
+                    </app-tabla-super-admin>
+                </mat-tab>
+            </mat-tab-group>
         </div>
     </div>
 </section>

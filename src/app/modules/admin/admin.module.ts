@@ -71,6 +71,7 @@ import { ConfigComponent } from './pages/config/config.component';
 import {MatCardModule} from '@angular/material/card';
 import { AddTasasComponent } from './pages/add-tasas/add-tasas.component';
 import { EstadoCuentaComponent } from './pages/estado-cuenta/estado-cuenta.component';
+import { FichaUserComponent } from './pages/ficha-user/ficha-user.component';
 
 
 @NgModule({
@@ -128,7 +129,9 @@ import { EstadoCuentaComponent } from './pages/estado-cuenta/estado-cuenta.compo
     TablaHistoricoConciliacionComponent, 
     TasasComponent, 
     ConfigComponent, 
-    AddTasasComponent, EstadoCuentaComponent],
+    AddTasasComponent, 
+    EstadoCuentaComponent, 
+    FichaUserComponent],
     
   imports: [
     CommonModule,
