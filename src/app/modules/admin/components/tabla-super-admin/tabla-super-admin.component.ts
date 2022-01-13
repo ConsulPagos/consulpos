@@ -169,7 +169,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
     switch (status) {
       case 'ACTIVO':
         return "active"
-      case 'DESAFILIADO':
+      case 'INACTIVO':
       default:
         return "desaffiliate"
     }
@@ -181,7 +181,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       cedula: this.crypto.encryptJson(user.cedula),
-      status_desc: this.crypto.encryptJson('DESAFILIADO'),
+      status_desc: this.crypto.encryptJson('INACTIVO'),
     }))
     this.loading = true;
     this.usuario.doDeleteUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {

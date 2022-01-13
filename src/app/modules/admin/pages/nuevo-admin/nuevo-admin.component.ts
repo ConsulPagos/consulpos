@@ -63,7 +63,7 @@ export class NuevoAdminComponent implements OnInit {
     primer_apellido: new FormControl('asd', [Validators.required]),
     segundo_apellido: new FormControl('asdasd', [Validators.required]),
     cedula: new FormControl('25386251', [Validators.required]),
-    // rol: new FormControl('', [Validators.required]),
+    rol: new FormControl('', [Validators.required]),
     direccion: new FormControl('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', [Validators.required]),
     localidad: new FormControl('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', [Validators.required]),
     pto_referencia: new FormControl('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', [Validators.required]),
@@ -99,6 +99,7 @@ export class NuevoAdminComponent implements OnInit {
     this.estados = JSON.parse(this.storage.get(constant.ESTADOS)).estados
     this.sucursales = JSON.parse(this.storage.get(constant.OCCS)).occs
     this.tipo_documentos = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs
+    this.roles = JSON.parse(this.storage.get(constant.ROLES)).roles
   }
 
   clear() {
@@ -142,7 +143,7 @@ export class NuevoAdminComponent implements OnInit {
       t_doc_id: this.crypto.encryptJson(this.adminForm.get('tipo_doc_user').value),
       cedula: this.crypto.encryptJson(this.adminForm.get('cedula').value),
 
-      rol_id: this.crypto.encryptJson("1"),
+      rol_id: this.crypto.encryptJson(this.adminForm.get('rol').value),
       email: this.crypto.encryptJson(this.adminForm.get('email').value),
       telefonos: this.crypto.encryptJson(JSON.stringify([
         {
@@ -180,11 +181,9 @@ export class NuevoAdminComponent implements OnInit {
       switch (this.validacionres.R) {
         case constant.R0:
           this.toaster.success(this.validacionres.M)
-          console.log('HOLA MANO')
           break;
         case constant.R1:
           this.toaster.error(this.validacionres.M)
-          console.log('HOLA PIE')
           break;
       }
     })

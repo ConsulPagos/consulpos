@@ -19,10 +19,6 @@
 
                     <h6>Datos del Usuario</h6>
 
-                    <div>
-                        
-                    </div>
-
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Primer Nombre</mat-label>
                         <input matInput placeholder="123456789" formControlName="primer_nombre" type="text">
@@ -58,14 +54,14 @@
                         </mat-form-field>
                     </div>
 
-                    <!-- <mat-form-field appearance="outline" class="container_box_space">
+                    <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Rol</mat-label>
                         <mat-select disableRipple formControlName="rol">
-                            <mat-option *ngFor="let rol of roles" value={{rol.id_rol}}>
+                            <mat-option *ngFor="let rol of roles" value={{rol.id}}>
                                 {{rol.rol}}
                             </mat-option>
                         </mat-select>
-                    </mat-form-field> -->
+                    </mat-form-field>
 
                     <h6>Información de contacto</h6>
 

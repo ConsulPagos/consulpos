@@ -75,7 +75,7 @@
           </button>
   
           <button #tooltip="matTooltip" matTooltip="Activar" matTooltipHideDelay="10"
-            *ngIf="user.status_desc == 'DESAFILIADO'" mat-icon-button class="container_icon"
+            *ngIf="user.status_desc == 'NO ACTIVO'" mat-icon-button class="container_icon"
             (click)="saveActive(user)">
             <i class="fas fa-check-square activate_check"></i>
           </button>

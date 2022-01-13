@@ -27,7 +27,7 @@ import { SesionService } from 'src/app/shared/services/sesion.service';
 
 export class EditAdminComponent implements OnInit {
 
-  editUser: UserRequestInterface = {};
+  showUser: UserRequestInterface = {};
 
   hide = true;
   loading = false;
@@ -61,27 +61,27 @@ export class EditAdminComponent implements OnInit {
     private session: SesionService,
   ) {
 
-    if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.editUser) {
-      this.editUser = this.router.getCurrentNavigation().extras.state.editUser as UserRequestInterface;
+    if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.showUser) {
+      this.showUser = this.router.getCurrentNavigation().extras.state.showUser as UserRequestInterface;
     } 
     // else {
     //   this.router.navigateByUrl("/admin/app/(adr:super-admin-panel)");
     // }
 
     this.adminForm = new FormGroup({
-      email: new FormControl(this.editUser.email, [Validators.required, Validators.email]),
-      primer_nombre: new FormControl(this.editUser.p_nombre, [Validators.required, Validators.min(90), Validators.max(99)]),
-      segundo_nombre: new FormControl(this.editUser.s_nombre, [Validators.required]),
-      primer_apellido: new FormControl(this.editUser.p_apellido, [Validators.required]),
-      segundo_apellido: new FormControl(this.editUser.s_apellido, [Validators.required]),
+      email: new FormControl(this.showUser.email, [Validators.required, Validators.email]),
+      primer_nombre: new FormControl(this.showUser.p_nombre, [Validators.required, Validators.min(90), Validators.max(99)]),
+      segundo_nombre: new FormControl(this.showUser.s_nombre, [Validators.required]),
+      primer_apellido: new FormControl(this.showUser.p_apellido, [Validators.required]),
+      segundo_apellido: new FormControl(this.showUser.s_apellido, [Validators.required]),
       // rol: new FormControl('', [Validators.required]),
-      direccion: new FormControl(this.editUser.direccion, [Validators.required]),
-      localidad: new FormControl(this.editUser.localidad, [Validators.required]),
-      pto_referencia: new FormControl(this.editUser.pto_ref, [Validators.required]),
-      estado: new FormControl(this.editUser.estado, [Validators.required]),
-      occ: new FormControl(this.editUser.occ, [Validators.required]),
-      codpostal: new FormControl(this.editUser.cod_postal, [Validators.required]),
-      comisionable: new FormControl(this.editUser.comisionable, [Validators.required]),
+      direccion: new FormControl(this.showUser.direccion, [Validators.required]),
+      localidad: new FormControl(this.showUser.localidad, [Validators.required]),
+      pto_referencia: new FormControl(this.showUser.pto_ref, [Validators.required]),
+      estado: new FormControl(this.showUser.estado, [Validators.required]),
+      occ: new FormControl(this.showUser.occ, [Validators.required]),
+      codpostal: new FormControl(this.showUser.cod_postal, [Validators.required]),
+      comisionable: new FormControl(this.showUser.comisionable, [Validators.required]),
     });
 
   }
@@ -101,7 +101,7 @@ export class EditAdminComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
 
       // t_doc_id: this.crypto.encryptJson(this.identity.get('tipo_doc').value),
-      cedula: this.crypto.encryptJson(this.editUser.cedula),
+      cedula: this.crypto.encryptJson(this.showUser.cedula),
 
       razon_social: this.crypto.encryptJson(this.adminForm.get('razon_social').value),
       comercio: this.crypto.encryptJson(this.adminForm.get('nombre_comercial').value),
