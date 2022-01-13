@@ -140,7 +140,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
   }
 
 
-  _findClient() {
+  _findUser() {
     var filter = this.identity.get('cedula').value
     this.statusFilter = true;
     const data = this.crypto.encryptString(JSON.stringify({
@@ -148,7 +148,12 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       status_desc: this.crypto.encryptJson('ACTIVO'),
-      filter: this.crypto.encryptJson(filter),
+      cedula: this.crypto.encryptJson(filter),
+      apps: this.crypto.encryptJson(JSON.stringify([
+        {
+          app_id: "1",
+        }
+      ])),
 
     }))
     this.isLoadingResults = true;
