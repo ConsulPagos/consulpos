@@ -19,12 +19,15 @@ export interface UserRequestInterface {
     estado?: string;
     id_estado?: string;
     occ?: string;
-    id_occ?: string;
+    occ_id?: string;
     fecha_registro?: string;
     status_desc?: string;
     status_id?: string;
     comisionable?: string;
     psw?: string;
+    rol_id?: string;
+    rol?: string;
+    
 
 
 }

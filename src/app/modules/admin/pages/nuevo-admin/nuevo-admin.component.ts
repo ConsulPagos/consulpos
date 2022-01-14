@@ -136,10 +136,10 @@ export class NuevoAdminComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
 
-      p_nombre: this.crypto.encryptJson(this.adminForm.get('primer_nombre').value),
-      s_nombre: this.crypto.encryptJson(this.adminForm.get('segundo_nombre').value),
-      p_apellido: this.crypto.encryptJson(this.adminForm.get('primer_apellido').value),
-      s_apellido: this.crypto.encryptJson(this.adminForm.get('segundo_apellido').value),
+      primer_nombre: this.crypto.encryptJson(this.adminForm.get('primer_nombre').value),
+      segundo_nombre: this.crypto.encryptJson(this.adminForm.get('segundo_nombre').value),
+      primer_apellido: this.crypto.encryptJson(this.adminForm.get('primer_apellido').value),
+      segundo_apellido: this.crypto.encryptJson(this.adminForm.get('segundo_apellido').value),
       t_doc_id: this.crypto.encryptJson(this.adminForm.get('tipo_doc_user').value),
       cedula: this.crypto.encryptJson(this.adminForm.get('cedula').value),
 
@@ -152,15 +152,15 @@ export class NuevoAdminComponent implements OnInit {
           iso: this.adminForm.get("phone_user").value.countryCode
         }
       ])),
-
       direccion: this.crypto.encryptJson(this.adminForm.get('direccion').value),
       pto_ref: this.crypto.encryptJson(this.adminForm.get('pto_referencia').value),
       cod_postal: this.crypto.encryptJson(this.adminForm.get('codpostal').value),
-      estado: this.crypto.encryptJson(this.adminForm.get('estado').value),
+      // estado: this.crypto.encryptJson(this.adminForm.get('estado').value),
       occ_id: this.crypto.encryptJson(this.adminForm.get('occ').value),
       psw: this.crypto.encryptJson(this.adminForm.get('password').value),
       comisionable: this.crypto.encryptJson(this.adminForm.get('comisionable').value),
       localidad: this.crypto.encryptJson(this.adminForm.get('localidad').value),
+      id_pais: this.crypto.encryptJson('1'),
       apps: this.crypto.encryptJson(JSON.stringify([
         {
           app_id: "1",

@@ -62,16 +62,14 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
   PAGESIZE = 12
 
   constructor(
-    private admin: AdminService,
-    private auth: AuthService,
     private session: SesionService,
     private crypto: CryptoService,
     private storage: StorageService,
     private modal: ModalService,
     private toaster: ToasterService,
-    private router: Router,
-    private usuario: UsuariosService
-  ) {
+    private usuario: UsuariosService,
+  ) 
+  {
     this.dataSource = new MatTableDataSource(this.usuarios);
   }
 
@@ -110,7 +108,6 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
           }))
           return this.usuario.doAllUser(`${this.session.getDeviceId()};${data}`)
         }),
-
         map(data => {
           this.firstLoading = false;
           this.isLoadingResults = false;
@@ -123,7 +120,6 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
           console.log(this.ShowUserResponse)
           return this.ShowUserResponse.usuarios;
         }),
-
         catchError((e) => {
           this.firstLoading = false;
           this.loading = false;
@@ -149,11 +145,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       status_desc: this.crypto.encryptJson('ACTIVO'),
       cedula: this.crypto.encryptJson(filter),
-      apps: this.crypto.encryptJson(JSON.stringify([
-        {
-          app_id: "1",
-        }
-      ])),
+      app_id: this.crypto.encryptJson('1'),
 
     }))
     this.isLoadingResults = true;

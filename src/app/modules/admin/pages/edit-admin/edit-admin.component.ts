@@ -32,7 +32,7 @@ export class EditAdminComponent implements OnInit {
   hide = true;
   loading = false;
   error = false;
-  validacionres: DefaultResponse;
+  default: DefaultResponse;
   estados: EstadoInterface[];
   roles: RolInterface[];
   sucursales: SucursalInterface[];
@@ -47,10 +47,9 @@ export class EditAdminComponent implements OnInit {
       nombre: 'Si',
     }
   ]
-  default: DefaultResponse;
+
 
   constructor(
-    private admin: AdminService,
     private router: Router,
     private toaster: ToasterService,
     private title: Title,
@@ -64,22 +63,21 @@ export class EditAdminComponent implements OnInit {
     if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.showUser) {
       this.showUser = this.router.getCurrentNavigation().extras.state.showUser as UserRequestInterface;
     } 
-    // else {
-    //   this.router.navigateByUrl("/admin/app/(adr:super-admin-panel)");
-    // }
+    else {
+      this.router.navigateByUrl("/admin/app/(adr:super-admin-panel)");
+    }
 
     this.adminForm = new FormGroup({
-      email: new FormControl(this.showUser.email, [Validators.required, Validators.email]),
       primer_nombre: new FormControl(this.showUser.p_nombre, [Validators.required, Validators.min(90), Validators.max(99)]),
       segundo_nombre: new FormControl(this.showUser.s_nombre, [Validators.required]),
       primer_apellido: new FormControl(this.showUser.p_apellido, [Validators.required]),
       segundo_apellido: new FormControl(this.showUser.s_apellido, [Validators.required]),
-      // rol: new FormControl('', [Validators.required]),
+      email: new FormControl(this.showUser.email, [Validators.required, Validators.email]),
+      rol_id: new FormControl(this.showUser.rol_id, [Validators.required]),
       direccion: new FormControl(this.showUser.direccion, [Validators.required]),
       localidad: new FormControl(this.showUser.localidad, [Validators.required]),
       pto_referencia: new FormControl(this.showUser.pto_ref, [Validators.required]),
-      estado: new FormControl(this.showUser.estado, [Validators.required]),
-      occ: new FormControl(this.showUser.occ, [Validators.required]),
+      occ_id: new FormControl(this.showUser.occ_id, [Validators.required]),
       codpostal: new FormControl(this.showUser.cod_postal, [Validators.required]),
       comisionable: new FormControl(this.showUser.comisionable, [Validators.required]),
     });
@@ -99,24 +97,24 @@ export class EditAdminComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-
-      // t_doc_id: this.crypto.encryptJson(this.identity.get('tipo_doc').value),
       cedula: this.crypto.encryptJson(this.showUser.cedula),
 
-      razon_social: this.crypto.encryptJson(this.adminForm.get('razon_social').value),
-      comercio: this.crypto.encryptJson(this.adminForm.get('nombre_comercial').value),
-      contribuyente_id: this.crypto.encryptJson(this.adminForm.get('contribuyente').value),
+      primer_nombre: this.crypto.encryptJson(this.adminForm.get('primer_nombre').value),
+      segundo_nombre: this.crypto.encryptJson(this.adminForm.get('segundo_nombre').value),
+      primer_apellido: this.crypto.encryptJson(this.adminForm.get('primer_apellido').value),
+      segundo_apellido: this.crypto.encryptJson(this.adminForm.get('segundo_apellido').value),
       email: this.crypto.encryptJson(this.adminForm.get('email').value),
-      estados: this.crypto.encryptJson(this.adminForm.get('estado').value),
-      municipios: this.crypto.encryptJson(this.adminForm.get('municipio').value),
-      parroquia_id: this.crypto.encryptJson(this.adminForm.get('parroquia').value),
-      ciudad_id: this.crypto.encryptJson(this.adminForm.get('ciudad').value),
-      cod_postal: this.crypto.encryptJson(this.adminForm.get('codpostal').value),
+
       direccion: this.crypto.encryptJson(this.adminForm.get('direccion').value),
-      m_contacto_id: this.crypto.encryptJson(this.adminForm.get('contacto').value),
-      id_actividad_comercial: this.crypto.encryptJson(this.adminForm.get('act_comercial').value),
       pto_ref: this.crypto.encryptJson(this.adminForm.get('pto_referencia').value),
       localidad: this.crypto.encryptJson(this.adminForm.get('localidad').value),
+      cod_postal: this.crypto.encryptJson(this.adminForm.get('codpostal').value),
+      occ_id: this.crypto.encryptJson(this.adminForm.get('occ_id').value),
+      comisionable: this.crypto.encryptJson(this.adminForm.get('comisionable').value),
+      rol_id: this.crypto.encryptJson(this.adminForm.get('rol_id').value),
+      app_id: this.crypto.encryptJson('1'),
+
+      tlf: this.crypto.encryptJson('04242735855')
     }
     
     const dataS = this.crypto.encryptString(JSON.stringify(data));
@@ -134,7 +132,7 @@ export class EditAdminComponent implements OnInit {
 
       switch (this.default.R) {
         case constant.R0:
-          this.router.navigateByUrl('/admin/app/(adr:clientela)')
+          this.router.navigateByUrl('/admin/app/(adr:dashboard)')
           this.toaster.success(this.default.M)
           break;
         case constant.R1:
@@ -151,6 +149,7 @@ export class EditAdminComponent implements OnInit {
     this.title.setTitle('ConsulPos | Editar Usuario')
     this.estados = JSON.parse(this.storage.get(constant.ESTADOS)).estados
     this.sucursales = JSON.parse(this.storage.get(constant.OCCS)).occs
+    this.roles = JSON.parse(this.storage.get(constant.ROLES)).roles
   }
 
   save() {
