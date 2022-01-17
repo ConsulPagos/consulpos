@@ -34,3 +34,26 @@
 .container_box_space {
     margin-right: 10px;
 }
+
+.title_edit{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.text-tilte{
+    padding: 1rem;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    min-width: 300px;
+}
+
+.title_mother{
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 25px;
+    padding-top: 0.25rem;
+    text-align: center;
+}

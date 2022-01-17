@@ -73,7 +73,7 @@ export class EditAdminComponent implements OnInit {
       primer_apellido: new FormControl(this.showUser.p_apellido, [Validators.required]),
       segundo_apellido: new FormControl(this.showUser.s_apellido, [Validators.required]),
       email: new FormControl(this.showUser.email, [Validators.required, Validators.email]),
-      rol_id: new FormControl(this.showUser.rol_id, [Validators.required]),
+      rol_id: new FormControl(this.showUser.rol.rol_id, [Validators.required]),
       direccion: new FormControl(this.showUser.direccion, [Validators.required]),
       localidad: new FormControl(this.showUser.localidad, [Validators.required]),
       pto_referencia: new FormControl(this.showUser.pto_ref, [Validators.required]),

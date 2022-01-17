@@ -1,3 +1,4 @@
+import { RolInterface } from './rol';
 import { TelefonoInterface } from './telefono';
 
 export interface UserRequestInterface {
@@ -26,8 +27,6 @@ export interface UserRequestInterface {
     comisionable?: string;
     psw?: string;
     rol_id?: string;
-    rol?: string;
-    
-
-
+    rol_name?: string;
+    rol?: RolInterface;
 }
