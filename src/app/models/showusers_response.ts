@@ -2,7 +2,6 @@ import {UserRequestInterface} from './user_request';
 import { CryptoService } from "../shared/services/crypto.service";
 
 export interface ShowUsersResponse {
-    value_exists: string;
     R?: string;
     M?: string;
     keyS: string;
@@ -10,6 +9,7 @@ export interface ShowUsersResponse {
     keyJ: string;
     ivJ: string;
     session_valid: string;
+    value_exists: string;
     usuarios: UserRequestInterface[];
     total_row: string;
 }

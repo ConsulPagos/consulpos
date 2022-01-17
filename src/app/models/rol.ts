@@ -1,12 +1,11 @@
-export class Permiso{
-id_permiso:number;
-modulo: string;
-id_modulo: number;
-
+export class Permiso {
+    id_permiso: number;
+    modulo: string;
+    id_modulo: number;
 }
 
 export class RolInterface {
-    rol_id:   number;
+    rol_id: number;
     permisos: Permiso[];
-    rol:      string;
+    rol_name: string;
 }

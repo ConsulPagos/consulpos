@@ -19,7 +19,11 @@
                 <div class="title_edit">
                     <p class="text-tilte text-uppercase">
                         Cedula:
-                        <span class="text_rif">{{editUser.cedula}}</span>
+                        <span class="text_rif">{{showUser.cedula}}</span>
+                    </p>
+                    <p class="text-tilte text-uppercase">
+                        Rol:
+                        <span class="text_rif">{{showUser.rol.rol_name}}</span>
                     </p>
                 </div>
 
@@ -47,14 +51,14 @@
                         <input matInput placeholder="123456789" formControlName="segundo_apellido" type="text">
                     </mat-form-field>
 
-                    <!-- <mat-form-field appearance="outline" class="container_box_space">
+                    <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Rol</mat-label>
-                        <mat-select disableRipple formControlName="rol">
-                            <mat-option *ngFor="let rol of roles" value={{rol.id_rol}}>
+                        <mat-select disableRipple formControlName="rol_id">
+                            <mat-option *ngFor="let rol of roles" value={{rol.id}}>
                                 {{rol.rol}}
                             </mat-option>
                         </mat-select>
-                    </mat-form-field> -->
+                    </mat-form-field>
 
                     <h6>Información de contacto</h6>
 
@@ -103,16 +107,8 @@
                     <h6>Datos de la Sucursal</h6>
 
                     <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Estado</mat-label>
-                        <mat-select disableRipple formControlName="estado">
-                            <mat-option *ngFor="let estado of estados" value={{estado.id}}>
-                                {{estado.estado}} </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Sucursal / OCC</mat-label>
-                        <mat-select disableRipple formControlName="occ">
+                        <mat-select disableRipple formControlName="occ_id">
                             <mat-option *ngFor="let sucrusal of sucursales" value={{sucrusal.id}}>
                                 {{sucrusal.nombre}} </mat-option>
                         </mat-select>

@@ -8,6 +8,7 @@ export const constant = {
 
     T_DOCS: 't_doc',
     T_DOC_ID: 't_doc_id',
+    ROLES: 'roles',
 
     T_CLIENTES: 't_cliente',
     T_CLIENTE_ID: 't_cliente_id',

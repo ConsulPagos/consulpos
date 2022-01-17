@@ -62,16 +62,14 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
   PAGESIZE = 12
 
   constructor(
-    private admin: AdminService,
-    private auth: AuthService,
     private session: SesionService,
     private crypto: CryptoService,
     private storage: StorageService,
     private modal: ModalService,
     private toaster: ToasterService,
-    private router: Router,
-    private usuario: UsuariosService
-  ) {
+    private usuario: UsuariosService,
+  ) 
+  {
     this.dataSource = new MatTableDataSource(this.usuarios);
   }
 
@@ -110,7 +108,6 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
           }))
           return this.usuario.doAllUser(`${this.session.getDeviceId()};${data}`)
         }),
-
         map(data => {
           this.firstLoading = false;
           this.isLoadingResults = false;
@@ -123,7 +120,6 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
           console.log(this.ShowUserResponse)
           return this.ShowUserResponse.usuarios;
         }),
-
         catchError((e) => {
           this.firstLoading = false;
           this.loading = false;
@@ -140,7 +136,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
   }
 
 
-  _findClient() {
+  _findUser() {
     var filter = this.identity.get('cedula').value
     this.statusFilter = true;
     const data = this.crypto.encryptString(JSON.stringify({
@@ -148,7 +144,8 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       status_desc: this.crypto.encryptJson('ACTIVO'),
-      filter: this.crypto.encryptJson(filter),
+      cedula: this.crypto.encryptJson(filter),
+      app_id: this.crypto.encryptJson('1'),
 
     }))
     this.isLoadingResults = true;
@@ -169,7 +166,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
     switch (status) {
       case 'ACTIVO':
         return "active"
-      case 'DESAFILIADO':
+      case 'INACTIVO':
       default:
         return "desaffiliate"
     }
@@ -181,7 +178,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       cedula: this.crypto.encryptJson(user.cedula),
-      status_desc: this.crypto.encryptJson('DESAFILIADO'),
+      status_desc: this.crypto.encryptJson('INACTIVO'),
     }))
     this.loading = true;
     this.usuario.doDeleteUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
