@@ -61,8 +61,10 @@ export class EditAdminComponent implements OnInit {
     private session: SesionService,
   ) {
 
-    if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.editUser) {
-      this.editUser = this.router.getCurrentNavigation().extras.state.editUser as UserRequestInterface;
+
+
+    if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.showUser) {
+      this.editUser = this.router.getCurrentNavigation().extras.state.showUser as UserRequestInterface;
     } 
     // else {
     //   this.router.navigateByUrl("/admin/app/(adr:super-admin-panel)");
