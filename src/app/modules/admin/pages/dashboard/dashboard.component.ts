@@ -1,8 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { AdminService } from '../../services/admin.service';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ChartDataSets } from 'chart.js';
-import { Color, Label } from 'ng2-charts';
 
 
 @Component({
@@ -50,7 +47,7 @@ export class DashboardComponent implements OnInit {
   public pieDeuda = [1555464, 4454545, 857570, 75757];
   public pieDeudaType = 'pie';
 
-  constructor(private admin: AdminService, private title: Title) { }
+  constructor(private title: Title) { }
 
   ngOnInit(): void {
 

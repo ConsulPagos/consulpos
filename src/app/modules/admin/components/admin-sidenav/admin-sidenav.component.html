@@ -6,7 +6,7 @@
                 style="width: auto; height: 50px;">
         </div>
         <!-- Dashboard -->
-        <a class="menu_side" *ngIf="access.dashboard()"
+        <a class="menu_side" 
             [routerLink]="['/admin/app',{ outlets: { adr: ['dashboard'] } }]" routerLinkActive="ad-active"
             [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-tachometer-alt"></li> <span class="text_side">Dashboard</span>
@@ -14,14 +14,14 @@
         <!-- ************************************************************************************************** -->
 
         <!-- Registro de Clientes -->
-        <a class="menu_side" *ngIf="access.clientes()" [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]"
+        <a class="menu_side"  [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]"
             routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-users"></li><span class="text_side">Clientes</span>
         </a>
         <!-- ************************************************************************************************** -->
 
         <!-- Operaciones -->
-        <a class="menu_side" *ngIf="access.clientes()"
+        <a class="menu_side" 
             [routerLink]="['/admin/app',{ outlets: { adr: ['venta-consulpos'] } }]" routerLinkActive="ad-active"
             [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-cart-plus"></li><span class="text_side">Ventas Consulpos</span>
@@ -41,19 +41,19 @@
                 <span class="text_side">Ventas</span>
             </button>
 
-            <a class="menu_side" *ngIf="access.venta_manual()"
+            <a class="menu_side" 
                 [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-exchange-alt"></li> <span class="text_side">Traspaso</span>
             </a>
 
-            <a class="menu_side" *ngIf="access.venta_manual()"
+            <a class="menu_side" 
                 [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-university"></li> <span class="text_side">Cambio de Banco</span>
             </a>
 
-            <a class="menu_side" *ngIf="access.venta_manual()"
+            <a class="menu_side" 
                 [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-book-dead"></li> <span class="text_side">Desafiliación</span>
@@ -61,13 +61,13 @@
         </mat-menu>
 
         <mat-menu #venta="matMenu">
-            <a class="menu_side" *ngIf="access.venta_manual()"
+            <a class="menu_side" 
                 [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-cart-plus"></li> <span class="text_side">Pre-ventas</span>
             </a>
 
-            <a class="menu_side" *ngIf="access.venta_manual()"
+            <a class="menu_side" 
                 [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-cart-plus"></li> <span class="text_side">Ventas</span>
@@ -82,25 +82,25 @@
         </a>
         <mat-menu #cobranza="matMenu">
 
-            <!--  <a class="menu_side" *ngIf="access.venta_manual()"
+            <!--  <a class="menu_side" 
                 [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-money-bill"></li> <span class="text_side">Validar Pago POS</span>
             </a> -->
 
-            <a class="menu_side" *ngIf="access.venta_manual()"
+            <a class="menu_side" 
                 [routerLink]="['/admin/app',{ outlets: { adr: ['generar-archivo'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-file-download"></li> <span class="text_side">Generar Archivo</span>
             </a>
 
-            <a class="menu_side" *ngIf="access.venta_manual()"
+            <a class="menu_side" 
                 [routerLink]="['/admin/app',{ outlets: { adr: ['actualizar-archivo'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-file-upload"></li> <span class="text_side">Cargar Respuesta</span>
             </a>
 
-            <a class="menu_side" *ngIf="access.venta_manual()"
+            <a class="menu_side" 
                 [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fas fa-cash-register"></li> <span class="text_side">Conciliar Archivo</span>
@@ -108,7 +108,7 @@
 
 
 
-            <a class="menu_side" *ngIf="access.venta_manual()"
+            <a class="menu_side" 
                 [routerLink]="['/admin/app',{ outlets: { adr: ['historico-conciliacion'] } }]"
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-book"></li> <span class="text_side">Histórico de Conciliación</span>
@@ -116,7 +116,7 @@
 
             <hr>
 
-            <a class="menu_side" *ngIf="access.venta_manual()"
+            <a class="menu_side" 
                 [routerLink]="['/admin/app',{ outlets: { adr: ['cobro-centralizado'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fas fa-university"></li> <span class="text_side">Cobro Centralizado</span>
@@ -141,7 +141,7 @@
         <!- ************************************************************************************************** -->
 
         <!-- Condiguracion -->
-        <a class="menu_side" *ngIf="access.super()" [routerLink]="['/admin/app',{ outlets: { adr: ['config'] } }]"
+        <a class="menu_side"  [routerLink]="['/admin/app',{ outlets: { adr: ['config'] } }]"
             routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-cogs"></li><span class="text_side">Configuración</span>
         </a>

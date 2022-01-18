@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { CrmTableInterface } from 'src/app/models/crm';
-import { AdminService } from '../../services/admin.service';
+import { NavigationExtras, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BancoInterface } from '../../../../models/banco'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -25,7 +23,6 @@ import { LoaderService } from 'src/app/shared/services/loader.service';
 export class ConciliarArchivoComponent implements OnInit {
 
   data: any = { 'affiliate': {} };
-  affiliate: CrmTableInterface;
   loadingUpdate = false;
   loadingGetArchivo = false;
   error = false;

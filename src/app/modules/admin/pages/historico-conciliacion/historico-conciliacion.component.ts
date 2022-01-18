@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { BancoInterface } from 'src/app/models/banco';
 import { DefaultDecrypter } from 'src/app/models/default_response';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
-import { ModalService } from 'src/app/shared/services/modal.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';

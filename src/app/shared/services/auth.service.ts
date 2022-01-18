@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TokenResponseInterface } from '../../models/token_response'
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { Subject } from 'rxjs';

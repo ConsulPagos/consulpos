@@ -1,18 +1,15 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { BancoInterface } from 'src/app/models/banco';
-import { PaymentInterface } from 'src/app/models/payment';
-import { ApiService } from 'src/app/shared/services/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { AdminService } from '../../services/admin.service';
 import { MesInterface } from '../../../../models/mes'
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { GeneracionResponse, GeneracionDecrypter } from '../../../../models/generacion_response'
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ResultFileComponent } from '../result-file/result-file.component';
 import { ExportService } from '../../services/export.service'
 import { DefaultDecrypter } from '../../../../models/default_response'
@@ -34,7 +31,6 @@ export class GenerarArchivoComponent implements OnInit {
   loading = false;
   loadingTasas = false;
   error = false;
-  payment: PaymentInterface = {}
   methods;
   loading_methods = false;
   error_methods = false;
@@ -48,18 +44,14 @@ export class GenerarArchivoComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private admin: AdminService,
     private session: SesionService,
     private bancario: BancarioService,
-    private api: ApiService,
     private crypto: CryptoService,
-    private auth: AuthService,
     private routes: ActivatedRoute,
-    private router: Router,
     private storage: StorageService,
     private excelService: ExportService,
     private toaster: ToasterService,
-    private  loader:LoaderService
+    private loader: LoaderService
   ) { }
 
   form = new FormGroup({
@@ -82,181 +74,170 @@ export class GenerarArchivoComponent implements OnInit {
   ngOnInit(): void {
     this.id = parseInt(this.routes.snapshot.paramMap.get('id_pedido'))
     this.id_afiliado = parseInt(this.routes.snapshot.paramMap.get('id_afiliado'))
-    this.payment.admin = this.auth.getIdentity()
-    this.loadMethods()
     this.bancos = JSON.parse(this.storage.get(constant.BANCOS)).bancos
     this.getTasas();
   }
 
-  loadMethods() {
-    this.error_methods = false;
-    this.loading_methods = true;
-    this.api.get_payment_methods().subscribe(data => {
-      this.loading_methods = false;
-      this.methods = data
-    }, e => {
-      this.error_methods = true;
-    })
-  }
+ 
 
   openDialog(): void {
     this.dialog.open(ResultFileComponent, {
-      data:{
+      data: {
         archivo: this.generacionResponse,
         time: this.time
       }
     });
-}
-
-exportXLSX(): void {
-  this.excelService.exportExcel(this.generacionResponse.cuotas, 'Archivo_' + this.generacionResponse.id_archivo + '_' + new Date());
-}
-
-getTipoCobro(t: string): boolean {
-  var value = false;
-  try {
-    value = (t == this.form.get("tipo_cobro").value.toString())
-  } catch (error) {
-    value = false
-  }
-  return value;
-}
-
-
-submit() {
-
-  this.startTimer()
-
-  var data: {} = {
-    u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-    scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-    correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-    id_banco: this.crypto.encryptJson(this.form.get('banco').value),
-    descripcion: this.crypto.encryptJson(this.form.get('descripcion').value),
-    tasa: this.crypto.encryptJson(this.tasas.filter(t => t.id == this.form.get('tasa').value)[0].monto),
-    id_tasa: this.crypto.encryptJson(this.form.get('tasa').value),
-    oper: this.crypto.encryptJson(this.form.get("tipo_cobro").value)
   }
 
+  exportXLSX(): void {
+    this.excelService.exportExcel(this.generacionResponse.cuotas, 'Archivo_' + this.generacionResponse.id_archivo + '_' + new Date());
+  }
 
-  if (this.form.get("tipo_cobro").value == "personalizado") {
-    data = {
-      ...data,
-      cobroJuridico: this.crypto.encryptJson(JSON.stringify({
-        tipo_cobro: this.formPersonalizado.get("tipoCobroJuridico").value,
-        monto_cuota: this.formPersonalizado.get("cashJuridico").value
-      })),
-      cobroNatural: this.crypto.encryptJson(JSON.stringify({
-        tipo_cobro: this.formPersonalizado.get("tipoCobroNatural").value,
-        monto_cuota: this.formPersonalizado.get("cashNatural").value
-      })),
-      cobroFP: this.crypto.encryptJson(JSON.stringify({
-        tipo_cobro: this.formPersonalizado.get("tipoCobroFP").value,
-        monto_cuota: this.formPersonalizado.get("cashFP").value
-      })),
+  getTipoCobro(t: string): boolean {
+    var value = false;
+    try {
+      value = (t == this.form.get("tipo_cobro").value.toString())
+    } catch (error) {
+      value = false
     }
-
-  } else {
-    data = {
-      ...data,
-      monto_cuota: this.crypto.encryptJson(this.form.get('cash').value)
-    }
+    return value;
   }
 
-  const dataString = this.crypto.encryptString(JSON.stringify(data));
 
-  this.loading = true;
-  this.loader.loading()
+  submit() {
 
+    this.startTimer()
 
-  this.bancario.doGeneracion(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
-
-    this.pauseTimer()
-    this.loader.stop()
-    this.loading = false;
-
-    const json = JSON.parse(this.crypto.decryptString(res));
-
-    switch (json.R) {
-      case constant.R0:
-        this.generacionResponse = new GeneracionDecrypter(this.crypto).deserialize(json)
-        this.crypto.setKeys(this.generacionResponse.keyS, this.generacionResponse.ivJ, this.generacionResponse.keyJ, this.generacionResponse.ivS)
-        this.openDialog();
-        this.form.reset();
-        if (this.generacionResponse.tipo_archivo === 'EXCEL') {
-          this.exportXLSX();
-        } else if (this.generacionResponse.tipo_archivo === 'TXT') {
-          expFile(this.generacionResponse.cuotas.join('\n'), 'Archivo_' + this.generacionResponse.id_archivo + '_' + new Date())
-        }
-        break;
-      case constant.R1:
-        const def = new DefaultDecrypter(this.crypto).deserialize(json)
-        this.toaster.error(def.M)
-        this.crypto.setKeys(def.keyS, def.ivJ, def.keyJ, def.ivS)
-        break;
-      default:
-        this.toaster.default_error()
-        break;
+    var data: {} = {
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      id_banco: this.crypto.encryptJson(this.form.get('banco').value),
+      descripcion: this.crypto.encryptJson(this.form.get('descripcion').value),
+      tasa: this.crypto.encryptJson(this.tasas.filter(t => t.id == this.form.get('tasa').value)[0].monto),
+      id_tasa: this.crypto.encryptJson(this.form.get('tasa').value),
+      oper: this.crypto.encryptJson(this.form.get("tipo_cobro").value)
     }
 
 
-  })
+    if (this.form.get("tipo_cobro").value == "personalizado") {
+      data = {
+        ...data,
+        cobroJuridico: this.crypto.encryptJson(JSON.stringify({
+          tipo_cobro: this.formPersonalizado.get("tipoCobroJuridico").value,
+          monto_cuota: this.formPersonalizado.get("cashJuridico").value
+        })),
+        cobroNatural: this.crypto.encryptJson(JSON.stringify({
+          tipo_cobro: this.formPersonalizado.get("tipoCobroNatural").value,
+          monto_cuota: this.formPersonalizado.get("cashNatural").value
+        })),
+        cobroFP: this.crypto.encryptJson(JSON.stringify({
+          tipo_cobro: this.formPersonalizado.get("tipoCobroFP").value,
+          monto_cuota: this.formPersonalizado.get("cashFP").value
+        })),
+      }
 
-}
-
-isInvalid(): boolean {
-  if (this.form.get("tipo_cobro").value == "personalizado") {
-    return this.form.invalid || this.formPersonalizado.invalid;
-  }
-  return this.form.invalid || this.form.get("cash").value == null;
-}
-
-getTasas() {
-
-  var data: {} = {
-    u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-    scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-    correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-  }
-
-  const dataString = this.crypto.encryptString(JSON.stringify(data));
-
-  this.loader.loading();
-
-  this.bancario.doGetTasas(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
-    this.loader.stop();
-    const json = JSON.parse(this.crypto.decryptString(res));
-    const response = new DefaultDecrypter(this.crypto).deserialize(json);
-    console.log(json)
-    switch (json.R) {
-      case constant.R0:
-        this.tasas = JSON.parse(this.crypto.decryptJson(json.tasas));
-        console.log(this.tasas)
-        break;
-      case constant.R1:
-      default:
-        this.toaster.error(response.M)
-        break;
-    }
-    this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
-    this.loadingTasas = false
-  })
-}
-
-startTimer() {
-  this.time = 0;
-  console.log("=====>");
-  this.interval = setInterval(() => {
-    if (this.time === 0) {
-      this.time++;
     } else {
-      this.time++;
+      data = {
+        ...data,
+        monto_cuota: this.crypto.encryptJson(this.form.get('cash').value)
+      }
     }
-  }, 1000);
-}
 
-pauseTimer() {
-  clearInterval(this.interval);
-}
+    const dataString = this.crypto.encryptString(JSON.stringify(data));
+
+    this.loading = true;
+    this.loader.loading()
+
+
+    this.bancario.doGeneracion(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
+
+      this.pauseTimer()
+      this.loader.stop()
+      this.loading = false;
+
+      const json = JSON.parse(this.crypto.decryptString(res));
+
+      switch (json.R) {
+        case constant.R0:
+          this.generacionResponse = new GeneracionDecrypter(this.crypto).deserialize(json)
+          this.crypto.setKeys(this.generacionResponse.keyS, this.generacionResponse.ivJ, this.generacionResponse.keyJ, this.generacionResponse.ivS)
+          this.openDialog();
+          this.form.reset();
+          if (this.generacionResponse.tipo_archivo === 'EXCEL') {
+            this.exportXLSX();
+          } else if (this.generacionResponse.tipo_archivo === 'TXT') {
+            expFile(this.generacionResponse.cuotas.join('\n'), 'Archivo_' + this.generacionResponse.id_archivo + '_' + new Date())
+          }
+          break;
+        case constant.R1:
+          const def = new DefaultDecrypter(this.crypto).deserialize(json)
+          this.toaster.error(def.M)
+          this.crypto.setKeys(def.keyS, def.ivJ, def.keyJ, def.ivS)
+          break;
+        default:
+          this.toaster.default_error()
+          break;
+      }
+
+
+    })
+
+  }
+
+  isInvalid(): boolean {
+    if (this.form.get("tipo_cobro").value == "personalizado") {
+      return this.form.invalid || this.formPersonalizado.invalid;
+    }
+    return this.form.invalid || this.form.get("cash").value == null;
+  }
+
+  getTasas() {
+
+    var data: {} = {
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+    }
+
+    const dataString = this.crypto.encryptString(JSON.stringify(data));
+
+    this.loader.loading();
+
+    this.bancario.doGetTasas(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
+      this.loader.stop();
+      const json = JSON.parse(this.crypto.decryptString(res));
+      const response = new DefaultDecrypter(this.crypto).deserialize(json);
+      console.log(json)
+      switch (json.R) {
+        case constant.R0:
+          this.tasas = JSON.parse(this.crypto.decryptJson(json.tasas));
+          console.log(this.tasas)
+          break;
+        case constant.R1:
+        default:
+          this.toaster.error(response.M)
+          break;
+      }
+      this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+      this.loadingTasas = false
+    })
+  }
+
+  startTimer() {
+    this.time = 0;
+    console.log("=====>");
+    this.interval = setInterval(() => {
+      if (this.time === 0) {
+        this.time++;
+      } else {
+        this.time++;
+      }
+    }, 1000);
+  }
+
+  pauseTimer() {
+    clearInterval(this.interval);
+  }
 
 }

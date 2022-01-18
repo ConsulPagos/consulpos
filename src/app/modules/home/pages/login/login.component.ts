@@ -3,13 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ErrorResponse } from 'src/app/models/auth_response';
 import { StorageService } from 'src/app/shared/services/storage.service';
-import { ConfirmPasswordValidator } from 'src/app/shared/validators/confirm-password.validator';
 import { UserInterface } from '../../../../models/user';
-import { SesionObject, SesionResponse } from '../../../../models/sesion_response';
+import { SesionObject } from '../../../../models/sesion_response';
 
 import { SesionService } from '../../../../shared/services/sesion.service'
 import { CryptoService } from '../../../../shared/services/crypto.service'
-import { filter, map } from 'rxjs/operators';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 
 import { constant } from "../../../../shared/utils/constant";

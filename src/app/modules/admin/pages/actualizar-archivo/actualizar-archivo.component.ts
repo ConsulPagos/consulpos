@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-import { ArchivoInterface } from 'src/app/models/archivo';
+import { Router, NavigationExtras } from '@angular/router';
 import { BancoInterface } from 'src/app/models/banco';
 import { ActualizacionResponse, ActualizacionDecrypter } from 'src/app/models/actualizacion_response';
-import { CrmTableInterface } from 'src/app/models/crm';
 import { DefaultDecrypter } from 'src/app/models/default_response';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
@@ -13,8 +11,6 @@ import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { constant } from 'src/app/shared/utils/constant';
-import { AdminService } from '../../services/admin.service';
-import { PlantillaRespuestaInterface } from 'src/app/models/plantilla_respuesta';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
@@ -25,7 +21,6 @@ import { LoaderService } from 'src/app/shared/services/loader.service';
 export class ActualizarArchivoComponent implements OnInit {
 
   data: any = { 'affiliate': {} };
-  affiliate: CrmTableInterface;
   loading = false;
   error = false;
   id;

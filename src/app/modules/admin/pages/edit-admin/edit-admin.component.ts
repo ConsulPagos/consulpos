@@ -5,7 +5,6 @@ import { EstadoInterface } from 'src/app/models/estado';
 import { RolInterface } from 'src/app/models/rol';
 import { SucursalInterface } from 'src/app/models/sucrusal';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
-import { AdminService } from '../../services/admin.service';
 import { Title } from '@angular/platform-browser';
 import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
 import { TipodocumentoInterface } from 'src/app/models/tipo_documento';

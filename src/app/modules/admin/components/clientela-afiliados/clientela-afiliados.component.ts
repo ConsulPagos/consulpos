@@ -6,14 +6,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { merge, of as observableOf } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
-import { AffiliateDetailJoinInterface } from 'src/app/models/afiliado';
 import { ShowClientsDecrypter, ShowClientsResponse } from 'src/app/models/showclients_response';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { constant } from 'src/app/shared/utils/constant';
-import { AdminService } from "../../services/admin.service";
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
@@ -33,7 +31,6 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
 
   isLoadingResults = false;
 
-  expandedElement: AffiliateDetailJoinInterface | null;
 
   @Input() access_level: number;
   @Output() count = new EventEmitter<number>();
@@ -44,7 +41,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
   error = false;
   resultsLength;
   firstLoading = false;
-  dataSource = new MatTableDataSource<AffiliateDetailJoinInterface>();
+  dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<any>(true, []);

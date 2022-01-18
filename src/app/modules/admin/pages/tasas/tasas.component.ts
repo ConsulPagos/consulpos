@@ -1,17 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
 import { DefaultDecrypter } from 'src/app/models/default_response';
-import { ApiService } from 'src/app/shared/services/api.service';
-import { AuthService } from 'src/app/shared/services/auth.service';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { constant } from 'src/app/shared/utils/constant';
-import { AdminService } from '../../services/admin.service';
-import { ExportService } from '../../services/export.service';
 
 @Component({
   selector: 'app-tasas',
@@ -28,16 +23,10 @@ export class TasasComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private admin: AdminService,
     private session: SesionService,
     private bancario: BancarioService,
-    private api: ApiService,
     private crypto: CryptoService,
-    private auth: AuthService,
-    private routes: ActivatedRoute,
-    private router: Router,
     private storage: StorageService,
-    private excelService: ExportService,
     private toaster: ToasterService
   ) {
 
