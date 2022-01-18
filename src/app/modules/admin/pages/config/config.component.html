@@ -65,6 +65,32 @@
                                     </p>
                                 </div>
                             </div>
+
+                            <div class="card_box card-1">
+                                <div class="card__icon">
+                                    <i class="fas fa-user-lock"></i>
+                                    Roles Y Permisos
+                                </div>
+                                <div class="sub_title">
+                                    <p class="p_card">Configuracion para los usuarios</p>
+                                </div>
+                                <div class="menu_card">
+                                    <p class="card__apply">
+                                        <a class="card__link"
+                                            [routerLink]="['/admin/app',{ outlets: { adr: ['add-tasas'] } }]">
+                                            <i class="fas fa-key"></i>
+                                            Agregar
+                                        </a>
+                                    </p>
+                                    <p class="card__apply">
+                                        <a class="card__link"
+                                            [routerLink]="['/admin/app',{ outlets: { adr: ['tasas'] } }]">
+                                            <i class="fas fa-unlock"></i>
+                                            Listar
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
 
                     </div>

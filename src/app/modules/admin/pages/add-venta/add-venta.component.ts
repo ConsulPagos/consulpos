@@ -227,8 +227,8 @@ export class AddVentaComponent implements OnInit {
           pago: (JSON.stringify(
             {
               t_pago_id: this.solicitud.get("t_pago_id").value,
-              t_pago_desc: this.solicitud.get("t_pago_desc").value,
-              monto: this.solicitud.get("monto").value,
+              // t_pago_desc: this.solicitud.get("t_pago_desc").value,
+              // monto: this.solicitud.get("monto").value,
             }
           )),
         }
