@@ -73,6 +73,7 @@ import { AddTasasComponent } from './pages/add-tasas/add-tasas.component';
 import { EstadoCuentaComponent } from './pages/estado-cuenta/estado-cuenta.component';
 import { DiferirDeudaComponent } from './components/diferir-deuda/diferir-deuda.component';
 import { FichaUserComponent } from './pages/ficha-user/ficha-user.component';
+import { CobroCentralizadoComponent } from './pages/cobro-centralizado/cobro-centralizado.component';
 
 
 @NgModule({
@@ -131,7 +132,8 @@ import { FichaUserComponent } from './pages/ficha-user/ficha-user.component';
     TasasComponent, 
     ConfigComponent, 
     AddTasasComponent, EstadoCuentaComponent, DiferirDeudaComponent,
-     FichaUserComponent
+     FichaUserComponent,
+     CobroCentralizadoComponent
   ],
     
   imports: [

@@ -106,10 +106,20 @@
                 <li class="fas fa-cash-register"></li> <span class="text_side">Conciliar Archivo</span>
             </a>
 
+
+
             <a class="menu_side" *ngIf="access.venta_manual()"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['historico-conciliacion'] } }]"
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-book"></li> <span class="text_side">Histórico de Conciliación</span>
+            </a>
+
+            <hr>
+
+            <a class="menu_side" *ngIf="access.venta_manual()"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['cobro-centralizado'] } }]" routerLinkActive="ad-active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <li class="fas fa-university"></li> <span class="text_side">Cobro Centralizado</span>
             </a>
 
         </mat-menu>

@@ -1,0 +1,53 @@
+<section id="crmdetalle">
+    <div class="container-fluid">
+        <div class="title">
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="w-100">
+                <div class="bg-white rounded card p-2">
+                    <form [formGroup]="form">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="box-title d-flex justify-content-center">
+                                    <h5 class="bold uppercase mt-3">Cobro centralizado</h5>
+                                </div>
+                            </div>
+
+                            <div class="w-100 pl-4 pr-4 pt-4">
+                                <mat-form-field appearance="outline" class="container_box w-100">
+                                    <mat-label>Seleccionar opcion</mat-label>
+                                    <mat-select formControlName="option">
+                                        <mat-option value="1">
+                                            Generar plantilla
+                                        </mat-option>
+                                        <mat-option value="2">
+                                            Conciliar
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="w-100 pl-4 pr-4" *ngIf="form.get('option').value">
+                                <mat-form-field appearance="outline" class="container_box w-100">
+                                    <mat-label>Seleccionar Banco</mat-label>
+                                    <mat-select formControlName="banco">
+                                        <mat-option *ngFor="let banco of bancos" value={{banco.codigo}}>
+                                            {{banco.nombre}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 pl-4 pr-4 btn-submit" *ngIf="form.get('option').value">
+                                <app-action-btn *ngIf="form.get('option').value =='1'" [isDisabled]="form.invalid"
+                                    [text]="'Generar'">
+                                </app-action-btn>
+                                <app-action-btn *ngIf="form.get('option').value =='2'" [isDisabled]="form.invalid"
+                                    [text]="'Conciliar'">
+                                </app-action-btn>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

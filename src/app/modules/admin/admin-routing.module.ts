@@ -52,6 +52,7 @@ import { ConfigComponent } from './pages/config/config.component';
 import { TasasComponent } from './pages/tasas/tasas.component';
 import { AddTasasComponent } from './pages/add-tasas/add-tasas.component';
 import { FichaUserComponent } from './pages/ficha-user/ficha-user.component';
+import { CobroCentralizadoComponent } from './pages/cobro-centralizado/cobro-centralizado.component';
 
 const routes: Routes = [
   {
@@ -97,6 +98,8 @@ const routes: Routes = [
       { path: 'config', component: ConfigComponent, outlet: 'adr' },
       { path: 'tasas', component: TasasComponent, outlet: 'adr' },
       { path: 'add-tasas', component: AddTasasComponent, outlet: 'adr' },
+      { path: 'cobro-centralizado', component: CobroCentralizadoComponent, outlet: 'adr', canActivate: [CobrosGuard] },
+
     ],
   }
 ];
