@@ -8,7 +8,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { merge, of as observableOf } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
-import { AffiliateDetailJoinInterface } from 'src/app/models/afiliado';
 import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
 import { ShowUsersDecrypter, ShowUsersResponse } from 'src/app/models/showusers_response';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -20,7 +19,6 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { UsuariosService } from 'src/app/shared/services/usuarios.service';
 import { constant } from 'src/app/shared/utils/constant';
-import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-tabla-super-admin',
@@ -39,7 +37,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
 
   isLoadingResults = false;
 
-  expandedElement: AffiliateDetailJoinInterface | null;
+  expandedElement: any | null;
 
   @Input() access_level: number;
   @Output() count = new EventEmitter<number>();
@@ -49,7 +47,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
   error = false;
   resultsLength;
   firstLoading = false;
-  dataSource = new MatTableDataSource<AffiliateDetailJoinInterface>();
+  dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<any>(true, []);

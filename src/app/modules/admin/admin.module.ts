@@ -48,7 +48,11 @@ import { TablaHistoricoConciliacionComponent } from './components/tabla-historic
 import { AdminNavbarComponent } from './components/admin-navbar/admin-navbar.component';
 import { AdminSidenavComponent } from './components/admin-sidenav/admin-sidenav.component';
 import { ClientelaAfiliadosComponent } from './components/clientela-afiliados/clientela-afiliados.component';
+import { TablaSuperAdminComponent } from './components/tabla-super-admin/tabla-super-admin.component';
+import { SeleccionCentralizadoComponent } from './pages/seleccion-centralizado/seleccion-centralizado.component';
+import { ModalCentralizadoComponent } from './components/modal-centralizado/modal-centralizado.component';
 
+import { PrevisualizarArchivoComponent } from './components/previsualizar-archivo/previsualizar-archivo.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +88,10 @@ import { ClientelaAfiliadosComponent } from './components/clientela-afiliados/cl
     ClientelaAfiliadosComponent,
     DashboardComponent,
     GenerarArchivoComponent,
+    TablaSuperAdminComponent,
+    SeleccionCentralizadoComponent,
+    ModalCentralizadoComponent,
+    PrevisualizarArchivoComponent
   ],
 
   imports: [

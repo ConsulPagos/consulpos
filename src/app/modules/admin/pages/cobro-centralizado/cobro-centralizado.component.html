@@ -21,7 +21,7 @@
                                             Generar plantilla
                                         </mat-option>
                                         <mat-option value="2">
-                                            Conciliar
+                                            Registrar respuesta
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -38,10 +38,10 @@
                             </div>
                             <div class="col-12 pl-4 pr-4 btn-submit" *ngIf="form.get('option').value">
                                 <app-action-btn *ngIf="form.get('option').value =='1'" [isDisabled]="form.invalid"
-                                    [text]="'Generar'">
+                                    (click)="submitGenerar()" [text]="'Generar'">
                                 </app-action-btn>
                                 <app-action-btn *ngIf="form.get('option').value =='2'" [isDisabled]="form.invalid"
-                                    [text]="'Conciliar'">
+                                    (click)="submitRegistrar()" [text]="'Registrar'">
                                 </app-action-btn>
                             </div>
                         </div>

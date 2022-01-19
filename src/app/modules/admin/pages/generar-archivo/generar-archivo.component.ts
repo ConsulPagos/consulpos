@@ -18,6 +18,7 @@ import { expFile } from './generartxt'
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-generar-archivo',
@@ -78,7 +79,7 @@ export class GenerarArchivoComponent implements OnInit {
     this.getTasas();
   }
 
- 
+
 
   openDialog(): void {
     this.dialog.open(ResultFileComponent, {
@@ -160,6 +161,9 @@ export class GenerarArchivoComponent implements OnInit {
 
       switch (json.R) {
         case constant.R0:
+          const pipe = new DatePipe('en-US');
+          const now = Date.now();
+          const myFormattedDate = pipe.transform(now, 'short');
           this.generacionResponse = new GeneracionDecrypter(this.crypto).deserialize(json)
           this.crypto.setKeys(this.generacionResponse.keyS, this.generacionResponse.ivJ, this.generacionResponse.keyJ, this.generacionResponse.ivS)
           this.openDialog();
@@ -167,7 +171,7 @@ export class GenerarArchivoComponent implements OnInit {
           if (this.generacionResponse.tipo_archivo === 'EXCEL') {
             this.exportXLSX();
           } else if (this.generacionResponse.tipo_archivo === 'TXT') {
-            expFile(this.generacionResponse.cuotas.join('\n'), 'Archivo_' + this.generacionResponse.id_archivo + '_' + new Date())
+            expFile(this.generacionResponse.cuotas.join('\n'), 'Archivo_' + this.generacionResponse.id_archivo + '_' + myFormattedDate)
           }
           break;
         case constant.R1:

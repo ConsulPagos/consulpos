@@ -9,14 +9,15 @@
             </div>
         </div>
         <div class="content">
-            <div class="mb-2" *ngIf="!data">
-                <h6 class="mb-4 bold uppercase">Archivo #{{archivo.id}}</h6>
+            <div class="mb-2" *ngIf="!data; else prev">
+                <h6 class="mb-4 bold uppercase" *ngIf="!isCentralizado">Archivo #{{archivo.id}}</h6>
                 <h6>Selecciona el archivo respuesta en formato <span
                         class="text-lowercase bold">{{tipo_archivo}}</span>:</h6>
 
                 <input [disabled]="!plantilla" *ngIf="tipo_archivo =='EXCEL'; else TXTFile" type="file"
                     title="Seleccionar archivo (.xls, .xls)" style="display: inline-block;"
-                    (change)="onFileChange($event)" placeholder="Seleccionar archivo (.xls, .xlsx)" accept=".xls, .xlsx">
+                    (change)="onFileChange($event)" placeholder="Seleccionar archivo (.xls, .xlsx)"
+                    accept=".xls, .xlsx">
 
                 <ng-template #TXTFile>
                     <input [disabled]="!plantilla" type="file" title="Seleccionar archivo (.txt)"
@@ -24,42 +25,42 @@
                         placeholder="Seleccionar archivo (.txt)" accept=".txt">
                 </ng-template>
 
-                <div *ngIf="expression"></div>
             </div>
-            <div *ngIf="data && columns">
+
+
+            <ng-template #prev>
                 <div>
                     <div class="container-archivo">
                         <div>
-                            <h6 class="mb-4 bold uppercase">Archivo #{{archivo.id}} ({{archivo.cuotas}} lineas)</h6>
-                            <h6>Vista previa del archivo sleccionado:</h6>
-                            <!-- <div class="resumen-container">
-                                <div class="resumen-item">
-                                    <div class="resumen-text">{{archivo.cuotas}} lineas </div>
-                                </div>
-                            </div> -->
+                            <h6 *ngIf="!isCentralizado" class="mb-4 bold uppercase">Archivo #{{archivo.id}}
+                                ({{archivo.cuotas}} lineas)</h6>
+                            <h6>Vista previa del archivo seleccionado:</h6>
                         </div>
                         {{archivo.fecha_respuesta | date}}
                         {{archivo.fecha_conciliacion | date}}
 
-                        <div class="btn-submit"
-                            *ngIf="archivo && !archivo.fecha_respuesta && !archivo.fecha_conciliacion">
-                            <app-action-btn [isDisabled]="getTotal() != archivo.cuotas  || loading" (onClick)="save()"
-                                [loading]="loading" [text]="'Guardar'"></app-action-btn>
+                        <div *ngIf="!isCentralizado; else submitCentralizado">
+                            <div class="btn-submit"
+                                *ngIf="archivo && !archivo.fecha_respuesta && !archivo.fecha_conciliacion">
+                                <app-action-btn [isDisabled]=" getTotal() != archivo.cuotas  || loading"
+                                    (onClick)="save()" [loading]="loading" [text]="'Guardar'"></app-action-btn>
+                            </div>
                         </div>
+                        <ng-template #submitCentralizado>
+                            <div class="btn-submit">
+                                <app-action-btn [isDisabled]="!isCentralizado || loading" (onClick)="saveCentralizado()"
+                                    [loading]="loading" [text]="'Guardar'"></app-action-btn>
+                            </div>
+                        </ng-template>
                     </div>
-                    <span class="error" *ngIf="getTotal() != archivo.cuotas">
+                    <span class="error" *ngIf="!isCentralizado && getTotal() != archivo.cuotas">
                         La cantidad de líneas en el archivo no concuerda.
                     </span>
                 </div>
+                
                 <app-previsualizar-archivo [data]="data" [columns]="columns">
                 </app-previsualizar-archivo>
-
-            </div>
+            </ng-template>
         </div>
     </div>
 </section>
-<ng-template #loader>
-    <div *ngIf="loading">
-        <app-loader></app-loader>
-    </div>
-</ng-template>
