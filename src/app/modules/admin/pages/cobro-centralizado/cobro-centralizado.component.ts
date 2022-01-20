@@ -94,18 +94,26 @@ export class CobroCentralizadoComponent implements OnInit {
       posicion: 1,
       tipo: "string"
     }, {
+      nombre: "TERMIN",
+      columna: "terminal",
+      decimales: null,
+      inicia: null,
+      longitud: null,
+      posicion: 2,
+      tipo: "string"
+    }, {
       nombre: "COMI$",
       columna: "monto",
       decimales: 2,
       inicia: null,
       longitud: null,
-      posicion: 2,
+      posicion: 3,
       tipo: "double"
     }
     ]
 
     const id = 1;
-    const archivo = {}
+    const archivo = { id_banco: this.form.get("banco").value }
     const extras: NavigationExtras = {
       state: {
         archivo: archivo,

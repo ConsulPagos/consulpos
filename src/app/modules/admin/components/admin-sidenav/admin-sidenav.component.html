@@ -6,24 +6,22 @@
                 style="width: auto; height: 50px;">
         </div>
         <!-- Dashboard -->
-        <a class="menu_side" 
-            [routerLink]="['/admin/app',{ outlets: { adr: ['dashboard'] } }]" routerLinkActive="ad-active"
-            [routerLinkActiveOptions]="{exact: true}">
+        <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['dashboard'] } }]"
+            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-tachometer-alt"></li> <span class="text_side">Dashboard</span>
         </a>
         <!-- ************************************************************************************************** -->
 
         <!-- Registro de Clientes -->
-        <a class="menu_side"  [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]"
+        <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]"
             routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-users"></li><span class="text_side">Clientes</span>
         </a>
         <!-- ************************************************************************************************** -->
 
         <!-- Operaciones -->
-        <a class="menu_side" 
-            [routerLink]="['/admin/app',{ outlets: { adr: ['venta-consulpos'] } }]" routerLinkActive="ad-active"
-            [routerLinkActiveOptions]="{exact: true}">
+        <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['venta-consulpos'] } }]"
+            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-cart-plus"></li><span class="text_side">Ventas Consulpos</span>
         </a>
         <!-- ************************************************************************************************** -->
@@ -36,40 +34,35 @@
 
         <mat-menu #solicitud="matMenu">
 
-            <button class="menu_side" mat-menu-item [matMenuTriggerFor]="venta">
+            <a class="menu_side" mat-menu-item [matMenuTriggerFor]="venta">
                 <li class="fa fa-file-alt icon_side"></li>
                 <span class="text_side">Ventas</span>
-            </button>
+            </a>
 
-            <a class="menu_side" 
-                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
-                [routerLinkActiveOptions]="{exact: true}">
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-exchange-alt"></li> <span class="text_side">Traspaso</span>
             </a>
 
-            <a class="menu_side" 
-                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
-                [routerLinkActiveOptions]="{exact: true}">
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-university"></li> <span class="text_side">Cambio de Banco</span>
             </a>
 
-            <a class="menu_side" 
-                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
-                [routerLinkActiveOptions]="{exact: true}">
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-book-dead"></li> <span class="text_side">Desafiliación</span>
             </a>
         </mat-menu>
 
         <mat-menu #venta="matMenu">
-            <a class="menu_side" 
-                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
-                [routerLinkActiveOptions]="{exact: true}">
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-cart-plus"></li> <span class="text_side">Pre-ventas</span>
             </a>
 
-            <a class="menu_side" 
-                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]" routerLinkActive="ad-active"
-                [routerLinkActiveOptions]="{exact: true}">
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-cart-plus"></li> <span class="text_side">Ventas</span>
             </a>
         </mat-menu>
@@ -77,7 +70,7 @@
 
         <!-- Cobranza -->
         <a class="menu_side" mat-button [matMenuTriggerFor]="cobranza">
-            <li class="fa fa-file icon_side"></li>
+            <li class="fa fa-coins icon_side"></li>
             <span class="text_side">Cobranza</span>
         </a>
         <mat-menu #cobranza="matMenu">
@@ -88,39 +81,51 @@
                 <li class="fa fa-money-bill"></li> <span class="text_side">Validar Pago POS</span>
             </a> -->
 
-            <a class="menu_side" 
-                [routerLink]="['/admin/app',{ outlets: { adr: ['generar-archivo'] } }]" routerLinkActive="ad-active"
-                [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-file-download"></li> <span class="text_side">Generar Archivo</span>
+            <!-- domiciliacion -->
+            <a class="menu_side" mat-menu-item [matMenuTriggerFor]="domiciliacion">
+                <li class="fa fa-file-alt icon_side"></li>
+                <span class="text_side">Domiciliacion</span>
             </a>
 
-            <a class="menu_side" 
-                [routerLink]="['/admin/app',{ outlets: { adr: ['actualizar-archivo'] } }]" routerLinkActive="ad-active"
-                [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-file-upload"></li> <span class="text_side">Cargar Respuesta</span>
-            </a>
+            <mat-menu #domiciliacion="matMenu">
+                <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['generar-archivo'] } }]"
+                    routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                    <li class="fa fa-file-download"></li> <span class="text_side">Generar Archivo</span>
+                </a>
 
-            <a class="menu_side" 
-                [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]" routerLinkActive="ad-active"
-                [routerLinkActiveOptions]="{exact: true}">
-                <li class="fas fa-cash-register"></li> <span class="text_side">Conciliar Archivo</span>
-            </a>
+                <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['actualizar-archivo'] } }]"
+                    routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                    <li class="fa fa-file-upload"></li> <span class="text_side">Cargar Respuesta</span>
+                </a>
+            </mat-menu>
 
 
-
-            <a class="menu_side" 
-                [routerLink]="['/admin/app',{ outlets: { adr: ['historico-conciliacion'] } }]"
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['cobro-centralizado'] } }]"
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-book"></li> <span class="text_side">Histórico de Conciliación</span>
-            </a>
-
-            <hr>
-
-            <a class="menu_side" 
-                [routerLink]="['/admin/app',{ outlets: { adr: ['cobro-centralizado'] } }]" routerLinkActive="ad-active"
-                [routerLinkActiveOptions]="{exact: true}">
                 <li class="fas fa-university"></li> <span class="text_side">Cobro Centralizado</span>
             </a>
+
+
+            <!-- conciliacion -->
+            <a class="menu_side" mat-menu-item [matMenuTriggerFor]="conciliacion">
+                <li class="fa fa-money-check-alt icon_side"></li>
+                <span class="text_side">Conciliacion</span>
+            </a>
+
+            <mat-menu #conciliacion="matMenu">
+                <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]"
+                    routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                    <li class="fas fa-cash-register"></li> <span class="text_side">Conciliar Archivo</span>
+                </a>
+
+
+                <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['historico-conciliacion'] } }]"
+                    routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                    <li class="fa fa-book"></li> <span class="text_side">Histórico</span>
+                </a>
+            </mat-menu>
+
+
 
         </mat-menu>
         <!-- ************************************************************************************************** -->
@@ -141,8 +146,8 @@
         <!- ************************************************************************************************** -->
 
         <!-- Condiguracion -->
-        <a class="menu_side"  [routerLink]="['/admin/app',{ outlets: { adr: ['config'] } }]"
-            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+        <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['config'] } }]" routerLinkActive="ad-active"
+            [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-cogs"></li><span class="text_side">Configuración</span>
         </a>
         <!-- ************************************************************************************************** -->

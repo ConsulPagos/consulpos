@@ -36,8 +36,6 @@
                                 ({{archivo.cuotas}} lineas)</h6>
                             <h6>Vista previa del archivo seleccionado:</h6>
                         </div>
-                        {{archivo.fecha_respuesta | date}}
-                        {{archivo.fecha_conciliacion | date}}
 
                         <div *ngIf="!isCentralizado; else submitCentralizado">
                             <div class="btn-submit"

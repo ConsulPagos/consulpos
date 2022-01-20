@@ -51,10 +51,11 @@
 
 .archivo-prev{
     width: 600px;
-    margin: auto;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     border: 1px solid whitesmoke;
+    border-radius: 20px;
 }
 
 .btn-submit{

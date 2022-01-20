@@ -50,6 +50,7 @@ export class PrevArchivoComponent implements OnInit {
 
       if (this.router.getCurrentNavigation().extras.state.data) {
         this.data = this.router.getCurrentNavigation().extras.state.data
+        console.log(this.data)
       }
 
       if (this.router.getCurrentNavigation().extras.state.columns) {
@@ -66,7 +67,7 @@ export class PrevArchivoComponent implements OnInit {
       }
 
     } else {
-      this.router.navigateByUrl("/admin/app/(adr:actualizar-archivo)")
+      this.router.navigateByUrl("/admin/app/(adr:dashboard)")
     }
 
   }
@@ -264,12 +265,14 @@ export class PrevArchivoComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       archivo: this.crypto.encryptJson(JSON.stringify(this.data)),
+      id_banco: this.crypto.encryptJson(this.archivo.id_banco),
+      descripcion: this.crypto.encryptJson("PRUEBA CC"),
     }))
 
     this.loading = true;
     this.loader.loading()
 
-    this.bancario.doConciliacion(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.bancario.doConciliarCC(`${this.session.getDeviceId()};${data}`).subscribe(res => {
 
       const json = JSON.parse(this.crypto.decryptString(res))
       this.loading = false
@@ -344,6 +347,9 @@ export class PrevArchivoComponent implements OnInit {
   parseValue(type: string, value: string, d: number) {
     var data: any = value;
     switch (type) {
+      case "string":
+        data = value.toString();
+        break;
       case "int":
         data = parseInt(value);
         break;
@@ -351,7 +357,6 @@ export class PrevArchivoComponent implements OnInit {
         if (d > 0) {
           data = (parseFloat(value.trim().replace(".", '').replace(",", '.')) / Math.pow(10, d)).toFixed(d)
         } else {
-          //console.log(value);
           data = parseFloat(value.trim().replace(".", '').replace(",", '.')).toFixed(2);
           console.log(data)
         }

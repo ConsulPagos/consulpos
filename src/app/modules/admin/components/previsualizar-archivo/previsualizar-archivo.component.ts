@@ -17,14 +17,9 @@ export class PrevisualizarArchivoComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   constructor(){
-    console.log("se construye")
   }
 
   ngOnInit(): void {
-    console.log("se incicializa")
-
-    console.log(this.data)
-    console.log(this.columns)
     this.dataSource = new MatTableDataSource(this.data);
     setTimeout(() => this.dataSource.paginator = this.paginator);
   }
