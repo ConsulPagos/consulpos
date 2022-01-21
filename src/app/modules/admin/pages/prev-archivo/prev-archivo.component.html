@@ -46,7 +46,7 @@
                         </div>
                         <ng-template #submitCentralizado>
                             <div class="btn-submit">
-                                <app-action-btn [isDisabled]="!isCentralizado || loading" (onClick)="saveCentralizado()"
+                                <app-action-btn [isDisabled]="!isCentralizado || loading" (onClick)="confirmCentralizado()"
                                     [loading]="loading" [text]="'Guardar'"></app-action-btn>
                             </div>
                         </ng-template>

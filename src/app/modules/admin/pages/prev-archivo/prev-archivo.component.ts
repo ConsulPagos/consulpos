@@ -11,6 +11,9 @@ import { DefaultDecrypter } from 'src/app/models/default_response';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { PlantillaRespuestaInterface } from 'src/app/models/plantilla_respuesta';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditFieldDialogComponent } from 'src/app/shared/components/edit-field-dialog/edit-field-dialog.component';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -40,6 +43,7 @@ export class PrevArchivoComponent implements OnInit {
     private storage: StorageService,
     private session: SesionService,
     private toaster: ToasterService,
+    private dialog: MatDialog,
     private loader: LoaderService) {
 
     if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.archivo) {
@@ -259,14 +263,30 @@ export class PrevArchivoComponent implements OnInit {
     //**************************************************************************************************************************//
   }
 
-  submitCentralizado() {
+
+  confirmCentralizado(){
+    const dialogRef = this.dialog.open(EditFieldDialogComponent, {
+      width: '350px',
+      height:'auto',
+      panelClass:'custom-dialog',
+      data: { 'field': "Concepto","value":"" }
+    });
+
+    dialogRef.afterClosed().subscribe((result:any) => {
+      if(result){
+        this.submitCentralizado(result)
+      }
+    })
+  }
+
+  submitCentralizado(descripcion:string) {
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       archivo: this.crypto.encryptJson(JSON.stringify(this.data)),
       id_banco: this.crypto.encryptJson(this.archivo.id_banco),
-      descripcion: this.crypto.encryptJson("PRUEBA CC"),
+      descripcion: this.crypto.encryptJson(descripcion),
     }))
 
     this.loading = true;
