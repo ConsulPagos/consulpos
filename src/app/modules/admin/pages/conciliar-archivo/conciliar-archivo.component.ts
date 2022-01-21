@@ -14,6 +14,7 @@ import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { PlantillaRespuestaInterface } from 'src/app/models/plantilla_respuesta';
 
 @Component({
   selector: 'app-conciliar-archivo',
@@ -51,8 +52,9 @@ export class ConciliarArchivoComponent implements OnInit {
   }
 
   form = new FormGroup({
-    banco: new FormControl(null, [Validators.required]),
+    banco: new FormControl("", [Validators.required]),
     archivo: new FormControl('', [Validators.required]),
+    oper: new FormControl("", [Validators.required]),
   });
 
   load() {
@@ -77,7 +79,7 @@ export class ConciliarArchivoComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       id_banco: this.crypto.encryptJson(this.form.get('banco').value),
-      oper: this.crypto.encryptJson("/conciliar"),
+      oper: this.crypto.encryptJson(this.form.get('oper').value),
     }))
 
     this.loader.loading()
@@ -120,6 +122,7 @@ export class ConciliarArchivoComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       id_archivo: this.crypto.encryptJson(this.archivo.id),
+      oper: this.crypto.encryptJson(this.form.get('oper').value == "/conciliar/cc" ? "/cc" : "/do"),
     }))
 
     this.loader.loading()
@@ -166,6 +169,7 @@ export class ConciliarArchivoComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       id_archivo: this.crypto.encryptJson(this.archivo.id),
+      oper: this.crypto.encryptJson(this.form.get('oper').value == "/conciliar/cc" ? "/cc" : "/do"),
     }))
 
 
@@ -192,11 +196,39 @@ export class ConciliarArchivoComponent implements OnInit {
   }
 
   view(data: any) {
+
+    const plantilla: PlantillaRespuestaInterface[] = [{
+      nombre: "serial",
+      columna: "serial",
+      decimales: null,
+      inicia: null,
+      longitud: null,
+      posicion: 1,
+      tipo: "string"
+    }, {
+      nombre: "afiliado",
+      columna: "afiliado",
+      decimales: null,
+      inicia: null,
+      longitud: null,
+      posicion: 2,
+      tipo: "string"
+    }, {
+      nombre: "cobrado",
+      columna: "cobrado",
+      decimales: 2,
+      inicia: null,
+      longitud: null,
+      posicion: 3,
+      tipo: "string"
+    }
+    ]
+
     const archivo = this.archivo;
     const extras: NavigationExtras = {
       state: {
         archivo: archivo,
-        columns: ["rif", "cuenta", "afiliado", "cobrado", "enviado", "mensaje"],
+        columns: ["afiliado", "serial", "cobrado"],
         data: data
       }
     }

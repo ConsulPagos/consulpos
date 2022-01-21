@@ -29,6 +29,7 @@ import { CobroCentralizadoComponent } from './pages/cobro-centralizado/cobro-cen
 import { AddRolComponent } from './pages/add-rol/add-rol.component';
 import { EditRolComponent } from './pages/edit-rol/edit-rol.component';
 import { RolesComponent } from './pages/roles/roles.component';
+import { SeleccionCentralizadoComponent } from './pages/seleccion-centralizado/seleccion-centralizado.component';
 
 const routes: Routes = [
   {
@@ -62,6 +63,7 @@ const routes: Routes = [
       { path: 'add-rol', component: AddRolComponent, outlet: 'adr' },
       { path: 'edit-rol', component: EditRolComponent, outlet: 'adr' },
       { path: 'roles', component: RolesComponent, outlet: 'adr' },
+      { path: 'seleccion-centralizado', component: SeleccionCentralizadoComponent, outlet: 'adr' },
     ],
   }
 ];

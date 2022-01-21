@@ -54,8 +54,9 @@ import { RolesComponent } from './pages/roles/roles.component';
 import { TablaSuperAdminComponent } from './components/tabla-super-admin/tabla-super-admin.component';
 import { TablaRolesComponent } from './components/tabla-roles/tabla-roles.component';
 import { TablaSalesComponent } from './components/tabla-sales/tabla-sales.component';
-
-
+import { SeleccionCentralizadoComponent } from './pages/seleccion-centralizado/seleccion-centralizado.component';
+import { ModalCentralizadoComponent } from './components/modal-centralizado/modal-centralizado.component';
+import { PrevisualizarArchivoComponent } from './components/previsualizar-archivo/previsualizar-archivo.component';
 
 @NgModule({
   declarations: [
@@ -97,6 +98,10 @@ import { TablaSalesComponent } from './components/tabla-sales/tabla-sales.compon
     TablaSuperAdminComponent,
     TablaRolesComponent,
     TablaSalesComponent,
+    TablaSuperAdminComponent,
+    SeleccionCentralizadoComponent,
+    ModalCentralizadoComponent,
+    PrevisualizarArchivoComponent
   ],
 
   imports: [

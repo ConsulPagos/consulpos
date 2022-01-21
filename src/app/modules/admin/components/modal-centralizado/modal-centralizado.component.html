@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>
+    <span class="d-flex align-items-center mx-4">
+        <li class="fa fa-list mr-2"></li>
+        Equipos seleccionados
+    </span>
+</h1>
+
+<div mat-dialog-content>
+
+    <table class="table table-striped">
+        <tr>
+            <th>N°</th>
+            <th>N° Afiliado</th>
+            <th>Terminal</th>
+            <th>RIF del Comercio</th>
+            <th>Nombre del Comercio</th>
+            <th>Tarifa</th>
+        </tr>
+        <tr *ngFor="let equipo of data['selected']; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{equipo.afiliado}}</td>
+            <td>{{equipo.terminal}}</td>
+            <td>{{equipo.rif}}</td>
+            <td>{{equipo.razon_social}}</td>
+            <td>{{equipo.monto | currency}}</td>
+        </tr>
+
+    </table>
+</div>
+
+<div mat-dialog-actions>
+    <div class="d-flex w-100 btn-container">
+        <button class="cancel action_button flex-fill" mat-button mat-dialog-close>
+            <li class="fa fa-times text-dark"></li>
+        </button>
+        <button class="confirm action_button flex-fill" mat-button cdkFocusInitial [mat-dialog-close]="data['selected']">
+            <li class="fa fa-check"></li>
+        </button>
+    </div>
+</div>
+

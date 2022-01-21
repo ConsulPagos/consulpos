@@ -17,7 +17,7 @@
                     {{error.msg}}
                 </div>
                 <div class="input-container">
-                    <button mat-button class="btn-confirm" id="btn-confirm" type="button" (click)="login()">
+                    <button [disabled]="loading" mat-button class="btn-confirm" id="btn-confirm" type="button" (click)="login()">
                         <div *ngIf="!loading; else loadingTemplate">
                             Ingresar
                         </div>

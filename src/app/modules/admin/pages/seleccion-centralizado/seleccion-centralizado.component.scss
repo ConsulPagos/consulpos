@@ -1,0 +1,33 @@
+.container-seleccionado{
+    background-color: #fff;
+    margin: 0 10px;
+    border-radius: 20px;
+}
+
+.box-title{
+    padding: 20px;
+}
+
+.input-filter{
+    max-width: 600px;
+    width: 100%;
+    margin-right: 20px;
+}
+
+.container-filter{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.selected-text{
+    font-weight: 600;
+}
+
+.save-btn{
+    margin-left: auto;
+    margin-right: 20px;
+    height: 40px;
+    width: 100px;
+}

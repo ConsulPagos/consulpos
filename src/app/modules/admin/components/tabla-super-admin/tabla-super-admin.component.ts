@@ -17,7 +17,6 @@ import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { UsuariosService } from 'src/app/shared/services/usuarios.service';
 import { constant } from 'src/app/shared/utils/constant';
 
-
 @Component({
   selector: 'app-tabla-super-admin',
   templateUrl: './tabla-super-admin.component.html',

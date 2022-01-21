@@ -3,6 +3,7 @@ export const constant = {
     EMAIL: "email",
     R0:"0",
     R1:"1",
+    R4:"4",
     USER:"user",
 
 

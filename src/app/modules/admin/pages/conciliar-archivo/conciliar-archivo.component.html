@@ -12,19 +12,26 @@
                                     <h5 class="bold uppercase mt-3">Conciliar Archivo</h5>
                                 </div>
                             </div>
-
                             <div class="w-100 pl-4 pr-4 pt-4">
                                 <mat-form-field appearance="outline" class="container_box w-100">
+                                    <mat-label>Seleccionar tipo de cobro</mat-label>
+                                    <mat-select formControlName="oper" (selectionChange)="form.get('banco').reset()">
+                                        <mat-option selected value="/conciliar">Domicializacion</mat-option>
+                                        <mat-option selected value="/conciliar/cc">Cobro centralizado</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box w-100"
+                                    *ngIf="form.get('oper').value">
                                     <mat-label>Seleccionar Banco</mat-label>
                                     <mat-select formControlName="banco" (selectionChange)="getArchivos()">
-                                        <mat-option selected value="null">Seleccionar</mat-option>
                                         <mat-option *ngFor="let banco of bancos" value={{banco.codigo}}>
                                             {{banco.nombre}} </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
 
-                            <div class="w-100 pl-4 pr-4" *ngIf="archivos">
+                            <div class="w-100 pl-4 pr-4" *ngIf="archivos &&  form.get('banco').value">
                                 <mat-form-field appearance="outline" class="container_box w-100"
                                     [class.spinner]="loading">
                                     <mat-label>Seleccionar archivo</mat-label>
@@ -38,32 +45,37 @@
                                 </mat-form-field>
                             </div>
 
-                            <div class="archivo-prev mb-4 mt-4 card p-4" *ngIf="form.valid && archivo">
-
-                                <h6 class="uppercase bold">Archivo #{{archivo.id}}</h6>
-                                <div>{{archivo.cuotas}} líneas</div>
-                                <div><span>Monto enviado:</span> {{archivo.monto_enviado | currency}}</div>
-                                <div><span>Monto cobrado:</span> {{archivo.monto_cobrado | currency}}</div>
-                                <div><span>Generado el:</span> {{archivo.fecha_generacion|
-                                    date:'dd/MM/yyyy hh:mm:ss'}}</div>
-                                <div><span>Actualizado el:</span> {{archivo.fecha_respuesta |
-                                    date:'dd/MM/yyyy hh:mm:ss'}}</div>
-                                <div><span>Descripción:</span> {{ archivo.descripcion }}</div>
-
-
-                                <div class="d-flex align-items-center mt-4">
-                                    <app-action-btn mat-button (onClick)="conciliar()"
-                                        [isDisabled]="form.invalid || !archivo || loadingUpdate"
-                                        [loading]="loadingUpdate" [text]="'Conciliar'" class="mr-3">
-                                    </app-action-btn>
-                                    <app-action-btn mat-button (onClick)="getArchivo()"
-                                        [isDisabled]="form.invalid || !archivo || loadingGetArchivo"
-                                        [loading]="loadingGetArchivo" [text]="'Ver'" class="mr-3">
-                                    </app-action-btn>
-                                </div>
-                            </div>
+                          
                         </div>
                     </form>
+                </div>
+                <div class="archivo-prev mb-4 mt-4 card p-4" *ngIf="form.valid && archivo">
+
+                    <h6 class="uppercase bold">Archivo #{{archivo.id}}</h6>
+                    <div>{{archivo.cuotas}} líneas</div>
+                    <div *ngIf="archivo.monto_enviado"><span>Monto enviado:</span> {{archivo.monto_enviado |
+                        currency}}</div>
+                    <div *ngIf="archivo.monto_cobrado"><span>Monto cobrado:</span> {{archivo.monto_cobrado |
+                        currency}}</div>
+                    <div *ngIf="archivo.fecha_generacion"><span>Generado el:</span>
+                        {{archivo.fecha_generacion|
+                        date:'dd/MM/yyyy hh:mm:ss'}}</div>
+                    <div *ngIf="archivo.fecha_respuesta"><span>Actualizado el:</span>
+                        {{archivo.fecha_respuesta |
+                        date:'dd/MM/yyyy hh:mm:ss'}}</div>
+                    <div *ngIf="archivo.descripcion"><span>Descripción:</span> {{ archivo.descripcion }}
+                    </div>
+
+                    <div class="d-flex align-items-center mt-4">
+                        <app-action-btn mat-button (onClick)="conciliar()"
+                            [isDisabled]="form.invalid || !archivo || loadingUpdate"
+                            [loading]="loadingUpdate" [text]="'Conciliar'" class="mr-3">
+                        </app-action-btn>
+                        <app-action-btn mat-button (onClick)="getArchivo()"
+                            [isDisabled]="form.invalid || !archivo || loadingGetArchivo"
+                            [loading]="loadingGetArchivo" [text]="'Ver'" class="mr-3">
+                        </app-action-btn>
+                    </div>
                 </div>
             </div>
         </div>
