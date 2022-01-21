@@ -26,7 +26,7 @@ $fontConfig: (
 // Foreground Elements
 
 // Light Theme Text
-$dark-text: #000000;
+$dark-text: #000;
 $dark-primary-text: rgba($dark-text, 0.87);
 $dark-accent-text: rgba($dark-primary-text, 0.54);
 $dark-disabled-text: rgba($dark-primary-text, 0.38);
@@ -34,13 +34,13 @@ $dark-dividers: rgba($dark-primary-text, 0.12);
 $dark-focused: rgba($dark-primary-text, 0.12);
 
 $mat-light-theme-foreground: (
-  base:              black,
+  base:              #000,
   divider:           $dark-dividers,
   dividers:          $dark-dividers,
   disabled:          $dark-disabled-text,
   disabled-button:   rgba($dark-text, 0.26),
   disabled-text:     $dark-disabled-text,
-  elevation:         black,
+  elevation:         #000,
   secondary-text:    $dark-accent-text,
   hint-text:         $dark-disabled-text,
   accent-text:       $dark-accent-text,
@@ -67,7 +67,7 @@ $mat-dark-theme-foreground: (
   disabled:          $light-disabled-text,
   disabled-button:   rgba($light-text, 0.3),
   disabled-text:     $light-disabled-text,
-  elevation:         black,
+  elevation:         #000,
   hint-text:         $light-disabled-text,
   secondary-text:    $light-accent-text,
   accent-text:       $light-accent-text,
@@ -143,18 +143,18 @@ $mat-dark-theme-background: (
 // Theme Config
 
 body {
-  --primary-color: #000000;
+  --primary-color: #000;
   --primary-lighter-color: #b3b3b3;
-  --primary-darker-color: #000000;
+  --primary-darker-color: #000;
   --text-primary-color: #{$light-primary-text};
   --text-primary-lighter-color: #{$dark-primary-text};
   --text-primary-darker-color: #{$light-primary-text};
 }   
 $mat-primary: (
-  main: #000000,
+  main: #000,
   lighter: #b3b3b3,
-  darker: #000000,
-  200: #000000, // For slide toggle,
+  darker: #000,
+  200: #000, // For slide toggle,
   contrast : (
     main: $light-primary-text,
     lighter: $dark-primary-text,
@@ -165,18 +165,18 @@ $theme-primary: mat-palette($mat-primary, main, lighter, darker);
 
 
 body {
-  --accent-color: #3d976e;
+  --accent-color: #000;
   --accent-lighter-color: #c5e0d4;
-  --accent-darker-color: #277a51;
+  --accent-darker-color: #000;
   --text-accent-color: #{$light-primary-text};
   --text-accent-lighter-color: #{$dark-primary-text};
   --text-accent-darker-color: #{$light-primary-text};
 }   
 $mat-accent: (
-  main: #3d976e,
+  main: rgb(0, 134, 128),
   lighter: #c5e0d4,
-  darker: #277a51,
-  200: #3d976e, // For slide toggle,
+  darker: rgb(0, 134, 128),
+  200: rgb(0, 134, 128), // For slide toggle,
   contrast : (
     main: $light-primary-text,
     lighter: $dark-primary-text,
@@ -263,7 +263,7 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 }
 
 .ok-snackbar {
-  background: teal;
+  background: #000;
 
   .mat-button-wrapper {
     color: #ffffff; 
@@ -317,7 +317,7 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 }
 
 .mat-simple-snackbar > span {
-  font-family: 'Montserrat', 'medium';
+  font-family: 'Roboto', 'medium';
   font-weight: 400;
   font-size: 16px;
   color: #ffffff;
@@ -327,8 +327,8 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 
 .mat-tooltip{
   font-size: 14px;
-  background-color: #04302d;
-  font-family: 'Montserrat', 'medium';
+  background-color: #000000;
+  font-family: 'Roboto', 'medium';
   font-weight: 400;
 }
 
@@ -345,7 +345,7 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 
 .mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, 
 .mat-step-header .mat-step-icon-state-edit {
-    background-color: teal !important;
+    background-color: #000 !important;
     color: white !important;
 }
 

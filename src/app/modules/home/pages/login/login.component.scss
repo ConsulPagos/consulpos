@@ -1,129 +1,142 @@
-@import "../../../../../variables.scss";    
+@import "../../../../../variables.scss";
 
-#login{
-    background: white;
-    width: 100%;
-    min-height: 100vh;
-    padding-top: 30px;
+#login {
+  background: white;
+  width: 100%;
+  min-height: 100vh;
 }
 
-.container0{
-  background-color: white;
+.container0 {
+  display: flex;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  backdrop-filter: blur(20px);
+  --webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+}
+
+.login-container {
+  background-color: rgba(255, 255, 255, 0);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 480px;
-  border-radius: 10%;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  backdrop-filter: blur(20px);
-  --webkit-backdrop-filter: blur(20px);
+  width: 450px;
+  padding: 40px;
 }
 
-
-input{
-    border-radius: 30px;
-    height: 60px;
-    width: 100%;
-    background-color: rgb(255, 255, 255);
+.login-page {
+  width: 350px;
+  height: 100%;
+  background-image: url("../../../../../assets/images/loginbg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 
+input {
+  border-radius: 30px;
+  height: 60px;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+  border: 1px solid whitesmoke;
+}
 
-form{
+form {
   width: 100%;
   max-width: 420px;
 }
 
-.input-container{
+.input-container {
   margin: 10px 0px;
   width: 100%;
 }
 
-
-button{
-    width: 100%;
-    height: 60px;
-    border-radius: 30px;
-    background-color: $accent;
-    text-transform: uppercase;
-    font-family: 'Montserrat', 'medium';
-    font-weight: 500;
-    font-size: 23.5px;
-    letter-spacing: 1.2px;
-    color: black;
+button {
+  width: 100%;
+  height: 60px;
+  border-radius: 30px;
+  background-color: $accent;
+  text-transform: uppercase;
+  font-family: "Roboto", "medium";
+  font-weight: 400;
+  font-size: 23.5px;
+  letter-spacing: 1.2px;
+  color: #fff;
 }
 
-.error-message{
-    color: red; 
-    min-height: 20px;
+.error-message {
+  color: red;
+  min-height: 20px;
+  font-weight: 600;
 }
 
 .input-error {
-    outline: 0;
-    border-color: red;
-    animation-name: bounce;
-    animation-duration: .5s;
-    animation-delay: 0.25s;
-  }
+  outline: 0;
+  border-color: red;
+  animation-name: bounce;
+  animation-duration: 0.5s;
+  animation-delay: 0.25s;
+}
 
-  .brand{
-    position: fixed;
-    bottom: 20px;
-    left: auto;
-    right: auto;
-  }
+.brand {
+  position: fixed;
+  bottom: 20px;
+  left: auto;
+  right: auto;
+}
 
-  .brand img{
-    height:30px;
-  }
+.brand img {
+  height: 30px;
+}
 
- 
-  /* This approximates the ease-in-out-bounce animation from easings.net, which would require a plug-in to use*/
-  @keyframes bounce {
-    0% {
-      transform: translateX(0px);
-      timing-function: ease-in;
-    }
-    37% {
-      transform: translateX(5px);
-      timing-function: ease-out;
-    }
-    55% {
-      transform: translateX(-5px);
-      timing-function: ease-in;
-    }
-    73% {
-      transform: translateX(4px);
-      timing-function: ease-out;
-    }
-    82% {
-      transform: translateX(-4px);
-      timing-function: ease-in;
-    }
-    91% {
-      transform: translateX(2px);
-      timing-function: ease-out;
-    }
-    96% {
-      transform: translateX(-2px);
-      timing-function: ease-in;
-    }
-    100% {
-      transform: translateX(0px);
-      timing-function: ease-in;
-    }
+/* This approximates the ease-in-out-bounce animation from easings.net, which would require a plug-in to use*/
+@keyframes bounce {
+  0% {
+    transform: translateX(0px);
+    timing-function: ease-in;
   }
+  37% {
+    transform: translateX(5px);
+    timing-function: ease-out;
+  }
+  55% {
+    transform: translateX(-5px);
+    timing-function: ease-in;
+  }
+  73% {
+    transform: translateX(4px);
+    timing-function: ease-out;
+  }
+  82% {
+    transform: translateX(-4px);
+    timing-function: ease-in;
+  }
+  91% {
+    transform: translateX(2px);
+    timing-function: ease-out;
+  }
+  96% {
+    transform: translateX(-2px);
+    timing-function: ease-in;
+  }
+  100% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
+}
 
-  
-@media screen and (max-width: 992px){
-  #login{
+@media screen and (max-width: 992px) {
+  #login {
     height: 100vh;
     padding-top: 85px;
   }
 }
-@media (max-height:480px){
-  #login{
-    height: auto; 
+@media (max-height: 480px) {
+  #login {
+    height: auto;
     min-height: 100vh;
     transform: scale(1.01);
     overflow: hidden !important;

@@ -318,7 +318,7 @@ export class PrevArchivoComponent implements OnInit {
   saveCentralizado() {
     this.modal.confirm("Se guardará el archivo.").subscribe(result => {
       if (result) {
-        this.submitCentralizado()
+        this.submitCentralizado(result)
       }
     })
   }
