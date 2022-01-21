@@ -272,8 +272,8 @@ export class PrevArchivoComponent implements OnInit {
       data: { 'field': "Concepto","value":"" }
     });
 
-    dialogRef.afterClosed().subscribe((result:any) => {
-      if(result){
+    dialogRef.afterClosed().subscribe((result:string) => {
+      if(result.length > 0){
         this.submitCentralizado(result)
       }
     })

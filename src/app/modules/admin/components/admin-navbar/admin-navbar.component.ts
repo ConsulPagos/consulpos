@@ -48,21 +48,9 @@ export class AdminNavbarComponent implements OnInit {
       console.log(res)
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.response = new SesionObject(this.crypto).logOutDecrypter(JSON.parse(this.crypto.decryptString(res)))
-      console.log(this.response)
-      switch (this.response.R) {
-        case constant.R0:
-          localStorage.clear()
-          this.route.navigateByUrl('')
-          break;
-        case constant.R1:
-          this.toaster.error(this.response.M)
-          this.crypto.setKeys(this.response.keyJ, this.response.ivJ, this.response.keyJ, this.response.keyS)
-          break;
-        default:
-          this.toaster.default_error()
-          this.crypto.setKeys(this.response.keyJ, this.response.ivJ, this.response.keyJ, this.response.keyS)
-          break;
-      }
+      //console.log(this.response)
+      localStorage.clear()
+      this.route.navigateByUrl('')
     })
   }
 }
