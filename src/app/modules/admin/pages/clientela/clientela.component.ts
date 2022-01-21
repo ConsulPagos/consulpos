@@ -24,9 +24,6 @@ export class ClientelaComponent implements OnInit {
   constructor(
     private title: Title, 
     private router: Router, 
-    private crypto: CryptoService,
-    private cliente: ClientesService,
-    private storage: StorageService,
     private excelService: ExportService,
     ) { }
 

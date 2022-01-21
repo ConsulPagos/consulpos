@@ -18,6 +18,13 @@
                         <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
                             matBadgePosition="before">Listado de Ventas</span>
                     </ng-template>
+                    <app-tabla-sales 
+                    (editSale)="editSale($event)" 
+                    (showSale)="showSale($event)" 
+                    (count)='countNuevos = $event' 
+                    class="w-100" 
+                    [access_level]="0">
+                    </app-tabla-sales>
                 </mat-tab>
             </mat-tab-group>
         </div>

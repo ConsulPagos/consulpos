@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScrollToTopComponent } from './scroll-to-top.component';
+import { EditRolComponent } from './edit-rol.component';
 
-describe('ScrollToTopComponent', () => {
-  let component: ScrollToTopComponent;
-  let fixture: ComponentFixture<ScrollToTopComponent>;
+describe('EditRolComponent', () => {
+  let component: EditRolComponent;
+  let fixture: ComponentFixture<EditRolComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScrollToTopComponent ]
+      declarations: [ EditRolComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScrollToTopComponent);
+    fixture = TestBed.createComponent(EditRolComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

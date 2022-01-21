@@ -48,6 +48,13 @@ import { TablaHistoricoConciliacionComponent } from './components/tabla-historic
 import { AdminNavbarComponent } from './components/admin-navbar/admin-navbar.component';
 import { AdminSidenavComponent } from './components/admin-sidenav/admin-sidenav.component';
 import { ClientelaAfiliadosComponent } from './components/clientela-afiliados/clientela-afiliados.component';
+import { AddRolComponent } from './pages/add-rol/add-rol.component';
+import { EditRolComponent } from './pages/edit-rol/edit-rol.component';
+import { RolesComponent } from './pages/roles/roles.component';
+import { TablaSuperAdminComponent } from './components/tabla-super-admin/tabla-super-admin.component';
+import { TablaRolesComponent } from './components/tabla-roles/tabla-roles.component';
+import { TablaSalesComponent } from './components/tabla-sales/tabla-sales.component';
+
 
 
 @NgModule({
@@ -84,6 +91,12 @@ import { ClientelaAfiliadosComponent } from './components/clientela-afiliados/cl
     ClientelaAfiliadosComponent,
     DashboardComponent,
     GenerarArchivoComponent,
+    AddRolComponent,
+    EditRolComponent,
+    RolesComponent,
+    TablaSuperAdminComponent,
+    TablaRolesComponent,
+    TablaSalesComponent,
   ],
 
   imports: [
@@ -102,7 +115,8 @@ import { ClientelaAfiliadosComponent } from './components/clientela-afiliados/cl
     MatCheckboxModule,
     MatButtonToggleModule,
     OwlModule,
-    MatCardModule
+    MatCardModule,
+    
   ]
 })
 export class AdminModule { }

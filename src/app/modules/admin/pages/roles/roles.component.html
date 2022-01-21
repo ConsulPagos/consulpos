@@ -1,13 +1,9 @@
-<section id="superadmin">
+<section id="rol">
     <div class="title">
         <div class="d-flex">
-            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Usuario"  
-            [routerLink]="['/admin/app',{ outlets: { adr: ['nuevo-admin'] } }]" >
-                <li class="fas fa-user-plus"></li>
-            </a>
-            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'"
-                matTooltip="Exportar en formato Excel" (click)="exportXLSX()">
-                <li class="fas fa-file-download"></li>
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Rol"  
+            [routerLink]="['/admin/app',{ outlets: { adr: ['add-rol'] } }]" >
+                <li class="fas fa-user-lock"></li>
             </a>
         </div>
     </div>
@@ -21,16 +17,15 @@
                         matBadgeSize="small" 
                         matBadgeOverlap="false"
                         matBadgePosition="before">
-                        Listado de Usuarios
+                        Listado de Roles
                         </span>
                     </ng-template>
-                    <app-tabla-super-admin
-                    (editUser)="editUser($event)" 
-                    (showUser)="showUser($event)" 
+                    <app-tabla-roles
+                    (editRol)="editRol($event)" 
                     (count)='countNuevos = $event' 
                     class="w-100" 
                     [access_level]="0">
-                    </app-tabla-super-admin>
+                    </app-tabla-roles>
                 </mat-tab>
             </mat-tab-group>
         </div>

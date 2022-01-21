@@ -1,103 +1,101 @@
 <div>
-    <div>
-      <mat-form-field appearance="outline" class="mt-4 mx-4">
-        <form [formGroup]="identity">
-          <input matInput (keyup.enter)="_findUser()" placeholder="Buscar" formControlName="cedula" maxlength="9">
-        </form>
-      </mat-form-field>
-  
-      <button (click)="load()" mat-raised-button *ngIf="statusFilter">
-        <i class="fas fa-broom broom"></i>
-        Limpiar filtro
-      </button>
-    </div>
-  
-    <mat-divider></mat-divider>
-  
-    <div class="example-loading-shade" *ngIf="isLoadingResults">
-      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-    </div>
-  
-    <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
-  
-      <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef> Nombre </th>
-        <td mat-cell *matCellDef="let user"> {{user.p_nombre}} {{user.p_apellido}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="cedula">
-        <th mat-header-cell *matHeaderCellDef> Cedula </th>
-        <td mat-cell *matCellDef="let user"> {{user.cedula}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef> Correo Electronico </th>
-        <td mat-cell *matCellDef="let user"> {{user.email}} </td>
-      </ng-container>
+  <div>
+    <mat-form-field appearance="outline" class="mt-4 mx-4">
+      <form [formGroup]="identity">
+        <input matInput (keyup.enter)="_findUser()" placeholder="Buscar" formControlName="cedula" maxlength="9">
+      </form>
+    </mat-form-field>
 
-      <ng-container matColumnDef="sucursal">
-        <th mat-header-cell *matHeaderCellDef> Sucursal </th>
-        <td mat-cell *matCellDef="let user"> {{user.occ_name}} </td>
-      </ng-container>
-      
-  
-      <ng-container matColumnDef="status_desc">
-        <th mat-header-cell *matHeaderCellDef> estatus </th>
-        <td mat-cell *matCellDef="let user">
-          <div class={{statusColor(user.status_desc)}}>
-            {{user.status_desc}}
-          </div>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="fecha_registro">
-        <th mat-header-cell *matHeaderCellDef> Fecha de Registro </th>
-        <td mat-cell *matCellDef="let user"> {{user.fecha_registro}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="Acciones">
-        <th mat-header-cell *matHeaderCellDef> Acciones</th>
-        <td mat-cell *matCellDef="let user">
-          <button #tooltip="matTooltip" matTooltip="Ver Ficha" matTooltipHideDelay="10" mat-icon-button
-            (click)="_showUser(user)" class="container_icon">
-            <i class="fas fa-id-card activate_show"></i>
-          </button>
-  
-          <button #tooltip="matTooltip" matTooltip="Editar Usuario" matTooltipHideDelay="10" mat-icon-button
-            (click)="_editUser(user)" class="container_icon">
-            <i class="fas fa-user-edit activate_edit"></i>
-          </button>
-  
-          <button #tooltip="matTooltip" matTooltip="Desafiliar" matTooltipHideDelay="10"
-            *ngIf="user.status_desc == 'ACTIVO'" mat-icon-button class="container_icon"
-            (click)="saveDesativate(user)">
-            <i class="fas fa-ban activate_ban"></i>
-          </button>
-  
-          <button #tooltip="matTooltip" matTooltip="Activar" matTooltipHideDelay="10"
-            *ngIf="user.status_desc == 'NO ACTIVO'" mat-icon-button class="container_icon"
-            (click)="saveActive(user)">
-            <i class="fas fa-check-square activate_check"></i>
-          </button>
-  
-        </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let user; columns: displayedColumns;">
-      </tr>
-    </table>
+    <button (click)="load()" mat-raised-button *ngIf="statusFilter">
+      <i class="fas fa-broom broom"></i>
+      Limpiar filtro
+    </button>
   </div>
-  
-  <mat-paginator [length]="resultsLength" [pageSize]="25" showFirstLastButtons></mat-paginator>
-  
-  <ng-template #loadingTable>
-    <div class="loading d-flex justify-content-center align-items-center p-4">
-      <button class="loading-btn" mat-raised-button *ngIf="loading">
-        <mat-spinner [diameter]="20"></mat-spinner>
-      </button>
-      <button class="loading-btn" *ngIf="error" (click)="load()" mat-raised-button>
-        <li class="fas fa-redo-alt"></li>
-      </button>
-    </div>
-  </ng-template>
+
+  <mat-divider></mat-divider>
+
+  <div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let user"> {{user.p_nombre}} {{user.p_apellido}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cedula">
+      <th mat-header-cell *matHeaderCellDef> Cedula </th>
+      <td mat-cell *matCellDef="let user"> {{user.cedula}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Correo Electronico </th>
+      <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sucursal">
+      <th mat-header-cell *matHeaderCellDef> Sucursal </th>
+      <td mat-cell *matCellDef="let user"> {{user.occ_name}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="status_desc">
+      <th mat-header-cell *matHeaderCellDef> estatus </th>
+      <td mat-cell *matCellDef="let user">
+        <div class={{statusColor(user.status_desc)}}>
+          {{user.status_desc}}
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fecha_registro">
+      <th mat-header-cell *matHeaderCellDef> Fecha de Registro </th>
+      <td mat-cell *matCellDef="let user"> {{user.fecha_registro}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones</th>
+      <td mat-cell *matCellDef="let user">
+        <button #tooltip="matTooltip" matTooltip="Ver Ficha" matTooltipHideDelay="10" mat-icon-button
+          (click)="_showUser(user)" class="container_icon">
+          <i class="fas fa-id-card activate_show"></i>
+        </button>
+
+        <button #tooltip="matTooltip" matTooltip="Editar Usuario" matTooltipHideDelay="10" mat-icon-button
+          (click)="_editUser(user)" class="container_icon">
+          <i class="fas fa-user-edit activate_edit"></i>
+        </button>
+
+        <button #tooltip="matTooltip" matTooltip="Desafiliar" matTooltipHideDelay="10"
+          *ngIf="user.status_desc == 'ACTIVO'" mat-icon-button class="container_icon" (click)="saveDesativate(user)">
+          <i class="fas fa-ban activate_ban"></i>
+        </button>
+
+        <button #tooltip="matTooltip" matTooltip="Activar" matTooltipHideDelay="10"
+          *ngIf="user.status_desc == 'NO ACTIVO'" mat-icon-button class="container_icon" (click)="saveActive(user)">
+          <i class="fas fa-check-square activate_check"></i>
+        </button>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let user; columns: displayedColumns;">
+    </tr>
+  </table>
+</div>
+
+<mat-paginator [length]="resultsLength" [pageSize]="25" showFirstLastButtons></mat-paginator>
+
+<ng-template #loadingTable>
+  <div class="loading d-flex justify-content-center align-items-center p-4">
+    <button class="loading-btn" mat-raised-button *ngIf="loading">
+      <mat-spinner [diameter]="20"></mat-spinner>
+    </button>
+    <button class="loading-btn" *ngIf="error" (click)="load()" mat-raised-button>
+      <li class="fas fa-redo-alt"></li>
+    </button>
+  </div>
+</ng-template>

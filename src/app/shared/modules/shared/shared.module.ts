@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TitleComponent } from '../../components/title/title.component';
-import { ScrollToTopComponent } from '../../components/scroll-to-top/scroll-to-top.component';
 import { CounterComponent } from '../../components/counter/counter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,7 +17,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDividerModule } from '@angular/material/divider';
 import { EditFieldDialogComponent } from '../../components/edit-field-dialog/edit-field-dialog.component';
-import { SelloComponent } from '../../components/sello/sello.component';
 import { DateAgoPipe } from '../../pipes/date-ago.pipe';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -43,13 +41,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     TitleComponent,
-    ScrollToTopComponent,
     CounterComponent,
     ConfirmDialogComponent,
     SnackbarComponent,
     UploadComponent,
     EditFieldDialogComponent,
-    SelloComponent,
     DateAgoPipe,
     FileUploadComponent,
     FileUploadDirective,
@@ -92,7 +88,6 @@ import { MatNativeDateModule } from '@angular/material/core';
   exports: [
     TitleComponent,
     FormsModule,
-    ScrollToTopComponent,
     CounterComponent,
     ConfirmDialogComponent,
 
@@ -109,7 +104,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSortModule,
     EditFieldDialogComponent,
     MatDividerModule,
-    SelloComponent,
     DateAgoPipe,
     MatFormFieldModule,
     MatInputModule,

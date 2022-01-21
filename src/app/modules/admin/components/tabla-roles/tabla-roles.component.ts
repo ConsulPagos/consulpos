@@ -1,45 +1,35 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { merge, of as observableOf } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
-import { ShowUsersDecrypter, ShowUsersResponse } from 'src/app/models/showusers_response';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
-import { UsuariosService } from 'src/app/shared/services/usuarios.service';
+import { RolesService } from 'src/app/shared/services/roles.service';
 import { constant } from 'src/app/shared/utils/constant';
+import { ShowRolesDecrypter, ShowRolesResponse } from 'src/app/models/showroles_response';
 
 
 @Component({
-  selector: 'app-tabla-super-admin',
-  templateUrl: './tabla-super-admin.component.html',
-  styleUrls: ['./tabla-super-admin.component.scss'],
+  selector: 'app-tabla-roles',
+  templateUrl: './tabla-roles.component.html',
+  styleUrls: ['./tabla-roles.component.scss']
 })
+export class TablaRolesComponent implements OnInit {
 
-export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
-
-  displayedColumns: string[] = ['nombre', 'cedula', 'email', 'sucursal', 'status_desc', 'fecha_registro', 'Acciones'];
-  usuarios = [];
-
-  identity = new FormGroup({
-    cedula: new FormControl(''),
-  });
+  displayedColumns: string[] = ['rol','descripcion', 'Acciones'];
+  roles = [];
 
   isLoadingResults = false;
-
   expandedElement: any | null;
-
   @Input() access_level: number;
   @Output() count = new EventEmitter<number>();
-
   defaultResponse: DefaultResponse;
   loading = false;
   error = false;
@@ -50,13 +40,11 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<any>(true, []);
   statusFilter = false;
+  PAGESIZE = 12;
 
-  ShowUserResponse: ShowUsersResponse;
+  @Output() editRol = new EventEmitter<any>();
 
-  @Output() editUser = new EventEmitter<any>();
-  @Output() showUser = new EventEmitter<any>();
-
-  PAGESIZE = 12
+  ShowRollResponse: ShowRolesResponse;
 
   constructor(
     private session: SesionService,
@@ -64,10 +52,9 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
     private storage: StorageService,
     private modal: ModalService,
     private toaster: ToasterService,
-    private usuario: UsuariosService,
-  ) 
-  {
-    this.dataSource = new MatTableDataSource(this.usuarios);
+    private rol: RolesService,
+  ) {
+    this.dataSource = new MatTableDataSource(this.roles);
   }
 
   ngAfterViewInit() {
@@ -77,16 +64,8 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
   load() {
@@ -102,8 +81,12 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
             scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
             init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
             limit_row: this.crypto.encryptJson(((this.paginator.pageIndex + 1) * this.PAGESIZE).toString()),
+            
+            
           }))
-          return this.usuario.doAllUser(`${this.session.getDeviceId()};${data}`)
+          
+          return this.rol.doAllRoll(`${this.session.getDeviceId()};${data}`)
+          
         }),
         map(data => {
           this.firstLoading = false;
@@ -111,11 +94,11 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
           console.log("JSON: " + data)
           console.log("string: " + this.crypto.decryptString(data))
 
-          this.ShowUserResponse = new ShowUsersDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-          this.crypto.setKeys(this.ShowUserResponse.keyS, this.ShowUserResponse.ivJ, this.ShowUserResponse.keyJ, this.ShowUserResponse.ivS)
-          this.resultsLength = parseInt(this.ShowUserResponse.total_row);
-          console.log(this.ShowUserResponse)
-          return this.ShowUserResponse.usuarios;
+          this.ShowRollResponse = new ShowRolesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
+          this.crypto.setKeys(this.ShowRollResponse.keyS, this.ShowRollResponse.ivJ, this.ShowRollResponse.keyJ, this.ShowRollResponse.ivS)
+          this.resultsLength = parseInt(this.ShowRollResponse.total_row);
+          console.log(this.ShowRollResponse)
+          return this.ShowRollResponse.roles;
         }),
         catchError((e) => {
           this.firstLoading = false;
@@ -125,37 +108,31 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
           return observableOf([]);
         })
       ).subscribe(data => {
-        this.usuarios = data
-        this.dataSource = new MatTableDataSource(this.usuarios);
-        this.identity.reset();
+        this.roles = data
+        this.dataSource = new MatTableDataSource(this.roles);
         this.statusFilter = false;
       });
   }
 
-
-  _findUser() {
-    var filter = this.identity.get('cedula').value
+  _findRoll() {
     this.statusFilter = true;
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       status_desc: this.crypto.encryptJson('ACTIVO'),
-      cedula: this.crypto.encryptJson(filter),
-      app_id: this.crypto.encryptJson('1'),
-
     }))
     this.isLoadingResults = true;
-    this.usuario.doFindUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.rol.doFindRoll(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(this.crypto.decryptString(res))
       
-      this.ShowUserResponse = new ShowUsersDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.ShowRollResponse = new ShowRolesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-      this.crypto.setKeys(this.ShowUserResponse.keyS, this.ShowUserResponse.ivJ, this.ShowUserResponse.keyJ, this.ShowUserResponse.ivS)
-      this.toaster.success(this.ShowUserResponse.M)
+      this.crypto.setKeys(this.ShowRollResponse.keyS, this.ShowRollResponse.ivJ, this.ShowRollResponse.keyJ, this.ShowRollResponse.ivS)
+      this.toaster.success(this.ShowRollResponse.M)
 
-      this.usuarios = this.ShowUserResponse.usuarios
-      this.dataSource = new MatTableDataSource(this.usuarios);
+      this.roles = this.ShowRollResponse.roles
+      this.dataSource = new MatTableDataSource(this.roles);
     })
   }
 
@@ -178,7 +155,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
       status_desc: this.crypto.encryptJson('INACTIVO'),
     }))
     this.loading = true;
-    this.usuario.doDeleteUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.rol.doDeleteRoll(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.loading = false
       this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
@@ -207,14 +184,13 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
       status_desc: this.crypto.encryptJson('ACTIVO'),
     }))
     this.loading = true;
-    this.usuario.doDeleteUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.rol.doDeleteRoll(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.loading = false
       this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
 
       switch (this.defaultResponse.R) {
         case constant.R0:
-          // this.router.navigateByUrl('/admin/app/(adr:clientela)')
           window.location.reload();
           this.toaster.success(this.defaultResponse.M)
           break;
@@ -228,20 +204,12 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
     })
   }
 
-  clear() {
-    this.identity.reset();
-  }
-
-  _editUser(user) {
-    this.editUser.emit(user)
-  }
-
-  _showUser(user) {
-    this.showUser.emit(user)
+  _editRol(user) {
+    this.editRol.emit(user)
   }
 
   saveDesativate(user: any) {
-    this.modal.confirm("¿Desea desabilitar a este usuario?").subscribe(result => {
+    this.modal.confirm("¿Desea desabilitar este rol?").subscribe(result => {
       if (result) {
         this.disable(user)
       }
@@ -249,11 +217,15 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
   }
 
   saveActive(user: any) {
-    this.modal.confirm("¿Desea activar a este usuario?").subscribe(result => {
+    this.modal.confirm("¿Desea activar este rol?").subscribe(result => {
       if (result) {
         this.activate(user)
       }
     })
   }
 
+
+
 }
+
+

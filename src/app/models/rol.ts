@@ -9,3 +9,9 @@ export class RolInterface {
     permisos: Permiso[];
     rol_name: string;
 }
+
+export class RolRequestInterface {
+    id: number;
+    permisos: Permiso[];
+    rol: string;
+}

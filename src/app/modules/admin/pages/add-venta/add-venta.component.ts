@@ -88,39 +88,39 @@ export class AddVentaComponent implements OnInit {
   solicitud = new FormGroup({
     occ: new FormControl('1', [Validators.required]),
     t_pago_id: new FormControl('1', [Validators.required]),
-    t_pago_desc: new FormControl('Esto es un pago', [Validators.required]),
-    monto: new FormControl('22', [Validators.required]),
+    // t_pago_desc: new FormControl('Esto es un pago', [Validators.required]),
+    // monto: new FormControl('22', [Validators.required]),
   });
 
 
   buy = new FormGroup({
-    modelo: new FormControl('1', [Validators.required]),
-    plataforma: new FormControl('12384684654', [Validators.required]),
-    banco: new FormControl('1', [Validators.required]),
-    numero_cuenta_pos: new FormControl('12345678901234567890', [Validators.required]),
+    modelo: new FormControl('', [Validators.required]),
+    plataforma: new FormControl('', [Validators.required]),
+    banco: new FormControl('', [Validators.required]),
+    numero_cuenta_pos: new FormControl('', [Validators.required]),
     precio_usd: new FormControl('', [Validators.required]),
-    lugar_entrega: new FormControl('4F', [Validators.required]),
+    lugar_entrega: new FormControl('', [Validators.required]),
     // comunicacion: new FormControl('', [Validators.required]),
-    tipocobro: new FormControl('1', [Validators.required]),
-    plan: new FormControl('1', [Validators.required]),
-    cod_afiliado: new FormControl('12345678', [Validators.required]),
-    tipo_venta: new FormControl('1', [Validators.required]),
-    serial_pos: new FormControl('1234567899', [Validators.required]),
-    almacen: new FormControl('1', [Validators.required]),
-    terminal: new FormControl('1', [Validators.required]),
+    tipocobro: new FormControl('', [Validators.required]),
+    plan: new FormControl('', [Validators.required]),
+    cod_afiliado: new FormControl('', [Validators.required]),
+    tipo_venta: new FormControl('', [Validators.required]),
+    serial_pos: new FormControl('', [Validators.required]),
+    // almacen: new FormControl('', [Validators.required]),
+    terminal: new FormControl('', [Validators.required]),
 
   });
 
   sim = new FormGroup({
-    operadora: new FormControl('1', [Validators.required]),
-    serial_operadora: new FormControl('1212121212', [Validators.required]),
-    almacen_operadora: new FormControl('2', [Validators.required]),
+    operadora: new FormControl('', [Validators.required]),
+    serial_operadora: new FormControl('', [Validators.required]),
+    // almacen_operadora: new FormControl('2', [Validators.required]),
   });
 
   document = new FormGroup({
-    acta: new FormControl('as', [Validators.required]),
-    contrato: new FormControl('as', [Validators.required]),
-    domiciliacion: new FormControl('as', [Validators.required]),
+    acta: new FormControl('', [Validators.required]),
+    contrato: new FormControl('', [Validators.required]),
+    domiciliacion: new FormControl('', [Validators.required]),
   });
 
   //****************************************************************************************//
@@ -145,7 +145,7 @@ export class AddVentaComponent implements OnInit {
     var sim = new FormGroup({
       operadora: new FormControl('', [Validators.required]),
       serial_operadora: new FormControl('', [Validators.required]),
-      almacen_operadora: new FormControl('', [Validators.required]),
+      // almacen_operadora: new FormControl('', [Validators.required]),
     });
     this.sims.push(sim);
     this.formats.push(newFormat);

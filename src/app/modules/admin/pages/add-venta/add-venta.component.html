@@ -92,7 +92,7 @@
                                 <input matInput formControlName="monto" placeholder="$" type="text"
                                     (keypress)="onlyNumberKey($event)" maxlength="9">
                             </mat-form-field> -->
-<!-- 
+                            <!-- 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>descripción</mat-label>
                                 <input matInput formControlName="t_pago_desc" placeholder="Escriba algo..." type="text">
@@ -123,10 +123,11 @@
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Serial POS</mat-label>
-                                <input matInput formControlName="serial_pos" placeholder="1234" type="text" (keypress)="onlyNumberKey($event)">
+                                <input matInput formControlName="serial_pos" placeholder="1234" type="text"
+                                    (keypress)="onlyNumberKey($event)">
                             </mat-form-field>
 
-                           <!-- <mat-form-field appearance="outline" class="container_box_space">
+                            <!-- <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Tipo de Comunicación</mat-label>
                                 <mat-select disableRipple formControlName="comunicacion">
                                     <mat-option *ngFor="let comunicacion of comunicaciones" value={{comunicacion.id}}>
@@ -134,14 +135,14 @@
                                 </mat-select>
                             </mat-form-field> -->
 
-                            <mat-form-field appearance="outline" class="container_box_space">
+                            <!-- <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Almacen</mat-label>
                                 <mat-select disableRipple formControlName="almacen">
                                     <mat-option *ngFor="let nombre of occs" value={{nombre.id}}>
                                         {{nombre.nombre}}
                                     </mat-option>
                                 </mat-select>
-                            </mat-form-field>
+                            </mat-form-field> -->
 
                             <h6>Banco y Cuenta</h6>
 
@@ -169,7 +170,6 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Precio USD</mat-label>
                                 <input matInput disabled value={{price_model()}}>
-
                             </mat-form-field>
 
                             <h6>Otros</h6>
@@ -229,18 +229,17 @@
 
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Serial Operadora Tlf.</mat-label>
-                                    <input matInput formControlName="serial_operadora" placeholder="1234"
-                                        type="text">
+                                    <input matInput formControlName="serial_operadora" placeholder="1234" type="text">
                                 </mat-form-field>
 
-                                <mat-form-field appearance="outline" class="container_box_space">
+                                <!-- <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Almacen</mat-label>
                                     <mat-select disableRipple formControlName="almacen_operadora">
                                         <mat-option *ngFor="let nombre of occs" value={{nombre.id}}>
                                             {{nombre.nombre}}
                                         </mat-option>
                                     </mat-select>
-                                </mat-form-field>
+                                </mat-form-field> -->
 
                             </form>
 
@@ -265,7 +264,7 @@
                     <!-- Bootn de siguiente strepper -->
                     <div>
                         <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                        <button class="stepBtn" mat-raised-button matStepperNext >Siguiente</button>
+                        <button class="stepBtn" mat-raised-button matStepperNext>Siguiente</button>
                     </div>
                 </mat-step>
 

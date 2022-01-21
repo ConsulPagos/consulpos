@@ -26,6 +26,9 @@ import { TasasComponent } from './pages/tasas/tasas.component';
 import { AddTasasComponent } from './pages/add-tasas/add-tasas.component';
 import { FichaUserComponent } from './pages/ficha-user/ficha-user.component';
 import { CobroCentralizadoComponent } from './pages/cobro-centralizado/cobro-centralizado.component';
+import { AddRolComponent } from './pages/add-rol/add-rol.component';
+import { EditRolComponent } from './pages/edit-rol/edit-rol.component';
+import { RolesComponent } from './pages/roles/roles.component';
 
 const routes: Routes = [
   {
@@ -55,7 +58,10 @@ const routes: Routes = [
       { path: 'tasas', component: TasasComponent, outlet: 'adr' },
       { path: 'add-tasas', component: AddTasasComponent, outlet: 'adr' },
       { path: 'cobro-centralizado', component: CobroCentralizadoComponent, outlet: 'adr' },
-
+      
+      { path: 'add-rol', component: AddRolComponent, outlet: 'adr' },
+      { path: 'edit-rol', component: EditRolComponent, outlet: 'adr' },
+      { path: 'roles', component: RolesComponent, outlet: 'adr' },
     ],
   }
 ];
