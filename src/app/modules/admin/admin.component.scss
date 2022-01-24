@@ -37,9 +37,19 @@ p {
 
 .btn_toggle {
     position: fixed;
-    bottom: 0;
+    top: 0;
     margin: 10px;
     background: #fff;
+    z-index: 100;
+}
+
+
+.brand{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 101;
 }
 
 .loader{
@@ -86,4 +96,12 @@ p {
     }
   }
 
-  
+
+ .opened{
+   display: block;
+ }
+
+ .sidenav{
+   background-color: #fff;
+   border: none;
+ }

@@ -101,7 +101,7 @@ import { PrevisualizarArchivoComponent } from './components/previsualizar-archiv
     TablaSuperAdminComponent,
     SeleccionCentralizadoComponent,
     ModalCentralizadoComponent,
-    PrevisualizarArchivoComponent
+    PrevisualizarArchivoComponent,
   ],
 
   imports: [

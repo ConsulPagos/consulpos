@@ -22,15 +22,11 @@ import { environment } from '../environments/environment';
 import { AngularFireStorageModule } from '@angular/fire/storage'
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { ChartsModule } from 'ng2-charts';
-import { RouterModule, Routes} from '@angular/router';
 import { DashboardComponent } from './modules/admin/pages/dashboard/dashboard.component';
 import { LoginComponent } from './modules/home/pages/login/login.component';
 import { ChangePasswordDialogComponent } from './shared/components/change-password-dialog/change-password-dialog.component';
 import { EditphoneComponent } from './shared/components/editphone/editphone.component';
 
-const routes: Routes = [
-  { path: '', component: DashboardComponent },
-]
 
 @NgModule({
   declarations: [
@@ -67,7 +63,6 @@ const routes: Routes = [
     }), */
     AngularFireStorageModule,
     NgxIntlTelInputModule,
-    RouterModule.forRoot(routes),
     ChartsModule
   ],
   providers: [AffiliateGuard, AdminGuard, HomeGuard, StorageService],

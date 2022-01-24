@@ -2,27 +2,26 @@
     <div class="sidenav d-flex flex-column sidenav-items ">
 
         <div class="brand d-flex align-items-center justify-content-center pt-2 pb-2 mb-2">
-            <img src="../../../../../assets/images/consulpagos.png" alt="Consulpagos"
-                style="width: auto; height: 50px;">
+            <img src="../../../../../assets/images/consulpagos.png" alt="Consulpagos">
         </div>
         <!-- Dashboard -->
-        <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['dashboard'] } }]"
+        <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['dashboard'] } }]"
             routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-tachometer-alt"></li> <span class="text_side">Dashboard</span>
         </a>
         <!-- ************************************************************************************************** -->
 
         <!-- Registro de Clientes -->
-        <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]"
+        <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]"
             routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-users"></li><span class="text_side">Clientes</span>
         </a>
         <!-- ************************************************************************************************** -->
 
         <!-- Operaciones -->
-        <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['venta-consulpos'] } }]"
-            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-            <li class="fa fa-cart-plus"></li><span class="text_side">Ventas Consulpos</span>
+        <a mat-button class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['venta-consulpos'] } }]">
+            <li class="fa fa-cart-plus"></li>
+            <span class="text_side">Ventas Consulpos</span>
         </a>
         <!-- ************************************************************************************************** -->
 
@@ -100,7 +99,7 @@
             </mat-menu>
 
 
-            <a  class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['cobro-centralizado'] } }]"
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['cobro-centralizado'] } }]"
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fas fa-university"></li> <span class="text_side">Cobro Centralizado</span>
             </a>
@@ -146,8 +145,8 @@
         <!- ************************************************************************************************** -->
 
         <!-- Condiguracion -->
-        <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['config'] } }]" routerLinkActive="ad-active"
-            [routerLinkActiveOptions]="{exact: true}">
+        <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['config'] } }]"
+            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-cogs"></li><span class="text_side">Configuración</span>
         </a>
         <!-- ************************************************************************************************** -->
