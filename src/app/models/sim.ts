@@ -5,7 +5,6 @@ export class SimInterface {
     id_status?: number;
     complemento_de?: string;
     email_token?: number;
-
     saldo_anterior?: string;
     id_solicitud_banco?: number;
 }

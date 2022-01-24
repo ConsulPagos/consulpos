@@ -23,6 +23,26 @@
                         <mat-label>Descripcion</mat-label>
                         <input matInput type="text" formControlName="descripcion">
                     </mat-form-field>
+
+                    <div class="row" *ngIf="modulos">
+                        <div *ngFor="let modulo of modulos" class="col-12">
+                            <div>
+                                <h1>{{modulo.modulo}}</h1>
+                                <div *ngFor="let submodulo of modulo.submodulos" class="col-12">
+                                    <h3> {{submodulo.submodulo}}</h3>
+                                    <form>
+                                        <div>
+                                            <p *ngFor="let permiso of permisos">
+                                                <mat-checkbox [checked]="add_permiso(permiso.permiso_id, submodulo.submodulo_id)">{{permiso.permiso}}</mat-checkbox>
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
                 <div>
                 </div>

@@ -134,7 +134,7 @@ export class NuevoAdminComponent implements OnInit {
       pto_ref: this.crypto.encryptJson(this.adminForm.get('pto_referencia').value),
       cod_postal: this.crypto.encryptJson(this.adminForm.get('codpostal').value),
       occ_id: this.crypto.encryptJson(this.adminForm.get('occ').value),
-      psw: this.crypto.encryptJson(this.adminForm.get('password').value),
+      psw: this.crypto.encryptJson(this.crypto.hash(this.adminForm.get('password').value)),
       comisionable: this.crypto.encryptJson(this.adminForm.get('comisionable').value),
       localidad: this.crypto.encryptJson(this.adminForm.get('localidad').value),
       apps: this.crypto.encryptJson(JSON.stringify([

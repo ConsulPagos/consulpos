@@ -87,16 +87,6 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <!-- <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Monto</mat-label>
-                                <input matInput formControlName="monto" placeholder="$" type="text"
-                                    (keypress)="onlyNumberKey($event)" maxlength="9">
-                            </mat-form-field> -->
-                            <!-- 
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>descripción</mat-label>
-                                <input matInput formControlName="t_pago_desc" placeholder="Escriba algo..." type="text">
-                            </mat-form-field> -->
                         </div>
                     </form>
                     <!-- Bootn de siguiente strepper -->
@@ -109,158 +99,152 @@
 
                 <mat-step>
                     <!-- [stepControl]="buy" -->
-                    <form [formGroup]="buy">
+                    <form [formGroup]="buies[i]" *ngFor="let format of formats_buy; let i=index">
                         <ng-template matStepLabel>Datos de la Venta</ng-template>
                         <div>
-                            <h6>Datos del Equipo</h6>
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Modelo</mat-label>
-                                <mat-select disableRipple formControlName="modelo">
-                                    <mat-option *ngFor="let modelo of modelos" value={{modelo.id}}>
-                                        {{modelo.modelo}} </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Serial POS</mat-label>
-                                <input matInput formControlName="serial_pos" placeholder="1234" type="text"
-                                    (keypress)="onlyNumberKey($event)">
-                            </mat-form-field>
-
-                            <!-- <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Tipo de Comunicación</mat-label>
-                                <mat-select disableRipple formControlName="comunicacion">
-                                    <mat-option *ngFor="let comunicacion of comunicaciones" value={{comunicacion.id}}>
-                                        {{comunicacion.comunicacion}} </mat-option>
-                                </mat-select>
-                            </mat-form-field> -->
-
-                            <!-- <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Almacen</mat-label>
-                                <mat-select disableRipple formControlName="almacen">
-                                    <mat-option *ngFor="let nombre of occs" value={{nombre.id}}>
-                                        {{nombre.nombre}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field> -->
-
-                            <h6>Banco y Cuenta</h6>
-
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Plataforma de Pago</mat-label>
-                                <mat-select disableRipple formControlName="plataforma">
-                                    <mat-option *ngFor="let plataforma of plataformas" value={{plataforma.id}}>
-                                        {{plataforma.plataforma}} </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Banco</mat-label>
-                                <mat-select disableRipple formControlName="banco">
-                                    <mat-option *ngFor="let nombre of bancos" value={{nombre.codigo}}>
-                                        {{nombre.nombre}} </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Numero de cuenta POS</mat-label>
-                                <input matInput formControlName="numero_cuenta_pos" placeholder="1234" type="text">
-                            </mat-form-field>
-
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Precio USD</mat-label>
-                                <input matInput disabled value={{price_model()}}>
-                            </mat-form-field>
-
-                            <h6>Otros</h6>
-
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Plan</mat-label>
-                                <mat-select disableRipple formControlName="plan">
-                                    <mat-option *ngFor="let plan of planes" value={{plan.id}}>
-                                        {{plan.nombre}} </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Tipo de Cobro</mat-label>
-                                <mat-select disableRipple formControlName="tipocobro">
-                                    <mat-option *ngFor="let t_cobro of tipocobros" value={{t_cobro.id}}>
-                                        {{t_cobro.t_cobro}} </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Lugar de la entrega</mat-label>
-                                <input matInput formControlName="lugar_entrega" placeholder="1234" type="text">
-                            </mat-form-field>
-
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Código de afiliado</mat-label>
-                                <input matInput formControlName="cod_afiliado" placeholder="1234" type="number">
-                            </mat-form-field>
-
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Terminal</mat-label>
-                                <input matInput formControlName="terminal" placeholder="1234" type="text">
-                            </mat-form-field>
-
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Tipo de Venta</mat-label>
-                                <mat-select disableRipple formControlName="tipo_venta">
-                                    <mat-option *ngFor="let nombre of fraccion_pagos" value={{nombre.id}}>
-                                        {{nombre.nombre}} </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-
-                        <h6>SimCard</h6>
-
-                        <div class="container_agent">
-                            <form [formGroup]="sims[i]" class="formulario" *ngFor="let format of formats; let i=index">
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Operadora Tlf.</mat-label>
-                                    <mat-select disableRipple formControlName="operadora">
-                                        <mat-option *ngFor="let telefonica of operadoras" value={{telefonica.id}}>
-                                            {{telefonica.telefonica}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Serial Operadora Tlf.</mat-label>
-                                    <input matInput formControlName="serial_operadora" placeholder="1234" type="text">
-                                </mat-form-field>
-
-                                <!-- <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Almacen</mat-label>
-                                    <mat-select disableRipple formControlName="almacen_operadora">
-                                        <mat-option *ngFor="let nombre of occs" value={{nombre.id}}>
-                                            {{nombre.nombre}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field> -->
-
-                            </form>
-
                             <div>
-                                <button class="btn_form_add_agent" mat-icon-button color="primary"
-                                    aria-label="Example icon button with a menu icon" (click)="add_sim()"
-                                    *ngIf="(formats.length === 1 ||  formats.length === 0)">
-                                    <i class="fas fa-user-plus icon_sell"></i>
-                                    Agregar Sim
-                                </button>
+                                <div class="d-flex align-items-center ">
+                                    <h6>Equipo {{i + 1}}</h6>
+                                    <button mat-icon-button class="ml-4" color="primary"
+                                        aria-label="Example icon button with a menu icon" (click)="deleteBuy(i)"
+                                        *ngIf="(formats_buy.length > 1 && i >  0)">
+                                        <i class="fas fa-minus-circle"></i>
+                                    </button>
+                                </div>
+                                <h6>Datos del Equipo</h6>
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Modelo</mat-label>
+                                    <mat-select disableRipple formControlName="modelo">
+                                        <mat-option *ngFor="let modelo of modelos" value={{modelo.id}}>
+                                            {{modelo.modelo}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
 
-                                <button mat-icon-button class="btn_form_add_agent" color="primary"
-                                    aria-label="Example icon button with a menu icon" (click)="deleteSim(1)"
-                                    *ngIf="(formats.length === 2)">
-                                    <i class="fas fa-user-minus icon_sell"></i>
-                                    Eliminar una Sim
-                                </button>
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Serial POS</mat-label>
+                                    <input matInput formControlName="serial_pos" placeholder="1234" type="text"
+                                        (keypress)="onlyNumberKey($event)">
+                                </mat-form-field>
+
+                                <h6>Banco y Cuenta</h6>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Plataforma de Pago</mat-label>
+                                    <mat-select disableRipple formControlName="plataforma">
+                                        <mat-option *ngFor="let plataforma of plataformas" value={{plataforma.id}}>
+                                            {{plataforma.plataforma}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Banco</mat-label>
+                                    <mat-select disableRipple formControlName="banco">
+                                        <mat-option *ngFor="let nombre of bancos" value={{nombre.codigo}}>
+                                            {{nombre.nombre}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Numero de cuenta POS</mat-label>
+                                    <input matInput formControlName="numero_cuenta_pos" placeholder="1234" type="text">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Precio USD</mat-label>
+                                    <input matInput disabled value={{price_model()}}>
+                                </mat-form-field>
+
+                                <h6>Otros</h6>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Plan</mat-label>
+                                    <mat-select disableRipple formControlName="plan">
+                                        <mat-option *ngFor="let plan of planes" value={{plan.id}}>
+                                            {{plan.nombre}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Tipo de Cobro</mat-label>
+                                    <mat-select disableRipple formControlName="tipocobro">
+                                        <mat-option *ngFor="let t_cobro of tipocobros" value={{t_cobro.id}}>
+                                            {{t_cobro.t_cobro}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Lugar de la entrega</mat-label>
+                                    <input matInput formControlName="lugar_entrega" placeholder="1234" type="text">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Código de afiliado</mat-label>
+                                    <input matInput formControlName="cod_afiliado" placeholder="1234" type="number">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Terminal</mat-label>
+                                    <input matInput formControlName="terminal" placeholder="1234" type="text">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Tipo de Venta</mat-label>
+                                    <mat-select disableRipple formControlName="tipo_venta">
+                                        <mat-option *ngFor="let nombre of fraccion_pagos" value={{nombre.id}}>
+                                            {{nombre.nombre}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <h6>SimCard</h6>
+                            <div class="container_agent">
+                                <form [formGroup]="formats_buy[i].sims[isim]" class="formulario"
+                                    *ngFor="let format of formats_buy[i].sims; let isim=index">
+
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Operadora Tlf.</mat-label>
+                                        <mat-select disableRipple formControlName="operadora">
+                                            <mat-option *ngFor="let telefonica of operadoras" value={{telefonica.id}}>
+                                                {{telefonica.telefonica}} </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Serial Operadora Tlf.</mat-label>
+                                        <input matInput formControlName="serial_operadora" placeholder="1234"
+                                            type="text">
+                                    </mat-form-field>
+                                </form>
+
+                                <div>
+                                    <button class="btn_form_add_agent" mat-icon-button color="primary"
+                                        aria-label="Example icon button with a menu icon" (click)="add_sim(i)"
+                                        *ngIf="(formats_buy[i].sims.length === 1 ||  formats_buy[i].sims.length === 0)">
+                                        <i class="fas fa-user-plus icon_sell"></i>
+                                        Agregar Sim
+                                    </button>
+
+                                    <button mat-icon-button class="btn_form_add_agent" color="primary"
+                                        aria-label="Example icon button with a menu icon" (click)="deleteSim(i, isim)"
+                                        *ngIf="(formats_buy[i].sims.length === 2)">
+                                        <i class="fas fa-user-minus icon_sell"></i>
+                                        Eliminar una Sim
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
                     </form>
+                    <div>
+                        <button class="btn_form_add_agent" mat-icon-button color="primary"
+                            aria-label="Example icon button with a menu icon" (click)="add_buy()"
+                            *ngIf="(formats_buy.length <= 10)">
+                            <i class="fas fa-user-plus icon_sell"></i>
+                            Agregar un equipo
+                        </button>
+                        <br>
+
+
+                    </div>
                     <!-- Bootn de siguiente strepper -->
                     <div>
                         <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>

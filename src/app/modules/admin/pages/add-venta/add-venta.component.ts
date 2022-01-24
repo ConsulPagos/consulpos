@@ -31,6 +31,7 @@ import { VentasService } from 'src/app/shared/services/ventas.service';
 import { ValidacionclienteDecrypter, ValidacionclienteResponse } from '../../../../models/validacioncliente_response';
 import { ValidacionventaRese, ValidacionventadosDecrypter } from '../../../../models/validacionventa_res';
 import { ModalService } from 'src/app/shared/services/modal.service';
+import { SaleRequestInterface } from 'src/app/models/sales';
 //****************************************************************************************//
 
 @Component({
@@ -60,9 +61,9 @@ export class AddVentaComponent implements OnInit {
   occs: OccInterface[];
   t_pagos: TipoPagoInterface[];
   sims = [];
+  buies = [];
   formats: SimInterface[] = [];
-
-
+  formats_buy: SaleRequestInterface[] = [];
 
   //****************************************************************************************//
   constructor(
@@ -88,10 +89,7 @@ export class AddVentaComponent implements OnInit {
   solicitud = new FormGroup({
     occ: new FormControl('1', [Validators.required]),
     t_pago_id: new FormControl('1', [Validators.required]),
-    // t_pago_desc: new FormControl('Esto es un pago', [Validators.required]),
-    // monto: new FormControl('22', [Validators.required]),
   });
-
 
   buy = new FormGroup({
     modelo: new FormControl('', [Validators.required]),
@@ -100,21 +98,17 @@ export class AddVentaComponent implements OnInit {
     numero_cuenta_pos: new FormControl('', [Validators.required]),
     precio_usd: new FormControl('', [Validators.required]),
     lugar_entrega: new FormControl('', [Validators.required]),
-    // comunicacion: new FormControl('', [Validators.required]),
     tipocobro: new FormControl('', [Validators.required]),
     plan: new FormControl('', [Validators.required]),
     cod_afiliado: new FormControl('', [Validators.required]),
     tipo_venta: new FormControl('', [Validators.required]),
     serial_pos: new FormControl('', [Validators.required]),
-    // almacen: new FormControl('', [Validators.required]),
     terminal: new FormControl('', [Validators.required]),
-
   });
 
   sim = new FormGroup({
     operadora: new FormControl('', [Validators.required]),
     serial_operadora: new FormControl('', [Validators.required]),
-    // almacen_operadora: new FormControl('2', [Validators.required]),
   });
 
   document = new FormGroup({
@@ -126,7 +120,7 @@ export class AddVentaComponent implements OnInit {
   //****************************************************************************************//
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Agregar Venta')
-    this.add_sim()
+    this.add_buy()
     this.fraccion_pagos = JSON.parse(this.storage.get(constant.FRACCIONES_PAGO)).fracciones_pago
     this.operadoras = JSON.parse(this.storage.get(constant.OPERADORAS)).operadoras
     this.modelos = JSON.parse(this.storage.get(constant.MODELOS)).modelos
@@ -140,23 +134,47 @@ export class AddVentaComponent implements OnInit {
 
   }
 
-  add_sim() {
-    var newFormat: SimInterface = {};
+  add_buy() {
+    var newFormat: SaleRequestInterface = {};
+    var buy = new FormGroup({
+      modelo: new FormControl('', [Validators.required]),
+      plataforma: new FormControl('', [Validators.required]),
+      banco: new FormControl('', [Validators.required]),
+      numero_cuenta_pos: new FormControl('', [Validators.required]),
+      precio_usd: new FormControl('', [Validators.required]),
+      lugar_entrega: new FormControl('', [Validators.required]),
+      tipocobro: new FormControl('', [Validators.required]),
+      plan: new FormControl('', [Validators.required]),
+      cod_afiliado: new FormControl('', [Validators.required]),
+      tipo_venta: new FormControl('', [Validators.required]),
+      serial_pos: new FormControl('', [Validators.required]),
+      terminal: new FormControl('', [Validators.required]),
+    });
     var sim = new FormGroup({
       operadora: new FormControl('', [Validators.required]),
       serial_operadora: new FormControl('', [Validators.required]),
-      // almacen_operadora: new FormControl('', [Validators.required]),
     });
-    this.sims.push(sim);
-    this.formats.push(newFormat);
+    newFormat.sims=[sim]
+    this.buies.push(buy);
+    this.formats_buy.push(newFormat);
   }
 
-  deleteSim(index: number) {
-    this.formats.splice(index, 1);
-    this.sims.splice(index, 1);
+  deleteBuy(index: number) {
+    this.formats_buy.splice(index, 1);
+    this.buies.splice(index, 1);
   }
 
-  //****************************************************************************************//
+  add_sim(index: number) {
+    var sim = new FormGroup({
+      operadora: new FormControl('', [Validators.required]),
+      serial_operadora: new FormControl('', [Validators.required]),
+    });
+    this.formats_buy[index].sims.push(sim)
+  }
+
+  deleteSim(index: number, indexsim: number) {
+    this.formats_buy[index].sims.splice(indexsim, 1);
+  }
 
   // *** FUNCION VALIDADORA DE EXISTENCIA DE USUARIOS *** \\
   verificar_usuario() {
@@ -179,17 +197,14 @@ export class AddVentaComponent implements OnInit {
       if (!this.search_client) {
         this.identity.controls['rif'].setErrors({ 'existe': null });
         this.identity.controls['rif'].updateValueAndValidity()
-      } 
-      else 
-      {
+      }
+      else {
         this.identity.controls['rif'].setErrors({ 'existe': true });
       }
       this.loading = false
       this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
     })
   }
-  //****************************************************************************************//
-
 
   submit() {
     var items = [
