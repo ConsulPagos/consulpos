@@ -57,6 +57,11 @@ import { TablaSalesComponent } from './components/tabla-sales/tabla-sales.compon
 import { SeleccionCentralizadoComponent } from './pages/seleccion-centralizado/seleccion-centralizado.component';
 import { ModalCentralizadoComponent } from './components/modal-centralizado/modal-centralizado.component';
 import { PrevisualizarArchivoComponent } from './components/previsualizar-archivo/previsualizar-archivo.component';
+import { OperacionesComponent } from './pages/operaciones/operaciones.component';
+import { TablaOperacionesComponent } from './components/tabla-operaciones/tabla-operaciones.component';
+import { ModalAsignacionComponent } from './components/modal-asignacion/modal-asignacion.component';
+import { ModalParametrizacionComponent } from './components/modal-parametrizacion/modal-parametrizacion.component';
+import { ModalConfiguracionComponent } from './components/modal-configuracion/modal-configuracion.component';
 
 @NgModule({
   declarations: [
@@ -102,6 +107,11 @@ import { PrevisualizarArchivoComponent } from './components/previsualizar-archiv
     SeleccionCentralizadoComponent,
     ModalCentralizadoComponent,
     PrevisualizarArchivoComponent,
+    OperacionesComponent,
+    TablaOperacionesComponent,
+    ModalAsignacionComponent,
+    ModalParametrizacionComponent,
+    ModalConfiguracionComponent,
   ],
 
   imports: [

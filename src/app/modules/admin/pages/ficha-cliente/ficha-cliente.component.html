@@ -224,26 +224,13 @@
 
                 <mat-tab label="Estado de Cuenta">
                     <ng-template matTabContent>
-                        <!-- <mat-icon>request_quote</mat-icon>
-                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
-                            matBadgePosition="before">
-                            Estado de cuenta
-                        </span> -->
-
                         <app-estado-cuenta [rif]="showClient.rif">
-
-                            
                         </app-estado-cuenta>
                     </ng-template>
                 </mat-tab>
 
                 <mat-tab label="Equipos Asociados">
                     <ng-template matTabContent>
-                        <!-- <mat-icon>sim_card</mat-icon>
-                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
-                            matBadgePosition="before">
-                            Equipos asociados
-                        </span> -->
                         <div class="d-flex justify-content-center align-items-center mb-3" style="padding-top: 2rem;">
                             <h4 class="text-right">RIF: {{showClient.rif}}</h4>
                         </div>
@@ -257,8 +244,6 @@
                                     class="text-capitalize">
                                     <h4 class="labels title_data">Equipo {{equipo + 1}}:</h4>
 
-                                    <!-- Serial: <span *ngIf="item.complemento_de == 'null'"> Pos </span> {{item.cod_serial}}
-                                    {{item.complemento_de}} -->
                                     <div>
                                         <div class="col-md-12 container_module">
                                             <label class="labels title_data">

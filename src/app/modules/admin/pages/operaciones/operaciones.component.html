@@ -1,0 +1,24 @@
+<section id="ventas">
+    <div class="title">
+        <div class="d-flex">
+            
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">{{tipo_operacion}}</span>
+                    </ng-template>
+                    <app-tabla-operaciones 
+                    (count)='countNuevos = $event' 
+                    [cambioOperacion]="cambioOperacion.asObservable()"
+                    class="w-100">
+                    </app-tabla-operaciones>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>

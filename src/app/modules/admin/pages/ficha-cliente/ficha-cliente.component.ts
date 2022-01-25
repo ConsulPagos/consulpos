@@ -119,11 +119,9 @@ export class FichaClienteComponent implements OnInit {
           iso: phone.phone_2.countryCode,
           telefono_id: phone.phone_2_id,
         },
-        
+      
       ]))
-
     }))
-
     console.log(this.showClient.rif)
     this.loader.loading()
     this.cliente.doEditPhone(`${this.session.getDeviceId()};${data}`).subscribe(res => {

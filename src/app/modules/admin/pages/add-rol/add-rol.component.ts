@@ -1,3 +1,4 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -21,6 +22,7 @@ export class AddRolComponent implements OnInit {
   defaultResponse: DefaultResponse;
   modulos: any;
   permisos: any;
+  displayedColumns: string[] = ['select', 'permiso'];
 
   constructor(
     private title: Title,
@@ -40,25 +42,23 @@ export class AddRolComponent implements OnInit {
 
   }
 
-
-  form = new FormGroup({
+  rolname = new FormGroup({
     nameRol: new FormControl('', [Validators.required]),
     descripcion: new FormControl('', [Validators.required]),
   });
 
   clear() {
-    this.form.reset();
+    this.rolname.reset();
   }
 
   save() {
     this.modal.confirm("Se agregara una nueva tasa y se desactivará la anterior").subscribe(result => {
       if (result) {
         console.log("acciones")
-        // this.submit()
+        this.submit()
       }
     })
   }
-
 
   modulo() {
     const data = this.crypto.encryptString(JSON.stringify({
@@ -67,47 +67,72 @@ export class AddRolComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       app_id: this.crypto.encryptJson('1'),
     }))
-
     console.log("verify")
     this.rol.doModulosRoll(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      // console.log(data)
-      // console.log(res)
-      console.log('Hola' + this.crypto.decryptString(res))
+      console.log(this.crypto.decryptString(res))
       const json = JSON.parse(this.crypto.decryptString(res))
       this.modulos = JSON.parse(this.crypto.decryptJson(json.permisos))
-      console.log('PERMISOOOOOOOOOOOOOOOOO' + json.permisos)
+      console.log(json.permisos)
       this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.defaultResponse)
       this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
-      this.modulos.map(t => { t.permisos = []; return t });
       console.log(this.modulos)
-      this.permiso()
+      this.modulos.forEach(m => {
+        m.submodulos.map(s => {
+          s.selection = new SelectionModel<any>(true, []);
+          return s
+        })
+      })
     })
-
   }
 
-  permiso() {
+  submit() {
+    var permisos = this.getPermisosSelected()
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      rol: this.crypto.encryptJson(this.rolname.get('nameRol').value),
+      descricion: this.crypto.encryptJson(this.rolname.get('descripcion').value),
+      permisos: this.crypto.encryptJson(JSON.stringify(
+        permisos
+      ))
     }))
-
     console.log("verify")
-    this.rol.doPermisosRoll(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.rol.doSaveRoll(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.permisos = JSON.parse(this.crypto.decryptJson(json.permisos))
-      console.log('Hola' + this.crypto.decryptString(res))
+      console.log(this.crypto.decryptString(res))
       this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.defaultResponse)
-      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
-
-
+      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS);
     })
   }
 
-  add_permiso(permisoId, moduloId) {
-    this.modulos.filter(m => m.modulo_id == moduloId)[0].permisos.push(permisoId)
+  getPermisosSelected() {
+    var permisos = []
+    this.modulos.forEach(m => {
+      m.submodulos.forEach(s => {
+        s.selection.selected.forEach(p => {
+          permisos.push(p.permiso_submodulo_id)
+        })
+      })
+    })
+    return permisos
+  }
+
+  isAllSelected(sub) {
+    const numSelected = sub.selection.selected.length;
+    const numRows = sub.permisos.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle(sub) {
+    if (this.isAllSelected(sub)) {
+      sub.selection.clear();
+      return;
+    }
+    sub.selection.select(...sub.permisos);
   }
 
 }

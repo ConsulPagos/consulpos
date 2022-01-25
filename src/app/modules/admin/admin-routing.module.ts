@@ -30,6 +30,7 @@ import { AddRolComponent } from './pages/add-rol/add-rol.component';
 import { EditRolComponent } from './pages/edit-rol/edit-rol.component';
 import { RolesComponent } from './pages/roles/roles.component';
 import { SeleccionCentralizadoComponent } from './pages/seleccion-centralizado/seleccion-centralizado.component';
+import { OperacionesComponent } from './pages/operaciones/operaciones.component';
 
 const routes: Routes = [
   {
@@ -64,6 +65,7 @@ const routes: Routes = [
       { path: 'edit-rol', component: EditRolComponent, outlet: 'adr' },
       { path: 'roles', component: RolesComponent, outlet: 'adr' },
       { path: 'seleccion-centralizado', component: SeleccionCentralizadoComponent, outlet: 'adr' },
+      { path: 'operaciones/:tipo_operacion', component: OperacionesComponent, outlet: 'adr' },
     ],
   }
 ];
