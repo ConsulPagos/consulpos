@@ -93,7 +93,7 @@ export class AddRolComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rol: this.crypto.encryptJson(this.rolname.get('nameRol').value),
-      descricion: this.crypto.encryptJson(this.rolname.get('descripcion').value),
+      descripcion: this.crypto.encryptJson(this.rolname.get('descripcion').value),
       permisos: this.crypto.encryptJson(JSON.stringify(
         permisos
       ))

@@ -29,4 +29,5 @@ export interface UserRequestInterface {
     rol_id?: string;
     rol_name?: string;
     rol?: RolInterface;
+    cod_area?: string;
 }

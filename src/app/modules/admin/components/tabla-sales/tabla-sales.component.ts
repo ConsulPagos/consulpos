@@ -24,7 +24,7 @@ import { ShowSalesDecrypter, ShowSalesResponse } from 'src/app/models/showsales_
 })
 export class TablaSalesComponent implements OnInit {
 
-  displayedColumns: string[] = ['number','fecha','status_desc','Acciones'];
+  displayedColumns: string[] = ['number', 'rif','razon_social','fecha','status_desc','Acciones'];
   ventas = [];
 
   isLoadingResults = false;
