@@ -35,7 +35,7 @@ export class ShowClientsDecrypter {
             total_row: this.crypto.decryptJson(value.total_row),
         }
         
-        console.log(verify)
+        // console.log(verify)
         return verify
     }
 }

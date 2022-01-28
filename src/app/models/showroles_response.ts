@@ -30,7 +30,7 @@ export class ShowRolesDecrypter {
             roles:JSON.parse(this.crypto.decryptJson(value.roles)) as RolRequestInterface[],
             total_row: this.crypto.decryptJson(value.total_row),
         }
-        console.log(verify)
+        // console.log(verify)
         return verify
     }
 }

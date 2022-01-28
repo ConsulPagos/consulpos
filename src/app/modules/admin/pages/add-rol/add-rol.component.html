@@ -28,12 +28,12 @@
 
         <form [formGroup]="rolname">
             <div class="row" *ngIf="modulos">
-                <div *ngFor="let modulo of modulos" class="col-6">
-                    <div class="card">
-                        <h1>{{modulo.modulo}}</h1>
-                        <div class="menu_card">
-                            <div *ngFor="let submodulo of modulo.submodulos" class="">
-                                <h3> {{submodulo.submodulo}}</h3>
+                <div *ngFor="let modulo of modulos" class="col-4">
+                    <div class="card-modulo">
+                        <h1 class="title_modulos">{{modulo.modulo}}</h1>
+                        <div class="menu_card row">
+                            <div *ngFor="let submodulo of modulo.submodulos" class="submodulo_menu col-12">
+                                <h3 class="title_submodulos"> {{submodulo.submodulo}}</h3>
                                 <table class="table-permisos" mat-table [dataSource]="submodulo.permisos">
                                     <ng-container matColumnDef="select">
                                         <th mat-header-cell *matHeaderCellDef>

@@ -34,7 +34,7 @@ export class ShowUsersDecrypter {
             usuarios:JSON.parse(this.crypto.decryptJson(value.usuarios)) as UserRequestInterface[],
             total_row: this.crypto.decryptJson(value.total_row),
         }
-        console.log(verify)
+        // console.log(verify)
         return verify
     }
 }

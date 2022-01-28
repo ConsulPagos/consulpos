@@ -39,7 +39,6 @@ export class AddRolComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Agregar rol')
     this.modulo()
-
   }
 
   rolname = new FormGroup({
@@ -52,7 +51,7 @@ export class AddRolComponent implements OnInit {
   }
 
   save() {
-    this.modal.confirm("Se agregara una nueva tasa y se desactivará la anterior").subscribe(result => {
+    this.modal.confirm("Se agregara un nuevo rol").subscribe(result => {
       if (result) {
         console.log("acciones")
         this.submit()
@@ -107,6 +106,19 @@ export class AddRolComponent implements OnInit {
       console.log(this.defaultResponse)
       this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS);
     })
+
+    switch (this.defaultResponse.R) {
+      case constant.R0:
+        this.router.navigateByUrl('/admin/app/(adr:dashboard)')
+        this.toaster.success(this.defaultResponse.M)
+        break;
+      case constant.R1:
+        this.toaster.error(this.defaultResponse.M)
+        break;
+      default:
+        this.toaster.default_error()
+        break;
+    }
   }
 
   getPermisosSelected() {
@@ -114,7 +126,7 @@ export class AddRolComponent implements OnInit {
     this.modulos.forEach(m => {
       m.submodulos.forEach(s => {
         s.selection.selected.forEach(p => {
-          permisos.push(p.permiso_submodulo_id)
+          permisos.push({permiso_id: p.permiso_submodulo_id})
         })
       })
     })

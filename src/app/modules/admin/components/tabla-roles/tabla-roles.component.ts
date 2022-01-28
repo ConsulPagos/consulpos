@@ -146,85 +146,9 @@ export class TablaRolesComponent implements OnInit {
     }
   }
 
-  disable(user: any) {
-    const data = this.crypto.encryptString(JSON.stringify({
-      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      cedula: this.crypto.encryptJson(user.cedula),
-      status_desc: this.crypto.encryptJson('INACTIVO'),
-    }))
-    this.loading = true;
-    this.rol.doDeleteRoll(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.loading = false
-      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
-
-      switch (this.defaultResponse.R) {
-        case constant.R0:
-          window.location.reload();
-          this.toaster.success(this.defaultResponse.M)
-          break;
-        case constant.R1:
-          this.toaster.error(this.defaultResponse.M)
-          break;
-        default:
-          this.toaster.default_error()
-          break;
-      }
-    })
-  }
-
-  activate(user: any) {
-    const data = this.crypto.encryptString(JSON.stringify({
-      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      cedula: this.crypto.encryptJson(user.cedula),
-      status_desc: this.crypto.encryptJson('ACTIVO'),
-    }))
-    this.loading = true;
-    this.rol.doDeleteRoll(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.loading = false
-      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
-
-      switch (this.defaultResponse.R) {
-        case constant.R0:
-          window.location.reload();
-          this.toaster.success(this.defaultResponse.M)
-          break;
-        case constant.R1:
-          this.toaster.error(this.defaultResponse.M)
-          break;
-        default:
-          this.toaster.default_error()
-          break;
-      }
-    })
-  }
-
   _editRol(user) {
     this.editRol.emit(user)
   }
-
-  saveDesativate(user: any) {
-    this.modal.confirm("¿Desea desabilitar este rol?").subscribe(result => {
-      if (result) {
-        this.disable(user)
-      }
-    })
-  }
-
-  saveActive(user: any) {
-    this.modal.confirm("¿Desea activar este rol?").subscribe(result => {
-      if (result) {
-        this.activate(user)
-      }
-    })
-  }
-
-
 
 }
 

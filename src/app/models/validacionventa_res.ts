@@ -27,7 +27,7 @@ export class ValidacionventadosDecrypter {
             ivJ: this.crypto.decryptJson(value.ivJ),
             session_valid: this.crypto.decryptJson(value.session_valid),
         }
-        console.log(verify)
+        // console.log(verify)
         return verify
     }
 }

@@ -30,7 +30,7 @@ export class ShowSalesDecrypter {
             ventas:JSON.parse(this.crypto.decryptJson(value.ventas)) as SaleRequestInterface[],
             total_row: this.crypto.decryptJson(value.total_row),
         }
-        console.log(verify)
+        // console.log(verify)
         return verify
     }
 }

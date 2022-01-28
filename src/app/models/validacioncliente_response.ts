@@ -29,7 +29,7 @@ export class ValidacionclienteDecrypter {
             value_exists: this.crypto.decryptJson(value.value_exists),
             session_valid: this.crypto.decryptJson(value.session_valid),
         }
-        console.log(verify)
+        // console.log(verify)
         return verify
     }
 }

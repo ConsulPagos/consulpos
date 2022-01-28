@@ -33,7 +33,7 @@ export class StatusAccountDecrypter {
             estado_de_cuenta:JSON.parse(this.crypto.decryptJson(value.estado_de_cuenta)) as EstadoCuentaInterface,
         }
         
-        console.log(verify)
+        // console.log(verify)
         return verify
     }
 }

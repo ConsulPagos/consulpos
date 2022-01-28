@@ -23,7 +23,7 @@ export class RolesComponent implements OnInit {
   editRol(rol) {
     const navigationExtras: NavigationExtras = {
       state: {
-        showRol: rol
+        editRol: rol
       }
     }
     this.router.navigateByUrl("/admin/app/(adr:edit-rol)", navigationExtras)

@@ -16,7 +16,7 @@ export class RefreshDecrypter {
     }
 
     deserialize(value: any): RefreshResponse {
-        console.log(this.crypto.decryptJsonFixed(value.M))
+        // console.log(this.crypto.decryptJsonFixed(value.M))
         const refresh: RefreshResponse = {
             M: this.crypto.decryptJsonFixed(value.M),
             keyS: this.crypto.decryptStringFixed(value.keyS),

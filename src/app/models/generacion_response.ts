@@ -41,7 +41,7 @@ export class GeneracionDecrypter {
             total: parseFloat(this.crypto.decryptJson(value.total)),
             total_bolivares: parseFloat(this.crypto.decryptJson(value.total_bolivares)),
         }
-        console.log(verify)
+        // console.log(verify)
         return verify
     }
 }

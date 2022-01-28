@@ -11,7 +11,8 @@ export class RolInterface {
 }
 
 export class RolRequestInterface {
-    id: number;
+    rol_id: number;
     permisos: Permiso[];
-    rol: string;
+    rol_name: string;
+    rol_descripcion: string;
 }

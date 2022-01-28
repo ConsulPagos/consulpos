@@ -49,12 +49,12 @@ export class AdminComponent implements OnInit {
 
     this.loading = true;
 
-    console.log("verify")
+    // console.log("verify")
 
     this.sesion.doVerify(`${this.sesion.getDeviceId()};${data}`).subscribe(res => {
       var verifyResponse = new VerifyDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      console.log(verifyResponse)
-      console.log(JSON.parse(this.crypto.decryptString(res)))
+      // console.log(verifyResponse)
+      // console.log(JSON.parse(this.crypto.decryptString(res)))
       this.loading = false
       this.storage.store(constant.BANCOS, JSON.stringify(verifyResponse.bancos))
       this.storage.store(constant.ESTADOS, JSON.stringify(verifyResponse.estados))

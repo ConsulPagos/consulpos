@@ -104,19 +104,19 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
         map(data => {
           this.firstLoading = false;
           this.isLoadingResults = false;
-          console.log("JSON: " + data)
-          console.log("string: " + this.crypto.decryptString(data))
+          // console.log("JSON: " + data)
+          // console.log("string: " + this.crypto.decryptString(data))
           this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
           this.crypto.setKeys(this.showclientResponse.keyS, this.showclientResponse.ivJ, this.showclientResponse.keyJ, this.showclientResponse.ivS)
           this.resultsLength = parseInt(this.showclientResponse.total_row);
-          console.log(this.showclientResponse)
+          // console.log(this.showclientResponse)
           return this.showclientResponse.clientes;
         }),
         catchError((e) => {
           this.firstLoading = false;
           this.loading = false;
           this.error = true;
-          console.log(e)
+          // console.log(e)
           return observableOf([]);
         })
       ).subscribe(data => {
@@ -231,7 +231,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
     }))
     this.isLoadingResults = true;
     this.cliente.doFind(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      console.log(this.crypto.decryptString(res))
+      // console.log(this.crypto.decryptString(res))
       this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
       this.crypto.setKeys(this.showclientResponse.keyS, this.showclientResponse.ivJ, this.showclientResponse.keyJ, this.showclientResponse.ivS)

@@ -33,7 +33,7 @@ export class ShowItemDecrypter {
             items:JSON.parse(this.crypto.decryptJson(value.items)) as ItemInterface[],
         }
         
-        console.log(verify)
+        // console.log(verify)
         return verify
     }
 }

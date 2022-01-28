@@ -26,12 +26,12 @@ export class DiferirDeudaComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DiferirDeudaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {selected: ItemEstadoCuentaInterface[]},
     private storage:StorageService) { 
-      console.log(this.data)
+      // console.log(this.data)
     }
 
   ngOnInit(): void {
     this.tipos = JSON.parse(this.storage.get(constant.TIPOS_DIFERIDO)).tipos_diferido
-    console.log(this.tipos)
+    // console.log(this.tipos)
   }
 
   montoADiferir(){
