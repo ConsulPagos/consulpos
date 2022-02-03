@@ -37,7 +37,7 @@ export class VentasComponent implements OnInit {
         showSale: sale
       }
     }
-    this.router.navigateByUrl("/admin/app/(adr:ficha-venta)", navigationExtras)
+    this.router.navigateByUrl("/admin/app/(adr:ficha-sale)", navigationExtras)
   }
 
 }

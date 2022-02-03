@@ -40,9 +40,14 @@
                                 <mat-label>
                                     Rif
                                 </mat-label>
-                                <input matInput formControlName="rif" placeholder="123456789" type="text"
-                                    (keypress)="onlyNumberKey($event)" maxlength="9"
-                                    (keyup.enter)="verificar_usuario()">
+                                <input matInput 
+                                formControlName="rif" 
+                                placeholder="123456789" 
+                                type="text"
+                                (keypress)="onlyNumberKey($event)" 
+                                maxlength="9"
+                                >
+                                <!-- (keyup.enter)="verificar_usuario()" -->
                             </mat-form-field>
 
                             <div class="container_error_sell"
@@ -59,7 +64,8 @@
                     <!-- Bootn de siguiente strepper -->
                     <div>
                         <button class="stepBtn" mat-raised-button matStepperNext
-                            [disabled]="identity.invalid || search_client">Siguiente</button>
+                            [disabled]="identity.invalid ">Siguiente</button>
+                            <!-- || search_client -->
                     </div>
                 </mat-step>
 
@@ -72,21 +78,11 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Surcusal</mat-label>
                                 <mat-select disableRipple formControlName="occ">
-                                    <mat-option *ngFor="let nombre of occs" value={{nombre.id}}>
-                                        {{nombre.nombre}}
+                                    <mat-option *ngFor="let occ of occs" value={{occ.occ_id}}>
+                                        {{occ.occ_name}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Tipo de pago</mat-label>
-                                <mat-select disableRipple formControlName="t_pago_id">
-                                    <mat-option *ngFor="let nombre of t_pagos" value={{nombre.id}}>
-                                        {{nombre.nombre}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-
                         </div>
                     </form>
                     <!-- Bootn de siguiente strepper -->
@@ -99,7 +95,7 @@
 
                 <mat-step>
                     <!-- [stepControl]="buy" -->
-                    <form [formGroup]="buies[i]" *ngFor="let format of formats_buy; let i=index">
+                    <form [formGroup]="buies[i]" #f="ngForm" *ngFor="let format of formats_buy; let i=index">
                         <ng-template matStepLabel>Datos de la Venta</ng-template>
                         <div>
                             <div>
@@ -118,12 +114,6 @@
                                         <mat-option *ngFor="let modelo of modelos" value={{modelo.id}}>
                                             {{modelo.modelo}} </mat-option>
                                     </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Serial POS</mat-label>
-                                    <input matInput formControlName="serial_pos" placeholder="1234" type="text"
-                                        (keypress)="onlyNumberKey($event)">
                                 </mat-form-field>
 
                                 <h6>Banco y Cuenta</h6>
@@ -151,7 +141,7 @@
 
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Precio USD</mat-label>
-                                    <input matInput disabled value={{price_model()}}>
+                                    <input matInput disabled value={{price_model(buies[i])}}>
                                 </mat-form-field>
 
                                 <h6>Otros</h6>
@@ -179,7 +169,7 @@
 
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Código de afiliado</mat-label>
-                                    <input matInput formControlName="cod_afiliado" placeholder="1234" type="number">
+                                    <input matInput formControlName="cod_afiliado" placeholder="1234" type="text">
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" class="container_box_space">
@@ -207,12 +197,6 @@
                                                 {{telefonica.telefonica}} </mat-option>
                                         </mat-select>
                                     </mat-form-field>
-
-                                    <mat-form-field appearance="outline" class="container_box_space">
-                                        <mat-label>Serial Operadora Tlf.</mat-label>
-                                        <input matInput formControlName="serial_operadora" placeholder="1234"
-                                            type="text">
-                                    </mat-form-field>
                                 </form>
 
                                 <div>
@@ -232,6 +216,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <pre>{{ f.form.value | json }}</pre>
 
                     </form>
                     <div>
@@ -258,34 +244,12 @@
                         <ng-template matStepLabel>Carga de Documentos</ng-template>
 
                         <div>
-                            <h6>Acta de Entrega</h6>
+                            <h6>Referencia Bancaria</h6>
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>
-                                    Acta de Entrega
+                                    Referencia Bancaria
                                 </mat-label>
-                                <input matInput formControlName="acta" placeholder="Acta de Entrega" type="text">
-                            </mat-form-field>
-                        </div>
-
-                        <div>
-                            <h6>Contrato de Servicio</h6>
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>
-                                    Contrato de Servicio
-                                </mat-label>
-                                <input matInput formControlName="contrato" placeholder="Contrato de Servicio"
-                                    type="text">
-                            </mat-form-field>
-                        </div>
-
-                        <div>
-                            <h6>Carta de Cargo en cuenta por Domiciliacion</h6>
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>
-                                    Carta de Cargo en cuenta por Domiciliacion
-                                </mat-label>
-                                <input matInput formControlName="domiciliacion" placeholder="Carta de Domiciliacion"
-                                    type="text">
+                                <input matInput formControlName="referencia" placeholder="Referencia Bancaria" type="text">
                             </mat-form-field>
                         </div>
                         <!-- <div *ngIf="getTipoCliente()=='N'"> -->

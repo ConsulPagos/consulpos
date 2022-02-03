@@ -18,14 +18,9 @@
         </a>
         <!-- ************************************************************************************************** -->
 
-        <!-- Operaciones -->
-        <a mat-button class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['venta-consulpos'] } }]">
-            <li class="fa fa-cart-plus"></li>
-            <span class="text_side">Ventas Consulpos</span>
-        </a>
         <!-- ************************************************************************************************** -->
 
-        <!-- Tipos de solicitud -->
+        <!-- Operaciones -->
         <a class="menu_side" mat-button [matMenuTriggerFor]="operaciones">
             <li class="fa fa-file-alt icon_side"></li>
             <span class="text_side">Operaciones</span>
@@ -47,6 +42,11 @@
             <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['operaciones','configuracion'] } }]"
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-book-dead"></li> <span class="text_side">Configuracion</span>
+            </a>
+
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['operaciones','entregar'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-book-dead"></li> <span class="text_side">Entregar Equipo</span>
             </a>
         </mat-menu>
         <!-- ************************************************************************************************** -->
@@ -83,13 +83,13 @@
         <mat-menu #venta="matMenu">
             <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]"
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-cart-plus"></li> <span class="text_side">Pre-ventas</span>
-            </a>
-
-            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]"
-                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-cart-plus"></li> <span class="text_side">Ventas</span>
             </a>
+
+            <!-- <a mat-button class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['venta-consulpos'] } }]">
+                <li class="fa fa-cart-plus"></li>
+                <span class="text_side">Ventas Consulpos</span>
+            </a> -->
         </mat-menu>
         <!-- ************************************************************************************************** -->
 
@@ -100,11 +100,24 @@
         </a>
         <mat-menu #cobranza="matMenu">
 
-            <!--  <a class="menu_side" 
-                [routerLink]="['/admin/app',{ outlets: { adr: ['conciliar-archivo'] } }]" routerLinkActive="ad-active"
-                [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-money-bill"></li> <span class="text_side">Validar Pago POS</span>
-            </a> -->
+            <!-- Pagos -->
+
+            <a class="menu_side" mat-menu-item [matMenuTriggerFor]="pago">
+                <li class="fa fa-file-alt icon_side"></li>
+                <span class="text_side">Pagos</span>
+            </a>
+
+            <mat-menu #pago="matMenu">
+                <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['pagos'] } }]"
+                    routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                    <li class="fa fa-dollar-sign"></li><span class="text_side">Pagos</span>
+                </a>
+
+                <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['validar-pago'] } }]"
+                    routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                    <li class="fa fa-file-invoice-dollar"></li> <span class="text_side">Validar Pago</span>
+                </a>
+            </mat-menu>
 
             <!-- domiciliacion -->
             <a class="menu_side" mat-menu-item [matMenuTriggerFor]="domiciliacion">

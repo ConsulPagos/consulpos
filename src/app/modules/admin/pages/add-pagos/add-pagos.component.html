@@ -1,0 +1,75 @@
+<!-- Vista de Agregar Cliente -->
+<section id="addPago">
+    <!-- Botones del Navbar -->
+    <div class="title">
+        <div class="d-flex">
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['pagos'] } }]">
+                <li class="fas fa-arrow-left"></li>
+            </a>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <div>
+                <form [formGroup]="pay">
+
+                    <h6>Agregar pago a la venta {{addPay.rif}}</h6>
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Tipo de Pago</mat-label>
+                        <mat-select disableRipple formControlName="t_pago"
+                            (selectionChange)="buildFormGroup(getInput(pay.get('t_pago').value))">
+                            <mat-option *ngFor="let pago of t_pagos" value={{pago.t_pago_id}}>
+                                {{pago.pago}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div *ngIf="pay.get('t_pago').value != null">
+                        <mat-form-field class="box" appearance="outline">
+                            <mat-label>Monto Pagado</mat-label>
+                            <input matInput type="number" (keypress)="onlyNumberKey($event)" formControlName="monto">
+                        </mat-form-field>
+
+                        <mat-form-field class="box" appearance="outline">
+                            <mat-label>Descripcion</mat-label>
+                            <input matInput type="text" formControlName="descripcion">
+                        </mat-form-field>
+                    </div>
+                </form>
+                <form *ngIf="carForm != undefined" [formGroup]="carForm">
+                    <div *ngIf="pay.get('t_pago').value != null">
+                        <div *ngFor="let caracteristica of getInput(pay.get('t_pago').value)">
+                            <div [ngSwitch]="caracteristica.tipo">
+                                <div *ngSwitchCase="'string'">
+                                    <mat-form-field class="box" appearance="outline">
+                                        <mat-label>{{caracteristica.caracteristica}}</mat-label>
+                                        <input matInput type="text"
+                                            [formControlName]="caracteristica.id_caracteristica">
+                                    </mat-form-field>
+                                </div>
+                                <div *ngSwitchCase="'int'">
+                                    <mat-form-field class="box" appearance="outline">
+                                        <mat-label>{{caracteristica.caracteristica}}</mat-label>
+                                        <input matInput type="number" (keypress)="onlyNumberKey($event)"
+                                            [formControlName]="caracteristica.id_caracteristica">
+                                    </mat-form-field>
+                                </div>
+                                <div *ngSwitchCase="'file'">
+                                    <mat-form-field class="box" appearance="outline">
+                                        <mat-label>{{caracteristica.caracteristica}}</mat-label>
+                                        <input matInput [formControlName]="caracteristica.id_caracteristica">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div *ngIf="pay.get('t_pago').value">
+                <button mat-raised-button (click)="save(getInput(pay.get('t_pago').value))"
+                    [disabled]="!carForm || carForm.invalid || pay.invalid">Agregar Pago</button>
+            </div>
+        </div>
+    </div>
+</section>

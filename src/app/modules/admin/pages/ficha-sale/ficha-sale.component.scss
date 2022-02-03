@@ -1,0 +1,59 @@
+/////// Parte 1
+
+.title {
+    font-family: "Montserrat", "black" !important;
+    font-weight: 600;
+    color: #414c59;
+    font-size: 18px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    position: absolute;
+    top: 8px;
+    left: 20px;
+    z-index: 99;
+}
+
+.nav-btn {
+    color: #858598;
+    height: 45px;
+    width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 22px;
+    transition: 0.3s;
+}
+
+::ng-deep .mat-tab-label {
+    color: black;
+    background-color: transparent;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-family: "Montserrat", "black" !important;
+    font-size: 14px;
+}
+
+.text-center {
+    margin: 2rem;
+    font-weight: bold;
+}
+
+.nav-btn:hover {
+    background-color: rgb(255, 255, 255);
+}
+
+.container-ficha {
+    justify-content: center;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0 !important;
+    font-weight: bold;
+}
+
+.container_module {
+    margin: 0.55rem;
+}

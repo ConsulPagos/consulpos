@@ -130,7 +130,6 @@ export class EditClientComponent implements OnInit {
   client_type: FormGroup;
   data_vr: FormGroup;
 
-
   ////////////////PHONE///////////////////
   separateDialCode = true;
   SearchCountryField = SearchCountryField;

@@ -12,10 +12,12 @@ export class ModalAsignacionComponent implements OnInit {
 
   id_venta: number;
 
-  constructor(public dialogRef: MatDialogRef<ModalAsignacionComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { 
-      this.id_venta=data['id_venta']
-    }
+  constructor(
+    public dialogRef: MatDialogRef<ModalAsignacionComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {
+    this.id_venta = data['id_venta']
+  }
 
   ngOnInit(): void {
   }

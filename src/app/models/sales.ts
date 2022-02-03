@@ -14,4 +14,5 @@ export class SaleRequestInterface {
     status_desc?: string;
     status_id?: string;
     sims?: any;
+    solicitudes_bancos?:any;
 }

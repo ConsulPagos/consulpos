@@ -62,6 +62,15 @@ import { TablaOperacionesComponent } from './components/tabla-operaciones/tabla-
 import { ModalAsignacionComponent } from './components/modal-asignacion/modal-asignacion.component';
 import { ModalParametrizacionComponent } from './components/modal-parametrizacion/modal-parametrizacion.component';
 import { ModalConfiguracionComponent } from './components/modal-configuracion/modal-configuracion.component';
+import { FichaSaleComponent } from './pages/ficha-sale/ficha-sale.component';
+import { PagosComponent } from './pages/pagos/pagos.component';
+import { AddPagosComponent } from './pages/add-pagos/add-pagos.component';
+import { TablaPagosComponent } from './components/tabla-pagos/tabla-pagos.component';
+import { ModalPagoComponent } from './components/modal-pago/modal-pago.component';
+import { ValidarPagoComponent } from './pages/validar-pago/validar-pago.component';
+import { TablaValidarPagosComponent } from './components/tabla-validar-pagos/tabla-validar-pagos.component';
+import { ModalEntregaComponent } from './components/modal-entrega/modal-entrega.component';
+
 
 @NgModule({
   declarations: [
@@ -112,6 +121,14 @@ import { ModalConfiguracionComponent } from './components/modal-configuracion/mo
     ModalAsignacionComponent,
     ModalParametrizacionComponent,
     ModalConfiguracionComponent,
+    FichaSaleComponent,
+    PagosComponent,
+    AddPagosComponent,
+    TablaPagosComponent,
+    ModalPagoComponent,
+    ValidarPagoComponent,
+    TablaValidarPagosComponent,
+    ModalEntregaComponent,
   ],
 
   imports: [

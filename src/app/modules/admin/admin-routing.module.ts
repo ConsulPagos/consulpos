@@ -31,41 +31,55 @@ import { EditRolComponent } from './pages/edit-rol/edit-rol.component';
 import { RolesComponent } from './pages/roles/roles.component';
 import { SeleccionCentralizadoComponent } from './pages/seleccion-centralizado/seleccion-centralizado.component';
 import { OperacionesComponent } from './pages/operaciones/operaciones.component';
+import { FichaSaleComponent } from './pages/ficha-sale/ficha-sale.component';
+import { PagosComponent } from './pages/pagos/pagos.component';
+import { AddPagosComponent } from './pages/add-pagos/add-pagos.component';
+import { ValidarPagoComponent } from './pages/validar-pago/validar-pago.component';
 
 const routes: Routes = [
   {
     path: 'app', canActivate: [VerifyKeysGuard],
     component: AdminComponent,
     children: [
+      { path: 'dashboard', component: DashboardComponent, outlet: 'adr' },
+      { path: 'config', component: ConfigComponent, outlet: 'adr' },
+      // Modulo de Clientes
+      { path: 'clientela', component: ClientelaComponent, outlet: 'adr' },
+      { path: 'edit-client', component: EditClientComponent, outlet: 'adr' },
+      { path: 'add-client', component: AddClientComponent, outlet: 'adr' },
+      { path: 'ficha-cliente', component: FichaClienteComponent, outlet: 'adr' },
+      //Modulo de Usuarios
+      { path: 'super-admin-panel', component: SuperAdminComponent, outlet: 'adr' },
+      { path: 'ficha-user', component: FichaUserComponent, outlet: 'adr' },
+      { path: 'edit-admin', component: EditAdminComponent, outlet: 'adr' },
+      { path: 'cambiar-contraseña', component: AdminChangePwdComponent, outlet: 'adr' },
+      { path: 'nuevo-admin', component: NuevoAdminComponent, outlet: 'adr' },
+      // Modulo de Cobranza
       { path: 'generar-archivo', component: GenerarArchivoComponent, outlet: 'adr' },
       { path: 'actualizar-archivo', component: ActualizarArchivoComponent, outlet: 'adr' },
       { path: 'conciliar-archivo', component: ConciliarArchivoComponent, outlet: 'adr' },
       { path: 'historico-conciliacion', component: HistoricoConciliacionComponent, outlet: 'adr' },
-      { path: 'clientela', component: ClientelaComponent, outlet: 'adr' },
-      { path: 'venta-consulpos', component: VentaConsulposComponent, outlet: 'adr'},
-      { path: 'dashboard', component: DashboardComponent, outlet: 'adr' },
-      { path: 'super-admin-panel', component: SuperAdminComponent, outlet: 'adr' },
-      { path: 'nuevo-admin', component: NuevoAdminComponent, outlet: 'adr' },
-      { path: 'cambiar-contraseña', component: AdminChangePwdComponent, outlet: 'adr' },
-      { path: 'add-client', component: AddClientComponent, outlet: 'adr' },
-      { path: 'add-venta', component: AddVentaComponent, outlet: 'adr' },
-      { path: 'edit-admin', component: EditAdminComponent, outlet: 'adr' },
-      { path: 'edit-client', component: EditClientComponent, outlet: 'adr' },
-      { path: 'ventas', component: VentasComponent, outlet: 'adr' },
-      { path: 'previsualizar-archivo/:id', component: PrevArchivoComponent, outlet: 'adr' },
-      { path: 'ficha-cliente', component: FichaClienteComponent, outlet: 'adr' },
-      { path: 'ficha-user', component: FichaUserComponent, outlet: 'adr' },
-      { path: 'validador-venta/:id', component: ValidadorVentaComponent, outlet: 'adr' },
-      { path: 'config', component: ConfigComponent, outlet: 'adr' },
-      { path: 'tasas', component: TasasComponent, outlet: 'adr' },
-      { path: 'add-tasas', component: AddTasasComponent, outlet: 'adr' },
       { path: 'cobro-centralizado', component: CobroCentralizadoComponent, outlet: 'adr' },
-      
+      { path: 'previsualizar-archivo/:id', component: PrevArchivoComponent, outlet: 'adr' },
+      { path: 'seleccion-centralizado', component: SeleccionCentralizadoComponent, outlet: 'adr' },
+      // Modulo de Roles
+      { path: 'roles', component: RolesComponent, outlet: 'adr' },
       { path: 'add-rol', component: AddRolComponent, outlet: 'adr' },
       { path: 'edit-rol', component: EditRolComponent, outlet: 'adr' },
-      { path: 'roles', component: RolesComponent, outlet: 'adr' },
-      { path: 'seleccion-centralizado', component: SeleccionCentralizadoComponent, outlet: 'adr' },
+      // Modulo de ventas
+      { path: 'ventas', component: VentasComponent, outlet: 'adr' },
+      { path: 'ficha-sale', component: FichaSaleComponent, outlet: 'adr' },
+      { path: 'validador-venta/:id', component: ValidadorVentaComponent, outlet: 'adr' },
+      { path: 'add-venta', component: AddVentaComponent, outlet: 'adr' },
+      { path: 'venta-consulpos', component: VentaConsulposComponent, outlet: 'adr' },
+      // Modulo de Operaciones
       { path: 'operaciones/:tipo_operacion', component: OperacionesComponent, outlet: 'adr' },
+      // Modulo de Pagos
+      { path: 'pagos', component: PagosComponent, outlet: 'adr' },
+      { path: 'add-pagos', component: AddPagosComponent, outlet: 'adr' },
+      { path: 'validar-pago', component: ValidarPagoComponent, outlet: 'adr' },
+      { path: 'tasas', component: TasasComponent, outlet: 'adr' },
+      { path: 'add-tasas', component: AddTasasComponent, outlet: 'adr' },
     ],
   }
 ];

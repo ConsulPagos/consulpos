@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { Output } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -30,7 +30,7 @@ export class UploadComponent implements OnInit {
 
     // Generate a random ID
     const randomId = Math.random().toString(36).substring(2);
-    const filepath = `documentos_afiliados/${randomId}`;
+    const filepath = `documentos/${randomId}`;
 
     const fileRef = this._storage.ref(filepath);
 

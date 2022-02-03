@@ -3,8 +3,7 @@
     <div>
         <mat-form-field appearance="outline" class="mt-4 mx-4">
             <form [formGroup]="identity">
-                <input matInput (keyup.enter)="_findClient()" placeholder="Buscar" formControlName="rif" maxlength="9"
-                    #input>
+                <input matInput (keyup.enter)="_findSale()" placeholder="Buscar" formControlName="rzo" #input>
             </form>
         </mat-form-field>
 
@@ -65,19 +64,6 @@
                     (click)="_editSale(venta)" class="container_icon">
                     <i class="fas fa-edit activate_edit"></i>
                 </button>
-
-                <button #tooltip="matTooltip" matTooltip="Anular Venta" matTooltipHideDelay="10"
-                    *ngIf="venta.status_desc == 'TRANSANDO'" mat-icon-button class="container_icon"
-                    (click)="saveDesativate(venta)">
-                    <i class="fas fa-ban activate_ban"></i>
-                </button>
-
-                <button #tooltip="matTooltip" matTooltip="Activar" matTooltipHideDelay="10"
-                    *ngIf="venta.status_desc == 'NO ACTIVO'" mat-icon-button class="container_icon"
-                    (click)="saveActive(venta)">
-                    <i class="fas fa-check-square activate_check"></i>
-                </button>
-
             </td>
         </ng-container>
 

@@ -23,9 +23,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
-import { FileUploadComponent } from '../../components/fiel-upload/file-upload.component';
-import { FileUploadDirective } from '../../components/fiel-upload/file-upload.directive';
-import { ProgressComponent } from '../../components/fiel-upload/progress/progress.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BottomFormComponent } from '../../components/bottom-form/bottom-form.component';
@@ -47,9 +44,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     UploadComponent,
     EditFieldDialogComponent,
     DateAgoPipe,
-    FileUploadComponent,
-    FileUploadDirective,
-    ProgressComponent,
     BottomFormComponent,
     LoaderComponent,
     ActionBtnComponent
@@ -112,9 +106,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
-    FileUploadComponent,
-    FileUploadDirective,
-    ProgressComponent,
     MatMenuModule,
     MatSidenavModule,
     BottomFormComponent,

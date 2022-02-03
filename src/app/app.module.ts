@@ -26,15 +26,15 @@ import { DashboardComponent } from './modules/admin/pages/dashboard/dashboard.co
 import { LoginComponent } from './modules/home/pages/login/login.component';
 import { ChangePasswordDialogComponent } from './shared/components/change-password-dialog/change-password-dialog.component';
 import { EditphoneComponent } from './shared/components/editphone/editphone.component';
-
+import { AngularFireModule } from '@angular/fire';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ChangePasswordDialogComponent,
-    EditphoneComponent
-],
+    EditphoneComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -51,16 +51,14 @@ import { EditphoneComponent } from './shared/components/editphone/editphone.comp
     MatDividerModule,
     MatStepperModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    /* AngularFireModule.initializeApp({
-      apiKey: "AIzaSyAjz1qfKLyU34V0ExgnH969c9t4-cAiKzc",
-      authDomain: "g-altius.firebaseapp.com",
-      databaseURL: "https://g-altius.firebaseio.com",
-      projectId: "g-altius",
-      storageBucket: "g-altius.appspot.com",
-      messagingSenderId: "301996780499",
-      appId: "1:301996780499:web:0c858330142efc5a259d26",
-      measurementId: "G-9WHJ3FEJ9S"
-    }), */
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyAP-9HvAxZF2GxyruXkydTNoTD-uEAWzuQ",
+      authDomain: "sgapos-desarrollo.firebaseapp.com",
+      projectId: "sgapos-desarrollo",
+      storageBucket: "sgapos-desarrollo.appspot.com",
+      messagingSenderId: "167186511211",
+      appId: "1:167186511211:web:0ed20fd34c595462f0482e"
+    }),
     AngularFireStorageModule,
     NgxIntlTelInputModule,
     ChartsModule

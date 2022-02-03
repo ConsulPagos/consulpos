@@ -8,6 +8,7 @@ export interface DefaultResponse {
     keyJ?: string;
     ivJ?: string;
     permisos?: string;
+    t_pagos?: string;
 }
 
 export class DefaultDecrypter {
@@ -27,6 +28,7 @@ export class DefaultDecrypter {
             keyJ: this.crypto.decryptJson(value.keyJ),
             ivJ: this.crypto.decryptJson(value.ivJ),
             permisos: this.crypto.decryptJson(value.permisos),
+            t_pagos: this.crypto.decryptJson(value.t_pagos),
         }
         return data
     }

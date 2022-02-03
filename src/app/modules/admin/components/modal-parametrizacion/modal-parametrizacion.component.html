@@ -1,1 +1,37 @@
-<p>modal-parametrizacion works!</p>
+<h1 mat-dialog-title>
+    <li class="fa fa-edit mr-2"></li>
+    <span class="field">
+        Asignar venta #{{id_venta}}
+    </span>
+</h1>
+<div mat-dialog-content class="mat-dialog-content">
+    <div class="pt-2 pb-1 less-padding">
+        <div *ngFor="let item of data['items']">
+            <div *ngIf="!item.complemento_d">
+                <h1>{{item.modelo}}</h1>
+                <form>
+                    <mat-form-field class="box" appearance="outline">
+                        <mat-label>Numero de afiliado</mat-label>
+                        <input matInput type="text" formControlName="afiliado">
+                    </mat-form-field>
+
+                    <mat-form-field class="box" appearance="outline">
+                        <mat-label>Numero de terminal</mat-label>
+                        <input matInput type="text" formControlName="terminal">
+                    </mat-form-field>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <div class="d-flex w-100">
+        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null">
+            <li class="fa fa-times text-dark"></li>
+        </button>
+        <button class="flex-fill confirm action_button" [disabled]="false" mat-button cdkFocusInitial
+            [mat-dialog-close]="true">
+            <li class="fa fa-check"></li>
+        </button>
+    </div>
+</div>

@@ -61,7 +61,7 @@ export class TablaSalesComponent implements OnInit {
   }
 
   identity = new FormGroup({
-    rif: new FormControl(''),
+    rzo: new FormControl(''),
   });
 
   ngAfterViewInit() {
@@ -135,37 +135,8 @@ export class TablaSalesComponent implements OnInit {
     }
   }
 
-  disable(client: any) {
-    const data = this.crypto.encryptString(JSON.stringify({
-      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      rif: this.crypto.encryptJson(client.rif),
-      status_desc: this.crypto.encryptJson('DESAFILIADO'),
-    }))
-    this.loading = true;
-    this.venta.doDesafiliateSale(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.loading = false
-      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
-
-      switch (this.defaultResponse.R) {
-        case constant.R0:
-          window.location.reload();
-          this.toaster.success(this.defaultResponse.M)
-          break;
-        case constant.R1:
-          this.toaster.error(this.defaultResponse.M)
-          break;
-        default:
-          this.toaster.default_error()
-          break;
-      }
-    })
-  }
-
-  _findClient() {
-    var filter = this.identity.get('rif').value
+  _findSale() {
+    var filter = this.identity.get('rzo').value
     this.statusFilter = true;
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
@@ -199,13 +170,4 @@ export class TablaSalesComponent implements OnInit {
   _showSale(ventas) {
     this.showSale.emit(ventas)
   }
-
-  saveDesativate(ventas: any) {
-    this.modal.confirm("¿Desea anular a la venta?").subscribe(result => {
-      if (result) {
-        this.disable(ventas)
-      }
-    })
-  }
-
 }

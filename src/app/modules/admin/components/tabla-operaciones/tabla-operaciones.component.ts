@@ -7,7 +7,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
@@ -19,6 +18,9 @@ import { ShowSalesDecrypter, ShowSalesResponse } from 'src/app/models/showsales_
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ModalAsignacionComponent } from '../modal-asignacion/modal-asignacion.component';
+import { ModalParametrizacionComponent } from '../modal-parametrizacion/modal-parametrizacion.component';
+import { ModalConfiguracionComponent } from '../modal-configuracion/modal-configuracion.component';
+import { ModalEntregaComponent } from '../modal-entrega/modal-entrega.component';
 
 @Component({
   selector: 'app-tabla-operaciones',
@@ -27,14 +29,13 @@ import { ModalAsignacionComponent } from '../modal-asignacion/modal-asignacion.c
 })
 export class TablaOperacionesComponent implements OnInit {
 
-  displayedColumns: string[] = ['number', 'fecha', 'status_desc', 'Acciones'];
+  displayedColumns: string[] = ['number', 'rif','razon_social','fecha','status_desc','Acciones'];
   ventas = [];
 
   isLoadingResults = false;
   expandedElement: any | null;
   @Input() access_level: number;
   @Output() count = new EventEmitter<number>();
-  defaultResponse: DefaultResponse;
   loading = false;
   error = false;
   resultsLength;
@@ -71,7 +72,6 @@ export class TablaOperacionesComponent implements OnInit {
 
     this.route.paramMap.subscribe(paramMap => {
       this.tipo_operacion = paramMap.get('tipo_operacion');
-
     })
 
     this.dataSource = new MatTableDataSource(this.ventas);
@@ -92,28 +92,75 @@ export class TablaOperacionesComponent implements OnInit {
     this.cambioOperacion.subscribe(oper => {
       if (!this.firstLoading) {
         console.log(oper)
-
         this.tipo_operacion = oper
         this.load()
       }
-
     })
   }
 
-  openDialogAsignar(id_venta: number): void {
-
+  openDialog(id_venta: number, items: any): void {
     console.log(id_venta)
-    const dialogRef = this.dialog.open(ModalAsignacionComponent, {
-      height: 'auto',
-      panelClass: 'custom-dialog',
-      data: { id_venta: id_venta },
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+    switch (this.tipo_operacion) {
+      case 'asignacion':
+        var dialogRef = this.dialog.open(ModalAsignacionComponent, {
+          height: 'auto',
+          panelClass: 'custom-dialog',
+          data: { id_venta: id_venta, items: items },
+        });
+        console.log(items)
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
 
-      }
-    });
+          }
+        });
+        break;
+
+      case 'parametrizacion':
+        dialogRef = this.dialog.open(ModalParametrizacionComponent, {
+          height: 'auto',
+          panelClass: 'custom-dialog',
+          data: { id_venta: id_venta, items: items },
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+
+          }
+        });
+        break;
+
+      case 'configuracion':
+        dialogRef = this.dialog.open(ModalConfiguracionComponent, {
+          height: 'auto',
+          panelClass: 'custom-dialog',
+          data: { id_venta: id_venta, items: items },
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+
+          }
+        });
+        break;
+
+      case 'entregar':
+        dialogRef = this.dialog.open(ModalEntregaComponent, {
+          height: 'auto',
+          panelClass: 'custom-dialog',
+          data: { id_venta: id_venta, items: items },
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+
+          }
+        });
+        break;
+
+      default:
+        break;
+    }
   }
 
   applyFilter(event: Event) {
@@ -138,8 +185,9 @@ export class TablaOperacionesComponent implements OnInit {
             scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
             init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
             limit_row: this.crypto.encryptJson(((this.paginator.pageIndex + 1) * this.PAGESIZE).toString()),
+            status_desc: this.crypto.encryptJson(this.tipo_operacion.toUpperCase()),
           }))
-          return this.venta.doAllSale(`${this.session.getDeviceId()};${data}`)
+          return this.venta.doFindSalesByStatus(`${this.session.getDeviceId()};${data}`)
         }),
         map(data => {
           this.firstLoading = false;
@@ -171,41 +219,17 @@ export class TablaOperacionesComponent implements OnInit {
 
   statusColor(status) {
     switch (status) {
-      case 'TRANSANDO':
-        return "active"
-      case 'DESAFILIADO':
+      case 'ASIGNACION':
+        return "asignacion"
+      case 'PARAMETRIZACION':
+        return "parametrizacion"
+      case 'CONFIGURACION':
+        return "configuracion"
+      case 'ENTREGAR':
+        return "entregar"
       default:
         return "desaffiliate"
     }
-  }
-
-  disable(client: any) {
-    const data = this.crypto.encryptString(JSON.stringify({
-      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      rif: this.crypto.encryptJson(client.rif),
-      status_desc: this.crypto.encryptJson('DESAFILIADO'),
-    }))
-    this.loading = true;
-    this.venta.doDesafiliateSale(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.loading = false
-      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
-
-      switch (this.defaultResponse.R) {
-        case constant.R0:
-          window.location.reload();
-          this.toaster.success(this.defaultResponse.M)
-          break;
-        case constant.R1:
-          this.toaster.error(this.defaultResponse.M)
-          break;
-        default:
-          this.toaster.default_error()
-          break;
-      }
-    })
   }
 
   _findClient() {
@@ -242,13 +266,5 @@ export class TablaOperacionesComponent implements OnInit {
 
   _showSale(ventas) {
     this.showSale.emit(ventas)
-  }
-
-  saveDesativate(ventas: any) {
-    this.modal.confirm("¿Desea anular a la venta?").subscribe(result => {
-      if (result) {
-        this.disable(ventas)
-      }
-    })
   }
 }

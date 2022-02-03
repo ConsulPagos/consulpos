@@ -14,7 +14,7 @@ import { SimInterface } from '../../../../models/sim';
 import { TipoventaInterface } from '../../../../models/tipo_venta';
 import { TipoclienteInterface } from 'src/app/models/tipo_cliente';
 import { TipodocumentoInterface } from 'src/app/models/tipo_documento';
-import { ValidacionventaDecrypter } from '../../../../models/validacionventa_response';
+import { ValidacionOccDecrypter, ValidacionOccResponse } from '../../../../models/validacionocc_response';
 import { FraccionPagoInterface } from 'src/app/models/fraccion_pago';
 // *** IMPORTACIONES DE UTILIS *** \\
 import { constant } from 'src/app/shared/utils/constant';
@@ -48,6 +48,7 @@ export class AddVentaComponent implements OnInit {
   modelos: ModeloInterface[];
   fraccion_pagos: FraccionPagoInterface[];
   validacionresponse: ValidacionclienteResponse;
+  validacionoccresponse: ValidacionOccResponse;
   validacionres: ValidacionventaRese;
   tipos_clientes: TipoclienteInterface[];
   plataformas: PlataformaInterface[];
@@ -87,39 +88,21 @@ export class AddVentaComponent implements OnInit {
   });
 
   solicitud = new FormGroup({
-    occ: new FormControl('1', [Validators.required]),
-    t_pago_id: new FormControl('1', [Validators.required]),
-  });
-
-  buy = new FormGroup({
-    modelo: new FormControl('', [Validators.required]),
-    plataforma: new FormControl('', [Validators.required]),
-    banco: new FormControl('', [Validators.required]),
-    numero_cuenta_pos: new FormControl('', [Validators.required]),
-    precio_usd: new FormControl('', [Validators.required]),
-    lugar_entrega: new FormControl('', [Validators.required]),
-    tipocobro: new FormControl('', [Validators.required]),
-    plan: new FormControl('', [Validators.required]),
-    cod_afiliado: new FormControl('', [Validators.required]),
-    tipo_venta: new FormControl('', [Validators.required]),
-    serial_pos: new FormControl('', [Validators.required]),
-    terminal: new FormControl('', [Validators.required]),
+    occ: new FormControl('', [Validators.required]),
   });
 
   sim = new FormGroup({
     operadora: new FormControl('', [Validators.required]),
-    serial_operadora: new FormControl('', [Validators.required]),
   });
 
   document = new FormGroup({
-    acta: new FormControl('', [Validators.required]),
-    contrato: new FormControl('', [Validators.required]),
-    domiciliacion: new FormControl('', [Validators.required]),
+    referencia: new FormControl('', [Validators.required]),
   });
 
   //****************************************************************************************//
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Agregar Venta')
+    this.occUser()
     this.add_buy()
     this.fraccion_pagos = JSON.parse(this.storage.get(constant.FRACCIONES_PAGO)).fracciones_pago
     this.operadoras = JSON.parse(this.storage.get(constant.OPERADORAS)).operadoras
@@ -129,9 +112,8 @@ export class AddVentaComponent implements OnInit {
     this.tipocobros = JSON.parse(this.storage.get(constant.T_COBROS)).t_cobros
     this.tipo_documentos = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs
     this.bancos = JSON.parse(this.storage.get(constant.BANCOS)).bancos
-    this.occs = JSON.parse(this.storage.get(constant.OCCS)).occs
+    // this.occs = JSON.parse(this.storage.get(constant.OCCS)).occs
     this.t_pagos = JSON.parse(this.storage.get(constant.T_PAGOS)).t_pagos
-
   }
 
   add_buy() {
@@ -145,16 +127,14 @@ export class AddVentaComponent implements OnInit {
       lugar_entrega: new FormControl('', [Validators.required]),
       tipocobro: new FormControl('', [Validators.required]),
       plan: new FormControl('', [Validators.required]),
-      cod_afiliado: new FormControl('', [Validators.required]),
       tipo_venta: new FormControl('', [Validators.required]),
-      serial_pos: new FormControl('', [Validators.required]),
-      terminal: new FormControl('', [Validators.required]),
+      terminal: new FormControl(''),
+      cod_afiliado: new FormControl(''),
     });
     var sim = new FormGroup({
       operadora: new FormControl('', [Validators.required]),
-      serial_operadora: new FormControl('', [Validators.required]),
     });
-    newFormat.sims=[sim]
+    newFormat.sims = [sim]
     this.buies.push(buy);
     this.formats_buy.push(newFormat);
   }
@@ -167,7 +147,6 @@ export class AddVentaComponent implements OnInit {
   add_sim(index: number) {
     var sim = new FormGroup({
       operadora: new FormControl('', [Validators.required]),
-      serial_operadora: new FormControl('', [Validators.required]),
     });
     this.formats_buy[index].sims.push(sim)
   }
@@ -206,75 +185,70 @@ export class AddVentaComponent implements OnInit {
     })
   }
 
-  submit() {
-    var items = [
-      {
-        cod_serial: this.buy.get("serial_pos").value,
-        pedido_id: "1",
-        almacen_id: this.solicitud.get("occ").value,
-        status_id: "1",
-        complemento_d: "",
-      }
-    ]
-    this.sims.forEach(sim => {
-      items.push({
-        cod_serial: sim.get("serial_operadora").value,
-        pedido_id: "1",
-        almacen_id: sim.get("almacen_operadora").value,
-        status_id: "1",
-        complemento_d: this.buy.get("serial_pos").value,
-      })
-    })
-
-    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
-    // console.log(rif)
+  occUser() {
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+    }))
+    this.loading = true;
+    this.venta.doOccUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.validacionoccresponse = new ValidacionOccDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.occs = JSON.parse(this.validacionoccresponse.occ_usuarios)
+      this.loading = false
+      this.crypto.setKeys(this.validacionoccresponse.keyS, this.validacionoccresponse.ivJ, this.validacionoccresponse.keyJ, this.validacionoccresponse.ivS)
+    })
+  }
 
+  submit() {
+    var solicitudes_banco_sell: any = [];
+
+    this.buies.forEach(buy => {
+      var items: any = [
+        {
+          modelo_id: buy.get("modelo").value,
+          modelo: "MF919",
+        }
+      ]
+      this.sims.forEach(sim => {
+        items.push({
+          sim_id: sim.get("operadora").value,
+          sim: "DIGITEL",
+        })
+      })
+
+      solicitudes_banco_sell.push({
+        id_t_cobro: buy.get('tipocobro').value,
+        monto_cuota: "30",
+        fraccion_pago_id: buy.get('tipo_venta').value,
+        plan_id: buy.get('plan').value,
+        modelo_id: buy.get('modelo').value,
+        terminal: buy.get('terminal').value,
+        afiliado: buy.get('cod_afiliado').value,
+        cuenta: buy.get('numero_cuenta_pos').value,
+        banco_id: buy.get('banco').value,
+        items: JSON.stringify(items),
+      })
+    })
+
+    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
-
       solicitud: this.crypto.encryptJson(JSON.stringify(
         {
           occ_id: this.solicitud.get('occ').value,
           t_sol_id: "1",
-          pago: (JSON.stringify(
-            {
-              t_pago_id: this.solicitud.get("t_pago_id").value,
-              // t_pago_desc: this.solicitud.get("t_pago_desc").value,
-              // monto: this.solicitud.get("monto").value,
-            }
-          )),
         }
       )),
-
-      solicitudes_banco: this.crypto.encryptJson(JSON.stringify([
-        {
-          id_t_cobro: this.buy.get('tipocobro').value,
-          monto_cuota: "30",
-          fraccion_pago_id: this.buy.get('tipo_venta').value,
-          plan_id: this.buy.get('plan').value,
-          modelo_id: this.buy.get('modelo').value,
-          terminal: this.buy.get('terminal').value,
-          afiliado: this.buy.get('cod_afiliado').value,
-          cuenta: this.buy.get('numero_cuenta_pos').value,
-          banco_id: this.buy.get('banco').value,
-          items: JSON.stringify(items),
-        }]
+      solicitudes_banco: this.crypto.encryptJson(JSON.stringify(
+        solicitudes_banco_sell
       )),
-
       documentos: this.crypto.encryptJson(JSON.stringify([
         {
-          link: this.document.get("acta").value,
-          id_doc: "1"
-        },
-        {
-          link: this.document.get("contrato").value,
-          id_doc: "1"
-        },
-        {
-          link: this.document.get("domiciliacion").value,
+          link: this.document.get("referencia").value,
           id_doc: "1"
         },
       ]))
@@ -288,16 +262,13 @@ export class AddVentaComponent implements OnInit {
       console.log(this.validacionres)
       this.loading = false
       this.crypto.setKeys(this.validacionres.keyS, this.validacionres.ivJ, this.validacionres.keyJ, this.validacionres.ivS)
-
       switch (this.validacionres.R) {
         case constant.R0:
           this.toaster.success(this.validacionres.M)
-          console.log('HOLA MANO')
           this.router.navigateByUrl('/admin/app/(adr:ventas)')
           break;
         case constant.R1:
           this.toaster.error(this.validacionres.M)
-          console.log('HOLA PIE')
           break;
       }
     })
@@ -316,11 +287,11 @@ export class AddVentaComponent implements OnInit {
     return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
   }
 
-  price_model() {
+  price_model(buies: FormGroup) {
     var precio;
-    if (this.buy.get("modelo") != null) {
-      if (this.modelos.filter(it => it.id == this.buy.get("modelo").value).length > 0) {
-        precio = this.modelos.filter(it => it.id == this.buy.get("modelo").value)[0].precio
+    if (buies != null) {
+      if (this.modelos.filter(it => it.id == buies.get("modelo").value).length > 0) {
+        precio = this.modelos.filter(it => it.id == buies.get("modelo").value)[0].precio
       }
     }
     return precio
@@ -329,9 +300,7 @@ export class AddVentaComponent implements OnInit {
   save() {
     this.modal.confirm("Desea confirmar el registro de la venta").subscribe(result => {
       if (result) {
-        console.log("acciones")
         this.submit()
-
       }
     })
   }
