@@ -4,13 +4,15 @@
 
 export const environment = {
   production: false,
-  apiHost: 'http://192.168.44.217',
-  puerto_sesion: 9000,
-  puerto_ventas: 9001,
+  apiHost: 'http://192.168.38.10',
+  apiHostDonWeb: 'http://66.97.35.26',
+  // puerto_sesion: 9000,
+  puerto_sesion: 1718,
+  // puerto_ventas: 9001,
+  puerto_ventas: 1878,
   puerto_usuarios: 9002,
   puerto_pagos: 9004,
-  
-  puerto_bancario: 1314,
+  puerto_bancario: 9006,
   puerto_clientes: 1211,
 
   J_KEY: 'vsPlT8h1qZhMh3gxT0vi4htLMuLvrRRQ',

@@ -1,26 +1,30 @@
 <h1 mat-dialog-title>
     <li class="fa fa-edit mr-2"></li>
     <span class="field">
-        Asignar venta #{{id_venta}}
+        Configurar venta #{{dataVenta.number}}
     </span>
 </h1>
+
 <div mat-dialog-content class="mat-dialog-content">
     <div class="pt-2 pb-1 less-padding">
-
-        <div *ngFor="let item of data['items']">
+        <div *ngFor="let item of dataVenta.items">
             <div *ngIf="item.complemento_d">
                 <h1>{{item.modelo}}</h1>
-                <form>
+                <button (click)="findSim(item.modelo)">
+                    Search
+                </button>
+                <form [formGroup]="configuracion">
                     <mat-form-field class="box" appearance="outline">
                         <mat-label>Serial SIM</mat-label>
-                        <input matInput type="text" formControlName="serial_sim">
+                        <input matInput type="text" formControlName="serial_sim" [(ngModel)]="x">
                     </mat-form-field>
                 </form>
             </div>
         </div>
-
     </div>
 </div>
+
+
 <div mat-dialog-actions>
     <div class="d-flex w-100">
         <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null">

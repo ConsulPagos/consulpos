@@ -115,7 +115,7 @@ export class VerifyDecrypter {
             tipos_diferido: JSON.parse(this.crypto.decryptJson(value.tipos_diferido)),
 
         }
-        // console.log(verify)
+        console.log(verify)
         return verify
     }
 }

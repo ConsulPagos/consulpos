@@ -26,7 +26,7 @@ export class AddClientDecrypter {
             ivJ: this.crypto.decryptJson(value.ivJ),
         }
         
-        // console.log(verify)
+        console.log(verify)
         return verify
     }
 }

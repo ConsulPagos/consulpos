@@ -58,7 +58,8 @@ export class TablaPagosComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-  ) {
+  ) 
+  {
     this.dataSource = new MatTableDataSource(this.ventas);
   }
 
@@ -90,7 +91,6 @@ export class TablaPagosComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.error = false;
-          this.isLoadingResults = true;
           this.loader.loading()
           const data = this.crypto.encryptString(JSON.stringify({
             u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
@@ -104,7 +104,6 @@ export class TablaPagosComponent implements OnInit {
         }),
         map(data => {
           this.firstLoading = false;
-          this.isLoadingResults = false;
           console.log("JSON: " + data)
           console.log("string: " + this.crypto.decryptString(data))
           this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
@@ -112,12 +111,10 @@ export class TablaPagosComponent implements OnInit {
           this.resultsLength = parseInt(this.ShowSalesResponse.total_row);
           console.log(this.ShowSalesResponse)
           this.loader.stop()
-
           return this.ShowSalesResponse.ventas;
         }),
         catchError((e) => {
           this.firstLoading = false;
-          this.loading = false;
           this.error = true;
           console.log(e)
           return observableOf([]);
@@ -132,8 +129,6 @@ export class TablaPagosComponent implements OnInit {
 
   openDialogPay(id_venta: number, items: any): void {
     console.log(id_venta)
-
-
         var dialogRef = this.dialog.open(ModalPagoComponent, {
           height: 'auto',
           panelClass: 'custom-dialog',
@@ -146,7 +141,6 @@ export class TablaPagosComponent implements OnInit {
           }
         });
   }
-
 
   statusColor(status) {
     switch (status) {
@@ -166,13 +160,11 @@ export class TablaPagosComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       status_desc: this.crypto.encryptJson('ACTIVO'),
       filter: this.crypto.encryptJson(filter),
-
     }))
-    this.isLoadingResults = true;
+
     this.venta.doFindSales(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(this.crypto.decryptString(res))
       this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.isLoadingResults = false;
       this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
       this.toaster.success(this.ShowSalesResponse.M)
       this.ventas = this.ShowSalesResponse.ventas

@@ -1,18 +1,21 @@
 <h1 mat-dialog-title>
     <li class="fa fa-edit mr-2"></li>
     <span class="field">
-        Asignar venta #{{id_venta}}
+        Asignar venta #{{dataVenta.number}}
     </span>
 </h1>
 <div mat-dialog-content class="mat-dialog-content">
     <div class="pt-2 pb-1 less-padding">
-        <div *ngFor="let item of data['items']">
+        <div *ngFor="let item of dataVenta.items">
             <div *ngIf="!item.complemento_d">
                 <h1>{{item.modelo}}</h1>
-                <form>
+                <button (click)="findPos(item.modelo) ">
+                    Search 
+                </button>
+                <form [formGroup]="asignacion">
                     <mat-form-field class="box" appearance="outline">
                         <mat-label>Serial POS</mat-label>
-                        <input matInput type="text" formControlName="serial">
+                        <input matInput type="text" formControlName="serial" [(ngModel)]="x">
                     </mat-form-field>
 
                     <mat-form-field class="box" appearance="outline">
@@ -30,7 +33,7 @@
             <li class="fa fa-times text-dark"></li>
         </button>
         <button class="flex-fill confirm action_button" [disabled]="false" mat-button cdkFocusInitial
-            [mat-dialog-close]="true">
+            [mat-dialog-close]="true" (click)="saveConfig()">
             <li class="fa fa-check"></li>
         </button>
     </div>

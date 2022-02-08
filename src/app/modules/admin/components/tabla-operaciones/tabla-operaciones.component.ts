@@ -29,7 +29,7 @@ import { ModalEntregaComponent } from '../modal-entrega/modal-entrega.component'
 })
 export class TablaOperacionesComponent implements OnInit {
 
-  displayedColumns: string[] = ['number', 'rif','razon_social','fecha','status_desc','Acciones'];
+  displayedColumns: string[] = ['number', 'rif', 'razon_social', 'fecha', 'status_desc', 'Acciones'];
   ventas = [];
 
   isLoadingResults = false;
@@ -98,17 +98,14 @@ export class TablaOperacionesComponent implements OnInit {
     })
   }
 
-  openDialog(id_venta: number, items: any): void {
-    console.log(id_venta)
-
+  openDialog(venta): void {
     switch (this.tipo_operacion) {
       case 'asignacion':
-        var dialogRef = this.dialog.open(ModalAsignacionComponent, {
+        var dialogRef:any = this.dialog.open(ModalAsignacionComponent, {
           height: 'auto',
           panelClass: 'custom-dialog',
-          data: { id_venta: id_venta, items: items },
+          data: { venta: venta },
         });
-        console.log(items)
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
 
@@ -120,12 +117,11 @@ export class TablaOperacionesComponent implements OnInit {
         dialogRef = this.dialog.open(ModalParametrizacionComponent, {
           height: 'auto',
           panelClass: 'custom-dialog',
-          data: { id_venta: id_venta, items: items },
+          data: { venta: venta },
         });
 
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-
           }
         });
         break;
@@ -134,12 +130,11 @@ export class TablaOperacionesComponent implements OnInit {
         dialogRef = this.dialog.open(ModalConfiguracionComponent, {
           height: 'auto',
           panelClass: 'custom-dialog',
-          data: { id_venta: id_venta, items: items },
+          data: { venta: venta },
         });
 
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-
           }
         });
         break;
@@ -148,12 +143,11 @@ export class TablaOperacionesComponent implements OnInit {
         dialogRef = this.dialog.open(ModalEntregaComponent, {
           height: 'auto',
           panelClass: 'custom-dialog',
-          data: { id_venta: id_venta, items: items },
+          data: { venta: venta },
         });
 
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-
           }
         });
         break;
@@ -177,7 +171,6 @@ export class TablaOperacionesComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.error = false;
-          this.isLoadingResults = true;
           this.loader.loading()
           const data = this.crypto.encryptString(JSON.stringify({
             u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
@@ -191,7 +184,6 @@ export class TablaOperacionesComponent implements OnInit {
         }),
         map(data => {
           this.firstLoading = false;
-          this.isLoadingResults = false;
           console.log("JSON: " + data)
           console.log("string: " + this.crypto.decryptString(data))
           this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
@@ -199,7 +191,6 @@ export class TablaOperacionesComponent implements OnInit {
           this.resultsLength = parseInt(this.ShowSalesResponse.total_row);
           console.log(this.ShowSalesResponse)
           this.loader.stop()
-
           return this.ShowSalesResponse.ventas;
         }),
         catchError((e) => {
@@ -241,7 +232,6 @@ export class TablaOperacionesComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       status_desc: this.crypto.encryptJson('ACTIVO'),
       filter: this.crypto.encryptJson(filter),
-
     }))
     this.isLoadingResults = true;
     this.venta.doFindSales(`${this.session.getDeviceId()};${data}`).subscribe(res => {
