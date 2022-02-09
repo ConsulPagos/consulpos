@@ -17,7 +17,7 @@ export class ClientesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doSave(data) {
@@ -26,7 +26,7 @@ export class ClientesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doEdit(data) {
@@ -35,7 +35,7 @@ export class ClientesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doDelete(data) {
@@ -44,7 +44,7 @@ export class ClientesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doAll(data) {
@@ -53,7 +53,7 @@ export class ClientesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doItem(data) {
@@ -62,7 +62,7 @@ export class ClientesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doStatusAccount(data) {
@@ -71,7 +71,7 @@ export class ClientesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doFind(data) {
@@ -80,7 +80,7 @@ export class ClientesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doEditPhone(data) {
@@ -89,7 +89,7 @@ export class ClientesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
   }
 
 }
