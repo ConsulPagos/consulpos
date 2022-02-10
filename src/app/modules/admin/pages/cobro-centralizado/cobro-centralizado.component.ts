@@ -47,7 +47,7 @@ export class CobroCentralizadoComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      id_banco: this.crypto.encryptJson(this.form.get("banco").value),
+      codigo: this.crypto.encryptJson(this.form.get("banco").value),
     }))
 
     this.loader.loading()

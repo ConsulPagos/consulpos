@@ -113,7 +113,7 @@ export class GenerarArchivoComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      id_banco: this.crypto.encryptJson(this.form.get('banco').value),
+      codigo: this.crypto.encryptJson(this.form.get('banco').value),
       descripcion: this.crypto.encryptJson(this.form.get('descripcion').value),
       tasa: this.crypto.encryptJson(this.tasas.filter(t => t.id == this.form.get('tasa').value)[0].monto),
       id_tasa: this.crypto.encryptJson(this.form.get('tasa').value),
@@ -211,6 +211,8 @@ export class GenerarArchivoComponent implements OnInit {
     this.bancario.doGetTasas(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
       this.loader.stop();
       const json = JSON.parse(this.crypto.decryptString(res));
+      console.log("JSON DE TASAS")
+      console.log(json)
       const response = new DefaultDecrypter(this.crypto).deserialize(json);
       console.log(json)
       switch (json.R) {
