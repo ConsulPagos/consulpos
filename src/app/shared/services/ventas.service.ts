@@ -16,7 +16,7 @@ export class VentasService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doDesafiliateSale(data) {
@@ -25,7 +25,7 @@ export class VentasService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doVerifyItem(data) {
@@ -34,7 +34,7 @@ export class VentasService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doVerifyStatusAccount(data) {
@@ -43,7 +43,7 @@ export class VentasService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doAllSale(data) {
@@ -52,7 +52,7 @@ export class VentasService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doFindSales(data) {
@@ -61,7 +61,7 @@ export class VentasService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doFindSalesByStatus(data) {
@@ -70,7 +70,7 @@ export class VentasService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doOccUser(data) {
@@ -79,7 +79,7 @@ export class VentasService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doFindPos(data) {
@@ -88,7 +88,7 @@ export class VentasService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doFindSim(data) {
@@ -97,7 +97,7 @@ export class VentasService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doSaveConfig(data) {
@@ -106,7 +106,7 @@ export class VentasService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
 }

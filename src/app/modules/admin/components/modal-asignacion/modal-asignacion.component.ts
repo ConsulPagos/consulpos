@@ -29,7 +29,6 @@ export class ModalAsignacionComponent implements OnInit {
   x = null;
 
   constructor(
-    private title: Title,
     private crypto: CryptoService,
     private storage: StorageService,
     private session: SesionService,
@@ -76,20 +75,29 @@ export class ModalAsignacionComponent implements OnInit {
     })
   }
 
-  saveConfig() {
+  saveConfig(modelo) {
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      solicitud_id:this.crypto.encryptJson(this.dataVenta.number),
+      solicitud_banco_id:this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
+      accion: this.crypto.encryptJson("ASIGNACION"),
+
+      operaciones:this.crypto.encryptJson(JSON.stringify([
+        {
+          cod_serial:this.crypto.encryptJson(this.asignacion.get('serial').value),
+          terminal:this.crypto.encryptJson(""),
+          afiliado:this.crypto.encryptJson(this.dataVenta.afiliado),
+          modelo: this.crypto.encryptJson(modelo),
+        }
+      ]))
     }))
     console.log("verify")
     this.venta.doSaveConfig(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      console.log(JSON.parse(this.crypto.decryptString(res)))
-      console.log(data)
-      console.log(res)
       const json = JSON.parse(this.crypto.decryptString(res))
       // this.t_pagos = JSON.parse(this.crypto.decryptJson(json.t_pagos))
-      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       // this.t_pagos = JSON.parse(this.default.t_pagos)
       console.log(this.default)
       this.crypto.setKeys(this.default.keyS, this.default.ivJ, this.default.keyJ, this.default.ivS)

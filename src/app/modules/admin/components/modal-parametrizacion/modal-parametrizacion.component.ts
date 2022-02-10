@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { AsignacionDecrypter } from 'src/app/models/asignacion_response';
 import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
 import { DialogData } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
@@ -53,19 +54,25 @@ export class ModalParametrizacionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  saveConfig() {
+  saveConfig(modelo, serial) {
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      modelo: this.crypto.encryptJson(modelo),
+      accion: this.crypto.encryptJson("PARAMETRIZACION"),
+      solicitud_id:this.crypto.encryptJson(this.dataVenta.number),
+      solicitud_banco_id:this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
+      cod_serial:this.crypto.encryptJson(serial),
+      afiliado:this.crypto.encryptJson(this.dataVenta.afiliado),
+      terminal:this.crypto.encryptJson(this.parametrizacion.get('terminal').value),
     }))
     console.log("verify")
     this.venta.doSaveConfig(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      console.log(JSON.parse(this.crypto.decryptString(res)))
-      console.log(data)
-      console.log(res)
       const json = JSON.parse(this.crypto.decryptString(res))
-      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      // this.t_pagos = JSON.parse(this.crypto.decryptJson(json.t_pagos))
+      this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      // this.t_pagos = JSON.parse(this.default.t_pagos)
       console.log(this.default)
       this.crypto.setKeys(this.default.keyS, this.default.ivJ, this.default.keyJ, this.default.ivS)
     })

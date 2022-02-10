@@ -34,6 +34,7 @@ export class AddPagosComponent implements OnInit {
   formDinamic = [];
   tasas: any[];
   tasa: TasaInterface[];
+  totalPago = 0;
 
   constructor(
     private title: Title,
@@ -67,7 +68,6 @@ export class AddPagosComponent implements OnInit {
 
   formtasa = new FormGroup({
     dollar: new FormControl('', [Validators.required]),
-    // euro: new FormControl('', [Validators.required]),
   });
 
   ngOnInit(): void {
@@ -98,15 +98,27 @@ export class AddPagosComponent implements OnInit {
     })
   }
 
-  getMonto() {
+  clearForm(i) {
+    this.payments[i].reset();
+  }
+
+  getMonto(id: any) {
     var totalPago = 0;
-    this.payments.forEach(m => {
-      if (m.get('monto') && m.get('monto').value != null) {
-        totalPago += parseFloat(m.get('monto').value)
-        console.log(totalPago)
+    var tasaDollar = parseFloat(this.formtasa.get("dollar").value);
+    if (this.t_pagos && this.tasas) {
+      for (let index = 0; index < this.payments.length; index++) {
+        const m = this.payments[index];
+        const p = this.t_pagos.filter(t => t.t_pago_id == id)[0];
+        console.log('Esto es P')
+        console.log(p)
+        if (p.cod_moneda == "VES") {
+          totalPago += (parseFloat(m.get('monto').value) / tasaDollar)
+        } else {
+          totalPago += parseFloat(m.get('monto').value)
+        }
       }
-    })
-    return this.total - totalPago
+    }
+    this.totalPago = this.total - totalPago
   }
 
 
