@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ErrorResponse } from 'src/app/models/auth_response';
 import { UserInterface } from 'src/app/models/user';
@@ -26,7 +26,7 @@ export class AdminComponent implements OnInit {
   
   submitted: boolean = false;
 
-  constructor(private sesion: SesionService, private crypto: CryptoService, private storage: StorageService, private loader: LoaderService) { }
+  constructor(private cdr: ChangeDetectorRef,private sesion: SesionService, private crypto: CryptoService, private storage: StorageService, private loader: LoaderService) { }
 
   ngOnInit(): void {
 
@@ -36,6 +36,7 @@ export class AdminComponent implements OnInit {
     
     this.loader.changes.subscribe(loading => {
       this.loading = loading;
+      this.cdr.detectChanges()
     })
   }
 
