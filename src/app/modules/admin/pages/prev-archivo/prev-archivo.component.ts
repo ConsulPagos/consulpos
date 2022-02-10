@@ -233,7 +233,7 @@ export class PrevArchivoComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       id_archivo: this.crypto.encryptJson(this.archivo.id),
       archivo: this.crypto.encryptJson(JSON.stringify(this.data)),
-      id_banco: this.crypto.encryptJson(this.archivo.id_banco),
+      codigo: this.crypto.encryptJson(this.archivo.id_banco),
     }))
 
     this.loading = true;
@@ -285,7 +285,7 @@ export class PrevArchivoComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       archivo: this.crypto.encryptJson(JSON.stringify(this.data)),
-      id_banco: this.crypto.encryptJson(this.archivo.id_banco),
+      codigo: this.crypto.encryptJson(this.archivo.id_banco),
       descripcion: this.crypto.encryptJson(descripcion),
     }))
 
@@ -334,7 +334,7 @@ export class PrevArchivoComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      id_banco: this.crypto.encryptJson(this.archivo.id_banco),
+      codigo: this.crypto.encryptJson(this.archivo.id_banco),
     }))
 
     this.bancario.doGetPlantillaRespuesta(`${this.session.getDeviceId()};${data}`).subscribe(res => {
