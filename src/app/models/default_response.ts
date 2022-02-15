@@ -19,7 +19,6 @@ export class DefaultDecrypter {
 
         const data: DefaultResponse = {
             R: value.R,
-            // M: value.M,
             M: this.crypto.decryptJson(value.M),
             keyS: this.crypto.decryptString(value.keyS),
             ivS: this.crypto.decryptString(value.ivS),
