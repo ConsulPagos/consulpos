@@ -138,8 +138,9 @@
             </mat-menu>
 
 
-            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['cobro-centralizado'] } }]"
-                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+            <a class="menu_side" *ngIf="hasPermiso('Cobranza', 'Cobro Centralizado', 'Leer')"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['cobro-centralizado'] } }]" routerLinkActive="ad-active"
+                [routerLinkActiveOptions]="{exact: true}">
                 <li class="fas fa-university"></li> <span class="text_side">Cobro Centralizado</span>
             </a>
 

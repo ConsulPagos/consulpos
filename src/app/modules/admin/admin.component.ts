@@ -29,8 +29,10 @@ export class AdminComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef, private sesion: SesionService, private crypto: CryptoService, private storage: StorageService, private loader: LoaderService) { }
 
   ngOnInit(): void {
-
-    this.verify()
+    
+    if (this.storage.get(constant.BANCOS) == null) {
+      this.verify()
+    }
 
     this.loader.changes.subscribe(loading => {
       this.loading = loading;
