@@ -156,8 +156,9 @@ export class GenerarArchivoComponent implements OnInit {
       this.pauseTimer()
       this.loader.stop()
       this.loading = false;
-
+      console.log(res)
       const json = JSON.parse(this.crypto.decryptString(res));
+      const def = new DefaultDecrypter(this.crypto).deserialize(json)
 
       switch (json.R) {
         case constant.R0:
@@ -165,7 +166,6 @@ export class GenerarArchivoComponent implements OnInit {
           const now = Date.now();
           const myFormattedDate = pipe.transform(now, 'short');
           this.generacionResponse = new GeneracionDecrypter(this.crypto).deserialize(json)
-          this.crypto.setKeys(this.generacionResponse.keyS, this.generacionResponse.ivJ, this.generacionResponse.keyJ, this.generacionResponse.ivS)
           this.openDialog();
           this.form.reset();
           if (this.generacionResponse.tipo_archivo === 'EXCEL') {
@@ -175,15 +175,14 @@ export class GenerarArchivoComponent implements OnInit {
           }
           break;
         case constant.R1:
-          const def = new DefaultDecrypter(this.crypto).deserialize(json)
           this.toaster.error(def.M)
-          this.crypto.setKeys(def.keyS, def.ivJ, def.keyJ, def.ivS)
           break;
         default:
           this.toaster.default_error()
           break;
       }
 
+      this.crypto.setKeys(def.keyS, def.ivJ, def.keyJ, def.ivS)
 
     })
 

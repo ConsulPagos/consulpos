@@ -23,17 +23,15 @@ export class AdminComponent implements OnInit {
   user: UserInterface = {};
   error: ErrorResponse = {};
   loading: Boolean = false;
-  
+
   submitted: boolean = false;
 
-  constructor(private cdr: ChangeDetectorRef,private sesion: SesionService, private crypto: CryptoService, private storage: StorageService, private loader: LoaderService) { }
+  constructor(private cdr: ChangeDetectorRef, private sesion: SesionService, private crypto: CryptoService, private storage: StorageService, private loader: LoaderService) { }
 
   ngOnInit(): void {
 
-    if (this.storage.get(constant.BANCOS) == null) {
-      this.verify()
-    }
-    
+    this.verify()
+
     this.loader.changes.subscribe(loading => {
       this.loading = loading;
       this.cdr.detectChanges()
@@ -55,8 +53,7 @@ export class AdminComponent implements OnInit {
     this.sesion.doVerify(`${this.sesion.getDeviceId()};${data}`).subscribe(res => {
       var verifyResponse = new VerifyDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(verifyResponse)
-      console.log('LO UBIQUEMOS')
-      console.log(JSON.parse(this.crypto.decryptString(res)))
+      //console.log(JSON.parse(this.crypto.decryptString(res)))
       this.loading = false
       this.storage.store(constant.BANCOS, JSON.stringify(verifyResponse.bancos))
       this.storage.store(constant.ESTADOS, JSON.stringify(verifyResponse.estados))
@@ -69,7 +66,7 @@ export class AdminComponent implements OnInit {
       this.storage.store(constant.T_DOCS, JSON.stringify(verifyResponse.t_docs))
       this.storage.store(constant.ACTIVIDAD_COMERCIAL, JSON.stringify(verifyResponse.actividades_comerciales))
 
-      this.storage.store(constant.OPERADORAS, JSON.stringify(verifyResponse.operadoras))
+      //this.storage.store(constant.OPERADORAS, JSON.stringify(verifyResponse.operadoras))
       this.storage.store(constant.MODELOS, JSON.stringify(verifyResponse.modelos))
       this.storage.store(constant.PLANES, JSON.stringify(verifyResponse.planes))
       this.storage.store(constant.PLATAFORMAS, JSON.stringify(verifyResponse.plataformas))
@@ -82,7 +79,7 @@ export class AdminComponent implements OnInit {
       this.storage.store(constant.OCCS, JSON.stringify(verifyResponse.occs))
       this.storage.store(constant.T_PAGOS, JSON.stringify(verifyResponse.t_pagos))
       this.storage.store(constant.ROLES, JSON.stringify(verifyResponse.roles))
-      
+
       this.crypto.setKeys(verifyResponse.keyS, verifyResponse.ivJ, verifyResponse.keyJ, verifyResponse.ivS)
     })
   }

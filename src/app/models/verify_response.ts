@@ -28,8 +28,8 @@ export interface VerifyResponse {
     municipios: MunicipioInterface[];
     contribuyentes: ContribuyenteInterface[];
     roles: RolInterface[];
-    datos: string;
-    has_keys: string;
+    //datos: string;
+    //has_keys: string;
     bancos: BancoInterface[];
     ciudades: Ciudades[];
     operadoras: OperadoraInterface[];
@@ -87,8 +87,8 @@ export class VerifyDecrypter {
             contribuyentes: JSON.parse(this.crypto.decryptJson(value.contribuyentes)),
             roles: JSON.parse(this.crypto.decryptJson(value.roles)),
             R: value.R,
-            datos: JSON.parse(this.crypto.decryptJson(value.datos)),
-            has_keys: this.crypto.decryptJson(value.has_keys),
+            //datos: JSON.parse(this.crypto.decryptJson(value.datos)),
+            //has_keys: this.crypto.decryptJson(value.has_keys),
             bancos: JSON.parse(this.crypto.decryptJson(value.bancos)),
             ciudades: JSON.parse(this.crypto.decryptJson(value.ciudades)),
             operadoras: JSON.parse(this.crypto.decryptJson(value.operadoras)),
