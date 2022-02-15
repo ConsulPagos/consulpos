@@ -30,7 +30,7 @@ export class SesionService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHostDonWeb}:${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}:${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doRefresh(data) {
