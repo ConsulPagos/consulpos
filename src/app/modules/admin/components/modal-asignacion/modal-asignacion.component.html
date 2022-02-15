@@ -6,10 +6,10 @@
 </h1>
 <div mat-dialog-content class="mat-dialog-content">
     <div class="pt-2 pb-1 less-padding">
-        <div *ngFor="let item of dataVenta.items">
-            <div *ngIf="!item.complemento_d">
-                <h1>{{item.modelo}}</h1>
-                <button (click)="findPos(item.modelo) ">
+        <div *ngFor="let modelo of dataVenta.modelos">
+            <div *ngIf="!modelo.complemento_d">
+                <h1>{{modelo.modelo}}</h1>
+                <button (click)="findPos(modelo.modelo) ">
                     Search 
                 </button>
                 <form [formGroup]="asignacion">
@@ -24,17 +24,18 @@
                     </mat-form-field>
                 </form>
             </div>
+            <div mat-dialog-actions *ngIf="!modelo.complemento_d">
+                <div class="d-flex w-100">
+                    <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null">
+                        <li class="fa fa-times text-dark"></li>
+                    </button>
+                    <button class="flex-fill confirm action_button" [disabled]="false" mat-button cdkFocusInitial
+                        [mat-dialog-close]="true" (click)="saveConfig()">
+                        <li class="fa fa-check"></li>
+                    </button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-<div mat-dialog-actions>
-    <div class="d-flex w-100">
-        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null">
-            <li class="fa fa-times text-dark"></li>
-        </button>
-        <button class="flex-fill confirm action_button" [disabled]="false" mat-button cdkFocusInitial
-            [mat-dialog-close]="true" (click)="saveConfig()">
-            <li class="fa fa-check"></li>
-        </button>
+
     </div>
 </div>

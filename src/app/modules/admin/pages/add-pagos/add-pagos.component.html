@@ -16,21 +16,12 @@
             <form [formGroup]="formtasa">
                 <mat-form-field appearance="outline">
                     <mat-label>Tasa a aplicar USD</mat-label>
-                    <mat-select disableRipple formControlName="dollar">
+                    <mat-select disableRipple formControlName="dollar" >
                         <mat-option *ngFor="let tasa of tasas" value={{tasa.monto}}>
                             {{tasa.monto}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-
-                <!-- <mat-form-field appearance="outline">
-                    <mat-label>Tasa a aplicar EUR</mat-label>
-                    <mat-select disableRipple formControlName="euro">
-                        <mat-option *ngFor="let tasa of tasas" value={{tasa.monto}}>
-                            {{tasa.tasa}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field> -->
             </form>
             <div *ngFor="let format of formats_payments; let i=index">
                 <div class="d-flex align-items-center ">
@@ -45,17 +36,20 @@
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Tipo de Pago</mat-label>
                         <mat-select disableRipple formControlName="t_pago"
-                            (selectionChange)="buildFormGroup(getInput(payments[i].get('t_pago').value), i)">
+                            (selectionChange)="buildFormGroup(getInput(payments[i].get('t_pago').value), i)" (click)="clearForm(i)">
                             <mat-option *ngFor="let pago of t_pagos" value={{pago.t_pago_id}}>
                                 {{pago.pago}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <div *ngIf="payments[i].get('t_pago').value != null">
+
                         <mat-form-field class="box" appearance="outline">
                             <mat-label>Monto Pagado</mat-label>
-                            <input matInput type="number" formControlName="monto">
+                            <input matInput type="number" formControlName="monto" (change)="setDivisa(i)">
+
                         </mat-form-field>
+
                         <mat-form-field class="box" appearance="outline">
                             <mat-label>Descripcion</mat-label>
                             <input matInput type="text" formControlName="descripcion" maxlength="45">
@@ -101,7 +95,7 @@
             </div>
             <button class="btn_form_add_agent" mat-icon-button color="primary"
                 aria-label="Example icon button with a menu icon" (click)="add_pay()"
-                *ngIf="(formats_payments.length <= 5)" [disabled]="getMonto() <= 0">
+                *ngIf="(formats_payments.length <= 5)" [disabled]="totalPago <= 0">
                 <i class="fas fa-money-bill icon_sell"></i>
                 Agregar Pago
             </button>
@@ -110,32 +104,32 @@
                     <tr>
                         <th>Total a pagar USD</th>
                         <th>Total facturado Bs.S</th>
-                        <th>Total facturado EUR</th>
+                        <!-- <th>Total facturado EUR</th> -->
                     </tr>
                     <tr>
                         <td>
                             <p>{{total}}</p>
                         </td>
-                        <td>{{(total * 4.5).toFixed(2)}}</td>
-                        <td>{{(total / 1.13).toFixed(2)}}</td>
+                        <td>{{(total * (this.formtasa.get("dollar").value)).toFixed(2)}}</td>
+                        <!-- <td>{{(total / 1.13).toFixed(2)}}</td> -->
                     </tr>
                     <tr>
                         <th>Diferencia en USD</th>
                         <th>Diferencia en Bs.S</th>
-                        <th>Diferencia en EUR</th>
+                        <!-- <th>Diferencia en EUR</th> -->
                     </tr>
                     <tr>
                         <td>
-                            <p>{{getMonto().toFixed(2)}}</p>
+                            <p>{{totalPago}}</p>
                         </td>
-                        <td>{{(getMonto() * 4.5).toFixed(2)}}</td>
-                        <td>{{(getMonto() / 1.13).toFixed(2)}}</td>
+                        <td>{{(totalPago * (this.formtasa.get("dollar").value))}}</td>
+                        <!-- <td>{{(totalPago / 1.13).toFixed(2)}}</td> -->
                     </tr>
                 </table>
             </div>
             <div>
                 <button mat-raised-button (click)="save(getInput(pay.get('t_pago').value))"
-                    [disabled]="isInvalid() || getMonto() != 0">Cargar Pago</button>
+                    [disabled]="isInvalid() || totalPago != 0">Cargar Pago</button>
             </div>
         </div>
     </div>

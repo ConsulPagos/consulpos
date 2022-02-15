@@ -15,6 +15,7 @@ import { TipoventaInterface } from '../../../../models/tipo_venta';
 import { TipoclienteInterface } from 'src/app/models/tipo_cliente';
 import { TipodocumentoInterface } from 'src/app/models/tipo_documento';
 import { ValidacionOccDecrypter, ValidacionOccResponse } from '../../../../models/validacionocc_response';
+import { ValidacionSimDecrypter, ValidacionSimResponse } from '../../../../models/validacionsim_response';
 import { FraccionPagoInterface } from 'src/app/models/fraccion_pago';
 // *** IMPORTACIONES DE UTILIS *** \\
 import { constant } from 'src/app/shared/utils/constant';
@@ -32,6 +33,7 @@ import { ValidacionclienteDecrypter, ValidacionclienteResponse } from '../../../
 import { ValidacionventaRese, ValidacionventadosDecrypter } from '../../../../models/validacionventa_res';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { SaleRequestInterface } from 'src/app/models/sales';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 //****************************************************************************************//
 
 @Component({
@@ -49,6 +51,7 @@ export class AddVentaComponent implements OnInit {
   fraccion_pagos: FraccionPagoInterface[];
   validacionresponse: ValidacionclienteResponse;
   validacionoccresponse: ValidacionOccResponse;
+  validacionsimresponse: ValidacionSimResponse;
   validacionres: ValidacionventaRese;
   tipos_clientes: TipoclienteInterface[];
   plataformas: PlataformaInterface[];
@@ -77,18 +80,19 @@ export class AddVentaComponent implements OnInit {
     private router: Router,
     private venta: VentasService,
     private modal: ModalService,
+    private loader: LoaderService,
   ) {
 
   }
   //****************************************************************************************//
 
   identity = new FormGroup({
-    rif: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
-    tipo_doc: new FormControl('', [Validators.required]),
+    rif: new FormControl('306605738', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
+    tipo_doc: new FormControl('J', [Validators.required]),
   });
 
   solicitud = new FormGroup({
-    occ: new FormControl('', [Validators.required]),
+    occ: new FormControl('1', [Validators.required]),
   });
 
   sim = new FormGroup({
@@ -103,9 +107,10 @@ export class AddVentaComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Agregar Venta')
     this.occUser()
+    // this.doSimModels()
     this.add_buy()
     this.fraccion_pagos = JSON.parse(this.storage.get(constant.FRACCIONES_PAGO)).fracciones_pago
-    this.operadoras = JSON.parse(this.storage.get(constant.OPERADORAS)).operadoras
+    // this.operadoras = JSON.parse(this.storage.get(constant.OPERADORAS)).operadoras
     this.modelos = JSON.parse(this.storage.get(constant.MODELOS)).modelos
     this.planes = JSON.parse(this.storage.get(constant.PLANES)).planes
     this.plataformas = JSON.parse(this.storage.get(constant.PLATAFORMAS)).plataformas
@@ -119,20 +124,20 @@ export class AddVentaComponent implements OnInit {
   add_buy() {
     var newFormat: SaleRequestInterface = {};
     var buy = new FormGroup({
-      modelo: new FormControl('', [Validators.required]),
-      plataforma: new FormControl('', [Validators.required]),
-      banco: new FormControl('', [Validators.required]),
-      numero_cuenta_pos: new FormControl('', [Validators.required]),
+      modelo: new FormControl('1', [Validators.required]),
+      plataforma: new FormControl('1', [Validators.required]),
+      banco: new FormControl('0102', [Validators.required]),
+      numero_cuenta_pos: new FormControl('12345678900987654321', [Validators.required]),
       precio_usd: new FormControl('', [Validators.required]),
-      lugar_entrega: new FormControl('', [Validators.required]),
-      tipocobro: new FormControl('', [Validators.required]),
-      plan: new FormControl('', [Validators.required]),
-      tipo_venta: new FormControl('', [Validators.required]),
+      lugar_entrega: new FormControl('122sd', [Validators.required]),
+      tipocobro: new FormControl('1', [Validators.required]),
+      plan: new FormControl('1', [Validators.required]),
+      tipo_venta: new FormControl('1', [Validators.required]),
       terminal: new FormControl(''),
       cod_afiliado: new FormControl(''),
     });
     var sim = new FormGroup({
-      operadora: new FormControl('', [Validators.required]),
+      operadora: new FormControl('1', [Validators.required]),
     });
     newFormat.sims = [sim]
     this.buies.push(buy);
@@ -158,7 +163,6 @@ export class AddVentaComponent implements OnInit {
   // *** FUNCION VALIDADORA DE EXISTENCIA DE USUARIOS *** \\
   verificar_usuario() {
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
-    // console.log(rif)
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
@@ -168,8 +172,6 @@ export class AddVentaComponent implements OnInit {
     this.loading = true;
     console.log("verify")
     this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      // console.log(res)
-      // console.log(JSON.parse(this.crypto.decryptString(res)))
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionresponse)
       this.search_client = this.validacionresponse.value_exists === "false" ? true : false;
@@ -191,29 +193,46 @@ export class AddVentaComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
     }))
-    this.loading = true;
+    this.loader.loading()
     this.venta.doOccUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.validacionoccresponse = new ValidacionOccDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.occs = JSON.parse(this.validacionoccresponse.occ_usuarios)
-      this.loading = false
       this.crypto.setKeys(this.validacionoccresponse.keyS, this.validacionoccresponse.ivJ, this.validacionoccresponse.keyJ, this.validacionoccresponse.ivS)
+      this.doSimModels()
+    })
+    
+  }
+
+  doSimModels() {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+    }))
+    this.loader.stop()
+    this.venta.doSimModels(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.validacionsimresponse = new ValidacionSimDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.operadoras = JSON.parse(this.validacionsimresponse.modelos)
+      this.crypto.setKeys(this.validacionsimresponse.keyS, this.validacionsimresponse.ivJ, this.validacionsimresponse.keyJ, this.validacionsimresponse.ivS)
     })
   }
 
+
   submit() {
+    console.log(this.formats_buy)
+
     var solicitudes_banco_sell: any = [];
 
-    this.buies.forEach(buy => {
-      var items: any = [
-        {
-          modelo_id: buy.get("modelo").value,
-          modelo: "MF919",
-        }
-      ]
-      this.sims.forEach(sim => {
+    for (let index = 0; index < this.buies.length; index++) {
+
+      const buy = this.buies[index];    
+      var items = [];
+
+      const f = this.formats_buy[index];
+      f.sims.forEach(sim => {
         items.push({
           sim_id: sim.get("operadora").value,
-          sim: "DIGITEL",
+          modelo_id: buy.get("modelo").value,
         })
       })
 
@@ -229,7 +248,7 @@ export class AddVentaComponent implements OnInit {
         banco_id: buy.get('banco').value,
         items: JSON.stringify(items),
       })
-    })
+    }
 
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
     const data = this.crypto.encryptString(JSON.stringify({
@@ -237,15 +256,18 @@ export class AddVentaComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
+
       solicitud: this.crypto.encryptJson(JSON.stringify(
         {
           occ_id: this.solicitud.get('occ').value,
           t_sol_id: "1",
         }
       )),
+
       solicitudes_banco: this.crypto.encryptJson(JSON.stringify(
         solicitudes_banco_sell
       )),
+
       documentos: this.crypto.encryptJson(JSON.stringify([
         {
           link: this.document.get("referencia").value,
@@ -256,6 +278,7 @@ export class AddVentaComponent implements OnInit {
 
     this.loading = true;
     console.log("verify")
+    console.log(solicitudes_banco_sell)
     this.venta.doSale(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.validacionres = new ValidacionventadosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))

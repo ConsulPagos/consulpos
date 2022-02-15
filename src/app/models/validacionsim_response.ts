@@ -1,29 +1,29 @@
-export interface ValidacionOccResponse {
+export interface ValidacionSimResponse {
     R?: string;
     keyS: string;
     ivS: string;
     keyJ: string;
     ivJ: string;
-    occ_usuarios:any;
+    modelos:any;
 }
 
 import { CryptoService } from "../shared/services/crypto.service";
 
-export class ValidacionOccDecrypter {
+export class ValidacionSimDecrypter {
 
     constructor(private crypto: CryptoService) {
 
     }
 
-    deserialize(value: any): ValidacionOccResponse {
+    deserialize(value: any): ValidacionSimResponse {
 
-        const verify: ValidacionOccResponse = {
+        const verify: ValidacionSimResponse = {
             // R: value.R,
             keyS: this.crypto.decryptString(value.keyS),
             ivS: this.crypto.decryptString(value.ivS),
             keyJ: this.crypto.decryptJson(value.keyJ),
             ivJ: this.crypto.decryptJson(value.ivJ),
-            occ_usuarios: this.crypto.decryptJson(value.occ_usuarios),
+            modelos: this.crypto.decryptJson(value.modelos),
         }
         // console.log(verify)
         return verify

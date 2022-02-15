@@ -65,49 +65,49 @@ export class AddClientComponent implements OnInit {
 
   //FORM DEL PRIMER STEP\\
   identity = new FormGroup({
-    rif: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
-    tipo_doc: new FormControl('', [Validators.required]),
+    rif: new FormControl('253862510', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
+    tipo_doc: new FormControl('1', [Validators.required]),
   });
 
   //FORM DEL SEGUNDO STEP\\
   client_type = new FormGroup({
-    tipo_cliente: new FormControl('', [Validators.required]),
+    tipo_cliente: new FormControl('1', [Validators.required]),
   });
-  
+
   // *** FORM DEL TERCER STEP *** \\
   client = new FormGroup({
-    razon_social: new FormControl('', [Validators.required]),
-    nombre_comercial: new FormControl('', [Validators.required]),
-    contribuyente: new FormControl('', [Validators.required]),
-    email: new FormControl('', [
-      Validators.required, 
+    razon_social: new FormControl('Consulpagos', [Validators.required]),
+    nombre_comercial: new FormControl('Consulpagos', [Validators.required]),
+    contribuyente: new FormControl('1', [Validators.required]),
+    email: new FormControl('gmail@dmain.com', [
+      Validators.required,
       Validators.email,
       Validators.pattern('^[a-zA-Z0-9.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')
     ]),
-    phone_1: new FormControl('', [Validators.required]),
-    phone_2: new FormControl('', [Validators.required]),
-    estado: new FormControl('', [Validators.required]),
-    municipio: new FormControl('', [Validators.required]),
-    parroquia: new FormControl('', [Validators.required]),
-    ciudad: new FormControl('', [Validators.required]),
-    direccion: new FormControl('', [Validators.required]),
-    contacto: new FormControl('', [Validators.required]),
-    codpostal: new FormControl('', [Validators.required]),
-    act_comercial: new FormControl('', [Validators.required]),
-    pto_referencia: new FormControl('', [Validators.required]),
-    localidad: new FormControl('', [Validators.required]),
+    phone_1: new FormControl('4242735855', [Validators.required]),
+    phone_2: new FormControl('4242735857', [Validators.required]),
+    estado: new FormControl('1', [Validators.required]),
+    municipio: new FormControl('1', [Validators.required]),
+    parroquia: new FormControl('1', [Validators.required]),
+    ciudad: new FormControl('1', [Validators.required]),
+    direccion: new FormControl('Torre ibm frente al ccct las mercedes, cubo negro', [Validators.required]),
+    contacto: new FormControl('1', [Validators.required]),
+    codpostal: new FormControl('1080', [Validators.required]),
+    act_comercial: new FormControl('112', [Validators.required]),
+    pto_referencia: new FormControl('Torre ibm frente al ccct las mercedes, cubo negro', [Validators.required]),
+    localidad: new FormControl('Torre ibm frente al ccct las mercedes, cubo negro', [Validators.required]),
   });
 
   data_vr = new FormGroup({
-    primer_nombre: new FormControl('', [Validators.required]),
+    primer_nombre: new FormControl('Arturo', [Validators.required]),
     segundo_nombre: new FormControl('',),
-    primer_apellido: new FormControl('', [Validators.required]),
+    primer_apellido: new FormControl('Linares', [Validators.required]),
     segundo_apellido: new FormControl('',),
-    c_t_doc_cedula: new FormControl('', [Validators.required]),
-    cedula: new FormControl('', [Validators.required]),
-    genero: new FormControl('', [Validators.required]),
+    c_t_doc_cedula: new FormControl('1', [Validators.required]),
+    cedula: new FormControl('25386251', [Validators.required]),
+    genero: new FormControl('1', [Validators.required]),
     fecha_nacimiento: new FormControl('', [Validators.required]),
-    profesion: new FormControl('', [Validators.required]),
+    profesion: new FormControl('Desarrollador', [Validators.required]),
   });
 
   //FORM DEL CUARTO STEP\\
@@ -118,10 +118,10 @@ export class AddClientComponent implements OnInit {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   separateDialCode = false;
-	SearchCountryField = SearchCountryField;
-	CountryISO = CountryISO;
+  SearchCountryField = SearchCountryField;
+  CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
-	preferredCountries: CountryISO[] = [CountryISO.Venezuela, CountryISO.UnitedStates];
+  preferredCountries: CountryISO[] = [CountryISO.Venezuela, CountryISO.UnitedStates];
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -198,7 +198,7 @@ export class AddClientComponent implements OnInit {
       this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
     })
   }
-  
+
   submit() {
     this.search_client = true;
     var letra = this.tipo_documentos.filter(t => t.id == this.identity.get("tipo_doc").value)[0].t_doc
@@ -228,15 +228,15 @@ export class AddClientComponent implements OnInit {
       id_actividad_comercial: this.crypto.encryptJson(this.client.get('act_comercial').value),
       pto_ref: this.crypto.encryptJson(this.client.get('pto_referencia').value),
       localidad: this.crypto.encryptJson(this.client.get('localidad').value),
-      telefonos:this.crypto.encryptJson(JSON.stringify([
+      telefonos: this.crypto.encryptJson(JSON.stringify([
         {
-            number: this.client.get("phone_1").value.number,
-            cod_area:this.client.get("phone_1").value.dialCode,
-            iso: this.client.get("phone_1").value.countryCode
+          number: this.client.get("phone_1").value.number,
+          cod_area: this.client.get("phone_1").value.dialCode,
+          iso: this.client.get("phone_1").value.countryCode
         },
         {
           number: this.client.get("phone_2").value.number,
-          cod_area:this.client.get("phone_2").value.dialCode,
+          cod_area: this.client.get("phone_2").value.dialCode,
           iso: this.client.get("phone_2").value.countryCode
         }
       ]))
@@ -247,15 +247,16 @@ export class AddClientComponent implements OnInit {
         ...data,
         legal: this.crypto.encryptJson(JSON.stringify(
           {
-            p_nombre_representante: this.agent.get('p_nombre_representante').value,
-            s_nombre_representante: this.agent.get('s_nombre_representante').value,
-            p_apellido_representante: this.agent.get('p_apellido_representante').value,
-            s_apellido_representante: this.agent.get('s_apellido_representante').value,
-            tipo_doc_rep: this.agent.get('tipo_doc_rep').value,
-            cedula_representante: this.agent.get('cedula_representante').value,
+            l_p_nombre: this.agent.get('p_nombre_representante').value,
+            l_s_nombre: this.agent.get('s_nombre_representante').value,
+            l_p_apellido: this.agent.get('p_apellido_representante').value,
+            l_s_apellido: this.agent.get('s_apellido_representante').value,
+            r_t_doc_id: this.agent.get('tipo_doc_rep').value,
+            r_doc: this.agent.get('cedula_representante').value,
             telefono_local_repre: this.agent.get('telefono_local_repre').value,
             telefono_movil_repre: this.agent.get('telefono_movil_repre').value,
-            email_repre: this.agent.get('email_repre').value,
+            r_email: this.agent.get('email_repre').value,
+            rif: this.agent.get('cedula_representante').value,
           }
         )),
         if_natural: this.crypto.encryptJson("false"),

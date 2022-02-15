@@ -15,4 +15,6 @@ export class SaleRequestInterface {
     status_id?: string;
     sims?: any;
     solicitudes_bancos?:any;
+    modelos?:any;
+    
 }
