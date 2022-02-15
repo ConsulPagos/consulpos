@@ -46,7 +46,8 @@
 
                         <mat-form-field class="box" appearance="outline">
                             <mat-label>Monto Pagado</mat-label>
-                            <input matInput type="number" formControlName="monto" (change)="getMonto(payments[i].get('t_pago').value)">
+                            <input matInput type="number" formControlName="monto" (change)="setDivisa(i)">
+
                         </mat-form-field>
 
                         <mat-form-field class="box" appearance="outline">
@@ -119,9 +120,9 @@
                     </tr>
                     <tr>
                         <td>
-                            <p>{{totalPago.toFixed(2)}}</p>
+                            <p>{{totalPago}}</p>
                         </td>
-                        <td>{{(totalPago * (this.formtasa.get("dollar").value)).toFixed(2)}}</td>
+                        <td>{{(totalPago * (this.formtasa.get("dollar").value))}}</td>
                         <!-- <td>{{(totalPago / 1.13).toFixed(2)}}</td> -->
                     </tr>
                 </table>

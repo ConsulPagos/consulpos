@@ -28,7 +28,7 @@ export class ModalConfiguracionComponent implements OnInit {
   editSale: any = {};
   x = null;
 
-  operadoras: OperadoraInterface[];
+  formDinamic = [];
 
   constructor(
     private crypto: CryptoService,
@@ -41,60 +41,89 @@ export class ModalConfiguracionComponent implements OnInit {
     private pago: PagosService,
 
     public dialogRef: MatDialogRef<ModalConfiguracionComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) 
-    {
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.dataVenta = data['venta']
 
     this.configuracion = new FormGroup({
       serial_sim: new FormControl(this.x, [Validators.required]),
-      operadora: new FormControl('1', [Validators.required]),
+      operadora: new FormControl('', [Validators.required]),
     });
   }
-  
+
   configuracion: FormGroup;
 
-  ngOnInit(): void {
-    this.operadoras = JSON.parse(this.storage.get(constant.OPERADORAS)).operadoras
+  simFormGroup(sim: any[], i: number) {
+    this.formDinamic[i] = new FormGroup({})
+    sim.forEach(sim => {
+      this.formDinamic[i].addControl(sim.sim_serial, new FormControl('', [Validators.required]))
+    })
   }
 
-  findSim(modelo) {
+  ngOnInit(): void {
+    for (let index = 0; index < this.dataVenta.modelos.length; index++) {
+      const item = this.dataVenta.items[index];
+      this.formDinamic.push(new FormGroup({
+        serial_sim: new FormControl('', [Validators.required]),
+        serial_pos: new FormControl(item.cod_serial, [Validators.required]),
+      }))
+      console.log(this.formDinamic)
+    }
+  }
+
+  findSim(sim) {
+    console.log(sim)
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      modelo: this.crypto.encryptJson(modelo),
+      modelo: this.crypto.encryptJson(sim),
     }))
 
-    console.log("verify")
+    var x;
     this.venta.doFindSim(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(json)
       console.log(this.default)
       this.crypto.setKeys(this.default.keyS, this.default.ivJ, this.default.keyJ, this.default.ivS)
-      var x = this.default.item.cod_serial
-      this.x = x
-      console.log(this.x)
+      x = this.default.item.cod_serial
     })
+    return x;
   }
 
-  saveConfig() {
+  saveConfig(modelo, serial, sim) {
+
+    const inputs = [];
+    sim.forEach(sim => {
+      inputs.push({
+        input_id: sim.sim_serial,
+      })
+    })
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
+      solicitud_banco_id: this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
+      accion: this.crypto.encryptJson("CONFIGURACION"),
+
+      Operaciones: this.crypto.encryptJson(JSON.stringify([
+        {
+          cod_serial: serial,
+          terminal: this.configuracion.get('terminal').value,
+          afiliado: this.configuracion.get('afiliado').value,
+          modelo: modelo,
+          sim_serial: this.configuracion.get(inputs),
+        }
+      ]))
     }))
     console.log("verify")
     this.venta.doSaveConfig(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      console.log(JSON.parse(this.crypto.decryptString(res)))
-      console.log(data)
-      console.log(res)
       const json = JSON.parse(this.crypto.decryptString(res))
-      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default)
       this.crypto.setKeys(this.default.keyS, this.default.ivJ, this.default.keyJ, this.default.ivS)
     })
   }
-
 
 }

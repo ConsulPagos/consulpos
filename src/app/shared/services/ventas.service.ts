@@ -82,6 +82,15 @@ export class VentasService {
     return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
+  doSimModels(data) {
+    var path = `/simModels`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
   doFindPos(data) {
     var path = `/findPosToAssing`;
     var headers = new HttpHeaders()

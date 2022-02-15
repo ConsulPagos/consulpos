@@ -84,12 +84,12 @@ export class ModalAsignacionComponent implements OnInit {
       solicitud_banco_id:this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
       accion: this.crypto.encryptJson("ASIGNACION"),
 
-      operaciones:this.crypto.encryptJson(JSON.stringify([
+      Operaciones:this.crypto.encryptJson(JSON.stringify([
         {
-          cod_serial:this.crypto.encryptJson(this.asignacion.get('serial').value),
-          terminal:this.crypto.encryptJson(""),
-          afiliado:this.crypto.encryptJson(this.dataVenta.afiliado),
-          modelo: this.crypto.encryptJson(modelo),
+          cod_serial: this.asignacion.get('serial').value,
+          terminal:"",
+          afiliado:this.asignacion.get('afiliado').value,
+          modelo: modelo,
         }
       ]))
     }))

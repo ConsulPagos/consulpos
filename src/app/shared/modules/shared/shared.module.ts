@@ -76,7 +76,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatIconModule,
     NgxIntlTelInputModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatInputModule 
 
   ],
   exports: [
@@ -115,7 +116,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     LoaderComponent,
     ActionBtnComponent,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatInputModule 
 
   ]
 })

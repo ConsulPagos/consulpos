@@ -8,6 +8,7 @@ export interface AsignacionResponse {
     keyJ?: string;
     ivJ?: string;
     item?: any;
+
 }
 
 export class AsignacionDecrypter {

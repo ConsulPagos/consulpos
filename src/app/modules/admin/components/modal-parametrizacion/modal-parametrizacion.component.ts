@@ -59,13 +59,18 @@ export class ModalParametrizacionComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      modelo: this.crypto.encryptJson(modelo),
-      accion: this.crypto.encryptJson("PARAMETRIZACION"),
       solicitud_id:this.crypto.encryptJson(this.dataVenta.number),
       solicitud_banco_id:this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
-      cod_serial:this.crypto.encryptJson(serial),
-      afiliado:this.crypto.encryptJson(this.dataVenta.afiliado),
-      terminal:this.crypto.encryptJson(this.parametrizacion.get('terminal').value),
+      accion: this.crypto.encryptJson("PARAMETRIZACION"),
+
+      Operaciones:this.crypto.encryptJson(JSON.stringify([
+        {
+          cod_serial: serial,
+          terminal:this.parametrizacion.get('terminal').value,
+          afiliado: this.parametrizacion.get('afiliado').value,
+          modelo: modelo,
+        }
+      ]))
     }))
     console.log("verify")
     this.venta.doSaveConfig(`${this.session.getDeviceId()};${data}`).subscribe(res => {
@@ -77,5 +82,4 @@ export class ModalParametrizacionComponent implements OnInit {
       this.crypto.setKeys(this.default.keyS, this.default.ivJ, this.default.keyJ, this.default.ivS)
     })
   }
-
 }

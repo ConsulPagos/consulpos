@@ -37,13 +37,11 @@ export class AddPagosComponent implements OnInit {
   totalPago = 0;
 
   constructor(
-    private title: Title,
     private crypto: CryptoService,
     private storage: StorageService,
     private session: SesionService,
     private toaster: ToasterService,
     private router: Router,
-    private venta: VentasService,
     private modal: ModalService,
     private pago: PagosService,
     private loader: LoaderService,
@@ -60,15 +58,19 @@ export class AddPagosComponent implements OnInit {
     }
   }
 
+
+
+  formtasa = new FormGroup({
+    dollar: new FormControl('', [Validators.required]),
+  });
+
   pay = new FormGroup({
     t_pago: new FormControl(null, [Validators.required]),
     monto: new FormControl('', [Validators.required]),
     descripcion: new FormControl(''),
   });
 
-  formtasa = new FormGroup({
-    dollar: new FormControl('', [Validators.required]),
-  });
+
 
   ngOnInit(): void {
     this.tipoPagos()
@@ -81,6 +83,7 @@ export class AddPagosComponent implements OnInit {
       t_pago: new FormControl(null, [Validators.required]),
       monto: new FormControl(null, [Validators.required]),
       descripcion: new FormControl(''),
+      moneda: new FormControl(null),
     });
     this.payments.push(pay);
     this.formats_payments.push(newFormat);
@@ -102,19 +105,27 @@ export class AddPagosComponent implements OnInit {
     this.payments[i].reset();
   }
 
-  getMonto(id: any) {
+  setDivisa(i) {
+    const m = this.payments[i];
+    const p = this.t_pagos.filter(t => t.t_pago_id == m.get('t_pago').value)[0];
+    m.get('moneda').setValue(p.cod_moneda)
+    this.getMonto();
+  }
+
+  getMonto() {
     var totalPago = 0;
-    var tasaDollar = parseFloat(this.formtasa.get("dollar").value);
+
     if (this.t_pagos && this.tasas) {
       for (let index = 0; index < this.payments.length; index++) {
         const m = this.payments[index];
-        const p = this.t_pagos.filter(t => t.t_pago_id == id)[0];
-        console.log('Esto es P')
-        console.log(p)
-        if (p.cod_moneda == "VES") {
-          totalPago += (parseFloat(m.get('monto').value) / tasaDollar)
-        } else {
-          totalPago += parseFloat(m.get('monto').value)
+        var tasaDollar = parseFloat(this.formtasa.get("dollar").value);
+        if (m.valid) {
+          if (m.get('moneda').value == "VES") {
+            totalPago += (parseFloat(m.get('monto').value) / tasaDollar)
+          } else {
+            totalPago += parseFloat(m.get('monto').value)
+          }
+          console.log(totalPago)
         }
       }
     }
@@ -171,9 +182,18 @@ export class AddPagosComponent implements OnInit {
 
   submit(caracteristicas: any[]) {
     const inputs = [];
+    var pagos = [];
+
     caracteristicas.forEach(c => {
       inputs.push({
         input_id: c.id_caracteristica,
+      })
+    })
+
+    this.payments.forEach(p => {
+      pagos.push({
+      pay_id: p.get('t_pago').value,
+      monto:p.get('monto').value,
       })
     })
     const data = this.crypto.encryptString(JSON.stringify({
@@ -181,10 +201,9 @@ export class AddPagosComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_id: this.crypto.encryptJson(this.addPay.number),
-      t_pago_id: this.crypto.encryptJson(this.pay.get('t_pago').value),
-      monto: this.crypto.encryptJson(this.pay.get('monto').value),
-      descripcion: this.crypto.encryptJson(this.pay.get('descripcion').value),
       caracteristicas: this.crypto.encryptJson(JSON.stringify(inputs)),
+      payments: this.crypto.encryptJson(JSON.stringify(pagos)),
+      
     }))
 
     this.loading = true;
