@@ -176,13 +176,9 @@ export class AddPagosComponent implements OnInit {
     return invalid
   }
 
-  // isTypePay(){
-  //   return this.t_pagos.filter(m => m.cod_moneda == )
-  // }
-
   submit(caracteristicas: any[]) {
     const inputs = [];
-    var pagos = [];
+    var pago = [];
 
     caracteristicas.forEach(c => {
       inputs.push({
@@ -190,20 +186,27 @@ export class AddPagosComponent implements OnInit {
       })
     })
 
-    this.payments.forEach(p => {
-      pagos.push({
-      pay_id: p.get('t_pago').value,
-      monto:p.get('monto').value,
+    this.pagos.forEach(p => {
+      pago.push({
+        solicitud_id: p.addPay.number,
+        t_pago_id: p.get('t_pago').value,
+        monto: p.get('monto').value,
+        descripcion: p.get('descripcion').value,
+        caracteristicas: JSON.stringify(inputs),
+
+
       })
     })
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      solicitud_id: this.crypto.encryptJson(this.addPay.number),
-      caracteristicas: this.crypto.encryptJson(JSON.stringify(inputs)),
-      payments: this.crypto.encryptJson(JSON.stringify(pagos)),
-      
+
+      // solicitud_id: this.crypto.encryptJson(this.addPay.number),
+
+      // caracteristicas: this.crypto.encryptJson(JSON.stringify(inputs)),
+      pagos: this.crypto.encryptJson(JSON.stringify(pago)),
+
     }))
 
     this.loading = true;

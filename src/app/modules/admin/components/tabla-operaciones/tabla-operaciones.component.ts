@@ -239,7 +239,7 @@ export class TablaOperacionesComponent implements OnInit {
       this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
       this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
-      this.toaster.success(this.ShowSalesResponse.M)
+      // this.toaster.success(this.ShowSalesResponse.M)
       this.ventas = this.ShowSalesResponse.ventas
       this.dataSource = new MatTableDataSource(this.ventas);
     })
