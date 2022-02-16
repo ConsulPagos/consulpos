@@ -29,7 +29,7 @@ export class FichaClienteComponent implements OnInit {
   showClient: ClienteRequestInterface = {};
   loading: boolean;
   showItemClient: ShowItemResponse;
-  validacionCliente:ValidacionclienteResponse;
+  validacionCliente: ValidacionclienteResponse;
   showStatusAccount: StatusAccountResponse;
   telefonos: TelefonoInterface;
 
@@ -52,7 +52,7 @@ export class FichaClienteComponent implements OnInit {
       this.router.getCurrentNavigation().extras.state.showClient
     ) {
       this.showClient = this.router.getCurrentNavigation().extras.state.showClient as ClienteRequestInterface;
-      console.log(this.showClient)
+      //console.log(this.showClient)
     } else {
       this.router.navigateByUrl("/admin/app/(adr:clientela)");
     }
@@ -106,12 +106,12 @@ export class FichaClienteComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(this.showClient.rif),
-      telefonos:this.crypto.encryptJson(JSON.stringify([
+      telefonos: this.crypto.encryptJson(JSON.stringify([
         {
-            number: phone.phone_1.number,
-            cod_area:phone.phone_1.dialCode,
-            iso: phone.phone_1.countryCode,
-            telefono_id: phone.phone_1_id,
+          number: phone.phone_1.number,
+          cod_area: phone.phone_1.dialCode,
+          iso: phone.phone_1.countryCode,
+          telefono_id: phone.phone_1_id,
         },
         {
           number: phone.phone_2.number,
@@ -119,7 +119,7 @@ export class FichaClienteComponent implements OnInit {
           iso: phone.phone_2.countryCode,
           telefono_id: phone.phone_2_id,
         },
-      
+
       ]))
     }))
     console.log(this.showClient.rif)
