@@ -176,37 +176,33 @@ export class AddPagosComponent implements OnInit {
     return invalid
   }
 
-  submit(caracteristicas: any[]) {
+  submit() {
     const inputs = [];
     var pago = [];
 
-    caracteristicas.forEach(c => {
-      inputs.push({
-        input_id: c.id_caracteristica,
-      })
-    })
+    this.payments.forEach(p => {
+      this.getInput(p.get('t_pago').value).forEach(c => {
+        inputs.push({
+          input_id: c.id_caracteristica,
+          input: this.formDinamic[0].get(c.id_caracteristica).value
 
-    this.pagos.forEach(p => {
+        })
+      })
       pago.push({
-        solicitud_id: p.addPay.number,
+        solicitud_id: this.addPay.number,
         t_pago_id: p.get('t_pago').value,
+        // validar: ,
         monto: p.get('monto').value,
         descripcion: p.get('descripcion').value,
         caracteristicas: JSON.stringify(inputs),
-
-
       })
     })
+
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-
-      // solicitud_id: this.crypto.encryptJson(this.addPay.number),
-
-      // caracteristicas: this.crypto.encryptJson(JSON.stringify(inputs)),
       pagos: this.crypto.encryptJson(JSON.stringify(pago)),
-
     }))
 
     this.loading = true;
@@ -231,10 +227,10 @@ export class AddPagosComponent implements OnInit {
     })
   }
 
-  save(caracteristicas) {
+  save() {
     this.modal.confirm("Desea agregar este pago a la venta").subscribe(result => {
       if (result) {
-        this.submit(caracteristicas)
+        this.submit()
       }
     })
   }
