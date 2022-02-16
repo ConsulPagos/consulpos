@@ -7,6 +7,7 @@ import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import * as pdfMaker from "../../shared/utils/pdf";
 
 import { VerifyDecrypter, VerifyResponse } from '../../models/verify_response';
 
@@ -26,12 +27,16 @@ export class AdminComponent implements OnInit {
 
   submitted: boolean = false;
 
+
+
   constructor(private cdr: ChangeDetectorRef, private sesion: SesionService, private crypto: CryptoService, private storage: StorageService, private loader: LoaderService) { }
 
+
   ngOnInit(): void {
-    
-      this.verify()
-    
+
+    pdfMaker.default.createPdf(true)
+    //this.verify()
+
 
     this.loader.changes.subscribe(loading => {
       this.loading = loading;
