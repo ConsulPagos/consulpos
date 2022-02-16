@@ -114,7 +114,6 @@ export class AddPagosComponent implements OnInit {
 
   getMonto() {
     var totalPago = 0;
-
     if (this.t_pagos && this.tasas) {
       for (let index = 0; index < this.payments.length; index++) {
         const m = this.payments[index];
@@ -181,17 +180,19 @@ export class AddPagosComponent implements OnInit {
     var pago = [];
 
     this.payments.forEach(p => {
+      const h = this.t_pagos.filter(t => t.t_pago_id == p.get('t_pago').value)[0];
+
       this.getInput(p.get('t_pago').value).forEach(c => {
         inputs.push({
           input_id: c.id_caracteristica,
           input: this.formDinamic[0].get(c.id_caracteristica).value
-
         })
       })
+
       pago.push({
         solicitud_id: this.addPay.number,
         t_pago_id: p.get('t_pago').value,
-        // validar: ,
+        validar: h.validar,
         monto: p.get('monto').value,
         descripcion: p.get('descripcion').value,
         caracteristicas: JSON.stringify(inputs),
