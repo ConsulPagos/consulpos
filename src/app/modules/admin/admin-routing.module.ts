@@ -62,9 +62,12 @@ const routes: Routes = [
       { path: 'conciliar-archivo', component: ConciliarArchivoComponent, outlet: 'adr' },
       { path: 'historico-conciliacion', component: HistoricoConciliacionComponent, outlet: 'adr' },
       {
-        path: 'cobro-centralizado', component: CobroCentralizadoComponent, outlet: 'adr'
-        , canActivate: [HasPermisoGuard]
-        , data: { modulo: "Cobranza", submodulo: "Cobro Centralizado", permiso: "Leer" }
+        path: 'cobro-centralizado', component: CobroCentralizadoComponent, 
+        outlet: 'adr', 
+        canActivate: [HasPermisoGuard], 
+        data: { modulo: "Cobranza", 
+                submodulo: "Cobro Centralizado", 
+                permiso: "Leer" }
       },
       { path: 'previsualizar-archivo/:id', component: PrevArchivoComponent, outlet: 'adr' },
       { path: 'seleccion-centralizado', component: SeleccionCentralizadoComponent, outlet: 'adr' },
