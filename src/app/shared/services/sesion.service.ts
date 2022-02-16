@@ -79,6 +79,15 @@ export class SesionService {
     return this.http.post(`${environment.apiHost}:${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
   }
 
+  doChangePsw(data) {
+    var path = `/doChangePsw`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}:${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
   getSCod = () => {
     return this.scod
   }
@@ -88,7 +97,7 @@ export class SesionService {
   }
 
   getDeviceId(): string {
-    return "admin2@gmail.com"
+    return "admin@gmail.com"
   }
 
  /*  refreshKeys(){

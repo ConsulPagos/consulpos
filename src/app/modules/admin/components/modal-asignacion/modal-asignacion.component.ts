@@ -96,9 +96,7 @@ export class ModalAsignacionComponent implements OnInit {
     console.log("verify")
     this.venta.doSaveConfig(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
-      // this.t_pagos = JSON.parse(this.crypto.decryptJson(json.t_pagos))
       this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      // this.t_pagos = JSON.parse(this.default.t_pagos)
       console.log(this.default)
       this.crypto.setKeys(this.default.keyS, this.default.ivJ, this.default.keyJ, this.default.ivS)
     })

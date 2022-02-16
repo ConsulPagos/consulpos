@@ -5,25 +5,39 @@
 
                 <form [formGroup]="psw">
                     <h5 class="text-uppercase text-center">Cambiar contraseña</h5>
-                    <input 
-                    formControlName="password" 
-                    class="form-control mt-4" 
-                    type="password" 
-                    placeholder="Contraseña Actual">
-                    <input 
-                    formControlName="newPassword" 
-                    class="form-control mt-2" 
-                    type="password" 
-                    placeholder="Nueva contraseña">
-                    <input 
-                    formControlName="confirmPassword" 
-                    class="form-control mt-2" 
-                    type="password" 
-                    placeholder="Repetir contraseña">
+                    <div class="conatiner-psw">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Contraseña</mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password"
+                                type="password" autocomplete="new-password">
+                            <button mat-icon-button matSuffix (click)="hide = !hide">
+                                <i class="fas fa-eye-slash"></i>
+                            </button>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Nueva contraseña</mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="newPassword"
+                                type="password" autocomplete="new-password">
+                            <button mat-icon-button matSuffix (click)="hide = !hide">
+                                <i class="fas fa-eye-slash"></i>
+                            </button>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Repetir contraseña</mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword"
+                                type="password" autocomplete="new-password">
+                            <button mat-icon-button matSuffix (click)="hide = !hide">
+                                <i class="fas fa-eye-slash"></i>
+                            </button>
+                        </mat-form-field>
+                    </div>
                 </form>
 
-                <button [disabled]="psw.invalid" (click)="submit()" class="btn btn-success bg-success text-white w-100 mt-3 mb-3 text-uppercase"
-                mat-button>Guardar</button>
+                <button [disabled]="psw.invalid" (click)="submit()"
+                    class="btn btn-success bg-success text-white w-100 mt-3 mb-3 text-uppercase"
+                    mat-button>Guardar</button>
             </div>
         </div>
     </div>
