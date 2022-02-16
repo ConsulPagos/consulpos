@@ -6,7 +6,8 @@
         </div>
         <!-- Dashboard -->
         <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['dashboard'] } }]"
-            routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+            *ngIf="hasPermiso('Dashboard', 'Dashboard', 'Leer')" routerLinkActive="ad-active"
+            [routerLinkActiveOptions]="{exact: true}">
             <li class="fa fa-tachometer-alt"></li> <span class="text_side">Dashboard</span>
         </a>
         <!-- ************************************************************************************************** -->
