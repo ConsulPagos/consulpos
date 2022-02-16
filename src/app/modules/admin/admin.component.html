@@ -1,22 +1,21 @@
 <div *ngIf="!loading else loader">
 
-</div>
-<mat-sidenav-container class="custom-container">
+  <mat-sidenav-container class="custom-container">
 
-  <mat-sidenav class="sidenav" [(opened)]="opened" mode="side" opened #drawer>
-    <app-admin-sidenav (Toggle)='drawer.toggle()'>
+    <mat-sidenav class="sidenav" [(opened)]="opened" mode="side" opened #drawer>
+      <app-admin-sidenav (Toggle)='drawer.toggle()'>
 
-    </app-admin-sidenav>
-  </mat-sidenav>
+      </app-admin-sidenav>
+    </mat-sidenav>
 
-  <mat-sidenav-content>
+    <mat-sidenav-content>
 
-    <app-admin-navbar></app-admin-navbar>
-    <div class="pt-3">
+      <app-admin-navbar></app-admin-navbar>
+      <div class="pt-3">
 
-      <router-outlet name='adr'></router-outlet>
+        <router-outlet name='adr'></router-outlet>
 
-     <!--  <div class="brand" [class.opened]="opened">
+        <!--  <div class="brand" [class.opened]="opened">
         <img src="../../../../../assets/images/consulpagos.png" alt="Consulpagos" style="width: auto; height: 50px;">
       </div>
 
@@ -24,12 +23,12 @@
         class="btn_toggle">
         <i class="fas fa-bars"></i>
       </button> -->
-    </div>
-  </mat-sidenav-content>
+      </div>
+    </mat-sidenav-content>
 
-</mat-sidenav-container>
+  </mat-sidenav-container>
 
-
+</div>
 
 <ng-template #iconclose> <i class="fas fa-chevron-right"></i></ng-template>
 <ng-template #loader>

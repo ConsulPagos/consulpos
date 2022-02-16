@@ -10,9 +10,19 @@ export class RolInterface {
     rol_name: string;
 }
 
-export class RolRequestInterface {
-    rol_id: number;
-    permisos: Permiso[];
-    rol_name: string;
-    rol_descripcion: string;
+
+export class PermisoRoles {
+    submodulo:    string;
+    id_modulo:    number;
+    permiso:      string;
+    id:           number;
+    id_submodulo: number;
+    modulo:       string;
+}
+
+
+export class RolesInterface {
+    id:       number;
+    permisos: PermisoRoles[];
+    rol:      string;
 }

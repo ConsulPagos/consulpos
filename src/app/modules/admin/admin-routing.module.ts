@@ -16,6 +16,8 @@ import { EditAdminComponent } from './pages/edit-admin/edit-admin.component';
 import { EditClientComponent } from './pages/edit-client/edit-client.component';
 import { PrevArchivoComponent } from './pages/prev-archivo/prev-archivo.component';
 import { VerifyKeysGuard } from './guards/verify-keys.guard'
+import { HasPermisoGuard } from './guards/has-permiso.guard'
+
 import { VentaConsulposComponent } from './pages/venta-consulpos/venta-consulpos.component';
 import { FichaClienteComponent } from './pages/ficha-cliente/ficha-cliente.component';
 import { ValidadorVentaComponent } from './pages/validador-venta/validador-venta.component';
@@ -59,7 +61,11 @@ const routes: Routes = [
       { path: 'actualizar-archivo', component: ActualizarArchivoComponent, outlet: 'adr' },
       { path: 'conciliar-archivo', component: ConciliarArchivoComponent, outlet: 'adr' },
       { path: 'historico-conciliacion', component: HistoricoConciliacionComponent, outlet: 'adr' },
-      { path: 'cobro-centralizado', component: CobroCentralizadoComponent, outlet: 'adr' },
+      {
+        path: 'cobro-centralizado', component: CobroCentralizadoComponent, outlet: 'adr'
+        , canActivate: [HasPermisoGuard]
+        , data: { modulo: "Cobranza", submodulo: "Cobro Centralizado", permiso: "Leer" }
+      },
       { path: 'previsualizar-archivo/:id', component: PrevArchivoComponent, outlet: 'adr' },
       { path: 'seleccion-centralizado', component: SeleccionCentralizadoComponent, outlet: 'adr' },
       // Modulo de Roles

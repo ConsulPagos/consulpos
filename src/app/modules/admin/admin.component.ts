@@ -29,8 +29,9 @@ export class AdminComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef, private sesion: SesionService, private crypto: CryptoService, private storage: StorageService, private loader: LoaderService) { }
 
   ngOnInit(): void {
-
-    this.verify()
+    
+      this.verify()
+    
 
     this.loader.changes.subscribe(loading => {
       this.loading = loading;
@@ -47,8 +48,6 @@ export class AdminComponent implements OnInit {
     const data = this.crypto.encryptString(JSON.stringify({ u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid), correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email), scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod) }))
 
     this.loading = true;
-
-    // console.log("verify")
 
     this.sesion.doVerify(`${this.sesion.getDeviceId()};${data}`).subscribe(res => {
       var verifyResponse = new VerifyDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
