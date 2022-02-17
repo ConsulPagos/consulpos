@@ -35,7 +35,7 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
 
     //pdfMaker.default.createPdf(true)
-    //this.verify()
+    this.verify()
 
 
     this.loader.changes.subscribe(loading => {

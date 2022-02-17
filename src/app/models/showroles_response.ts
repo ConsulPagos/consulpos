@@ -1,4 +1,4 @@
-// import {RolRequestInterface} from './rol';
+import {RolInterface} from './rol';
 import { CryptoService } from "../shared/services/crypto.service";
 
 export interface ShowRolesResponse {
@@ -8,7 +8,7 @@ export interface ShowRolesResponse {
     ivS: string;
     keyJ: string;
     ivJ: string;
-    // roles: RolRequestInterface[];
+    roles: RolInterface[];
     total_row: string;
 }
 
@@ -27,7 +27,7 @@ export class ShowRolesDecrypter {
             ivS: this.crypto.decryptString(value.ivS),
             keyJ: this.crypto.decryptJson(value.keyJ),
             ivJ: this.crypto.decryptJson(value.ivJ),
-            // roles:JSON.parse(this.crypto.decryptJson(value.roles)) as RolRequestInterface[],
+            roles:JSON.parse(this.crypto.decryptJson(value.roles)) as RolInterface[],
             total_row: this.crypto.decryptJson(value.total_row),
         }
         // console.log(verify)

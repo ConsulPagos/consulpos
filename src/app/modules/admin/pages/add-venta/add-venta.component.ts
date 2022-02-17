@@ -110,14 +110,12 @@ export class AddVentaComponent implements OnInit {
     // this.doSimModels()
     this.add_buy()
     this.fraccion_pagos = JSON.parse(this.storage.get(constant.FRACCIONES_PAGO)).fracciones_pago
-    // this.operadoras = JSON.parse(this.storage.get(constant.OPERADORAS)).operadoras
     this.modelos = JSON.parse(this.storage.get(constant.MODELOS)).modelos
     this.planes = JSON.parse(this.storage.get(constant.PLANES)).planes
     this.plataformas = JSON.parse(this.storage.get(constant.PLATAFORMAS)).plataformas
     this.tipocobros = JSON.parse(this.storage.get(constant.T_COBROS)).t_cobros
     this.tipo_documentos = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs
     this.bancos = JSON.parse(this.storage.get(constant.BANCOS)).bancos
-    // this.occs = JSON.parse(this.storage.get(constant.OCCS)).occs
     this.t_pagos = JSON.parse(this.storage.get(constant.T_PAGOS)).t_pagos
   }
 

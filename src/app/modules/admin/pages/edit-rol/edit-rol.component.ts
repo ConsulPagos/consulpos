@@ -11,7 +11,7 @@ import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_respon
 import { constant } from 'src/app/shared/utils/constant';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-// import { RolRequestInterface } from '../../../../models/rol';
+import { RolInterface } from '../../../../models/rol';
 
 @Component({
   selector: 'app-edit-rol',
