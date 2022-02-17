@@ -38,7 +38,7 @@ import { ValidarPagoComponent } from './pages/validar-pago/validar-pago.componen
 
 const routes: Routes = [
   {
-    path: 'app', canActivate: [VerifyKeysGuard],
+    path: 'app',
     component: AdminComponent,
     children: [
       { path: 'dashboard', component: DashboardComponent, outlet: 'adr' },
