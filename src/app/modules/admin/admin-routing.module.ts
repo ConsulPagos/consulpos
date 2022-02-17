@@ -40,18 +40,18 @@ import { ValidarPagoComponent } from './pages/validar-pago/validar-pago.componen
 
 const routes: Routes = [
   {
-    path: 'app', canActivate: [VerifyKeysGuard],
+    path: 'app',
     component: AdminComponent,
     children: [
       {
         path: 'dashboard', component: DashboardComponent,
         outlet: 'adr',
-        canActivate: [HasPermisoGuard],
-        data: {
-          modulo: "Cobranza",
-          submodulo: "Cobro Centralizado",
-          permiso: "Leer"
-        }
+        /*   canActivate: [HasPermisoGuard],
+          data: {
+            modulo: "Cobranza",
+            submodulo: "Cobro Centralizado",
+            permiso: "Leer"
+          } */
       },
       {
         path: 'config', component: ConfigComponent, outlet: 'adr'

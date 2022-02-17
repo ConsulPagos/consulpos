@@ -51,15 +51,15 @@ export interface VerifyResponse {
     t_docs: TipodocumentoInterface[];
     marcas: MarcaInterface[];
     fracciones_pago: FraccionPagoInterface[];
-    generos:GeneroInterface[];
+    generos: GeneroInterface[];
     tipo_tasas: TipoTasasInterface[];
     tipos_diferido: TipoDiferidoInterface[];
     R: string;
     M: string;
-    keyS: string;
-    ivS: string;
-    keyJ: string;
-    ivJ: string;
+    /*     keyS: string;
+        ivS: string;
+        keyJ: string;
+        ivJ: string; */
 }
 
 import { CryptoService } from "../shared/services/crypto.service";
@@ -78,10 +78,11 @@ export class VerifyDecrypter {
 
         const verify: VerifyResponse = {
             M: this.crypto.decryptJson(value.M),
-            keyS: this.crypto.decryptString(value.keyS),
-            ivS: this.crypto.decryptString(value.ivS),
-            keyJ: this.crypto.decryptJson(value.keyJ),
-            ivJ: this.crypto.decryptJson(value.ivJ),
+            /*          keyS: this.crypto.decryptString(value.keyS),
+                        ivS: this.crypto.decryptString(value.ivS),
+                        keyJ: this.crypto.decryptJson(value.keyJ),
+                        ivJ: this.crypto.decryptJson(value.ivJ), 
+            */
 
             municipios: JSON.parse(this.crypto.decryptJson(value.municipios)),
             contribuyentes: JSON.parse(this.crypto.decryptJson(value.contribuyentes)),

@@ -1,5 +1,6 @@
 //import dateFormat from 'dateformat';
 //import db from '../firebase';
+import { formatDate } from '@angular/common';
 import { jsPDF } from 'jspdf';
 import { ClienteRequestInterface } from 'src/app/models/cliente_request';
 import { EstadoCuentaInterface } from 'src/app/models/estadocuenta';
@@ -11,7 +12,7 @@ export default class pdfMaker {
         MARGIN_LEFT: 10,
         MARGIN_RIGHT: 10,
         MARGIN_BOTTOM: 40,
-        LINE_GAP: 10,
+        LINE_GAP: 7,
         PAY_DISTANCE: 12.4
     }
 
@@ -27,7 +28,6 @@ export default class pdfMaker {
 
     public createPdf(cliente: ClienteRequestInterface, edc: EstadoCuentaInterface) {
 
-
         var title = "";
         var pageHeight = this.doc.internal.pageSize.height || this.doc.internal.pageSize.getHeight();
         var pageWidth = this.doc.internal.pageSize.width || this.doc.internal.pageSize.getWidth();
@@ -35,15 +35,13 @@ export default class pdfMaker {
         this.saldoGlobal = 0;
         this.docPages = [];
 
-        console.log('se crea pdf')
+        //console.log('se crea pdf')
 
         //let fecha_hoy = dateFormat(new Date(), 'dd/mm/yyyy');
         //let fecha_hoy_piso = dateFormat(new Date(), 'dd_mm_yyyy');
 
-        title = 'Estado_Cuenta_Cliente' + '.pdf';
-        this.doc.setFontSize(12);
-
-
+        title = 'Estado_Cuenta_' + cliente.rif + '.pdf';
+        this.doc.setFontSize(11);
 
         /* START HEADER  */
         /* IMAGEN CONSULPAGOS */
@@ -51,30 +49,62 @@ export default class pdfMaker {
         img.src = '../../assets/images/logo.png'
         this.doc.addImage(img, "png", this.VALUES.MARGIN_LEFT, this.VALUES.MARGIN_TOP, 65, 13)
         this.doc.setFont(undefined, "bold")
-        const text = 'Estado de Cuenta'
+        var text = 'Estado de Cuenta'
+
         this.doc.text(text, pageWidth - this.VALUES.MARGIN_RIGHT
             - this.doc.getTextWidth(text), this.VALUES.MARGIN_TOP + 8.25)
+
+        text = 'Fecha de Emision: ' + formatDate(new Date(), "dd/MM/YYYY", "en-US")
+
+        this.doc.text(text, pageWidth - this.VALUES.MARGIN_RIGHT
+            - this.doc.getTextWidth(text), this.VALUES.MARGIN_TOP + 10.25)
+
+        /* SEPARADOR */
         this.doc.setDrawColor(0, 0, 0);
-        //this.doc.setDrawColor(0, 178, 191);
         this.doc.setLineWidth(0.7);
         this.doc.line(this.VALUES.MARGIN_LEFT, 30, pageWidth - this.VALUES.MARGIN_RIGHT, 30);
-
+        /* LINEA 1 */
         this.doc.text("RIF: ", this.VALUES.MARGIN_LEFT, this.VALUES.HEAD_HEIGHT)
         this.doc.setFont(undefined, "normal")
         this.doc.text(cliente.rif, this.VALUES.MARGIN_LEFT + 45, this.VALUES.HEAD_HEIGHT)
+        /* LINEA 2 */
         this.doc.setFont(undefined, "bold")
         this.doc.text("Razón Social: ", this.VALUES.MARGIN_LEFT, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 1)
         this.doc.setFont(undefined, "normal")
         this.doc.text(cliente.razon_social, this.VALUES.MARGIN_LEFT + 45, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 1)
+        /* LINEA 3 */
         this.doc.setFont(undefined, "bold")
         this.doc.text("Dirección: ", this.VALUES.MARGIN_LEFT, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 2)
         this.doc.setFont(undefined, "normal")
         this.doc.text(cliente.direccion, this.VALUES.MARGIN_LEFT + 45, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 2)
+        /* LINEA 4 */
         this.doc.setFont(undefined, "bold")
         this.doc.text("Total deuda USD: ", this.VALUES.MARGIN_LEFT, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 3)
         this.doc.setFont(undefined, "normal")
         this.doc.text((edc.total_debito - edc.total_credito).toFixed(2), this.VALUES.MARGIN_LEFT + 45, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 3)
+        /* SEPARADOR AZUL */
+        this.doc.setLineWidth(1.5).setDrawColor(189, 197, 228);
+        this.doc.line(this.VALUES.MARGIN_LEFT, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 4, pageWidth - this.VALUES.MARGIN_RIGHT, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 4);
 
+
+
+        this.doc.setFont(undefined, "bold")
+        this.doc.text("Fecha: ", this.VALUES.MARGIN_LEFT, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 5)
+        this.doc.setFont(undefined, "normal")
+
+        const currentLine = 6
+
+        for (let index = 0; index < edc.items.length; index++) {
+            const item = edc.items[index];
+            /* LINEA 4 */
+            this.doc.text(formatDate(item.fecha, "dd-MMM", "en-US"), this.VALUES.MARGIN_LEFT, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * (index + currentLine))
+            this.doc.text(item.saldo, this.VALUES.MARGIN_LEFT + 20, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * (index + currentLine))
+            this.doc.text(item.saldo, this.VALUES.MARGIN_LEFT + 40, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * (index + currentLine))
+            this.doc.text(item.modelo, this.VALUES.MARGIN_LEFT + 60, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * (index + currentLine))
+            this.doc.text(item.concepto, this.VALUES.MARGIN_LEFT + 80, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * (index + currentLine))
+        }
+
+        /* SAVE PDF */
         this.doc.save(title)
 
         //     /* SEPARADOR */
