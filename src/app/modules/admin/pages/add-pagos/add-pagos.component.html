@@ -13,6 +13,7 @@
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
             <h6>Agregar pago a la venta {{addPay.number}} - {{addPay.rif}}</h6>
+
             <form [formGroup]="formtasa">
                 <mat-form-field appearance="outline">
                     <mat-label>Tasa a aplicar USD</mat-label>
@@ -23,6 +24,7 @@
                     </mat-select>
                 </mat-form-field>
             </form>
+
             <div *ngFor="let format of formats_payments; let i=index">
                 <div class="d-flex align-items-center ">
                     <h6>Pago {{i + 1}}</h6>
@@ -32,6 +34,7 @@
                         <i class="fas fa-minus-circle"></i>
                     </button>
                 </div>
+                
                 <form [formGroup]="payments[i]">
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Tipo de Pago</mat-label>
@@ -120,15 +123,15 @@
                     </tr>
                     <tr>
                         <td>
-                            <p>{{totalPago}}</p>
+                            <p>{{totalPago.toFixed(2)}}</p>
                         </td>
-                        <td>{{(totalPago * (this.formtasa.get("dollar").value))}}</td>
+                        <td>{{(totalPago * (this.formtasa.get("dollar").value)).toFixed(2)}}</td>
                         <!-- <td>{{(totalPago / 1.13).toFixed(2)}}</td> -->
                     </tr>
                 </table>
             </div>
             <div>
-                <button mat-raised-button (click)="save(getInput(pay.get('t_pago').value))"
+                <button mat-raised-button (click)="save()"
                     [disabled]="isInvalid() || totalPago != 0">Cargar Pago</button>
             </div>
         </div>

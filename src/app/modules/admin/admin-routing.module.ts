@@ -43,41 +43,103 @@ const routes: Routes = [
     path: 'app', canActivate: [VerifyKeysGuard],
     component: AdminComponent,
     children: [
-      { path: 'dashboard', component: DashboardComponent, outlet: 'adr' },
-      { path: 'config', component: ConfigComponent, outlet: 'adr' },
-      // Modulo de Clientes
-      { path: 'clientela', component: ClientelaComponent, outlet: 'adr' },
-      { path: 'edit-client', component: EditClientComponent, outlet: 'adr' },
-      { path: 'add-client', component: AddClientComponent, outlet: 'adr' },
-      { path: 'ficha-cliente', component: FichaClienteComponent, outlet: 'adr' },
-      //Modulo de Usuarios
-      { path: 'super-admin-panel', component: SuperAdminComponent, outlet: 'adr' },
-      { path: 'ficha-user', component: FichaUserComponent, outlet: 'adr' },
-      { path: 'edit-admin', component: EditAdminComponent, outlet: 'adr' },
-      { path: 'cambiar-contraseña', component: AdminChangePwdComponent, outlet: 'adr' },
-      { path: 'nuevo-admin', component: NuevoAdminComponent, outlet: 'adr' },
-      // Modulo de Cobranza
-      { path: 'generar-archivo', component: GenerarArchivoComponent, outlet: 'adr' },
-      { path: 'actualizar-archivo', component: ActualizarArchivoComponent, outlet: 'adr' },
-      { path: 'conciliar-archivo', component: ConciliarArchivoComponent, outlet: 'adr' },
-      { path: 'historico-conciliacion', component: HistoricoConciliacionComponent, outlet: 'adr' },
       {
-        path: 'cobro-centralizado', component: CobroCentralizadoComponent, outlet: 'adr'
-        , canActivate: [HasPermisoGuard]
-        , data: { modulo: "Cobranza", submodulo: "Cobro Centralizado", permiso: "Leer" }
+        path: 'dashboard', component: DashboardComponent,
+        outlet: 'adr',
+        canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Cobranza",
+          submodulo: "Cobro Centralizado",
+          permiso: "Leer"
+        }
       },
-      { path: 'previsualizar-archivo/:id', component: PrevArchivoComponent, outlet: 'adr' },
-      { path: 'seleccion-centralizado', component: SeleccionCentralizadoComponent, outlet: 'adr' },
+      {
+        path: 'config', component: ConfigComponent, outlet: 'adr'
+      },
+      // Modulo de Clientes
+      {
+        path: 'clientela', component: ClientelaComponent, outlet: 'adr'
+      },
+      {
+        path: 'edit-client', component: EditClientComponent, outlet: 'adr'
+      },
+      {
+        path: 'add-client', component: AddClientComponent, outlet: 'adr'
+      },
+      {
+        path: 'ficha-cliente', component: FichaClienteComponent, outlet: 'adr'
+      },
+      //Modulo de Usuarios
+      {
+        path: 'super-admin-panel', component: SuperAdminComponent, outlet: 'adr'
+      },
+      {
+        path: 'ficha-user', component: FichaUserComponent, outlet: 'adr'
+      },
+      {
+        path: 'edit-admin', component: EditAdminComponent, outlet: 'adr'
+      },
+      {
+        path: 'cambiar-contraseña', component: AdminChangePwdComponent, outlet: 'adr'
+      },
+      {
+        path: 'nuevo-admin', component: NuevoAdminComponent, outlet: 'adr'
+      },
+      // Modulo de Cobranza
+      {
+        path: 'generar-archivo', component: GenerarArchivoComponent, outlet: 'adr'
+      },
+      {
+        path: 'actualizar-archivo', component: ActualizarArchivoComponent, outlet: 'adr'
+      },
+      {
+        path: 'conciliar-archivo', component: ConciliarArchivoComponent, outlet: 'adr'
+      },
+      {
+        path: 'historico-conciliacion', component: HistoricoConciliacionComponent, outlet: 'adr'
+      },
+      {
+        path: 'cobro-centralizado', component: CobroCentralizadoComponent,
+        outlet: 'adr',
+        canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Cobranza",
+          submodulo: "Cobro Centralizado",
+          permiso: "Leer"
+        }
+      },
+      {
+        path: 'previsualizar-archivo/:id', component: PrevArchivoComponent, outlet: 'adr'
+      },
+      {
+        path: 'seleccion-centralizado', component: SeleccionCentralizadoComponent, outlet: 'adr'
+      },
       // Modulo de Roles
-      { path: 'roles', component: RolesComponent, outlet: 'adr' },
-      { path: 'add-rol', component: AddRolComponent, outlet: 'adr' },
-      { path: 'edit-rol', component: EditRolComponent, outlet: 'adr' },
+      {
+        path: 'roles', component: RolesComponent, outlet: 'adr'
+      },
+      {
+        path: 'add-rol', component: AddRolComponent, outlet: 'adr'
+      },
+      {
+        path: 'edit-rol', component: EditRolComponent, outlet: 'adr'
+      },
       // Modulo de ventas
-      { path: 'ventas', component: VentasComponent, outlet: 'adr' },
-      { path: 'ficha-sale', component: FichaSaleComponent, outlet: 'adr' },
-      { path: 'validador-venta/:id', component: ValidadorVentaComponent, outlet: 'adr' },
-      { path: 'add-venta', component: AddVentaComponent, outlet: 'adr' },
-      { path: 'venta-consulpos', component: VentaConsulposComponent, outlet: 'adr' },
+      {
+        path: 'ventas', component: VentasComponent, outlet: 'adr'
+      },
+      {
+        path: 'ficha-sale', component: FichaSaleComponent, outlet: 'adr'
+      },
+      {
+        path: 'validador-venta/:id', component: ValidadorVentaComponent, outlet: 'adr'
+      },
+      {
+        path: 'add-venta', component: AddVentaComponent, outlet: 'adr'
+      },
+      {
+        path: 'venta-consulpos', component: VentaConsulposComponent, outlet: 'adr'
+      },
       // Modulo de Operaciones
       { path: 'operaciones/:tipo_operacion', component: OperacionesComponent, outlet: 'adr' },
       // Modulo de Pagos

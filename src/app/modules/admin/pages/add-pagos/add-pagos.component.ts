@@ -114,7 +114,6 @@ export class AddPagosComponent implements OnInit {
 
   getMonto() {
     var totalPago = 0;
-
     if (this.t_pagos && this.tasas) {
       for (let index = 0; index < this.payments.length; index++) {
         const m = this.payments[index];
@@ -176,37 +175,35 @@ export class AddPagosComponent implements OnInit {
     return invalid
   }
 
-  submit(caracteristicas: any[]) {
+  submit() {
     const inputs = [];
     var pago = [];
 
-    caracteristicas.forEach(c => {
-      inputs.push({
-        input_id: c.id_caracteristica,
-      })
-    })
+    this.payments.forEach(p => {
+      const h = this.t_pagos.filter(t => t.t_pago_id == p.get('t_pago').value)[0];
 
-    this.pagos.forEach(p => {
+      this.getInput(p.get('t_pago').value).forEach(c => {
+        inputs.push({
+          input_id: c.id_caracteristica,
+          input: this.formDinamic[0].get(c.id_caracteristica).value
+        })
+      })
+
       pago.push({
-        solicitud_id: p.addPay.number,
+        solicitud_id: this.addPay.number,
         t_pago_id: p.get('t_pago').value,
+        validar: h.validar,
         monto: p.get('monto').value,
         descripcion: p.get('descripcion').value,
         caracteristicas: JSON.stringify(inputs),
-
-
       })
     })
+
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-
-      // solicitud_id: this.crypto.encryptJson(this.addPay.number),
-
-      // caracteristicas: this.crypto.encryptJson(JSON.stringify(inputs)),
       pagos: this.crypto.encryptJson(JSON.stringify(pago)),
-
     }))
 
     this.loading = true;
@@ -231,10 +228,10 @@ export class AddPagosComponent implements OnInit {
     })
   }
 
-  save(caracteristicas) {
+  save() {
     this.modal.confirm("Desea agregar este pago a la venta").subscribe(result => {
       if (result) {
-        this.submit(caracteristicas)
+        this.submit()
       }
     })
   }

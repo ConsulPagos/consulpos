@@ -9,6 +9,7 @@ export interface PagosResponse {
     ivJ?: string;
     t_pagos?: string;
     total?: string;
+    session_valid?: string;
 }
 
 export class PagosDecrypter {
@@ -21,7 +22,6 @@ export class PagosDecrypter {
 
         const data: PagosResponse = {
             R: value.R,
-            // M: value.M,
             M: this.crypto.decryptJson(value.M),
             keyS: this.crypto.decryptString(value.keyS),
             ivS: this.crypto.decryptString(value.ivS),
@@ -29,6 +29,7 @@ export class PagosDecrypter {
             ivJ: this.crypto.decryptJson(value.ivJ),
             t_pagos: this.crypto.decryptJson(value.t_pagos),
             total: this.crypto.decryptJson(value.total),
+            session_valid: this.crypto.decryptJson(value.session_valid),
         }
         return data
     }
