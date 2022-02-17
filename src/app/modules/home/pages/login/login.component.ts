@@ -15,7 +15,8 @@ import { constant } from "../../../../shared/utils/constant";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']})
+  styleUrls: ['./login.component.scss']
+})
 
 
 export class LoginComponent implements OnInit {
@@ -46,22 +47,22 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.error = {};
-    this.user.correo = this.crypto.encryptJsonFixed(this.authForm.get('email').value)
-    this.user.psw = this.crypto.encryptJsonFixed(this.crypto.hash(this.authForm.get('password').value))
-    this.user.lat = this.crypto.encryptJsonFixed('0')
-    this.user.long = this.crypto.encryptJsonFixed('0')
-    this.user.sist_op = this.crypto.encryptJsonFixed('0')
-    this.user.modelo_disp = this.crypto.encryptJsonFixed('0')
+    this.user.correo = this.crypto.encryptJson(this.authForm.get('email').value)
+    this.user.psw = this.crypto.encryptJson(this.crypto.hash(this.authForm.get('password').value))
+    this.user.lat = this.crypto.encryptJson('0')
+    this.user.long = this.crypto.encryptJson('0')
+    this.user.sist_op = this.crypto.encryptJson('0')
+    this.user.modelo_disp = this.crypto.encryptJson('0')
 
-    const data = this.crypto.encryptStringFixed(JSON.stringify(this.user))
+    const data = this.crypto.encryptString(JSON.stringify(this.user))
 
     if (this.authForm.valid) {
 
       this.loading = true;
 
       this.session.doLogin(`${this.session.getDeviceId()};${data}`).toPromise().then(res => {
-        var sesionResponse = new SesionObject(this.crypto).deserialize(JSON.parse(this.crypto.decryptStringFixed(res)))
-        this.crypto.setKeys(sesionResponse.keyS, sesionResponse.ivJ, sesionResponse.keyJ, sesionResponse.ivS)
+        var sesionResponse = new SesionObject(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+        //this.crypto.setKeys(sesionResponse.keyS, sesionResponse.ivJ, sesionResponse.keyJ, sesionResponse.ivS)
         switch (sesionResponse.R) {
           case constant.R0:
             this.storage.storeJson(constant.USER, { email: this.authForm.get('email').value, scod: sesionResponse.scod, uid: sesionResponse.u_id })
