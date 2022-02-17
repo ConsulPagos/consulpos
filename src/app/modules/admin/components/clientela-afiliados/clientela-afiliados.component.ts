@@ -107,7 +107,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
           // console.log("JSON: " + data)
           // console.log("string: " + this.crypto.decryptString(data))
           this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-          this.crypto.setKeys(this.showclientResponse.keyS, this.showclientResponse.ivJ, this.showclientResponse.keyJ, this.showclientResponse.ivS)
+          //this.crypto.setKeys(this.showclientResponse.keyS, this.showclientResponse.ivJ, this.showclientResponse.keyJ, this.showclientResponse.ivS)
           this.resultsLength = parseInt(this.showclientResponse.total_row);
           // console.log(this.showclientResponse)
           return this.showclientResponse.clientes;
@@ -171,7 +171,6 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
     this.cliente.doDelete(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.loading = false
-      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
 
       switch (this.defaultResponse.R) {
         case constant.R0:
@@ -200,7 +199,6 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
     this.cliente.doDelete(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.loading = false
-      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
 
       switch (this.defaultResponse.R) {
         case constant.R0:
@@ -234,7 +232,6 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
       // console.log(this.crypto.decryptString(res))
       this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-      this.crypto.setKeys(this.showclientResponse.keyS, this.showclientResponse.ivJ, this.showclientResponse.keyJ, this.showclientResponse.ivS)
       this.toaster.success(this.showclientResponse.M)
       this.clientes = this.showclientResponse.clientes
       this.dataSource = new MatTableDataSource(this.clientes);
