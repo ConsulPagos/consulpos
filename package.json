@@ -39,6 +39,7 @@
     "inputmask": "^5.0.6",
     "intl-tel-input": "^17.0.15",
     "jquery": "^3.5.1",
+    "jspdf": "^2.5.1",
     "ng2-charts": "^2.4.3",
     "ngx-bootstrap": "^6.1.0",
     "ngx-intl-tel-input": "^3.1.3",

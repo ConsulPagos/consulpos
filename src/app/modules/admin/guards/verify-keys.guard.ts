@@ -25,7 +25,6 @@ export class VerifyKeysGuard implements CanActivate {
     await this.session.doRefresh(`${this.session.getDeviceId()};${data}`).toPromise().then(res => {
       var response = new RefreshDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptStringFixed(res)))
       this.loader.stop()
-
       if (response.R == "0") {
         result = true
       } else {

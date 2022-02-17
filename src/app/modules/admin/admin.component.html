@@ -1,6 +1,6 @@
 <div *ngIf="!loading else loader">
-
 </div>
+
 <mat-sidenav-container class="custom-container">
 
   <mat-sidenav class="sidenav" [(opened)]="opened" mode="side" opened #drawer>
@@ -16,7 +16,7 @@
 
       <router-outlet name='adr'></router-outlet>
 
-     <!--  <div class="brand" [class.opened]="opened">
+      <!--  <div class="brand" [class.opened]="opened">
         <img src="../../../../../assets/images/consulpagos.png" alt="Consulpagos" style="width: auto; height: 50px;">
       </div>
 
@@ -28,7 +28,6 @@
   </mat-sidenav-content>
 
 </mat-sidenav-container>
-
 
 
 <ng-template #iconclose> <i class="fas fa-chevron-right"></i></ng-template>

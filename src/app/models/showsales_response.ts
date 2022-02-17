@@ -10,6 +10,7 @@ export interface ShowSalesResponse {
     ivJ: string;
     ventas: SaleRequestInterface[];
     total_row: string;
+    session_valid?: string;
 }
 
 export class ShowSalesDecrypter {
@@ -29,6 +30,7 @@ export class ShowSalesDecrypter {
             ivJ: this.crypto.decryptJson(value.ivJ),
             ventas:JSON.parse(this.crypto.decryptJson(value.ventas)) as SaleRequestInterface[],
             total_row: this.crypto.decryptJson(value.total_row),
+            session_valid: this.crypto.decryptJson(value.session_valid),
         }
         // console.log(verify)
         return verify

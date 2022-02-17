@@ -7,6 +7,7 @@ import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import * as pdfMaker from "../../shared/utils/pdf";
 
 import { VerifyDecrypter, VerifyResponse } from '../../models/verify_response';
 
@@ -26,11 +27,16 @@ export class AdminComponent implements OnInit {
 
   submitted: boolean = false;
 
+
+
   constructor(private cdr: ChangeDetectorRef, private sesion: SesionService, private crypto: CryptoService, private storage: StorageService, private loader: LoaderService) { }
+
 
   ngOnInit(): void {
 
+    //pdfMaker.default.createPdf(true)
     this.verify()
+
 
     this.loader.changes.subscribe(loading => {
       this.loading = loading;
@@ -47,8 +53,6 @@ export class AdminComponent implements OnInit {
     const data = this.crypto.encryptString(JSON.stringify({ u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid), correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email), scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod) }))
 
     this.loading = true;
-
-    // console.log("verify")
 
     this.sesion.doVerify(`${this.sesion.getDeviceId()};${data}`).subscribe(res => {
       var verifyResponse = new VerifyDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
