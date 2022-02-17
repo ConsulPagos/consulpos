@@ -149,7 +149,7 @@ export class AddPagosComponent implements OnInit {
       console.log(this.default)
       this.t_pagos = JSON.parse(this.default.t_pagos)
       console.log(this.t_pagos)
-      this.crypto.setKeys(this.default.keyS, this.default.ivJ, this.default.keyJ, this.default.ivS)
+        
       this.getTasas()
     })
   }
@@ -214,7 +214,7 @@ export class AddPagosComponent implements OnInit {
       this.default = new PagosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default)
       this.loader.stop()
-      this.crypto.setKeys(this.default.keyS, this.default.ivJ, this.default.keyJ, this.default.ivS)
+        
       switch (this.default.R) {
         case constant.R0:
           this.toaster.success(this.default.M)
@@ -264,7 +264,7 @@ export class AddPagosComponent implements OnInit {
           this.toaster.error(response.M)
           break;
       }
-      this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+       
     })
   }
 

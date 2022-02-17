@@ -78,7 +78,7 @@ export class FichaClienteComponent implements OnInit {
       console.log(this.showItemClient)
       console.log(this.crypto.decryptString(res))
       // this.loading = false
-      this.crypto.setKeys(this.showItemClient.keyS, this.showItemClient.ivJ, this.showItemClient.keyJ, this.showItemClient.ivS)
+       //this.crypto.setKeys(this.showItemClient.keyS, this.showItemClient.ivJ, this.showItemClient.keyJ, this.showItemClient.ivS)
     })
   }
 
@@ -131,7 +131,7 @@ export class FichaClienteComponent implements OnInit {
       console.log(this.validacionCliente)
       console.log(this.crypto.decryptString(res))
       this.loader.stop()
-      this.crypto.setKeys(this.validacionCliente.keyS, this.validacionCliente.ivJ, this.validacionCliente.keyJ, this.validacionCliente.ivS)
+       //this.crypto.setKeys(this.validacionCliente.keyS, this.validacionCliente.ivJ, this.validacionCliente.keyJ, this.validacionCliente.ivS)
     })
   }
 

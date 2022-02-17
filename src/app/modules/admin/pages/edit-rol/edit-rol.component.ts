@@ -85,7 +85,7 @@ export class EditRolComponent implements OnInit {
       // console.log(json.permisos)
       this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       // console.log(this.defaultResponse)
-      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
+       //this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
       // console.log(this.modulos)
       this.modulos.forEach(m => {
         m.submodulos.map(s => {
@@ -117,7 +117,7 @@ export class EditRolComponent implements OnInit {
       console.log(this.crypto.decryptString(res))
       this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.defaultResponse)
-      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS);
+       //this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS);
     })
 
     switch (this.defaultResponse.R) {

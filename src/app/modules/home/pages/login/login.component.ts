@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
 
       this.session.doLogin(`${this.session.getDeviceId()};${data}`).toPromise().then(res => {
         var sesionResponse = new SesionObject(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-        //this.crypto.setKeys(sesionResponse.keyS, sesionResponse.ivJ, sesionResponse.keyJ, sesionResponse.ivS)
+        // //this.crypto.setKeys(sesionResponse.keyS, sesionResponse.ivJ, sesionResponse.keyJ, sesionResponse.ivS)
         switch (sesionResponse.R) {
           case constant.R0:
             this.storage.storeJson(constant.USER, { email: this.authForm.get('email').value, scod: sesionResponse.scod, uid: sesionResponse.u_id })

@@ -195,7 +195,7 @@ export class AddClientComponent implements OnInit {
         this.identity.controls['rif'].updateValueAndValidity()
       }
       this.loading = false
-      this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
+       //this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
     })
   }
 
@@ -294,7 +294,7 @@ export class AddClientComponent implements OnInit {
       this.addClientResponse = new AddClientDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.addClientResponse)
       // this.loading = false
-      this.crypto.setKeys(this.addClientResponse.keyS, this.addClientResponse.ivJ, this.addClientResponse.keyJ, this.addClientResponse.ivS)
+       //this.crypto.setKeys(this.addClientResponse.keyS, this.addClientResponse.ivJ, this.addClientResponse.keyJ, this.addClientResponse.ivS)
 
       switch (this.addClientResponse.R) {
         case constant.R0:

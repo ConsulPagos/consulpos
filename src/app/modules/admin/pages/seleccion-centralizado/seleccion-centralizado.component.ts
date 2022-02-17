@@ -147,7 +147,7 @@ export class SeleccionCentralizadoComponent implements OnInit {
           break;
       }
 
-      this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+       
 
     })
   }

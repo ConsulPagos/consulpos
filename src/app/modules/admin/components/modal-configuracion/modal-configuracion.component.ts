@@ -85,7 +85,7 @@ export class ModalConfiguracionComponent implements OnInit {
       this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(json)
       console.log(this.default)
-      this.crypto.setKeys(this.default.keyS, this.default.ivJ, this.default.keyJ, this.default.ivS)
+        
       x = this.default.item.cod_serial
     })
     return x;
@@ -122,7 +122,7 @@ export class ModalConfiguracionComponent implements OnInit {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default)
-      this.crypto.setKeys(this.default.keyS, this.default.ivJ, this.default.keyJ, this.default.ivS)
+        
     })
   }
 

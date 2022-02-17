@@ -151,7 +151,6 @@ export class NuevoAdminComponent implements OnInit {
       this.validacionres = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionres)
       this.loading = false
-      this.crypto.setKeys(this.validacionres.keyS, this.validacionres.ivJ, this.validacionres.keyJ, this.validacionres.ivS)
       switch (this.validacionres.R) {
         case constant.R0:
           this.toaster.success(this.validacionres.M)

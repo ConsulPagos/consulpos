@@ -90,7 +90,7 @@ export class HistoricoConciliacionComponent implements OnInit {
           this.data = JSON.parse(this.crypto.decryptJson(json.archivos))
           console.log(this.data)
           this.resultsLength = parseInt(this.crypto.decryptJson(json.total));
-          this.crypto.setKeys(response0.keyS, response0.ivJ, response0.keyJ, response0.ivS)
+    
           return this.data;
 
         }),
@@ -131,13 +131,13 @@ export class HistoricoConciliacionComponent implements OnInit {
   //         const response0 = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
   //         this.data = JSON.parse(this.crypto.decryptJson(json.archivos))
   //         console.log(this.data)
-  //         this.crypto.setKeys(response0.keyS, response0.ivJ, response0.keyJ, response0.ivS)
+  //   
   //         //this.toaster.success(response0.M)
   //         break
   //       case constant.R1:
   //       default:
   //         const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-  //         this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+  //          
   //         this.toaster.error(response.M)
   //         break;
   //     }

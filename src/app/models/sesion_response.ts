@@ -31,10 +31,10 @@ export class SesionObject {
     deserialize(value: SesionResponse): SesionResponse {
         try {
             value.M = this.crypto.decryptJson(value.M)
-            // value.keyS = this.crypto.decryptJsonFixed(value.keyS)
-            // value.ivS = this.crypto.decryptJsonFixed(value.ivS)
-            // value.keyJ = this.crypto.decryptJsonFixed(value.keyJ)
-            // value.ivJ = this.crypto.decryptJsonFixed(value.ivJ)
+            // value.keyS = this.crypto.decryptJson(value.keyS)
+            // value.ivS = this.crypto.decryptJson(value.ivS)
+            // value.keyJ = this.crypto.decryptJson(value.keyJ)
+            // value.ivJ = this.crypto.decryptJson(value.ivJ)
             value.u_id = this.crypto.decryptJson(value.u_id)
             if (value.R == "0") {
                 value.scod = this.crypto.decryptJson(value.scod)
