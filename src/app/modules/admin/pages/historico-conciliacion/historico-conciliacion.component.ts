@@ -76,7 +76,7 @@ export class HistoricoConciliacionComponent implements OnInit {
             u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
             scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
             correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-            id_banco: this.crypto.encryptJson(this.form.get("banco").value),
+            codigo: this.crypto.encryptJson(this.form.get("banco").value),
             pag: this.crypto.encryptJson(this.paginator.pageIndex.toString()),
             offset: this.crypto.encryptJson("10"),
             oper: this.crypto.encryptJson(this.form.get("oper").value),

@@ -8,7 +8,7 @@ export interface ShowItemResponse {
    
     session_valid: string;
     items: ItemInterface[];
-    modelos: any[];
+    // modelos: any[];
 }
 
 export class ShowItemDecrypter {
@@ -26,7 +26,7 @@ export class ShowItemDecrypter {
             value_exists: this.crypto.decryptJson(value.value_exists),
             session_valid: this.crypto.decryptJson(value.session_valid),
             items:JSON.parse(this.crypto.decryptJson(value.items)) as ItemInterface[],
-            modelos:JSON.parse(this.crypto.decryptJson(value.modelos)) as any[],
+            // modelos:JSON.parse(this.crypto.decryptJson(value.modelos)) as any[],
         }
         
         // console.log(verify)

@@ -15,9 +15,9 @@ export class HasPermisoGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const roles = JSON.parse(this.storage.get(constant.ROLES)).roles as RolesInterface
+    const permisos = JSON.parse(this.storage.get(constant.PERMISOS))
     const data = next.data
-    return roles.permisos.filter(p => p.modulo == data.modulo && p.permiso == data.permiso && p.submodulo == data.submodulo).length == 1
+    return permisos.filter(p => p.modulo == data.modulo && p.permiso == data.permiso && p.submodulo == data.submodulo).length == 1
   }
 
 }

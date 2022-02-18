@@ -34,9 +34,9 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //pdfMaker.default.createPdf(true)
-    // this.verify()
-
+    if (this.storage.get(constant.BANCOS) == null) {
+      this.verify()
+    }
 
     this.loader.changes.subscribe(loading => {
       this.loading = loading;
@@ -82,7 +82,7 @@ export class AdminComponent implements OnInit {
 
       this.storage.store(constant.OCCS, JSON.stringify(verifyResponse.occs))
       this.storage.store(constant.T_PAGOS, JSON.stringify(verifyResponse.t_pagos))
-      this.storage.store(constant.ROLES, JSON.stringify(verifyResponse.roles))
+      //this.storage.store(constant.ROLES, JSON.stringify(verifyResponse.roles))
 
       // //this.crypto.setKeys(verifyResponse.keyS, verifyResponse.ivJ, verifyResponse.keyJ, verifyResponse.ivS)
     })

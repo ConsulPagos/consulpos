@@ -201,17 +201,13 @@ export class GenerarArchivoComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      tipo: this.crypto.encryptJson("1"), //Tasa de venta 1-Cobranza; 2-Venta; nada todas
     }
 
     const dataString = this.crypto.encryptString(JSON.stringify(data));
 
-    this.loader.loading();
-
     this.bancario.doGetTasas(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
-      this.loader.stop();
       const json = JSON.parse(this.crypto.decryptString(res));
-      console.log("JSON DE TASAS")
-      console.log(json)
       const response = new DefaultDecrypter(this.crypto).deserialize(json);
       console.log(json)
       switch (json.R) {
