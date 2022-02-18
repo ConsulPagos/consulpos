@@ -40,7 +40,7 @@
                                 </div>
                             </ng-template>
 
-                            <div class="col-12 ml-2 mr-2 mb-4">
+                            <div class="col-12 ml-2 mr-2 mb-4" *ngIf="archivos">
                                 <div class="d-flex align-items-center">
                                     <app-action-btn class="btn-submit" mat-button (onClick)="load()" mat-button [isDisabled]="form.invalid" text="Siguiente"></app-action-btn>
                                 </div>

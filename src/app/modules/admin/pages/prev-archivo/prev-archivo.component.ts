@@ -327,7 +327,6 @@ export class PrevArchivoComponent implements OnInit {
 
     this.plantilla = null;
 
-    this.loader.loading()
 
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
@@ -339,10 +338,6 @@ export class PrevArchivoComponent implements OnInit {
     this.bancario.doGetPlantillaRespuesta(`${this.session.getDeviceId()};${data}`).subscribe(res => {
 
       const json = JSON.parse(this.crypto.decryptString(res))
-
-      console.log(json)
-
-      this.loader.stop()
 
       switch (json.R) {
         case constant.R0:

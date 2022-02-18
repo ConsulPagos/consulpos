@@ -79,12 +79,10 @@ export class ActualizarArchivoComponent implements OnInit {
     }))
 
     this.loading = true;
-    this.loader.loading()
 
     this.bancario.doGetArchivos(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.loading = false
-      this.loader.stop()
 
       switch (json.R) {
         case constant.R0:

@@ -34,11 +34,8 @@ export class AdminSidenavComponent implements OnInit {
   }
 
   hasPermiso(modulo: string, submodulo: string, permiso: string): boolean {
-  /*   if (!this.roles) {
-      this.roles = JSON.parse(this.storage.get(constant.ROLES)).roles as RolesInterface
-    }
-    return this.roles.permisos.filter(p => p.modulo == modulo && p.permiso == permiso && p.submodulo == submodulo).length == 1 */
-    return true
+    const permisos = JSON.parse(this.storage.get(constant.PERMISOS))
+    return permisos.filter(p => p.modulo == modulo && p.permiso == permiso && p.submodulo == submodulo).length == 1
   }
 
 
