@@ -1,15 +1,18 @@
 //import dateFormat from 'dateformat';
 //import db from '../firebase';
+import { formatDate } from '@angular/common';
 import { jsPDF } from 'jspdf';
+import { ClienteRequestInterface } from 'src/app/models/cliente_request';
+import { EstadoCuentaInterface } from 'src/app/models/estadocuenta';
 export default class pdfMaker {
 
-    public VALUES = {
-        HEAD_HEIGHT: 85,
-        MARGIN_TOP: 40,
-        MARGIN_LEFT: 25,
-        MARGIN_RIGHT: 25,
+    VALUES = {
+        HEAD_HEIGHT: 45,
+        MARGIN_TOP: 10,
+        MARGIN_LEFT: 10,
+        MARGIN_RIGHT: 10,
         MARGIN_BOTTOM: 40,
-        LINE_GAP: 25,
+        LINE_GAP: 7,
         PAY_DISTANCE: 12.4
     }
 
@@ -18,57 +21,91 @@ export default class pdfMaker {
     private saldoGlobal: number = 0;
 
     constructor() {
+        this.doc = new jsPDF();
 
     }
 
 
-    public static createPdf(historical: boolean = false) {
-
+    public createPdf(cliente: ClienteRequestInterface, edc: EstadoCuentaInterface) {
 
         var title = "";
+        var pageHeight = this.doc.internal.pageSize.height || this.doc.internal.pageSize.getHeight();
+        var pageWidth = this.doc.internal.pageSize.width || this.doc.internal.pageSize.getWidth();
 
-        // pdfMaker.saldoGlobal = 0;
-        // pdfMaker.VALUES.HEAD_HEIGHT = 85;
-        // pdfMaker.VALUES.PAY_DISTANCE = 12.4;
-        // this..docPages = [];
+        this.saldoGlobal = 0;
+        this.docPages = [];
 
-        console.log('se crea pdf')
+        //console.log('se crea pdf')
 
         //let fecha_hoy = dateFormat(new Date(), 'dd/mm/yyyy');
         //let fecha_hoy_piso = dateFormat(new Date(), 'dd_mm_yyyy');
-        const doc = new jsPDF();
 
-        if (!historical) {
-            title = 'Estado_Cuenta_Cliente_' + '.pdf';
-        } else {
-            title = 'Historico_Cobranzas_Cliente_' + '.pdf';
-        }
-
-        doc.setFontSize(12);
-
-
+        title = 'Estado_Cuenta_' + cliente.rif + '.pdf';
+        this.doc.setFontSize(11);
 
         /* START HEADER  */
         /* IMAGEN CONSULPAGOS */
         var img = new Image()
-        img.src = '../../assets/images/consulpagos.png'
-        doc.addImage(img, "png", 20, 20, 200, 100)
+        img.src = '../../assets/images/logo.png'
+        this.doc.addImage(img, "png", this.VALUES.MARGIN_LEFT, this.VALUES.MARGIN_TOP, 65, 13)
+        this.doc.setFont(undefined, "bold")
+        var text = 'Estado de Cuenta'
 
-        doc.text('Estado de Cuenta', 20, 40)
+        this.doc.text(text, pageWidth - this.VALUES.MARGIN_RIGHT
+            - this.doc.getTextWidth(text), this.VALUES.MARGIN_TOP + 8.25)
 
-        if (!historical) {
-            /* TÍTULO ESTADO DE CUENTA*/
-            //doc.addFont('Helvetica-Bold')
+        text = 'Fecha de Emision: ' + formatDate(new Date(), "dd/MM/YYYY", "en-US")
 
-        } else {
-            // /* TÍTULO HISTORICO*/
-            // doc.font('Helvetica-Bold').text('Histórico Cobranzas', pdfMaker.VALUES.MARGIN_LEFT, pdfMaker.VALUES.HEAD_HEIGHT / 2, {
-            //     width: doc.page.width - pdfMaker.VALUES.MARGIN_RIGHT - 40,
-            //     align: 'right',
-            // }).font('Helvetica')
+        this.doc.text(text, pageWidth - this.VALUES.MARGIN_RIGHT
+            - this.doc.getTextWidth(text), this.VALUES.MARGIN_TOP + 10.25)
+
+        /* SEPARADOR */
+        this.doc.setDrawColor(0, 0, 0);
+        this.doc.setLineWidth(0.7);
+        this.doc.line(this.VALUES.MARGIN_LEFT, 30, pageWidth - this.VALUES.MARGIN_RIGHT, 30);
+        /* LINEA 1 */
+        this.doc.text("RIF: ", this.VALUES.MARGIN_LEFT, this.VALUES.HEAD_HEIGHT)
+        this.doc.setFont(undefined, "normal")
+        this.doc.text(cliente.rif, this.VALUES.MARGIN_LEFT + 45, this.VALUES.HEAD_HEIGHT)
+        /* LINEA 2 */
+        this.doc.setFont(undefined, "bold")
+        this.doc.text("Razón Social: ", this.VALUES.MARGIN_LEFT, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 1)
+        this.doc.setFont(undefined, "normal")
+        this.doc.text(cliente.razon_social, this.VALUES.MARGIN_LEFT + 45, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 1)
+        /* LINEA 3 */
+        this.doc.setFont(undefined, "bold")
+        this.doc.text("Dirección: ", this.VALUES.MARGIN_LEFT, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 2)
+        this.doc.setFont(undefined, "normal")
+        this.doc.text(cliente.direccion, this.VALUES.MARGIN_LEFT + 45, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 2)
+        /* LINEA 4 */
+        this.doc.setFont(undefined, "bold")
+        this.doc.text("Total deuda USD: ", this.VALUES.MARGIN_LEFT, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 3)
+        this.doc.setFont(undefined, "normal")
+        this.doc.text((edc.total_debito - edc.total_credito).toFixed(2), this.VALUES.MARGIN_LEFT + 45, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 3)
+        /* SEPARADOR AZUL */
+        this.doc.setLineWidth(1.5).setDrawColor(189, 197, 228);
+        this.doc.line(this.VALUES.MARGIN_LEFT, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 4, pageWidth - this.VALUES.MARGIN_RIGHT, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 4);
+
+
+
+        this.doc.setFont(undefined, "bold")
+        this.doc.text("Fecha: ", this.VALUES.MARGIN_LEFT, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * 5)
+        this.doc.setFont(undefined, "normal")
+
+        const currentLine = 6
+
+        for (let index = 0; index < edc.items.length; index++) {
+            const item = edc.items[index];
+            /* LINEA 4 */
+            this.doc.text(formatDate(item.fecha, "dd-MMM", "en-US"), this.VALUES.MARGIN_LEFT, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * (index + currentLine))
+            this.doc.text(item.saldo, this.VALUES.MARGIN_LEFT + 20, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * (index + currentLine))
+            this.doc.text(item.saldo, this.VALUES.MARGIN_LEFT + 40, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * (index + currentLine))
+            this.doc.text(item.modelo, this.VALUES.MARGIN_LEFT + 60, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * (index + currentLine))
+            this.doc.text(item.concepto, this.VALUES.MARGIN_LEFT + 80, this.VALUES.HEAD_HEIGHT + this.VALUES.LINE_GAP * (index + currentLine))
         }
 
-        doc.save(title)
+        /* SAVE PDF */
+        this.doc.save(title)
 
         //     /* SEPARADOR */
         //     doc
@@ -652,6 +689,10 @@ export default class pdfMaker {
     //         return tasa;
     //     }
     //  */
+
+    setTextAligned(text: string, pageWidth, y, align) {
+        this.doc.text(text, pageWidth, y, { align: 'right' });
+    }
 }
 
 

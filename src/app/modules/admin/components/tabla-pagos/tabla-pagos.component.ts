@@ -107,7 +107,7 @@ export class TablaPagosComponent implements OnInit {
           console.log("JSON: " + data)
           console.log("string: " + this.crypto.decryptString(data))
           this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-          this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
+           //this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
           this.resultsLength = parseInt(this.ShowSalesResponse.total_row);
           console.log(this.ShowSalesResponse)
           this.loader.stop()
@@ -165,7 +165,7 @@ export class TablaPagosComponent implements OnInit {
     this.venta.doFindSales(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(this.crypto.decryptString(res))
       this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
+       //this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
       this.toaster.success(this.ShowSalesResponse.M)
       this.ventas = this.ShowSalesResponse.ventas
       this.dataSource = new MatTableDataSource(this.ventas);

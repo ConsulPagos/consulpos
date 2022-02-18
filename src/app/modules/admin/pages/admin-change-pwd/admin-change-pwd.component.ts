@@ -65,7 +65,7 @@ export class AdminChangePwdComponent implements OnInit {
       console.log(this.crypto.decryptString(res))
       this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.defaultResponse)
-      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS);
+       //this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS);
       this.loader.stop()
           switch (this.defaultResponse.R) {
       case constant.R0:

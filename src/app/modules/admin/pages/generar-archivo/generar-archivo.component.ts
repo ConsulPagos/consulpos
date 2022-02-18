@@ -182,7 +182,7 @@ export class GenerarArchivoComponent implements OnInit {
           break;
       }
 
-      this.crypto.setKeys(def.keyS, def.ivJ, def.keyJ, def.ivS)
+       //this.crypto.setKeys(def.keyS, def.ivJ, def.keyJ, def.ivS)
 
     })
 
@@ -224,7 +224,7 @@ export class GenerarArchivoComponent implements OnInit {
           this.toaster.error(response.M)
           break;
       }
-      this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+       
       this.loadingTasas = false
     })
   }

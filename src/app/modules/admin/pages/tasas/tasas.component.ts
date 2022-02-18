@@ -60,7 +60,7 @@ export class TasasComponent implements OnInit {
           this.toaster.error(response.M)
           break;
       }
-      this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+       
       this.loadingTasas = false
     })
   }

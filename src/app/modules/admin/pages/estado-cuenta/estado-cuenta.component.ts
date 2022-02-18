@@ -18,6 +18,7 @@ import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { constant } from 'src/app/shared/utils/constant';
+import pdfMaker from 'src/app/shared/utils/pdf';
 import { StatusAccountDecrypter, StatusAccountResponse } from '../../../../models/statusaccount';
 import { DiferirDeudaComponent } from '../../components/diferir-deuda/diferir-deuda.component';
 
@@ -40,6 +41,7 @@ export class EstadoCuentaComponent implements OnInit {
   showItemClient: ShowItemResponse;
   showStatusAccount: StatusAccountResponse;
   @Input() rif;
+  @Input() client:ClienteRequestInterface;
   selection = new SelectionModel<ItemEstadoCuentaInterface>(true, []);
 
 
@@ -57,7 +59,6 @@ export class EstadoCuentaComponent implements OnInit {
   ) {
     if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.showClient) {
       this.showClient = this.router.getCurrentNavigation().extras.state.showClient as ClienteRequestInterface;
-
     }
     // else {
     //   this.router.navigateByUrl("/admin/app/(adr:clientela)");
@@ -87,7 +88,9 @@ export class EstadoCuentaComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.showStatusAccount.estado_de_cuenta.items)
       console.log(this.crypto.decryptString(res))
       this.loading = false
-      this.crypto.setKeys(this.showStatusAccount.keyS, this.showStatusAccount.ivJ, this.showStatusAccount.keyJ, this.showStatusAccount.ivS)
+       //this.crypto.setKeys(this.showStatusAccount.keyS, this.showStatusAccount.ivJ, this.showStatusAccount.keyJ, this.showStatusAccount.ivS)
+      const pdf = new pdfMaker()
+      pdf.createPdf(this.client, this.showStatusAccount.estado_de_cuenta)
     })
   }
 
@@ -111,7 +114,7 @@ export class EstadoCuentaComponent implements OnInit {
       this.loading = false
       console.log(response)
       
-      this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+       
 
       if (response.R === "0") {
         this.selection.clear()

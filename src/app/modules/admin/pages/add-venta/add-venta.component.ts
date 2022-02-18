@@ -181,7 +181,7 @@ export class AddVentaComponent implements OnInit {
         this.identity.controls['rif'].setErrors({ 'existe': true });
       }
       this.loading = false
-      this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
+       //this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
     })
   }
 
@@ -195,7 +195,7 @@ export class AddVentaComponent implements OnInit {
     this.venta.doOccUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.validacionoccresponse = new ValidacionOccDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.occs = JSON.parse(this.validacionoccresponse.occ_usuarios)
-      this.crypto.setKeys(this.validacionoccresponse.keyS, this.validacionoccresponse.ivJ, this.validacionoccresponse.keyJ, this.validacionoccresponse.ivS)
+       //this.crypto.setKeys(this.validacionoccresponse.keyS, this.validacionoccresponse.ivJ, this.validacionoccresponse.keyJ, this.validacionoccresponse.ivS)
       this.doSimModels()
     })
     
@@ -211,7 +211,7 @@ export class AddVentaComponent implements OnInit {
     this.venta.doSimModels(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.validacionsimresponse = new ValidacionSimDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.operadoras = JSON.parse(this.validacionsimresponse.modelos)
-      this.crypto.setKeys(this.validacionsimresponse.keyS, this.validacionsimresponse.ivJ, this.validacionsimresponse.keyJ, this.validacionsimresponse.ivS)
+       //this.crypto.setKeys(this.validacionsimresponse.keyS, this.validacionsimresponse.ivJ, this.validacionsimresponse.keyJ, this.validacionsimresponse.ivS)
     })
   }
 
@@ -282,7 +282,7 @@ export class AddVentaComponent implements OnInit {
       this.validacionres = new ValidacionventadosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionres)
       this.loading = false
-      this.crypto.setKeys(this.validacionres.keyS, this.validacionres.ivJ, this.validacionres.keyJ, this.validacionres.ivS)
+       //this.crypto.setKeys(this.validacionres.keyS, this.validacionres.ivJ, this.validacionres.keyJ, this.validacionres.ivS)
       switch (this.validacionres.R) {
         case constant.R0:
           this.toaster.success(this.validacionres.M)

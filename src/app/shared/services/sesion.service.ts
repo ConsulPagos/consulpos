@@ -109,9 +109,9 @@ export class SesionService {
       
       this.loader.stop()
 
-      var response = new RefreshDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptStringFixed(res)))
+      var response = new RefreshDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       if (response.R == constant.R0) {
-        this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+         
       } else {
 
       }

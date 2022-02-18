@@ -89,7 +89,7 @@ export class AddTasasComponent implements OnInit {
       this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.defaultResponse)
       // this.loading = false
-      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
+       //this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
     
 
     switch (this.defaultResponse.R) {

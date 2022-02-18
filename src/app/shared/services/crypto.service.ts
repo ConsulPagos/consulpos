@@ -14,21 +14,21 @@ import { ToasterService } from './toaster.service';
 })
 export class CryptoService {
 
-  private keyString: string
+/*   private keyString: string
   private vectorString: string
   private keyJson: string
-  private vectorJson: string
+  private vectorJson: string */
 
-  setKeys(keyString: string, vectorJson: string, keyJson: string, vectorString: string) {
+  /* setKeys(keyString: string, vectorJson: string, keyJson: string, vectorString: string) {
     this.keyString = keyString
     this.keyJson = keyJson
     this.vectorString = vectorString
     this.vectorJson = vectorJson
     console.log("keyS: " + this.keyString)
     console.log("keyj: " + this.keyJson)
-  }
+  } */
 
-  hasKeys(): boolean {
+/*   hasKeys(): boolean {
     return this.vectorJson != undefined && this.keyJson != undefined && this.vectorString != undefined && this.keyString != undefined;
   }
 
@@ -112,21 +112,21 @@ export class CryptoService {
     return decrypt
 
   }
-
-  encryptStringFixed(text: string): string {
+ */
+  encryptString(text: string): string {
     return AesEncryption.encrypt(environment.S_KEY, environment.S_VEC, text)
   }
 
 
-  decryptStringFixed(text: string): string {
+  decryptString(text: string): string {
     return AesEncryption.decrypt(environment.S_KEY, environment.S_VEC, text)
   }
 
-  encryptJsonFixed(text: string): string {
+  encryptJson(text: string): string {
     return AesEncryption.encrypt(environment.J_KEY, environment.J_VEC, text)
   }
 
-  decryptJsonFixed(text: string): string {
+  decryptJson(text: string): string {
     return AesEncryption.decrypt(environment.J_KEY, environment.J_VEC, text)
   }
 
@@ -153,20 +153,20 @@ export class CryptoService {
   }
 
 
-  refreshKeys() {
+/*   refreshKeys() {
 
     this.toaster.error("Error inesperado, por favor intentelo nuevamente.")
 
     this.loader.loading()
-    const data = this.encryptStringFixed(JSON.stringify({ u_id: this.encryptJsonFixed(this.getJson(constant.USER).uid), correo: this.encryptJsonFixed(this.getJson(constant.USER).email), scod: this.encryptJsonFixed(this.getJson(constant.USER).scod) }))
+    const data = this.encryptString(JSON.stringify({ u_id: this.encryptJson(this.getJson(constant.USER).uid), correo: this.encryptJson(this.getJson(constant.USER).email), scod: this.encryptJson(this.getJson(constant.USER).scod) }))
 
     this.session.doRefresh(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.loader.stop()
-      var response = new RefreshDecrypter(this).deserialize(JSON.parse(this.decryptStringFixed(res)))
+      var response = new RefreshDecrypter(this).deserialize(JSON.parse(this.decryptString(res)))
       this.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
     })
 
-  }
+  } */
 
   getJson(key: string): any {
     var data = JSON.parse(this.decryptStringStorage(localStorage.getItem(key)))

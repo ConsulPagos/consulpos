@@ -19,11 +19,11 @@ export class VerifyKeysGuard implements CanActivate {
   async canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Promise<boolean> {
-    const data = this.crypto.encryptStringFixed(JSON.stringify({ u_id: this.crypto.encryptJsonFixed(this.storage.getJson(constant.USER).uid), correo: this.crypto.encryptJsonFixed(this.storage.getJson(constant.USER).email), scod: this.crypto.encryptJsonFixed(this.storage.getJson(constant.USER).scod) }))
+    const data = this.crypto.encryptString(JSON.stringify({ u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid), correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email), scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod) }))
     var result = false;
     this.loader.loading()
     await this.session.doRefresh(`${this.session.getDeviceId()};${data}`).toPromise().then(res => {
-      var response = new RefreshDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptStringFixed(res)))
+      var response = new RefreshDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.loader.stop()
       if (response.R == "0") {
         result = true
@@ -31,7 +31,7 @@ export class VerifyKeysGuard implements CanActivate {
         this.toaster.error(response.M)
         this.route.navigateByUrl("")
       }
-      this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+       
     })
     return result;
 

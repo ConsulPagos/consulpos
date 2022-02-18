@@ -10,10 +10,7 @@ export interface GeneracionResponse {
 
     R?: string;
     M?: string;
-    keyS: string;
-    ivS: string;
-    keyJ: string;
-    ivJ: string;
+   
 }
 
 import { CryptoService } from "../shared/services/crypto.service";
@@ -28,10 +25,7 @@ export class GeneracionDecrypter {
 
         const verify: GeneracionResponse = {
             M: this.crypto.decryptJson(value.M),
-            keyS: this.crypto.decryptString(value.keyS),
-            ivS: this.crypto.decryptString(value.ivS),
-            keyJ: this.crypto.decryptJson(value.keyJ),
-            ivJ: this.crypto.decryptJson(value.ivJ),
+            
             cuotas: JSON.parse(this.crypto.decryptJson(value.cuotas)),
             cantidad_cuotas: parseInt(this.crypto.decryptJson(value.cantidad_cuotas)),
             decimales: parseInt(this.crypto.decryptJson(value.decimales)),

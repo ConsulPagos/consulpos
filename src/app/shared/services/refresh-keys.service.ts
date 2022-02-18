@@ -21,7 +21,7 @@ export class RefreshKeysService {
     this.session.doRefresh(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       
       this.loader.stop()
-      //var response = new RefreshDecrypter(this).deserialize(JSON.parse(this.decryptStringFixed(res)))
+      //var response = new RefreshDecrypter(this).deserialize(JSON.parse(this.decryptString(res)))
 
       return res
   
