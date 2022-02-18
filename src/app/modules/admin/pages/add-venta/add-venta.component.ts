@@ -273,15 +273,12 @@ export class AddVentaComponent implements OnInit {
         },
       ]))
     }))
-
-    this.loading = true;
     console.log("verify")
     console.log(solicitudes_banco_sell)
     this.venta.doSale(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.validacionres = new ValidacionventadosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionres)
-      this.loading = false
        //this.crypto.setKeys(this.validacionres.keyS, this.validacionres.ivJ, this.validacionres.keyJ, this.validacionres.ivS)
       switch (this.validacionres.R) {
         case constant.R0:

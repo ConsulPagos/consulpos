@@ -16,7 +16,7 @@ export class RefreshKeysService {
   refreshKeys(data){
 
     this.loader.loading()
-    //const data = this.encryptStringFixed(JSON.stringify({ u_id: this.encryptJsonFixed(this.getJson(constant.USER).uid), correo: this.encryptJsonFixed(this.getJson(constant.USER).email), scod: this.encryptJsonFixed(this.getJson(constant.USER).scod) }))
+    //const data = this.encryptString(JSON.stringify({ u_id: this.encryptJson(this.getJson(constant.USER).uid), correo: this.encryptJson(this.getJson(constant.USER).email), scod: this.encryptJson(this.getJson(constant.USER).scod) }))
 
     this.session.doRefresh(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       

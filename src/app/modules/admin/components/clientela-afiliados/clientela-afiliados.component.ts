@@ -92,12 +92,12 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
         switchMap(() => {
           this.error = false;
           this.isLoadingResults = true;
-          const data = this.crypto.encryptStringFixed(JSON.stringify({
-            u_id: this.crypto.encryptJsonFixed(this.storage.getJson(constant.USER).uid),
-            correo: this.crypto.encryptJsonFixed(this.storage.getJson(constant.USER).email),
-            scod: this.crypto.encryptJsonFixed(this.storage.getJson(constant.USER).scod),
-            init_row: this.crypto.encryptJsonFixed(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
-            limit_row: this.crypto.encryptJsonFixed(((this.paginator.pageIndex + 1) * this.PAGESIZE).toString()),
+          const data = this.crypto.encryptString(JSON.stringify({
+            u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+            correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+            scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+            init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
+            limit_row: this.crypto.encryptJson(((this.paginator.pageIndex + 1) * this.PAGESIZE).toString()),
           }))
           return this.cliente.doAll(`${this.session.getDeviceId()};${data}`)
         }),

@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TasaInterface } from 'src/app/models/tasa';
 import { PagosResponse, PagosDecrypter } from 'src/app/models/pagos_response';
+import { SavePagosDecrypter } from 'src/app/models/savepagos_response';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
@@ -58,8 +58,6 @@ export class AddPagosComponent implements OnInit {
     }
   }
 
-
-
   formtasa = new FormGroup({
     dollar: new FormControl('', [Validators.required]),
   });
@@ -70,9 +68,8 @@ export class AddPagosComponent implements OnInit {
     descripcion: new FormControl(''),
   });
 
-
-
   ngOnInit(): void {
+    this.getTasas()
     this.tipoPagos()
     this.add_pay()
   }
@@ -143,14 +140,18 @@ export class AddPagosComponent implements OnInit {
     this.pago.doPaymentInput(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.loader.stop()
       const json = JSON.parse(this.crypto.decryptString(res))
-      this.total = JSON.parse(this.crypto.decryptJson(json.total))
+      console.log(this.crypto.decryptString(res))
+      console.log(res)
+      console.log(this.crypto.decryptJson(json.t_pagos))
       this.t_pagos = JSON.parse(this.crypto.decryptJson(json.t_pagos))
+      console.log(this.t_pagos)
+      this.total = JSON.parse(this.crypto.decryptJson(json.total))
+      console.log(this.total)
       this.default = new PagosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default)
       this.t_pagos = JSON.parse(this.default.t_pagos)
-      console.log(this.t_pagos)
-        
-      this.getTasas()
+
+      
     })
   }
 
@@ -205,16 +206,15 @@ export class AddPagosComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       pagos: this.crypto.encryptJson(JSON.stringify(pago)),
     }))
-
     this.loading = true;
     console.log("verify")
     this.loader.loading()
     this.pago.doSavePayment(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(JSON.parse(this.crypto.decryptString(res)))
-      this.default = new PagosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(res)
+      this.default = new SavePagosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default)
       this.loader.stop()
-        
       switch (this.default.R) {
         case constant.R0:
           this.toaster.success(this.default.M)
@@ -264,7 +264,6 @@ export class AddPagosComponent implements OnInit {
           this.toaster.error(response.M)
           break;
       }
-       
     })
   }
 

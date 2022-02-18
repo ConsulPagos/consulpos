@@ -4,7 +4,6 @@ export interface AsignacionResponse {
     R?: string;
     M?: string;
     item?: any;
-
 }
 
 export class AsignacionDecrypter {

@@ -61,14 +61,14 @@ export class ModalAsignacionComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       modelo: this.crypto.encryptJson(modelo),
     }))
-
     console.log("verify")
-    this.venta.doFindPos(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.venta.doAutomaticAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
+      console.log(res)
+      console.log(this.crypto.decryptString(res))
       this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(json)
       console.log(this.default)
-        
       var x = this.default.item.cod_serial
       this.x = x
       console.log(this.x)
@@ -83,7 +83,6 @@ export class ModalAsignacionComponent implements OnInit {
       solicitud_id:this.crypto.encryptJson(this.dataVenta.number),
       solicitud_banco_id:this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
       accion: this.crypto.encryptJson("ASIGNACION"),
-
       Operaciones:this.crypto.encryptJson(JSON.stringify([
         {
           cod_serial: this.asignacion.get('serial').value,

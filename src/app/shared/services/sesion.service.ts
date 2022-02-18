@@ -103,7 +103,7 @@ export class SesionService {
  /*  refreshKeys(){
 
     this.loader.loading()
-    const data = this.crypto.encryptStringFixed(JSON.stringify({ u_id: this.crypto.encryptJsonFixed(this.storage.getJson(constant.USER).uid), correo: this.crypto.encryptJsonFixed(this.storage.getJson(constant.USER).email), scod: this.crypto.encryptJsonFixed(this.storage.getJson(constant.USER).scod) }))
+    const data = this.crypto.encryptString(JSON.stringify({ u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid), correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email), scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod) }))
 
     this.doRefresh(`${this.getDeviceId()};${data}`).subscribe(res => {
       
