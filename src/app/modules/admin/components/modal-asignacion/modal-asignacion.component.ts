@@ -54,22 +54,39 @@ export class ModalAsignacionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  findPos(modelo) {
+  
+
+  findPos() {
+    const modelos = [];
+    this.dataVenta.modelos.forEach(m => {
+      modelos.push(
+        {
+          modelo: m.caracteristicas[0].modelo,
+          solicitud_banco_id: this.dataVenta.solicitud_banco_id,
+        }
+      )
+    });
+
+    console.log(modelos)
+
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      modelo: this.crypto.encryptJson(modelo),
-    }))
+      solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
 
+      modelos: this.crypto.encryptJson(JSON.stringify(
+        modelos
+      ))
+      
+    }))
+    
     console.log("verify")
-    this.venta.doFindPos(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.venta.doAutomaticAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
+      console.log(JSON.parse(this.crypto.decryptString(res)))
       this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      console.log(json)
-      console.log(this.default)
-        
-      var x = this.default.item.cod_serial
+      var x = this.default.items[0].cod_serial
       this.x = x
       console.log(this.x)
     })
@@ -80,15 +97,14 @@ export class ModalAsignacionComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      solicitud_id:this.crypto.encryptJson(this.dataVenta.number),
-      solicitud_banco_id:this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
+      solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
+      solicitud_banco_id: this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
       accion: this.crypto.encryptJson("ASIGNACION"),
-
-      Operaciones:this.crypto.encryptJson(JSON.stringify([
+      Operaciones: this.crypto.encryptJson(JSON.stringify([
         {
           cod_serial: this.asignacion.get('serial').value,
-          terminal:"",
-          afiliado:this.asignacion.get('afiliado').value,
+          terminal: "",
+          afiliado: this.asignacion.get('afiliado').value,
           modelo: modelo,
         }
       ]))
@@ -98,7 +114,7 @@ export class ModalAsignacionComponent implements OnInit {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default)
-        
+
     })
   }
 

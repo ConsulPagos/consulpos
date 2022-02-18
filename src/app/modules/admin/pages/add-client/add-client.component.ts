@@ -24,6 +24,7 @@ import { Router } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { TelefonoInterface } from 'src/app/models/telefono';
+import { ModalService } from 'src/app/shared/services/modal.service';
 
 @Component({
   selector: 'app-add-client',
@@ -61,6 +62,7 @@ export class AddClientComponent implements OnInit {
     private toaster: ToasterService,
     private router: Router,
     private loader: LoaderService,
+    private modal: ModalService,
   ) { }
 
   //FORM DEL PRIMER STEP\\
@@ -332,6 +334,15 @@ export class AddClientComponent implements OnInit {
 
   resetStatus() {
     this.search_client = true;
+  }
+
+  save() {
+    this.modal.confirm("Desea registrar este cliente?").subscribe(result => {
+      if (result) {
+        console.log("acciones")
+        this.submit()
+      }
+    })
   }
 
 }

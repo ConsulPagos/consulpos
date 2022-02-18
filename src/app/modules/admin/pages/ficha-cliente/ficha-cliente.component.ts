@@ -74,6 +74,7 @@ export class FichaClienteComponent implements OnInit {
     console.log(this.showClient.rif)
     this.loading = true;
     this.cliente.doItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      console.log(JSON.parse(this.crypto.decryptString(res)))
       this.showItemClient = new ShowItemDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.showItemClient)
       console.log(this.crypto.decryptString(res))
@@ -96,7 +97,7 @@ export class FichaClienteComponent implements OnInit {
         console.log(result)
         this.doEditPhone(result)
       }
-      this.router.navigateByUrl("/admin/app/(adr:dashboard)");
+      this.router.navigateByUrl("/admin/app/(adr:clientela)");
     });
   }
 

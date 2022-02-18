@@ -3,8 +3,8 @@ import { CryptoService } from "../shared/services/crypto.service"
 export interface AsignacionResponse {
     R?: string;
     M?: string;
-    item?: any;
-
+    items?: any[];
+    session_valid?: string;
 }
 
 export class AsignacionDecrypter {
@@ -18,8 +18,8 @@ export class AsignacionDecrypter {
         const data: AsignacionResponse = {
             R: value.R,
             M: this.crypto.decryptJson(value.M),
-            
-            item: JSON.parse(this.crypto.decryptJson(value.item)) ,
+            session_valid: this.crypto.decryptJson(value.session_valid),
+            items: JSON.parse(this.crypto.decryptJson(value.items)),
         }
         return data
     }

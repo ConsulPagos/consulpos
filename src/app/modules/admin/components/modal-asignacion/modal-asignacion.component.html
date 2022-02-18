@@ -6,47 +6,27 @@
 </h1>
 <div mat-dialog-content class="mat-dialog-content">
     <div class="pt-2 pb-1 less-padding">
+        <p>
+            Se asignaran Seriales a los siguientes modelos:
+        </p>
         <div *ngFor="let modelo of dataVenta.modelos">
-
-                <div >
-
-                    <div *ngIf="modelo.caracteristicas">
-
-                        <h1>{{modelo.caracteristicas[0].modelo}}</h1>
-
-                        <button (click)="findPos(modelo.caracteristicas[0].modelo) ">
-                            Search
-                        </button>
-
-                        <form [formGroup]="asignacion">
-                            <mat-form-field class="box" appearance="outline">
-                                <mat-label>Serial POS</mat-label>
-                                <input matInput type="text" formControlName="serial" [(ngModel)]="x">
-                            </mat-form-field>
-
-                            <mat-form-field class="box" appearance="outline">
-                                <mat-label>Numero de afiliado</mat-label>
-                                <input matInput type="text" formControlName="afiliado">
-                            </mat-form-field>
-                        </form>
-
-                    </div>
-
-                </div>
-
-          
-
+            
+                <p>{{modelo.caracteristicas[0].modelo}}</p>
+           
         </div>
-          <div mat-dialog-actions>
-                <div class="d-flex w-100">
-                    <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null">
-                        <li class="fa fa-times text-dark"></li>
-                    </button>
-                    <button class="flex-fill confirm action_button" [disabled]="false" mat-button cdkFocusInitial
-                        [mat-dialog-close]="true" >
-                        <li class="fa fa-check"></li>
-                    </button>
-                </div>
-            </div>
+
     </div>
 </div>
+<div mat-dialog-actions>
+    <div class="d-flex w-100">
+        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null">
+            <li class="fa fa-times text-dark"></li>
+        </button>
+        <button class="flex-fill confirm action_button" (click)="findPos()" [disabled]="false" mat-button
+            cdkFocusInitial [mat-dialog-close]="true">
+            <li class="fa fa-check"></li>
+        </button>
+    </div>
+</div>
+
+<!-- <ng-template [ngTemplateOutlet]="outlet" [ngOutletContext]="context"></ng-template> -->

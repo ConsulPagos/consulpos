@@ -307,11 +307,11 @@
                             </mat-form-field>
                         </div>
                     </form>
-
+<!-- 
                     <div>
                         <strong>Form value:</strong>
                         <pre>{{ l.form.value | json }}</pre>
-                    </div>
+                    </div> -->
 
                     <div>
                         <button class="stepBtn" mat-raised-button matStepperPrevious>
@@ -319,7 +319,7 @@
                         </button>
 
                         <button class="stepBtn" *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'" mat-raised-button
-                            matStepperNext [disabled]="client.invalid" (click)="submit()">
+                            matStepperNext [disabled]="client.invalid" (click)="save()">
                             Finalizar
                         </button>
 
@@ -337,8 +337,8 @@
                         <h6></h6>
                         <ng-container>
                             <div class="container_agent">
-                                <form [formGroup]="agent" class="formulario"
-                                    *ngFor="let format of formats; let i=index" #l="ngForm">
+                                <form [formGroup]="agent" class="formulario" *ngFor="let format of formats; let i=index"
+                                    #l="ngForm">
 
                                     <mat-form-field appearance="outline" class="container_box_space">
                                         <mat-label>Primer Nombre</mat-label>
@@ -394,14 +394,14 @@
 
                                     <mat-form-field appearance="outline">
                                         <mat-label>Correo Electrónico</mat-label>
-                                        <input matInput formControlName="email_repre" placeholder="ejemplo@consulpagos.com"
-                                            type="email">
+                                        <input matInput formControlName="email_repre"
+                                            placeholder="ejemplo@consulpagos.com" type="email">
                                     </mat-form-field>
 
-                                    <div>
+                                    <!-- <div>
                                         <strong>Form value:</strong>
                                         <pre>{{ l.form.value | json }}</pre>
-                                    </div>
+                                    </div> -->
 
                                 </form>
                                 <!-- <div>
@@ -432,6 +432,42 @@
                         </ng-container>
                     </mat-step>
                 </div>
+
+                <!-- <mat-step [stepControl]="document">
+                    <form [formGroup]="document">
+                        <ng-template matStepLabel>Carga de documentos</ng-template>
+                        <div>
+                            <div>
+                                <h6>RIF</h6>
+                                <app-upload></app-upload>
+                            </div>
+
+                            <div>
+                                <h6>Registro Mercantil</h6>
+                                <app-upload></app-upload>
+                            </div>
+
+                            <div>
+                                <h6>Cedula Representante Legal</h6>
+                                <app-upload></app-upload>
+                            </div>
+
+                            <div>
+                                <h6>RIF Representante Legal</h6>
+                                <app-upload></app-upload>
+                            </div>
+
+                            <div>
+                                <h6>Otro</h6>
+                                <app-upload></app-upload>
+                            </div>
+                        </div>
+                    </form>
+                    <div>
+                        <button class="stepBtn" mat-raised-button matStepperNext
+                            [disabled]="identity.invalid || search_client">Siguiente</button>
+                    </div>
+                </mat-step> -->
 
             </mat-vertical-stepper>
         </div>
