@@ -87,6 +87,7 @@
   .btn-submit{
     margin-top: 20px;
     margin-right: 40px;
+    margin-left: auto;
     width: 150px;
     height: 40px;
     margin-left: auto;
@@ -95,4 +96,8 @@
   .error{
     color: red;
     font-weight: 600;
+  }
+
+  .container-title{
+    width: -webkit-fill-available;
   }

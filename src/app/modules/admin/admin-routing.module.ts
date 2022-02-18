@@ -103,9 +103,9 @@ const routes: Routes = [
         outlet: 'adr',
         canActivate: [HasPermisoGuard],
         data: {
-          modulo: "Cobranza",
+          modulo: "Cobro Centralizado",
           submodulo: "Cobro Centralizado",
-          permiso: "Leer"
+          permiso: "Generar Archivo"
         }
       },
       {
