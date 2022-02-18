@@ -107,17 +107,21 @@ export class PrevArchivoComponent implements OnInit {
     reader.onload = (e: any) => {
       const binarystr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
-
+      console.info(this.n_pagina)
       const wsname: string = wb.SheetNames[this.n_pagina];
+      console.info(wsname)
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
       const json = XLSX.utils.sheet_to_json(ws);
       const nData: any = []
+
+      console.info(json)
 
       json.forEach(cuota => {
         console.log(cuota)
         var data = {};
         for (let index = 0; index < this.plantilla.length; index++) {
           const col = this.plantilla[index];
+          console.log(cuota[col.nombre])
           data[col.columna] = this.parseValue(col.tipo, cuota[col.nombre], col.decimales);
         }
 
@@ -248,7 +252,7 @@ export class PrevArchivoComponent implements OnInit {
       switch (json.R) {
         case constant.R0:
           const response0 = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-    
+
           this.toaster.success(response0.M)
           this.router.navigateByUrl("admin/app/(adr:actualizar-archivo)")
           break;
@@ -263,22 +267,22 @@ export class PrevArchivoComponent implements OnInit {
   }
 
 
-  confirmCentralizado(){
+  confirmCentralizado() {
     const dialogRef = this.dialog.open(EditFieldDialogComponent, {
       width: '350px',
-      height:'auto',
-      panelClass:'custom-dialog',
-      data: { 'field': "Concepto","value":"" }
+      height: 'auto',
+      panelClass: 'custom-dialog',
+      data: { 'field': "Concepto", "value": "" }
     });
 
-    dialogRef.afterClosed().subscribe((result:string) => {
-      if(result.length > 0){
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (result.length > 0) {
         this.submitCentralizado(result)
       }
     })
   }
 
-  submitCentralizado(descripcion:string) {
+  submitCentralizado(descripcion: string) {
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
@@ -300,14 +304,14 @@ export class PrevArchivoComponent implements OnInit {
       switch (json.R) {
         case constant.R0:
           const response0 = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-    
+
           this.toaster.success(response0.M)
           this.router.navigateByUrl("admin/app/(adr:cobro-centralizado)")
           break;
         case constant.R1:
         default:
           const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-           
+
           this.toaster.error(response.M)
           break;
       }
@@ -343,12 +347,12 @@ export class PrevArchivoComponent implements OnInit {
         case constant.R0:
           const response0 = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
           this.plantilla = JSON.parse(this.crypto.decryptJson(json.plantilla)) as PlantillaRespuestaInterface[];
-    
+
           break;
         case constant.R1:
         default:
           const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-           
+
           this.toaster.error(response.M)
           break;
       }
@@ -369,9 +373,9 @@ export class PrevArchivoComponent implements OnInit {
         break;
       case "double":
         if (d > 0) {
-          data = (parseFloat(value.trim().replace(".", '').replace(",", '.')) / Math.pow(10, d)).toFixed(d)
+          data = (parseFloat(value.toString().trim().replace(".", '').replace(",", '.')) / Math.pow(10, d)).toFixed(d)
         } else {
-          data = parseFloat(value.trim().replace(".", '').replace(",", '.')).toFixed(2);
+          data = parseFloat(value.toString().trim().replace(".", '').replace(",", '.')).toFixed(2);
           console.log(data)
         }
         break;
