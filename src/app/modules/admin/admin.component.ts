@@ -35,7 +35,7 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.storage.get(constant.BANCOS) == null) {
-     // this.verify()
+      this.verify()
     }
 
     this.loader.changes.subscribe(loading => {
