@@ -179,21 +179,12 @@ const routes: Routes = [
       {
         path: 'cobro-centralizado', component: CobroCentralizadoComponent,
         outlet: 'adr',
-<<<<<<< HEAD
         canActivate: [HasPermisoGuard],
         data: {
           modulo: "Cobro Centralizado",
           submodulo: "Cobro Centralizado",
           permiso: "Generar Archivo"
         }
-=======
-        // canActivate: [HasPermisoGuard],
-        // data: {
-        //   modulo: "Cobro Centralizado",
-        //   submodulo: "Cobro Centralizado",
-        //   permiso: "Generar Archivo"
-        // }
->>>>>>> 8553589a6e35eada5e2052314a1e182d8c1857fc
       },
       {
         path: 'previsualizar-archivo/:id', component: PrevArchivoComponent, outlet: 'adr'
