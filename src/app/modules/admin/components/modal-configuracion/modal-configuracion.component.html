@@ -10,21 +10,29 @@
         <div *ngFor="let item of dataVenta.modelos; let i = index">
             <div>
                 <h1>{{item.modelo}}</h1>
-               
-                <form [formGroup]="formDinamic[i]">
-                    <mat-form-field class="box" appearance="outline">
-                        <mat-label>POS</mat-label>
-                        <input matInput type="text" formControlName="serial_pos" readonly>
-                    </mat-form-field>
-                    {{item.sim}}
-                    <mat-form-field class="box" appearance="outline">
-                        <mat-label>Serial SIM</mat-label>
-                        <input matInput type="text" formControlName="serial_sim">
-                    </mat-form-field>
-                    <button (click)="formDinamic[i].get('serial_sim').setValue(findSim(item.sim))">
-                        Search
-                    </button>
-                </form>
+
+                <div *ngFor="let caracteristica of item.caracteristicas">
+
+                    <form [formGroup]="formDinamic[i]">
+                        
+                        <mat-form-field class="box" appearance="outline">
+                            <mat-label>POS</mat-label>
+                            <input matInput type="text" formControlName="serial_pos" readonly>
+                        </mat-form-field>
+
+                        SIM: {{caracteristica.sim}}
+                        <mat-form-field class="box" appearance="outline">
+                            <mat-label>Serial SIM</mat-label>
+                            <input matInput type="text" formControlName="serial_sim">
+                        </mat-form-field>
+
+                    </form>
+                </div>
+                <button (click)="formDinamic[i].get('serial_sim').setValue(findSim(caracteristica.sim))">
+                    Search
+                </button>
+
+
             </div>
         </div>
     </div>
