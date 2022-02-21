@@ -86,7 +86,7 @@ export class ModalConfiguracionComponent implements OnInit {
       console.log(json)
       console.log(this.default)
         
-      x = this.default.item.cod_serial
+      x = this.default.items[0].cod_serial
     })
     return x;
   }
