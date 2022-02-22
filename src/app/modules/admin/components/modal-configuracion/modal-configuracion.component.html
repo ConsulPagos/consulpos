@@ -7,32 +7,27 @@
 
 <div mat-dialog-content class="mat-dialog-content">
     <div class="pt-2 pb-1 less-padding">
-        <div *ngFor="let item of dataVenta.modelos; let i = index">
-            <div>
-                <h1>{{item.modelo}}</h1>
+        <div *ngFor="let item of dataVenta.items; let i = index">
+            <h1>{{item.modelo}} - {{item.cod_serial}}</h1>
+        </div>
 
-                <div *ngFor="let caracteristica of item.caracteristicas">
+        <div *ngFor="let item of dataVenta.modelos;">
 
-                    <form [formGroup]="formDinamic[i]">
-                        
-                        <mat-form-field class="box" appearance="outline">
-                            <mat-label>POS</mat-label>
-                            <input matInput type="text" formControlName="serial_pos" readonly>
-                        </mat-form-field>
 
-                        SIM: {{caracteristica.sim}}
-                        <mat-form-field class="box" appearance="outline">
-                            <mat-label>Serial SIM</mat-label>
-                            <input matInput type="text" formControlName="serial_sim">
-                        </mat-form-field>
+            <div *ngFor="let caracteristica of item.caracteristicas;let p = index">
 
-                    </form>
-                </div>
-                <button (click)="formDinamic[i].get('serial_sim').setValue(findSim(caracteristica.sim))">
+                <form [formGroup]="formDinamic[p]">
+                    SIM: {{caracteristica.sim}}
+                    <mat-form-field class="box" appearance="outline">
+                        <mat-label>Serial SIM</mat-label>
+                        <input matInput type="text" formControlName="serial_sim" readonly>
+                    </mat-form-field>
+                </form>
+
+
+                <button (click)="findSim(caracteristica.sim, formDinamic[p])">
                     Search
                 </button>
-
-
             </div>
         </div>
     </div>
