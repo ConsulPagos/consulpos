@@ -34,7 +34,7 @@ export class AddPagosComponent implements OnInit {
   formDinamic = [];
   tasas: any[];
   tasa: TasaInterface[];
-  totalPago = 0;
+  totalPago: number = 0;
 
   constructor(
     private crypto: CryptoService,
@@ -114,12 +114,11 @@ export class AddPagosComponent implements OnInit {
     if (this.t_pagos && this.tasas) {
       for (let index = 0; index < this.payments.length; index++) {
         const m = this.payments[index];
-        var tasaDollar = parseFloat(this.formtasa.get("dollar").value);
         if (m.valid) {
           if (m.get('moneda').value == "VES") {
-            totalPago += (parseFloat(m.get('monto').value) / tasaDollar)
+            totalPago += parseFloat((parseFloat(m.get('monto').value) / parseFloat(this.formtasa.get("dollar").value)).toFixed(2))
           } else {
-            totalPago += parseFloat(m.get('monto').value)
+            totalPago += parseFloat((parseFloat(m.get('monto').value)).toFixed(2))
           }
           console.log(totalPago)
         }
@@ -151,7 +150,7 @@ export class AddPagosComponent implements OnInit {
       console.log(this.default)
       this.t_pagos = JSON.parse(this.default.t_pagos)
 
-      
+
     })
   }
 

@@ -35,7 +35,7 @@ export class AddTasasComponent implements OnInit {
     private bancario: BancarioService,
     private toaster: ToasterService,
     private router: Router,
-  ) { 
+  ) {
 
   }
 
@@ -77,7 +77,7 @@ export class AddTasasComponent implements OnInit {
       id_moneda: this.crypto.encryptJson(this.form.get('moneda').value),
       id_tipo_tasa: this.crypto.encryptJson(this.form.get('tipo_tasas').value),
       monto: this.crypto.encryptJson(this.form.get('tasa').value),
-      
+
     }))
 
     this.loading = true;
@@ -89,23 +89,22 @@ export class AddTasasComponent implements OnInit {
       this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.defaultResponse)
       // this.loading = false
-       //this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
-    
+      //this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
 
-    switch (this.defaultResponse.R) {
-      case constant.R0:
-        this.toaster.success(this.defaultResponse.M)
-        this.router.navigateByUrl('/admin/app/(adr:tasas)')
-        break;
-      case constant.R1:
-        this.toaster.error(this.defaultResponse.M)
-        break;
-      default:
-        this.toaster.default_error()
-        break;
-    }
+      switch (this.defaultResponse.R) {
+        case constant.R0:
+          this.toaster.success(this.defaultResponse.M)
+          this.router.navigateByUrl('/admin/app/(adr:tasas)')
+          break;
+        case constant.R1:
+          this.toaster.error(this.defaultResponse.M)
+          break;
+        default:
+          this.toaster.default_error()
+          break;
+      }
 
-  })
+    })
 
   }
 
