@@ -54,7 +54,7 @@ export class PrevArchivoComponent implements OnInit {
 
       if (this.router.getCurrentNavigation().extras.state.data) {
         this.data = this.router.getCurrentNavigation().extras.state.data
-        console.log(this.data)
+        //console.log(this.data)
       }
 
       if (this.router.getCurrentNavigation().extras.state.columns) {
@@ -107,21 +107,22 @@ export class PrevArchivoComponent implements OnInit {
     reader.onload = (e: any) => {
       const binarystr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
-      console.info(this.n_pagina)
+      //console.info(this.n_pagina)
       const wsname: string = wb.SheetNames[this.n_pagina];
-      console.info(wsname)
+      //console.info(wsname)
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
       const json = XLSX.utils.sheet_to_json(ws);
       const nData: any = []
 
-      console.info(json)
+      //console.info(json)
 
       json.forEach(cuota => {
-        console.log(cuota)
+        //console.log(cuota)
         var data = {};
         for (let index = 0; index < this.plantilla.length; index++) {
           const col = this.plantilla[index];
-          console.log(cuota[col.nombre])
+          //console.log(cuota[col.nombre])
+          //data[col.columna] = this.parseValue(col.tipo, cuota[col.nombre], col.decimales);
           data[col.columna] = this.parseValue(col.tipo, cuota[col.nombre], col.decimales);
         }
 
@@ -129,8 +130,8 @@ export class PrevArchivoComponent implements OnInit {
 
       });
 
-      console.log(nData)
-      console.log(columns)
+      //console.log(nData)
+      //console.log(columns)
 
       this.data = nData;
       this.columns = columns;
@@ -153,7 +154,7 @@ export class PrevArchivoComponent implements OnInit {
       throw new Error('Cannot use multiple files');
     }
     const reader: FileReader = new FileReader();
-    console.log(target.files[0])
+    //console.log(target.files[0])
     reader.readAsBinaryString(target.files[0]);
     reader.onload = (e: any) => {
       var lines = e.target.result.split('\n');
@@ -182,7 +183,7 @@ export class PrevArchivoComponent implements OnInit {
 
       });
 
-      console.log(data)
+      //console.log(data)
       this.data = data;
       this.columns = columns;
 
@@ -221,7 +222,7 @@ export class PrevArchivoComponent implements OnInit {
   save() {
     this.modal.confirm("Se actualizará el archivo.").subscribe(result => {
       if (result) {
-        console.log("acciones")
+        //console.log("acciones")
         this.submit()
       }
     })
@@ -229,7 +230,7 @@ export class PrevArchivoComponent implements OnInit {
 
   submit() {
 
-    //console.log(JSON.stringify(this.data))
+    ////console.log(JSON.stringify(this.data))
 
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
@@ -357,7 +358,7 @@ export class PrevArchivoComponent implements OnInit {
           break;
       }
 
-      console.log(this.plantilla)
+      //console.log(this.plantilla)
     })
     //**************************************************************************************************************************//
   }
@@ -376,7 +377,7 @@ export class PrevArchivoComponent implements OnInit {
           data = (parseFloat(value.toString().trim().replace(".", '').replace(",", '.')) / Math.pow(10, d)).toFixed(d)
         } else {
           data = parseFloat(value.toString().trim().replace(".", '').replace(",", '.')).toFixed(2);
-          console.log(data)
+          //console.log(data)
         }
         break;
       default:

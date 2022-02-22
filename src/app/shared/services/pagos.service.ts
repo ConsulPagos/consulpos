@@ -16,7 +16,7 @@ export class PagosService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_pagos}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_pagos}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doSavePayment(data) {
@@ -25,6 +25,6 @@ export class PagosService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_pagos}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_pagos}` + path, data, { headers: headers, responseType: 'text' })
   }
 }
