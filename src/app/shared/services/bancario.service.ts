@@ -15,7 +15,7 @@ export class BancarioService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doGetArchivos(data) {
@@ -24,7 +24,7 @@ export class BancarioService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doConciliacion(data) {
@@ -33,7 +33,7 @@ export class BancarioService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doGetTasas(data) {
@@ -42,7 +42,7 @@ export class BancarioService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doCreateTasa(data) {
@@ -51,7 +51,7 @@ export class BancarioService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doUpdateEC(data) {
@@ -60,7 +60,7 @@ export class BancarioService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doGetArchivo(data) {
@@ -69,7 +69,7 @@ export class BancarioService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doGetHistoricoConciliacion(data) {
@@ -78,7 +78,7 @@ export class BancarioService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doGetPlantillaRespuesta(data) {
@@ -87,7 +87,7 @@ export class BancarioService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doDiferir(data) {
@@ -96,7 +96,7 @@ export class BancarioService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doGetClientList(data) {
@@ -105,7 +105,7 @@ export class BancarioService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doUpdateClientList(data) {
@@ -114,7 +114,7 @@ export class BancarioService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   
@@ -124,7 +124,7 @@ export class BancarioService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
 

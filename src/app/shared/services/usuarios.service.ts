@@ -17,7 +17,7 @@ export class UsuariosService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doFindUser(data) {
@@ -26,7 +26,7 @@ export class UsuariosService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doSaveUser(data) {
@@ -35,7 +35,7 @@ export class UsuariosService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doEditUser(data) {
@@ -44,7 +44,7 @@ export class UsuariosService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doDeleteUser(data) {
@@ -53,7 +53,7 @@ export class UsuariosService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doEditPermisos(data) {
@@ -62,6 +62,6 @@ export class UsuariosService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
   }
 }

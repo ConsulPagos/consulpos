@@ -17,7 +17,7 @@ export class RolesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doFindRoll(data) {
@@ -26,7 +26,7 @@ export class RolesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doSaveRoll(data) {
@@ -35,7 +35,7 @@ export class RolesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doEditRoll(data) {
@@ -44,7 +44,7 @@ export class RolesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doDeleteRoll(data) {
@@ -53,7 +53,7 @@ export class RolesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doPermisosRoll(data) {
@@ -62,7 +62,7 @@ export class RolesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doModulosRoll(data) {
@@ -71,6 +71,6 @@ export class RolesService {
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_usuarios}` + path, data, { headers: headers, responseType: 'text' })
   }
 }
