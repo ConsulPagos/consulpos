@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { AsignacionResponse, AsignacionDecrypter } from 'src/app/models/asignacion_response';
+import { ConfiguracionResponse, ConfiguracionDecrypter } from 'src/app/models/configuracion_response';
 import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
 import { OperadoraInterface } from 'src/app/models/operadora';
 import { DialogData } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
@@ -24,9 +24,12 @@ import { constant } from 'src/app/shared/utils/constant';
 export class ModalConfiguracionComponent implements OnInit {
 
   dataVenta: any;
-  default: AsignacionResponse;
+  default: ConfiguracionResponse;
   editSale: any = {};
   x = null;
+  modelo: any;
+  serial: any;
+  sim: any;
 
   formDinamic = [];
 
@@ -46,7 +49,6 @@ export class ModalConfiguracionComponent implements OnInit {
 
     this.configuracion = new FormGroup({
       serial_sim: new FormControl(this.x, [Validators.required]),
-      operadora: new FormControl('', [Validators.required]),
     });
   }
 
@@ -61,16 +63,19 @@ export class ModalConfiguracionComponent implements OnInit {
 
   ngOnInit(): void {
     for (let index = 0; index < this.dataVenta.modelos.length; index++) {
-      const item = this.dataVenta.items[index];
-      this.formDinamic.push(new FormGroup({
-        serial_sim: new FormControl('', [Validators.required]),
-        serial_pos: new FormControl(item.cod_serial, [Validators.required]),
-      }))
+      const item = this.dataVenta.modelos[index];
+      console.log(item)
+      for (let z = 0; z < item.caracteristicas.length; z++) {
+        this.formDinamic.push(new FormGroup({
+          serial_sim: new FormControl(null, [Validators.required]),
+        }))
+      }
+
       console.log(this.formDinamic)
     }
   }
 
-  findSim(sim) {
+  findSim(sim: string, form: FormGroup) {
     console.log(sim)
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
@@ -82,21 +87,25 @@ export class ModalConfiguracionComponent implements OnInit {
     var x;
     this.venta.doFindSim(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
-      this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.crypto.decryptString(res))
+      console.log(res)
+      this.default = new ConfiguracionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(json)
       console.log(this.default)
-        
-      x = this.default.items[0].cod_serial
+      form.get("serial_sim").setValue(this.default.item.cod_serial)
+      x = this.default.item.cod_serial
+      console.log(x)
     })
-    return x;
   }
 
-  saveConfig(modelo, serial, sim) {
+  saveConfig(modelo, serial) {
 
     const inputs = [];
-    sim.forEach(sim => {
+
+    this.formDinamic.forEach(f => {
       inputs.push({
-        input_id: sim.sim_serial,
+        input_id: f.get('serial_sim').value,
       })
     })
     const data = this.crypto.encryptString(JSON.stringify({
@@ -118,11 +127,11 @@ export class ModalConfiguracionComponent implements OnInit {
       ]))
     }))
     console.log("verify")
-    this.venta.doSaveConfig(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.venta.doEndAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
-      this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.default = new ConfiguracionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default)
-        
+
     })
   }
 

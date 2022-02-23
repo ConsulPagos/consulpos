@@ -12,7 +12,7 @@ export class ClientesService {
   constructor(private http: HttpClient) { }
 
   doVerificaicon(data) {
-    var path = `/getClients`;
+    var path = `/client/getClients`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -21,7 +21,7 @@ export class ClientesService {
   }
 
   doSave(data) {
-    var path = `/saveClients`;
+    var path = `/client/saveClients`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -30,7 +30,7 @@ export class ClientesService {
   }
 
   doEdit(data) {
-    var path = `/editClients`;
+    var path = `/client/editClients`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -39,7 +39,7 @@ export class ClientesService {
   }
 
   doDelete(data) {
-    var path = `/deleteClients`;
+    var path = `/client/deleteClients`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -48,7 +48,7 @@ export class ClientesService {
   }
 
   doAll(data) {
-    var path = `/allClients`;
+    var path = `/client/allClients`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -57,7 +57,7 @@ export class ClientesService {
   }
 
   doItem(data) {
-    var path = `/itemsByClients`;
+    var path = `/client/itemsByClients`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -66,7 +66,7 @@ export class ClientesService {
   }
 
   doStatusAccount(data) {
-    var path = `/accountStatusByClients`;
+    var path = `/client/accountStatusByClients`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -75,7 +75,7 @@ export class ClientesService {
   }
 
   doFind(data) {
-    var path = `/findClients`;
+    var path = `/client/findClients`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -84,7 +84,7 @@ export class ClientesService {
   }
 
   doEditPhone(data) {
-    var path = `/editPhoneByClients`;
+    var path = `/client/editPhoneByClients`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');

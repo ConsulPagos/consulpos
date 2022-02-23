@@ -20,103 +20,97 @@
                                         Información del Usuario
                                     </h4>
 
-                                    <mat-card class="example-card">
-                                        <mat-card-title-group>
-                                            <mat-card-title>
-                                                {{showUser.p_nombre}}
-                                                {{showUser.p_apellido}}
-                                                {{showUser.s_nombre}}
-                                                {{showUser.s_apellido}}
-                                            </mat-card-title>
-                                            <mat-card-subtitle>
-                                                <div>
-                                                    <label class="labels">
-                                                        Cedula:
-                                                    </label>
-                                                    <span class="text-capitalize">
-                                                        {{showUser.cedula}}
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <label class="labels">
-                                                        Correo Electronico:
-                                                    </label>
-                                                    <a href="mailto:{{showUser.email}}" class="text-lowercase">
-                                                        {{showUser.email}}
-                                                    </a>
-                                                </div>
 
-                                                <div>
-                                                    <label class="labels">
-                                                        OCC:
-                                                    </label>
-                                                    <span>
-                                                        {{showUser.occ_name}}
-                                                    </span>
-                                                </div>
+                                    <mat-card-title-group>
+                                        <mat-card-title>
+                                            {{showUser.p_nombre}}
+                                            {{showUser.p_apellido}}
+                                            {{showUser.s_nombre}}
+                                            {{showUser.s_apellido}}
+                                        </mat-card-title>
+                                        <mat-card-subtitle>
+                                            <div>
+                                                <label class="labels">
+                                                    Cedula:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showUser.cedula}}
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <label class="labels">
+                                                    Correo Electronico:
+                                                </label>
+                                                <a href="mailto:{{showUser.email}}" class="text-lowercase">
+                                                    {{showUser.email}}
+                                                </a>
+                                            </div>
 
-                                                <div>
-                                                    <label class="labels">
-                                                        Telefono:
-                                                    </label>
-                                                    <span>
-                                                        {{showUser.tlf}}
-                                                    </span>
-                                                </div>
+                                            <div>
+                                                <label class="labels">
+                                                    OCC:
+                                                </label>
+                                                <span>
+                                                    {{showUser.occ_name}}
+                                                </span>
+                                            </div>
 
-                                                <div>
-                                                    <label class="labels">
-                                                        Estatus del usuario:
-                                                    </label>
-                                                    <span>
-                                                        {{showUser.status_desc}}
-                                                    </span>
-                                                </div>
+                                            <div>
+                                                <label class="labels">
+                                                    Telefono:
+                                                </label>
+                                                <span>
+                                                    {{showUser.tlf}}
+                                                </span>
+                                            </div>
 
-                                                <div>
-                                                    <label class="labels">
-                                                        Rol:
-                                                    </label>
-                                                    <span class="text-capitalize">
-                                                        {{showUser.rol.rol_name}}
-                                                    </span>
-                                                </div>
+                                            <div>
+                                                <label class="labels">
+                                                    Estatus del usuario:
+                                                </label>
+                                                <span>
+                                                    {{showUser.status_desc}}
+                                                </span>
+                                            </div>
 
-                                                <div>
-                                                    <label class="labels">
-                                                        Comisionable:
-                                                    </label>
-                                                    <span class="text-capitalize">
-                                                        {{showUser.comisionable_desc}}
-                                                    </span>
-                                                </div>
+                                            <div>
+                                                <label class="labels">
+                                                    Rol:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showUser.rol.rol_name}}
+                                                </span>
+                                            </div>
 
-                                                <div>
-                                                    <label class="labels">
-                                                        Direccion:
-                                                    </label>
-                                                    <span>
-                                                        {{showUser.direccion}}, {{showUser.localidad}},
-                                                        {{showUser.cod_postal}}, {{showUser.pto_ref}}.
-                                                    </span>
-                                                </div>
+                                            <div>
+                                                <label class="labels">
+                                                    Comisionable:
+                                                </label>
+                                                <span class="text-capitalize">
+                                                    {{showUser.comisionable_desc}}
+                                                </span>
+                                            </div>
 
-                                                <div>
-                                                    <label class="labels">
-                                                        Fecha de registro:
-                                                    </label>
-                                                    <span>
-                                                        {{showUser.fecha_registro}}
-                                                    </span>
-                                                </div>
+                                            <div>
+                                                <label class="labels">
+                                                    Direccion:
+                                                </label>
+                                                <span>
+                                                    {{showUser.direccion}}, {{showUser.localidad}},
+                                                    {{showUser.cod_postal}}, {{showUser.pto_ref}}.
+                                                </span>
+                                            </div>
 
-                                            </mat-card-subtitle>
-                                            <img mat-card-lg-image src="../../../../../assets/images/selfie.jpg">
-                                        </mat-card-title-group>
-                                        <mat-card-content>
-                                            {{longText}}
-                                        </mat-card-content>
-                                    </mat-card>
+                                            <div>
+                                                <label class="labels">
+                                                    Fecha de registro:
+                                                </label>
+                                                <span>
+                                                    {{showUser.fecha_registro}}
+                                                </span>
+                                            </div>
+                                        </mat-card-subtitle>
+                                    </mat-card-title-group>
                                 </div>
                             </div>
                         </div>

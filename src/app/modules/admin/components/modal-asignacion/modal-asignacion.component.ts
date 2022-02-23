@@ -54,8 +54,6 @@ export class ModalAsignacionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  
-
   findPos() {
     const modelos = [];
     this.dataVenta.modelos.forEach(m => {
@@ -66,22 +64,17 @@ export class ModalAsignacionComponent implements OnInit {
         }
       )
     });
-
     console.log(modelos)
-
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
-
       modelos: this.crypto.encryptJson(JSON.stringify(
         modelos
       ))
-      
     }))
-    
-    console.log("verify")
+        console.log("verify")
     this.venta.doAutomaticAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       console.log(JSON.parse(this.crypto.decryptString(res)))
@@ -92,27 +85,44 @@ export class ModalAsignacionComponent implements OnInit {
     })
   }
 
-  saveConfig(modelo) {
+  save() {
+    this.modal.confirm("Se le asignaro seriales a los equipos").subscribe(result => {
+      if (result) {
+        this.saveAsignacion()
+      }
+    })
+  }
+
+  saveAsignacion() {
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
-      solicitud_banco_id: this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
-      accion: this.crypto.encryptJson("ASIGNACION"),
-      Operaciones: this.crypto.encryptJson(JSON.stringify([
-        {
-          cod_serial: this.asignacion.get('serial').value,
-          terminal: "",
-          afiliado: this.asignacion.get('afiliado').value,
-          modelo: modelo,
-        }
-      ]))
+      // solicitud_banco_id: this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
+      // accion: this.crypto.encryptJson("ASIGNACION"),
+      // Operaciones: this.crypto.encryptJson(JSON.stringify([
+      //   {
+      //     cod_serial: this.asignacion.get('serial').value,
+      //     terminal: "",
+      //     afiliado: this.asignacion.get('afiliado').value,
+      //     modelo: modelo,
+      //   }
+      // ]))
     }))
     console.log("verify")
-    this.venta.doSaveConfig(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.venta.doEndAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      switch (this.default.R) {
+        case constant.R0:
+          this.toaster.success(this.default.M)
+          this.router.navigateByUrl('/admin/app/(adr:operaciones/asignacion)')
+          break;
+        case constant.R1:
+          this.toaster.error(this.default.M)
+          break;
+      }
       console.log(this.default)
 
     })

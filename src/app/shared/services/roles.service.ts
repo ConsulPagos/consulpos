@@ -12,7 +12,7 @@ export class RolesService {
   constructor(private http: HttpClient) { }
 
   doAllRoll(data) {
-    var path = `/allRoll`;
+    var path = `/user/allRoll`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -21,7 +21,7 @@ export class RolesService {
   }
 
   doFindRoll(data) {
-    var path = `/findRoll`;
+    var path = `/user/findRoll`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -30,7 +30,7 @@ export class RolesService {
   }
 
   doSaveRoll(data) {
-    var path = `/saveRoll`;
+    var path = `/user/saveRoll`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -39,7 +39,7 @@ export class RolesService {
   }
 
   doEditRoll(data) {
-    var path = `/editRoll`;
+    var path = `/user/editRoll`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -48,7 +48,7 @@ export class RolesService {
   }
 
   doDeleteRoll(data) {
-    var path = `/deleteRoll`;
+    var path = `/user/deleteRoll`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -57,7 +57,7 @@ export class RolesService {
   }
 
   doPermisosRoll(data) {
-    var path = `/permisosRolls`;
+    var path = `/user/permisosRolls`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -66,7 +66,7 @@ export class RolesService {
   }
 
   doModulosRoll(data) {
-    var path = `/modulos`;
+    var path = `/user/modulos`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');

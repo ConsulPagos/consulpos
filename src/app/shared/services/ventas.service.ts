@@ -11,7 +11,7 @@ export class VentasService {
   constructor(private http: HttpClient) { }
 
   doSale(data) {
-    var path = `/saveSale`;
+    var path = `/sell/saveSale`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -20,7 +20,7 @@ export class VentasService {
   }
 
   doDesafiliateSale(data) {
-    var path = `/disaffiliateSale`;
+    var path = `/sell/disaffiliateSale`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -29,7 +29,7 @@ export class VentasService {
   }
 
   doVerifyItem(data) {
-    var path = `/verifyItem`;
+    var path = `/sell/verifyItem`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -38,7 +38,7 @@ export class VentasService {
   }
 
   doVerifyStatusAccount(data) {
-    var path = `/verifyStatusAccount`;
+    var path = `/sell/verifyStatusAccount`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -47,7 +47,7 @@ export class VentasService {
   }
 
   doAllSale(data) {
-    var path = `/allSales`;
+    var path = `/sell/allSales`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -56,7 +56,7 @@ export class VentasService {
   }
 
   doFindSales(data) {
-    var path = `/findSale`;
+    var path = `/sell/findSale`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -65,7 +65,7 @@ export class VentasService {
   }
 
   doFindSalesByStatus(data) {
-    var path = `/findSaleByStatus`;
+    var path = `/sell/findSaleByStatus`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -74,7 +74,7 @@ export class VentasService {
   }
 
   doOccUser(data) {
-    var path = `/occByUser`;
+    var path = `/sell/occByUser`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -83,7 +83,7 @@ export class VentasService {
   }
 
   doSimModels(data) {
-    var path = `/simModels`;
+    var path = `/sell/simModels`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -92,7 +92,7 @@ export class VentasService {
   }
 
   doFindPos(data) {
-    var path = `/findPosToAssing`;
+    var path = `/sell/findPosToAssing`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -101,7 +101,7 @@ export class VentasService {
   }
 
   doFindSim(data) {
-    var path = `/findSimToAssing`;
+    var path = `/sell/findSimToAssing`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -110,7 +110,7 @@ export class VentasService {
   }
 
   doSaveConfig(data) {
-    var path = `/salesConfig`;
+    var path = `/sell/salesConfig`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -119,7 +119,16 @@ export class VentasService {
   }
 
   doAutomaticAssingItem(data) {
-    var path = `/automaticAssingItem`;
+    var path = `/sell/automaticAssingItem`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  doEndAssingItem(data) {
+    var path = `/sell/endAssingItem`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
