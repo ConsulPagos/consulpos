@@ -10,7 +10,7 @@ export class BancarioService {
   constructor(private http: HttpClient) { }
 
   doGeneracion(data) {
-    var path = `/doGeneracion`;
+    var path = `/banking/doGeneracion`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -19,7 +19,7 @@ export class BancarioService {
   }
 
   doGetArchivos(data) {
-    var path = `/doGetArchivos`;
+    var path = `/banking/doGetArchivos`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -28,7 +28,7 @@ export class BancarioService {
   }
 
   doConciliacion(data) {
-    var path = `/doConciliacion`;
+    var path = `/banking/doConciliacion`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -37,7 +37,7 @@ export class BancarioService {
   }
 
   doGetTasas(data) {
-    var path = `/doGetTasas`;
+    var path = `/banking/doGetTasas`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -46,7 +46,7 @@ export class BancarioService {
   }
 
   doCreateTasa(data) {
-    var path = `/doCreateTasa`;
+    var path = `/banking/doCreateTasa`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -55,7 +55,7 @@ export class BancarioService {
   }
 
   doUpdateEC(data) {
-    var path = `/doUpdateEC`;
+    var path = `/banking/doUpdateEC`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -64,7 +64,7 @@ export class BancarioService {
   }
 
   doGetArchivo(data) {
-    var path = `/doGetArchivo`;
+    var path = `/banking/doGetArchivo`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -73,7 +73,7 @@ export class BancarioService {
   }
 
   doGetHistoricoConciliacion(data) {
-    var path = `/doGetHistoricoConciliacion`;
+    var path = `/banking/doGetHistoricoConciliacion`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -82,7 +82,7 @@ export class BancarioService {
   }
 
   doGetPlantillaRespuesta(data) {
-    var path = `/doGetPlantillaRespuesta`;
+    var path = `/banking/doGetPlantillaRespuesta`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -91,7 +91,7 @@ export class BancarioService {
   }
 
   doDiferir(data) {
-    var path = `/doDiferir`;
+    var path = `/banking/doDiferir`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -100,7 +100,7 @@ export class BancarioService {
   }
 
   doGetClientList(data) {
-    var path = `/doGetClientList`;
+    var path = `/banking/doGetClientList`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -109,7 +109,7 @@ export class BancarioService {
   }
 
   doUpdateClientList(data) {
-    var path = `/doUpdateClientList`;
+    var path = `/banking/doUpdateClientList`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -119,7 +119,7 @@ export class BancarioService {
 
   
   doConciliarCC(data) {
-    var path = `/doConciliarCC`;
+    var path = `/banking/doConciliarCC`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');

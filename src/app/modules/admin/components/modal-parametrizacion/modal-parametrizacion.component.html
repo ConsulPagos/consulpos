@@ -6,10 +6,11 @@
 </h1>
 <div mat-dialog-content class="mat-dialog-content">
     <div class="pt-2 pb-1 less-padding">
-        <div *ngFor="let item of dataVenta.items">
+        <div *ngFor="let item of dataVenta.items; let z = index">
             <div *ngIf="!item.complemento_d">
                 <h1>{{item.modelo}} - {{item.cod_serial}}</h1>
-                <form [formGroup]="parametrizacion">
+                
+                <form [formGroup]="formDinamic[z]">
                     <mat-form-field class="box" appearance="outline">
                         <mat-label>Numero de afiliado</mat-label>
                         <input matInput type="text" formControlName="afiliado">
@@ -21,18 +22,17 @@
                     </mat-form-field>
                 </form>
             </div>
-
-            <div mat-dialog-actions *ngIf="!item.complemento_d">
-                <div class="d-flex w-100">
-                    <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null">
-                        <li class="fa fa-times text-dark"></li>
-                    </button>
-                    <button class="flex-fill confirm action_button" [disabled]="false" mat-button cdkFocusInitial
-                        [mat-dialog-close]="true" (click)="saveConfig(item.modelo, item.serial)">
-                        <li class="fa fa-check"></li>
-                    </button>
-                </div>
-            </div>
         </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <div class="d-flex w-100">
+        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null">
+            <li class="fa fa-times text-dark"></li>
+        </button>
+        <button class="flex-fill confirm action_button" [disabled]="false" mat-button cdkFocusInitial
+            [mat-dialog-close]="true" (click)="saveConfig(serial, modelo)">
+            <li class="fa fa-check"></li>
+        </button>
     </div>
 </div>

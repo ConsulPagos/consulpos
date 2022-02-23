@@ -27,6 +27,9 @@ export class ModalConfiguracionComponent implements OnInit {
   default: ConfiguracionResponse;
   editSale: any = {};
   x = null;
+  modelo: any;
+  serial: any;
+  sim: any;
 
   formDinamic = [];
 
@@ -65,7 +68,6 @@ export class ModalConfiguracionComponent implements OnInit {
       for (let z = 0; z < item.caracteristicas.length; z++) {
         this.formDinamic.push(new FormGroup({
           serial_sim: new FormControl(null, [Validators.required]),
-          // serial_pos: new FormControl(item.cod_serial, [Validators.required]),
         }))
       }
 
@@ -97,12 +99,13 @@ export class ModalConfiguracionComponent implements OnInit {
     })
   }
 
-  saveConfig(modelo, serial, sim) {
+  saveConfig(modelo, serial) {
 
     const inputs = [];
-    sim.forEach(sim => {
+
+    this.formDinamic.forEach(f => {
       inputs.push({
-        input_id: sim.sim_serial,
+        input_id: f.get('serial_sim').value,
       })
     })
     const data = this.crypto.encryptString(JSON.stringify({
@@ -124,7 +127,7 @@ export class ModalConfiguracionComponent implements OnInit {
       ]))
     }))
     console.log("verify")
-    this.venta.doSaveConfig(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.venta.doEndAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.default = new ConfiguracionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default)

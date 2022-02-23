@@ -12,7 +12,7 @@ export class UsuariosService {
   constructor(private http: HttpClient) { }
 
   doAllUser(data) {
-    var path = `/allUsers`;
+    var path = `/user/allUsers`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -21,7 +21,7 @@ export class UsuariosService {
   }
 
   doFindUser(data) {
-    var path = `/findUser`;
+    var path = `/user/findUser`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -30,7 +30,7 @@ export class UsuariosService {
   }
 
   doSaveUser(data) {
-    var path = `/saveUser`;
+    var path = `/user/saveUser`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -39,7 +39,7 @@ export class UsuariosService {
   }
 
   doEditUser(data) {
-    var path = `/editUser`;
+    var path = `/user/editUser`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -48,7 +48,7 @@ export class UsuariosService {
   }
 
   doDeleteUser(data) {
-    var path = `/deleteUser`;
+    var path = `/user/deleteUser`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -57,7 +57,7 @@ export class UsuariosService {
   }
 
   doEditPermisos(data) {
-    var path = `/editPermisos`;
+    var path = `/user/editPermisos`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');

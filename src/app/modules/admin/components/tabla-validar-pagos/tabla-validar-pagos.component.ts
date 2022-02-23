@@ -130,13 +130,12 @@ export class TablaValidarPagosComponent implements OnInit {
       });
   }
 
-  openDialogPay(id_venta: number, items: any): void {
+  openDialogPay(venta): void {
     var dialogRef = this.dialog.open(ModalPagoComponent, {
       height: 'auto',
       panelClass: 'custom-dialog',
-      data: { id_venta: id_venta, items: items },
+      data: { venta: venta},
     });
-    console.log(items)
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.submit()

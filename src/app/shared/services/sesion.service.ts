@@ -16,7 +16,7 @@ export class SesionService {
   constructor(private http: HttpClient) { }
 
   doLogin(data) {
-    var path = `/doLogin`;
+    var path = `/session/doLogin`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -25,7 +25,7 @@ export class SesionService {
   }
 
   doVerify(data) {
-    var path = `/doVerify`;
+    var path = `/session/doVerify`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -34,7 +34,7 @@ export class SesionService {
   }
 
   doRefresh(data) {
-    var path = `/doRefresh`;
+    var path = `/session/doRefresh`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -44,7 +44,7 @@ export class SesionService {
 
 
   /* doGeneracion(data) {
-    var path = `/doGeneracion`;
+    var path = `/session/doGeneracion`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -53,7 +53,7 @@ export class SesionService {
   }
 
   doGetArchivos(data) {
-    var path = `/doGetArchivos`;
+    var path = `/session/doGetArchivos`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -62,7 +62,7 @@ export class SesionService {
   } */
 
   doGetUsuarios(data) {
-    var path = `/doGetUsuarios`;
+    var path = `/session/doGetUsuarios`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -71,7 +71,7 @@ export class SesionService {
   }
 
   doLogout(data) {
-    var path = `/doLogout`;
+    var path = `/session/doLogout`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -80,7 +80,7 @@ export class SesionService {
   }
 
   doChangePsw(data) {
-    var path = `/doChangePsw`;
+    var path = `/session/doChangePsw`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
