@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiHost: 'http://192.168.36.30',
+  apiHost: 'http://192.168.36.30:81',
   puerto_sesion: "session",
   puerto_usuarios: "user",
   puerto_ventas: "sell",
