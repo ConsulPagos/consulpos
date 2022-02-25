@@ -2,7 +2,7 @@
     <div>
         <mat-form-field appearance="outline" class="mt-4 mx-4">
             <form [formGroup]="identity">
-                <input matInput (keyup.enter)="_findClient()" placeholder="Buscar" formControlName="rif" maxlength="9"
+                <input matInput (keyup.enter)="_findClient()" placeholder="Buscar" formControlName="rif" 
                     #input>
             </form>
         </mat-form-field>
@@ -56,7 +56,7 @@
 
                 <div>
                     <button #tooltip="matTooltip" matTooltip="Validar pago" matTooltipHideDelay="10" mat-icon-button
-                        (click)="openDialogPay(ventas.id_venta, ventas.items)" class="container_icon">
+                        (click)="openDialogPay(venta)" class="container_icon">
                         <i class="fas fa-check-square activate_edit"></i>
                     </button>
                 </div>

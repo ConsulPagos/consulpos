@@ -111,7 +111,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
           console.log("string: " + this.crypto.decryptString(data))
 
           this.ShowUserResponse = new ShowUsersDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-          this.crypto.setKeys(this.ShowUserResponse.keyS, this.ShowUserResponse.ivJ, this.ShowUserResponse.keyJ, this.ShowUserResponse.ivS)
+           //this.crypto.setKeys(this.ShowUserResponse.keyS, this.ShowUserResponse.ivJ, this.ShowUserResponse.keyJ, this.ShowUserResponse.ivS)
           this.resultsLength = parseInt(this.ShowUserResponse.total_row);
           console.log(this.ShowUserResponse)
           return this.ShowUserResponse.usuarios;
@@ -150,7 +150,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
       
       this.ShowUserResponse = new ShowUsersDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-      this.crypto.setKeys(this.ShowUserResponse.keyS, this.ShowUserResponse.ivJ, this.ShowUserResponse.keyJ, this.ShowUserResponse.ivS)
+       //this.crypto.setKeys(this.ShowUserResponse.keyS, this.ShowUserResponse.ivJ, this.ShowUserResponse.keyJ, this.ShowUserResponse.ivS)
       this.toaster.success(this.ShowUserResponse.M)
 
       this.usuarios = this.ShowUserResponse.usuarios
@@ -180,7 +180,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
     this.usuario.doDeleteUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.loading = false
-      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
+       //this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
 
       switch (this.defaultResponse.R) {
         case constant.R0:
@@ -209,7 +209,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
     this.usuario.doDeleteUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.loading = false
-      this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
+       //this.crypto.setKeys(this.defaultResponse.keyS, this.defaultResponse.ivJ, this.defaultResponse.keyJ, this.defaultResponse.ivS)
 
       switch (this.defaultResponse.R) {
         case constant.R0:

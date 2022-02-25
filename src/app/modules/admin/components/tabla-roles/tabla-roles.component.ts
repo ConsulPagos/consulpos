@@ -95,7 +95,7 @@ export class TablaRolesComponent implements OnInit {
           console.log("string: " + this.crypto.decryptString(data))
 
           this.ShowRollResponse = new ShowRolesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-          this.crypto.setKeys(this.ShowRollResponse.keyS, this.ShowRollResponse.ivJ, this.ShowRollResponse.keyJ, this.ShowRollResponse.ivS)
+           //this.crypto.setKeys(this.ShowRollResponse.keyS, this.ShowRollResponse.ivJ, this.ShowRollResponse.keyJ, this.ShowRollResponse.ivS)
           this.resultsLength = parseInt(this.ShowRollResponse.total_row);
           console.log(this.ShowRollResponse)
           return this.ShowRollResponse.roles;
@@ -128,7 +128,7 @@ export class TablaRolesComponent implements OnInit {
       
       this.ShowRollResponse = new ShowRolesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-      this.crypto.setKeys(this.ShowRollResponse.keyS, this.ShowRollResponse.ivJ, this.ShowRollResponse.keyJ, this.ShowRollResponse.ivS)
+       //this.crypto.setKeys(this.ShowRollResponse.keyS, this.ShowRollResponse.ivJ, this.ShowRollResponse.keyJ, this.ShowRollResponse.ivS)
       this.toaster.success(this.ShowRollResponse.M)
 
       this.roles = this.ShowRollResponse.roles

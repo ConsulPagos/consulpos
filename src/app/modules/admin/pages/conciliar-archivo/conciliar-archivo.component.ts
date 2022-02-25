@@ -78,7 +78,7 @@ export class ConciliarArchivoComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      id_banco: this.crypto.encryptJson(this.form.get('banco').value),
+      codigo: this.crypto.encryptJson(this.form.get('banco').value),
       oper: this.crypto.encryptJson(this.form.get('oper').value),
     }))
 
@@ -93,13 +93,12 @@ export class ConciliarArchivoComponent implements OnInit {
         case constant.R0:
           this.conciliacionResponse = new ConciliacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
           this.archivos = this.conciliacionResponse.archivos
-          this.crypto.setKeys(this.conciliacionResponse.keyS, this.conciliacionResponse.ivJ, this.conciliacionResponse.keyJ, this.conciliacionResponse.ivS)
           break;
         case constant.R1:
         default:
           this.form.get("archivo").reset()
           const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-          this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+           
           this.toaster.error(response.M)
           break;
       }
@@ -135,7 +134,7 @@ export class ConciliarArchivoComponent implements OnInit {
       switch (json.R) {
         case constant.R0:
           const response0 = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-          this.crypto.setKeys(response0.keyS, response0.ivJ, response0.keyJ, response0.ivS)
+    
           this.toaster.success(response0.M)
           this.archivos = null
           this.archivo = null;
@@ -146,7 +145,7 @@ export class ConciliarArchivoComponent implements OnInit {
         case constant.R1:
         default:
           const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-          this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+           
           this.toaster.error(response.M)
           break;
       }
@@ -182,13 +181,13 @@ export class ConciliarArchivoComponent implements OnInit {
         case constant.R0:
           const response0 = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
           this.view(JSON.parse(this.crypto.decryptJson(json.archivo)));
-          this.crypto.setKeys(response0.keyS, response0.ivJ, response0.keyJ, response0.ivS)
+    
           //this.toaster.success(response0.M)
           break
         case constant.R1:
         default:
           const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-          this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+           
           this.toaster.error(response.M)
           break;
       }

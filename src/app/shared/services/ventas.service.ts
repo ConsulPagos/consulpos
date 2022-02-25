@@ -11,111 +11,129 @@ export class VentasService {
   constructor(private http: HttpClient) { }
 
   doSale(data) {
-    var path = `/saveSale`;
+    var path = `/sell/saveSale`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doDesafiliateSale(data) {
-    var path = `/disaffiliateSale`;
+    var path = `/sell/disaffiliateSale`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doVerifyItem(data) {
-    var path = `/verifyItem`;
+    var path = `/sell/verifyItem`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doVerifyStatusAccount(data) {
-    var path = `/verifyStatusAccount`;
+    var path = `/sell/verifyStatusAccount`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doAllSale(data) {
-    var path = `/allSales`;
+    var path = `/sell/allSales`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doFindSales(data) {
-    var path = `/findSale`;
+    var path = `/sell/findSale`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doFindSalesByStatus(data) {
-    var path = `/findSaleByStatus`;
+    var path = `/sell/findSaleByStatus`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doOccUser(data) {
-    var path = `/occByUser`;
+    var path = `/sell/occByUser`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doSimModels(data) {
-    var path = `/simModels`;
+    var path = `/sell/simModels`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doFindPos(data) {
-    var path = `/findPosToAssing`;
+    var path = `/sell/findPosToAssing`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doFindSim(data) {
-    var path = `/findSimToAssing`;
+    var path = `/sell/findSimToAssing`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doSaveConfig(data) {
-    var path = `/salesConfig`;
+    var path = `/sell/salesConfig`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  doAutomaticAssingItem(data) {
+    var path = `/sell/automaticAssingItem`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  doEndAssingItem(data) {
+    var path = `/sell/endAssingItem`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
 }

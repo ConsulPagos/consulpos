@@ -139,7 +139,7 @@
             </mat-menu>
 
 
-            <a class="menu_side" *ngIf="hasPermiso('Cobranza', 'Cobro Centralizado', 'Leer')"
+            <a class="menu_side" *ngIf="hasPermiso('Cobro Centralizado', 'Cobro Centralizado', 'Generar Archivo') || hasPermiso('Cobro Centralizado', 'Cobro Centralizado', 'Cargar Archivo')"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['cobro-centralizado'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fas fa-university"></li> <span class="text_side">Cobro Centralizado</span>

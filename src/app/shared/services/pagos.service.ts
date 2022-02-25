@@ -11,20 +11,38 @@ export class PagosService {
   constructor(private http: HttpClient) { }
 
   doPaymentInput(data) {
-    var path = `/paymentConstructor`;
+    var path = `/payment/paymentConstructor`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_pagos}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_pagos}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doSavePayment(data) {
-    var path = `/savePayment`;
+    var path = `/payment/savePayment`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_pagos}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_pagos}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  doPaymentInfo(data) {
+    var path = `/payment/paymentInfo`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_pagos}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  doConfirmPayment(data) {
+    var path = `/payment/confirmPayment`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_pagos}` + path, data, { headers: headers, responseType: 'text' })
   }
 }

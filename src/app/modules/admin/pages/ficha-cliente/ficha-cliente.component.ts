@@ -74,11 +74,12 @@ export class FichaClienteComponent implements OnInit {
     console.log(this.showClient.rif)
     this.loading = true;
     this.cliente.doItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      console.log(JSON.parse(this.crypto.decryptString(res)))
       this.showItemClient = new ShowItemDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.showItemClient)
       console.log(this.crypto.decryptString(res))
       // this.loading = false
-      this.crypto.setKeys(this.showItemClient.keyS, this.showItemClient.ivJ, this.showItemClient.keyJ, this.showItemClient.ivS)
+       //this.crypto.setKeys(this.showItemClient.keyS, this.showItemClient.ivJ, this.showItemClient.keyJ, this.showItemClient.ivS)
     })
   }
 
@@ -96,7 +97,7 @@ export class FichaClienteComponent implements OnInit {
         console.log(result)
         this.doEditPhone(result)
       }
-      this.router.navigateByUrl("/admin/app/(adr:dashboard)");
+      this.router.navigateByUrl("/admin/app/(adr:clientela)");
     });
   }
 
@@ -131,7 +132,7 @@ export class FichaClienteComponent implements OnInit {
       console.log(this.validacionCliente)
       console.log(this.crypto.decryptString(res))
       this.loader.stop()
-      this.crypto.setKeys(this.validacionCliente.keyS, this.validacionCliente.ivJ, this.validacionCliente.keyJ, this.validacionCliente.ivS)
+       //this.crypto.setKeys(this.validacionCliente.keyS, this.validacionCliente.ivJ, this.validacionCliente.keyJ, this.validacionCliente.ivS)
     })
   }
 

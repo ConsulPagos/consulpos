@@ -1,27 +1,25 @@
 import { CryptoService } from "../shared/services/crypto.service"
 
-export interface PagosResponse {
+export interface ConfiguracionResponse {
     R?: string;
     M?: string;
-    t_pagos?: string;
-    total?: string;
+    item?: any;
     session_valid?: string;
 }
 
-export class PagosDecrypter {
+export class ConfiguracionDecrypter {
 
     constructor(private crypto: CryptoService) {
 
     }
 
-    deserialize(value: any): PagosResponse {
+    deserialize(value: any): ConfiguracionResponse {
 
-        const data: PagosResponse = {
+        const data: ConfiguracionResponse = {
             R: value.R,
             M: this.crypto.decryptJson(value.M),
-            t_pagos: this.crypto.decryptJson(value.t_pagos),
-            total: this.crypto.decryptJson(value.total),
             session_valid: this.crypto.decryptJson(value.session_valid),
+            item: JSON.parse(this.crypto.decryptJson(value.item)),
         }
         return data
     }

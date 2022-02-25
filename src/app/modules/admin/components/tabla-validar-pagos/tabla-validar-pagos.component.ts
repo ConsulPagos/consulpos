@@ -108,7 +108,7 @@ export class TablaValidarPagosComponent implements OnInit {
           console.log("JSON: " + data)
           console.log("string: " + this.crypto.decryptString(data))
           this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-          this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
+           //this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
           this.resultsLength = parseInt(this.ShowSalesResponse.total_row);
           console.log(this.ShowSalesResponse)
           this.loader.stop()
@@ -130,13 +130,12 @@ export class TablaValidarPagosComponent implements OnInit {
       });
   }
 
-  openDialogPay(id_venta: number, items: any): void {
+  openDialogPay(venta): void {
     var dialogRef = this.dialog.open(ModalPagoComponent, {
       height: 'auto',
       panelClass: 'custom-dialog',
-      data: { id_venta: id_venta, items: items },
+      data: { venta: venta},
     });
-    console.log(items)
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.submit()
@@ -169,7 +168,7 @@ export class TablaValidarPagosComponent implements OnInit {
       console.log(this.crypto.decryptString(res))
       this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-      this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
+       //this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
       this.toaster.success(this.ShowSalesResponse.M)
       this.ventas = this.ShowSalesResponse.ventas
       this.dataSource = new MatTableDataSource(this.ventas);

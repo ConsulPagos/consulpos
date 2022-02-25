@@ -127,7 +127,7 @@ export class EditAdminComponent implements OnInit {
       this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default)
       this.loading = false
-      this.crypto.setKeys(this.default.keyS, this.default.ivJ, this.default.keyJ, this.default.ivS)
+        
 
       switch (this.default.R) {
         case constant.R0:

@@ -337,7 +337,7 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
       padding: 25px;
       border-radius: 10px;
       background-color: #fff;
-      width: 500px;
+      min-width: 500px;
   }
   mat-dialog-content{
     padding: 0;

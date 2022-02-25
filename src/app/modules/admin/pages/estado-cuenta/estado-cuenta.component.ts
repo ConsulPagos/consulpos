@@ -88,9 +88,9 @@ export class EstadoCuentaComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.showStatusAccount.estado_de_cuenta.items)
       console.log(this.crypto.decryptString(res))
       this.loading = false
-      this.crypto.setKeys(this.showStatusAccount.keyS, this.showStatusAccount.ivJ, this.showStatusAccount.keyJ, this.showStatusAccount.ivS)
-      const pdf = new pdfMaker()
-      pdf.createPdf(this.client, this.showStatusAccount.estado_de_cuenta)
+       //this.crypto.setKeys(this.showStatusAccount.keyS, this.showStatusAccount.ivJ, this.showStatusAccount.keyJ, this.showStatusAccount.ivS)
+      //const pdf = new pdfMaker()
+      //pdf.createPdf(this.client, this.showStatusAccount.estado_de_cuenta)
     })
   }
 
@@ -114,7 +114,7 @@ export class EstadoCuentaComponent implements OnInit {
       this.loading = false
       console.log(response)
       
-      this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+       
 
       if (response.R === "0") {
         this.selection.clear()

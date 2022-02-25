@@ -16,76 +16,76 @@ export class SesionService {
   constructor(private http: HttpClient) { }
 
   doLogin(data) {
-    var path = `/doLogin`;
+    var path = `/session/doLogin`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doVerify(data) {
-    var path = `/doVerify`;
+    var path = `/session/doVerify`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doRefresh(data) {
-    var path = `/doRefresh`;
+    var path = `/session/doRefresh`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
   }
 
 
   /* doGeneracion(data) {
-    var path = `/doGeneracion`;
+    var path = `/session/doGeneracion`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doGetArchivos(data) {
-    var path = `/doGetArchivos`;
+    var path = `/session/doGetArchivos`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   } */
 
   doGetUsuarios(data) {
-    var path = `/doGetUsuarios`;
+    var path = `/session/doGetUsuarios`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doLogout(data) {
-    var path = `/doLogout`;
+    var path = `/session/doLogout`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   doChangePsw(data) {
-    var path = `/doChangePsw`;
+    var path = `/session/doChangePsw`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(`${environment.apiHost}:${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_sesion}` + path, data, { headers: headers, responseType: 'text' })
   }
 
   getSCod = () => {
@@ -103,15 +103,15 @@ export class SesionService {
  /*  refreshKeys(){
 
     this.loader.loading()
-    const data = this.crypto.encryptStringFixed(JSON.stringify({ u_id: this.crypto.encryptJsonFixed(this.storage.getJson(constant.USER).uid), correo: this.crypto.encryptJsonFixed(this.storage.getJson(constant.USER).email), scod: this.crypto.encryptJsonFixed(this.storage.getJson(constant.USER).scod) }))
+    const data = this.crypto.encryptString(JSON.stringify({ u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid), correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email), scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod) }))
 
     this.doRefresh(`${this.getDeviceId()};${data}`).subscribe(res => {
       
       this.loader.stop()
 
-      var response = new RefreshDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptStringFixed(res)))
+      var response = new RefreshDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       if (response.R == constant.R0) {
-        this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+         
       } else {
 
       }

@@ -3,10 +3,7 @@ import { CryptoService } from "../shared/services/crypto.service";
 export interface SesionResponse {
     scod?: string;
     R?: string;
-    /* keyS?: string;
-    ivS?: string;
-    keyJ?: string;
-    ivJ?: string; */
+    permisos?: any;
     M?: string;
     u_id?: string;
 
@@ -15,10 +12,6 @@ export interface SesionResponse {
 export interface LogoutResponse {
     R?: string;
     M?: string;
-    /*     keyS?: string;
-        ivS?: string;
-        keyJ?: string;
-        ivJ?: string; */
     u_id?: string;
 }
 
@@ -31,10 +24,7 @@ export class SesionObject {
     deserialize(value: SesionResponse): SesionResponse {
         try {
             value.M = this.crypto.decryptJson(value.M)
-            // value.keyS = this.crypto.decryptJsonFixed(value.keyS)
-            // value.ivS = this.crypto.decryptJsonFixed(value.ivS)
-            // value.keyJ = this.crypto.decryptJsonFixed(value.keyJ)
-            // value.ivJ = this.crypto.decryptJsonFixed(value.ivJ)
+            value.permisos = JSON.parse(this.crypto.decryptJson(value.permisos))
             value.u_id = this.crypto.decryptJson(value.u_id)
             if (value.R == "0") {
                 value.scod = this.crypto.decryptJson(value.scod)

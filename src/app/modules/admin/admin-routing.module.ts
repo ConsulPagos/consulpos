@@ -54,100 +54,262 @@ const routes: Routes = [
           } */
       },
       {
-        path: 'config', component: ConfigComponent, outlet: 'adr'
+        path: 'config', component: ConfigComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Cobranza",
+        //   submodulo: "Cobro Centralizado",
+        //   permiso: "Leer"
+        // }
       },
       // Modulo de Clientes
       {
-        path: 'clientela', component: ClientelaComponent, outlet: 'adr'
+        path: 'clientela', component: ClientelaComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Clientes",
+        //   submodulo: "Listado",
+        //   permiso: "Leer"
+        // }
       },
       {
-        path: 'edit-client', component: EditClientComponent, outlet: 'adr'
+        path: 'edit-client', component: EditClientComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Clientes",
+        //   submodulo: "Listado",
+        //   permiso: "Editar"
+        // }
       },
       {
-        path: 'add-client', component: AddClientComponent, outlet: 'adr'
+        path: 'add-client', component: AddClientComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Clientes",
+        //   submodulo: "Listado",
+        //   permiso: "Crear"
+        // }
       },
       {
-        path: 'ficha-cliente', component: FichaClienteComponent, outlet: 'adr'
+        path: 'ficha-cliente', component: FichaClienteComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Clientes",
+        //   submodulo: "Ficha",
+        //   permiso: "Leer"
+        // }
       },
       //Modulo de Usuarios
       {
-        path: 'super-admin-panel', component: SuperAdminComponent, outlet: 'adr'
+        path: 'super-admin-panel', component: SuperAdminComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Usuarios",
+        //   permiso: "Leer"
+        // }
       },
       {
-        path: 'ficha-user', component: FichaUserComponent, outlet: 'adr'
+        path: 'ficha-user', component: FichaUserComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Usuarios",
+        //   permiso: "Leer"
+        // }
       },
       {
-        path: 'edit-admin', component: EditAdminComponent, outlet: 'adr'
+        path: 'edit-admin', component: EditAdminComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Usuarios",
+        //   permiso: "Editar"
+        // }
       },
       {
         path: 'cambiar-contraseña', component: AdminChangePwdComponent, outlet: 'adr'
       },
       {
-        path: 'nuevo-admin', component: NuevoAdminComponent, outlet: 'adr'
+        path: 'nuevo-admin', component: NuevoAdminComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Usuarios",
+        //   permiso: "Crear"
+        // }
       },
       // Modulo de Cobranza
       {
-        path: 'generar-archivo', component: GenerarArchivoComponent, outlet: 'adr'
+        path: 'generar-archivo', component: GenerarArchivoComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Domiciliacion",
+        //   submodulo: "Generar Archivo",
+        //   permiso: "Generar Archivo"
+        // }
       },
       {
-        path: 'actualizar-archivo', component: ActualizarArchivoComponent, outlet: 'adr'
+        path: 'actualizar-archivo', component: ActualizarArchivoComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Domiciliacion",
+        //   submodulo: "Cargar Respuesta",
+        //   permiso: "Cargar Archivo"
+        // }
       },
       {
-        path: 'conciliar-archivo', component: ConciliarArchivoComponent, outlet: 'adr'
+        path: 'conciliar-archivo', component: ConciliarArchivoComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Conciliacion",
+        //   submodulo: "Conciliar Archivo",
+        //   permiso: "Conciliar Archivo"
+        // }
       },
       {
-        path: 'historico-conciliacion', component: HistoricoConciliacionComponent, outlet: 'adr'
+        path: 'historico-conciliacion', component: HistoricoConciliacionComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Conciliacion",
+        //   submodulo: "Historico",
+        //   permiso: "Leer"
+        // }
       },
       {
         path: 'cobro-centralizado', component: CobroCentralizadoComponent,
         outlet: 'adr',
-        canActivate: [HasPermisoGuard],
-        data: {
-          modulo: "Cobranza",
-          submodulo: "Cobro Centralizado",
-          permiso: "Leer"
-        }
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Cobro Centralizado",
+        //   submodulo: "Cobro Centralizado",
+        //   permiso: "Generar Archivo"
+        // }
       },
       {
         path: 'previsualizar-archivo/:id', component: PrevArchivoComponent, outlet: 'adr'
       },
       {
-        path: 'seleccion-centralizado', component: SeleccionCentralizadoComponent, outlet: 'adr'
+        path: 'seleccion-centralizado', component: SeleccionCentralizadoComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Cobro Centralizado",
+        //   submodulo: "Cobro Centralizado",
+        //   permiso: "Cargar Archivo"
+        // }
       },
       // Modulo de Roles
       {
-        path: 'roles', component: RolesComponent, outlet: 'adr'
+        path: 'roles', component: RolesComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Roles",
+        //   permiso: "Leer"
+        // }
       },
       {
-        path: 'add-rol', component: AddRolComponent, outlet: 'adr'
+        path: 'add-rol', component: AddRolComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Roles",
+        //   permiso: "Crear"
+        // }
       },
       {
-        path: 'edit-rol', component: EditRolComponent, outlet: 'adr'
+        path: 'edit-rol', component: EditRolComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Roles",
+        //   permiso: "Editar"
+        // }
       },
       // Modulo de ventas
       {
-        path: 'ventas', component: VentasComponent, outlet: 'adr'
+        path: 'ventas', component: VentasComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Ventas",
+        //   submodulo: "Listado",
+        //   permiso: "Leer"
+        // }
       },
       {
-        path: 'ficha-sale', component: FichaSaleComponent, outlet: 'adr'
+        path: 'ficha-sale', component: FichaSaleComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Ventas",
+        //   submodulo: "Ficha",
+        //   permiso: "Leer"
+        // }
       },
       {
         path: 'validador-venta/:id', component: ValidadorVentaComponent, outlet: 'adr'
       },
       {
-        path: 'add-venta', component: AddVentaComponent, outlet: 'adr'
+        path: 'add-venta', component: AddVentaComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Ventas",
+        //   submodulo: "Listado",
+        //   permiso: "Crear"
+        // }
       },
       {
         path: 'venta-consulpos', component: VentaConsulposComponent, outlet: 'adr'
       },
       // Modulo de Operaciones
-      { path: 'operaciones/:tipo_operacion', component: OperacionesComponent, outlet: 'adr' },
+      {
+        path: 'operaciones/:tipo_operacion', component: OperacionesComponent, outlet: 'adr'
+      },
       // Modulo de Pagos
-      { path: 'pagos', component: PagosComponent, outlet: 'adr' },
-      { path: 'add-pagos', component: AddPagosComponent, outlet: 'adr' },
-      { path: 'validar-pago', component: ValidarPagoComponent, outlet: 'adr' },
-      { path: 'tasas', component: TasasComponent, outlet: 'adr' },
-      { path: 'add-tasas', component: AddTasasComponent, outlet: 'adr' },
+      {
+        path: 'pagos', component: PagosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Pagos",
+        //   submodulo: "Listado",
+        //   permiso: "Leer"
+        // }
+      },
+      {
+        path: 'add-pagos', component: AddPagosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Pagos",
+        //   submodulo: "Listado",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'validar-pago', component: ValidarPagoComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Pagos",
+        //   submodulo: "Validar Pago",
+        //   permiso: "Leer"
+        // }
+      },
+      {
+        path: 'tasas', component: TasasComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Leer"
+        // }
+      },
+      {
+        path: 'add-tasas', component: AddTasasComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
     ],
   }
 ];

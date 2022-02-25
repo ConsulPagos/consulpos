@@ -21,10 +21,10 @@ export class ValidarPagoComponent implements OnInit {
     this.title.setTitle('ConsulPos | Validar Pago')
   }
 
-  addPay(pay) {
+  showPay(pay) {
     const navigationExtras: NavigationExtras = {
       state: {
-        addPay: pay
+        showPay: pay
       }
     }
     this.router.navigateByUrl("/admin/app/(adr:add-pagos)", navigationExtras)

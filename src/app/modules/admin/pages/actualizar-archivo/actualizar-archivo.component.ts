@@ -79,24 +79,22 @@ export class ActualizarArchivoComponent implements OnInit {
     }))
 
     this.loading = true;
-    this.loader.loading()
 
     this.bancario.doGetArchivos(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.loading = false
-      this.loader.stop()
 
       switch (json.R) {
         case constant.R0:
           this.actualizacionResponse = new ActualizacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
           this.archivos = this.actualizacionResponse.archivos
-          this.crypto.setKeys(this.actualizacionResponse.keyS, this.actualizacionResponse.ivJ, this.actualizacionResponse.keyJ, this.actualizacionResponse.ivS)
+           //this.crypto.setKeys(this.actualizacionResponse.keyS, this.actualizacionResponse.ivJ, this.actualizacionResponse.keyJ, this.actualizacionResponse.ivS)
           break;
         case constant.R1:
         default:
           this.form.get("archivo").reset()
           const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-          this.crypto.setKeys(response.keyS, response.ivJ, response.keyJ, response.ivS)
+           
           this.toaster.error(response.M)
           break;
       }

@@ -258,7 +258,6 @@ export class EditClientComponent implements OnInit {
       this.addClientResponse = new AddClientDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.addClientResponse)
       this.loading = false
-      this.crypto.setKeys(this.addClientResponse.keyS, this.addClientResponse.ivJ, this.addClientResponse.keyJ, this.addClientResponse.ivS)
 
       switch (this.addClientResponse.R) {
         case constant.R0:

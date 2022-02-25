@@ -1,23 +1,23 @@
 import { CryptoService } from "../shared/services/crypto.service"
 
-export interface DefaultResponse {
+export interface ValidarPagosResponse {
     R?: string;
     M?: string;
- 
+    solicitud?: string;
 }
 
-export class DefaultDecrypter {
+export class ValidarPagosDecrypter {
 
     constructor(private crypto: CryptoService) {
 
     }
 
-    deserialize(value: any): DefaultResponse {
+    deserialize(value: any): ValidarPagosResponse {
 
-        const data: DefaultResponse = {
+        const data: ValidarPagosResponse = {
             R: value.R,
             M: this.crypto.decryptJson(value.M),
-            
+            solicitud: this.crypto.decryptJson(value.solicitud),
         }
         return data
     }
