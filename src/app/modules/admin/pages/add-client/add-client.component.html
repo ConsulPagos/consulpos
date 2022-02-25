@@ -1,6 +1,4 @@
-<!-- Vista de Agregar Cliente -->
 <section id="addClient">
-    <!-- Botones del Navbar -->
     <div class="title">
         <div class="d-flex">
             <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
@@ -12,7 +10,6 @@
 
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
-
             <mat-vertical-stepper linear #stepper>
                 <ng-template matStepperIcon="edit">
                     <li class="fa fa-check"></li>
@@ -20,9 +17,9 @@
 
                 <mat-step [stepControl]="identity">
                     <form [formGroup]="identity">
-                        <ng-template matStepLabel>Ingrese documento de identidad</ng-template>
+                        <ng-template matStepLabel>Ingrese documento fiscal</ng-template>
                         <div>
-                            <h6>Documento de identidad</h6>
+                            <h6>Documento RIF</h6>
                             <mat-form-field appearance="outline" class="container_box">
                                 <mat-label>Tipo</mat-label>
                                 <mat-select disableRipple formControlName="tipo_doc" (selectionChange)="resetStatus()">
@@ -31,14 +28,12 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-
                             <mat-form-field appearance="outline">
                                 <mat-label>
                                     Rif
                                 </mat-label>
                                 <input matInput formControlName="rif" placeholder="123456789" type="text"
-                                    (keypress)="onlyNumberKey($event)" maxlength="9"
-                                    (keyup.enter)="verificar_usuario()">
+                                    (keypress)="onlyNumberKey($event)" maxlength="11">
                             </mat-form-field>
 
                             <div class="container_error_sell"
@@ -50,28 +45,28 @@
                             </div>
                         </div>
                     </form>
-                    <div>
-                        <button class="stepBtn" mat-raised-button matStepperNext
-                            [disabled]="identity.invalid || search_client">Siguiente</button>
+                    <div *ngIf="!search_client">
+                        <form [formGroup]="client_type">
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Tipo de Cliente</mat-label>
+                                <mat-select disableRipple formControlName="tipo_cliente">
+                                    <mat-option *ngFor="let t_cliente of tipos_clientes" value={{t_cliente.id}}>
+                                        {{t_cliente.t_cliente}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </form>
                     </div>
-                </mat-step>
-
-                <mat-step [stepControl]="client_type">
-                    <form [formGroup]="client_type">
-                        <ng-template matStepLabel>Indique el tipo de cliente</ng-template>
-                        <h6></h6>
-                        <mat-form-field appearance="outline" class="container_box_space">
-                            <mat-label>Tipo de Cliente</mat-label>
-                            <mat-select disableRipple formControlName="tipo_cliente">
-                                <mat-option *ngFor="let t_cliente of tipos_clientes" value={{t_cliente.id}}>
-                                    {{t_cliente.t_cliente}} </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </form>
-
-                    <div>
+                    <div *ngIf="search_client">
+                        <button class="stepBtn" mat-raised-button [disabled]="identity.invalid"
+                            (click)="verificar_usuario()">
+                            Validar
+                        </button>
+                    </div>
+                    <div *ngIf="!search_client">
                         <button class="stepBtn" mat-raised-button matStepperNext
-                            [disabled]="client_type.invalid">Siguiente</button>
+                            [disabled]="client_type.invalid || identity.invalid || search_client">
+                            Siguiente
+                        </button>
                     </div>
                 </mat-step>
 
@@ -134,7 +129,10 @@
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Fecha de Nacimiento</mat-label>
-                                <input matInput type="date" formControlName="fecha_nacimiento">
+                                <input matInput [matDatepicker]="dp3" disabled [max]="currentYear"
+                                    formControlName="fecha_nacimiento">
+                                <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                                <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="container_box_space">
@@ -189,7 +187,7 @@
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Correo electrónico</mat-label>
-                                <input matInput formControlName="email" placeholder="ConsuPagos@gmail.com" type="email"
+                                <input matInput formControlName="email" placeholder="ConsuPagos@gmail.com" type="text"
                                     maxlength="255">
 
                             </mat-form-field>
@@ -230,7 +228,7 @@
                             <h6>Datos Geográficos</h6>
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Estado</mat-label>
-                                <mat-select disableRipple formControlName="estado">
+                                <mat-select disableRipple formControlName="estado" (selectionChange)="getEstado($event.value)">
                                     <mat-option *ngFor="let estado of estados" value={{estado.id}}>
                                         {{estado.estado}} </mat-option>
                                 </mat-select>
@@ -238,7 +236,7 @@
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Municipio</mat-label>
-                                <mat-select disableRipple formControlName="municipio">
+                                <mat-select disableRipple formControlName="municipio" (selectionChange)="getMunicipio($event.value)">
                                     <mat-option *ngFor="let municipio of municipios" value={{municipio.id}}>
                                         {{municipio.municipio}} </mat-option>
                                 </mat-select>
@@ -307,7 +305,7 @@
                             </mat-form-field>
                         </div>
                     </form>
-<!-- 
+                    <!-- 
                     <div>
                         <strong>Form value:</strong>
                         <pre>{{ l.form.value | json }}</pre>
