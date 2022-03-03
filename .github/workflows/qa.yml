@@ -62,7 +62,7 @@ jobs:
         host: ${{ secrets.SSH_HOST_TEST }}
         username: ${{ secrets.SSH_USER_TEST }}
         key: ${{ secrets.SSH_KEY_TEST }}
-        source: "/home/runner/work/consulpos/app_front.tar.gz"
+        source: "../app_front.tar.gz"
         target: "/home7/victorri/www/prueba"
     - name: Uncompress new Files
       uses: appleboy/ssh-action@master
