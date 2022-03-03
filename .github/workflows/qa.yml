@@ -54,10 +54,6 @@ jobs:
       run : |
             cd dist/
             tar -czvf ../../app_front.tar.gz ./
-            cd ..
-            cd ..
-            pwd
-            ls -l
             
       # sudo sshpass -p ${{ secrets.SSH_PASS_TEST }} scp -v -i ${{ secrets.SSH_KEY_TEST }} -r app_front.tar.gz ${{ secrets.SSH_USER_TEST }}@${{ secrets.SSH_HOST_TEST }}:/home7/victorri/www/prueba
     - name: ... Copy New Files to server
@@ -66,7 +62,7 @@ jobs:
         host: ${{ secrets.SSH_HOST_TEST }}
         username: ${{ secrets.SSH_USER_TEST }}
         password: ${{ secrets.SSH_KEY_TEST }}
-        source: "app_front.tar.gz"
+        source: "/home/runner/work/consulpos/app_front.tar.gz"
         target: "/home7/victorri/www/prueba"
     - name: Uncompress new Files
       uses: appleboy/ssh-action@master
