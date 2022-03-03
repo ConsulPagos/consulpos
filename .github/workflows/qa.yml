@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-
+    name: Deploy 
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -40,14 +40,41 @@ jobs:
     - name: NPM build Angular Production
       run: ng build --prod
     - name: Delete Existing Files
-      run : sudo sshpass -p ${{ secrets.SSH_PASS_TEST }} -v ssh -i ${{ secrets.SSH_KEY_TEST }} ${{ secrets.SSH_USER_TEST }}@${{ secrets.SSH_HOST_TEST }} 'rm -rf /home7/victorri/www/prueba/*'
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST_TEST }}
+        username: ${{ secrets.SSH_USER_TEST }}
+        key: ${{ secrets.SSH_KEY_TEST }}
+        script: |
+          rm -rf /home7/victorri/www/prueba/*
 
-    - name: Compress and Copy New Files to server
+      # run : sudo sshpass -p ${{ secrets.SSH_PASS_TEST }} -v ssh -i ${{ secrets.SSH_KEY_TEST }} ${{ secrets.SSH_USER_TEST }}@${{ secrets.SSH_HOST_TEST }} 'rm -rf /home7/victorri/www/prueba/*'
+
+    - name: Compress and... 
       run : |
             cd dist/
             tar -czvf ../../app_front.tar.gz ./
             cd ..
             cd ..
-            sudo sshpass -p ${{ secrets.SSH_PASS_TEST }} scp -v -i ${{ secrets.SSH_KEY_TEST }} -r app_front.tar.gz ${{ secrets.SSH_USER_TEST }}@${{ secrets.SSH_HOST_TEST }}:/home7/victorri/www/prueba
+            
+      # sudo sshpass -p ${{ secrets.SSH_PASS_TEST }} scp -v -i ${{ secrets.SSH_KEY_TEST }} -r app_front.tar.gz ${{ secrets.SSH_USER_TEST }}@${{ secrets.SSH_HOST_TEST }}:/home7/victorri/www/prueba
+    - name: ... Copy New Files to server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SSH_HOST_TEST }}
+        username: ${{ secrets.SSH_USER_TEST }}
+        password: ${{ secrets.SSH_KEY_TEST }}
+        source: "app_front.tar.gz"
+        target: "/home7/victorri/www/prueba"
     - name: Uncompress new Files
-      run : sudo sshpass -p ${{ secrets.SSH_PASS_TEST }} -v ssh -i ${{ secrets.SSH_KEY_TEST }} ${{ secrets.SSH_USER_TEST }}@${{ secrets.SSH_HOST_TEST }} 'cd /home7/victorri/www/prueba/ && tar -xzvf app_front.tar.gz && rm app_front.tar.gz'
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST_TEST }}
+        username: ${{ secrets.SSH_USER_TEST }}
+        key: ${{ secrets.SSH_KEY_TEST }}
+        script: |
+          cd /home7/victorri/www/prueba/ 
+          tar -xzvf app_front.tar.gz 
+          rm app_front.tar.gz
+
+        # run : sudo sshpass -p ${{ secrets.SSH_PASS_TEST }} -v ssh -i ${{ secrets.SSH_KEY_TEST }} ${{ secrets.SSH_USER_TEST }}@${{ secrets.SSH_HOST_TEST }} 'cd /home7/victorri/www/prueba/ && tar -xzvf app_front.tar.gz && rm app_front.tar.gz'
