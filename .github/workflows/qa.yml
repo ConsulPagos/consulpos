@@ -1,0 +1,53 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: QA CI
+
+on:
+  push:
+    branches: [ qa ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1 #this installs node and npm for us
+      with:
+        node-version: '12.x'
+
+    - uses: actions/cache@v1 # this allows for re-using node_modules caching, making builds a bit faster.
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: NPM Install
+      run: npm install
+    - name: NPM Install Angular
+      run: npm install -g @angular/cli > /dev/null
+    - name: NPM build Angular Production
+      run: ng build --prod
+    - name: Delete Existing Files
+      run : sudo sshpass -p ${{ secrets.SSH_PASS_TEST }} -v ssh -i ${{ secrets.SSH_KEY_TEST }} ${{ secrets.SSH_USER_TEST }}@${{ secrets.SSH_HOST_TEST }} 'rm -rf /home7/victorri/www/prueba/*'
+
+    - name: Compress and Copy New Files to server
+      run : |
+            cd dist/
+            tar -czvf ../../app_front.tar.gz ./
+            cd ..
+            cd ..
+            sudo sshpass -p ${{ secrets.SSH_PASS_TEST }} scp -v -i ${{ secrets.SSH_KEY_TEST }} -r app_front.tar.gz ${{ secrets.SSH_USER_TEST }}@${{ secrets.SSH_HOST_TEST }}:/home7/victorri/www/prueba
+    - name: Uncompress new Files
+      run : sudo sshpass -p ${{ secrets.SSH_PASS_TEST }} -v ssh -i ${{ secrets.SSH_KEY_TEST }} ${{ secrets.SSH_USER_TEST }}@${{ secrets.SSH_HOST_TEST }} 'cd /home7/victorri/www/prueba/ && tar -xzvf app_front.tar.gz && rm app_front.tar.gz'
