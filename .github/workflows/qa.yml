@@ -45,6 +45,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps: 
+      - name: Install AWS CLI 
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install --update
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
