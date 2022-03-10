@@ -15,30 +15,30 @@ jobs:
       run:
         working-directory: ./
 
-    strategy:
-      matrix:
-        node-version: [12.x]
+#    strategy:
+#      matrix:
+#        node-version: [12.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1 #this installs node and npm for us
-      with:
-        node-version: '12.x'
+#    - uses: actions/setup-node@v1 #this installs node and npm for us
+#      with:
+#        node-version: '12.x'
 
-    - uses: actions/cache@v1 # this allows for re-using node_modules caching, making builds a bit faster.
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+#    - uses: actions/cache@v1 # this allows for re-using node_modules caching, making builds a bit faster.
+#      with:
+#        path: ~/.npm
+#        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#        restore-keys: |
+#          ${{ runner.os }}-node-
 
-    - name: NPM Install
-      run: npm install
-    - name: NPM Install Angular
-      run: npm install -g @angular/cli > /dev/null
-    - name: NPM build Angular Production
-      run: ng build --prod
+#    - name: NPM Install
+#      run: npm install
+#    - name: NPM Install Angular
+#      run: npm install -g @angular/cli > /dev/null
+#    - name: NPM build Angular Production
+#      run: ng build --prod
       
   deploy:
     name: Deploy
