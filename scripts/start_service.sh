@@ -8,6 +8,10 @@ sudo chmod -R 777 /home/desplieges/front
 
 cd /home/desplieges/front
 
+npm install
+
+run: npm install -g @angular/cli > /dev/null
+
 ng build --prod
 
 cp -rf ./dist/* /var/www/html
