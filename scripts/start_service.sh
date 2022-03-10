@@ -12,6 +12,10 @@ cd /var/www/html
 
 npm install
 
+npm install -g @angular/cli > /dev/null
+
+ng build --prod
+
 # start our node app in the background using pm2
 
-sudo pm2 start ‘npm start.’
+# sudo pm2 start ‘npm start.’
