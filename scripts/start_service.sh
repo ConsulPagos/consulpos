@@ -2,20 +2,13 @@
 
 # give permission to the files inside /secure_docs directory
 
-sudo chmod -R 777 /var/www/html
+sudo chmod -R 777 /home/desplieges/front
 
 # navigate into current working directory
 
-cd /var/www/html
-
-# install node modules
-
-# npm install
-
-# npm install -g @angular/cli > /dev/null
+cd /home/desplieges/front
 
 ng build --prod
 
-# start our node app in the background using pm2
+cp -rf ./dist/* /var/www/html
 
-# sudo pm2 start ‘npm start.’
