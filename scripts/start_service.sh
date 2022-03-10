@@ -10,9 +10,9 @@ cd /var/www/html
 
 # install node modules
 
-npm install
+# npm install
 
-npm install -g @angular/cli > /dev/null
+# npm install -g @angular/cli > /dev/null
 
 ng build --prod
 
