@@ -87,12 +87,12 @@ export class AddVentaComponent implements OnInit {
   //****************************************************************************************//
 
   identity = new FormGroup({
-    rif: new FormControl('306605738', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
-    tipo_doc: new FormControl('J', [Validators.required]),
+    rif: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
+    tipo_doc: new FormControl('', [Validators.required]),
   });
 
   solicitud = new FormGroup({
-    occ: new FormControl('1', [Validators.required]),
+    occ: new FormControl('', [Validators.required]),
   });
 
   sim = new FormGroup({
@@ -122,20 +122,20 @@ export class AddVentaComponent implements OnInit {
   add_buy() {
     var newFormat: SaleRequestInterface = {};
     var buy = new FormGroup({
-      modelo: new FormControl('1', [Validators.required]),
-      plataforma: new FormControl('1', [Validators.required]),
-      banco: new FormControl('0102', [Validators.required]),
-      numero_cuenta_pos: new FormControl('12345678900987654321', [Validators.required]),
+      modelo: new FormControl('', [Validators.required]),
+      plataforma: new FormControl('', [Validators.required]),
+      banco: new FormControl('', [Validators.required]),
+      numero_cuenta_pos: new FormControl('', [Validators.required]),
       precio_usd: new FormControl('', [Validators.required]),
-      lugar_entrega: new FormControl('122sd', [Validators.required]),
-      tipocobro: new FormControl('1', [Validators.required]),
-      plan: new FormControl('1', [Validators.required]),
-      tipo_venta: new FormControl('1', [Validators.required]),
+      lugar_entrega: new FormControl('', [Validators.required]),
+      tipocobro: new FormControl('', [Validators.required]),
+      plan: new FormControl('', [Validators.required]),
+      tipo_venta: new FormControl('', [Validators.required]),
       terminal: new FormControl(''),
       cod_afiliado: new FormControl(''),
     });
     var sim = new FormGroup({
-      operadora: new FormControl('1', [Validators.required]),
+      operadora: new FormControl('', [Validators.required]),
     });
     newFormat.sims = [sim]
     this.buies.push(buy);
@@ -198,7 +198,6 @@ export class AddVentaComponent implements OnInit {
        //this.crypto.setKeys(this.validacionoccresponse.keyS, this.validacionoccresponse.ivJ, this.validacionoccresponse.keyJ, this.validacionoccresponse.ivS)
       this.doSimModels()
     })
-    
   }
 
   doSimModels() {

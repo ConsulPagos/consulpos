@@ -1,0 +1,45 @@
+<section id="edit-marcas">
+    <div class="title">
+        <div class="d-flex">
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['marcas'] } }]">
+                <li class="fas fa-arrow-left"></li>
+            </a>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <div class="box-title d-flex justify-content-center">
+                <h5 class="bold uppercase mt-3">Editar Marca</h5>
+            </div>
+            <form [formGroup]="form">
+                <div class="container">
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="name" placeholder="MoreFun" type="text" maxlength="255"
+                            minlength="3">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Descripcion</mat-label>
+                        <input matInput formControlName="descripcion" placeholder="descripcion" type="text" maxlength="255"
+                            minlength="3">
+                    </mat-form-field>
+                </div>
+            </form>
+
+            <div class="btn_form">
+                <button (click)="clear()" class="btn btn-danger bg-danger text-white w-25 mt-3 mb-3 text-uppercase"
+                    mat-button>
+                    Limpiar
+                </button>
+
+                <button (click)="save()" class="btn btn-success bg-success text-white w-25 mt-3 mb-3 text-uppercase"
+                    mat-button [disabled]="form.invalid">
+                    Guardar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</section>
