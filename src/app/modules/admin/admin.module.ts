@@ -70,6 +70,34 @@ import { ModalPagoComponent } from './components/modal-pago/modal-pago.component
 import { ValidarPagoComponent } from './pages/validar-pago/validar-pago.component';
 import { TablaValidarPagosComponent } from './components/tabla-validar-pagos/tabla-validar-pagos.component';
 import { ModalEntregaComponent } from './components/modal-entrega/modal-entrega.component';
+import { AlmacenesComponent } from './pages/almacenes/almacenes.component';
+import { SucursalesComponent } from './pages/sucursales/sucursales.component';
+import { ProvedoresComponent } from './pages/provedores/provedores.component';
+import { ModelosComponent } from './pages/modelos/modelos.component';
+import { MarcasComponent } from './pages/marcas/marcas.component';
+import { PlataformasComponent } from './pages/plataformas/plataformas.component';
+import { ProductosComponent } from './pages/productos/productos.component';
+import { TablaAlmacenesComponent } from './components/tabla-almacenes/tabla-almacenes.component';
+import { TablaSucursalesComponent } from './components/tabla-sucursales/tabla-sucursales.component';
+import { TablaProvedoresComponent } from './components/tabla-provedores/tabla-provedores.component';
+import { TablaMarcasComponent } from './components/tabla-marcas/tabla-marcas.component';
+import { TablaModelosComponent } from './components/tabla-modelos/tabla-modelos.component';
+import { TablaPlataformasComponent } from './components/tabla-plataformas/tabla-plataformas.component';
+import { TablaProductosComponent } from './components/tabla-productos/tabla-productos.component';
+import { AddAlmacenesComponent } from './pages/add-almacenes/add-almacenes.component';
+import { AddSucursalesComponent } from './pages/add-sucursales/add-sucursales.component';
+import { AddProvedoresComponent } from './pages/add-provedores/add-provedores.component';
+import { AddMarcasComponent } from './pages/add-marcas/add-marcas.component';
+import { AddModelosComponent } from './pages/add-modelos/add-modelos.component';
+import { AddPlataformasComponent } from './pages/add-plataformas/add-plataformas.component';
+import { AddProductosComponent } from './pages/add-productos/add-productos.component';
+import { EditAlmacenesComponent } from './pages/edit-almacenes/edit-almacenes.component';
+import { EditSucursalesComponent } from './pages/edit-sucursales/edit-sucursales.component';
+import { EditProvedoresComponent } from './pages/edit-provedores/edit-provedores.component';
+import { EditMarcasComponent } from './pages/edit-marcas/edit-marcas.component';
+import { EditModelosComponent } from './pages/edit-modelos/edit-modelos.component';
+import { EditPlataformasComponent } from './pages/edit-plataformas/edit-plataformas.component';
+import { EditProductosComponent } from './pages/edit-productos/edit-productos.component';
 
 
 @NgModule({
@@ -129,6 +157,34 @@ import { ModalEntregaComponent } from './components/modal-entrega/modal-entrega.
     ValidarPagoComponent,
     TablaValidarPagosComponent,
     ModalEntregaComponent,
+    AlmacenesComponent,
+    SucursalesComponent,
+    ProvedoresComponent,
+    ModelosComponent,
+    MarcasComponent,
+    PlataformasComponent,
+    ProductosComponent,
+    TablaAlmacenesComponent,
+    TablaSucursalesComponent,
+    TablaProvedoresComponent,
+    TablaMarcasComponent,
+    TablaModelosComponent,
+    TablaPlataformasComponent,
+    TablaProductosComponent,
+    AddAlmacenesComponent,
+    AddSucursalesComponent,
+    AddProvedoresComponent,
+    AddMarcasComponent,
+    AddModelosComponent,
+    AddPlataformasComponent,
+    AddProductosComponent,
+    EditAlmacenesComponent,
+    EditSucursalesComponent,
+    EditProvedoresComponent,
+    EditMarcasComponent,
+    EditModelosComponent,
+    EditPlataformasComponent,
+    EditProductosComponent,
   ],
 
   imports: [

@@ -1,0 +1,95 @@
+<section id="sucursales">
+    <div class="structur"> 
+        <div>
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Sucursal"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['add-sucursales'] } }]">
+                <li class="fas fa-user-plus"></li>
+            </a>
+        </div>
+        <div>
+            <mat-form-field appearance="outline" class="mt-4 mx-4">
+                <form [formGroup]="identifier">
+                    <input matInput (keyup.enter)="_findClient()" placeholder="Buscar" formControlName="sucursal"
+                        #input>
+                </form>
+            </mat-form-field>
+
+            <button (click)="load()" mat-raised-button *ngIf="statusFilter">
+                <i class="fas fa-broom broom"></i>
+                Limpiar filtro
+            </button>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+
+        <ng-container matColumnDef="zona">
+            <th mat-header-cell *matHeaderCellDef> Zona </th>
+            <td mat-cell *matCellDef="let sucursal"> {{sucursal.localidad}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="sucursal">
+            <th mat-header-cell *matHeaderCellDef> Sucursal </th>
+            <td mat-cell *matCellDef="let sucursal"> {{sucursal.occ}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="estatus">
+            <th mat-header-cell *matHeaderCellDef> Estatus </th>
+            <td mat-cell *matCellDef="let sucursal">
+                <div class={{statusColor(sucursal.status)}}>
+                    {{sucursal.status}}
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones</th>
+            <td mat-cell *matCellDef="let sucursal">
+                <button #tooltip="matTooltip" matTooltip="Editar Sucursal" matTooltipHideDelay="10" mat-icon-button
+                    (click)="_editSucursal(sucursal)" class="container_icon">
+                    <i class="fas fa-user-edit activate_edit"></i>
+                </button>
+
+                <button #tooltip="matTooltip" matTooltip="Desafiliar" matTooltipHideDelay="10"
+                    *ngIf="sucursal.status == 'ACTIVO'" mat-icon-button class="container_icon"
+                    (click)="saveDesativate(sucursal)">
+                    <i class="fas fa-ban activate_ban"></i>
+                </button>
+
+                <button #tooltip="matTooltip" matTooltip="Activar" matTooltipHideDelay="10"
+                    *ngIf="sucursal.status == 'NO ACTIVO'" mat-icon-button class="container_icon"
+                    (click)="saveActive(sucursal)">
+                    <i class="fas fa-check-square activate_check"></i>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let sucursal; columns: displayedColumns;">
+
+        </tr>
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="10">No se encontro ese cliente porfavor Ingrese los datos correctos</td>
+        </tr>
+    </table>
+</section>
+
+<mat-paginator [length]="resultsLength" [pageSize]="12" showFirstLastButtons></mat-paginator>
+
+<ng-template #loadingTable>
+    <div class="loading d-flex justify-content-center align-items-center p-4">
+        <button class="loading-btn" mat-raised-button *ngIf="loading">
+            <mat-spinner [diameter]="20"></mat-spinner>
+        </button>
+        <button class="loading-btn" *ngIf="error" (click)="load()" mat-raised-button>
+            <li class="fas fa-redo-alt"></li>
+        </button>
+    </div>
+</ng-template>

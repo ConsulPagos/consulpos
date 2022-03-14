@@ -1,5 +1,5 @@
 import { CategoriaMod } from '../models/categoria_mods';
-import { Categoria } from '../models/categoria';
+import { CategoriaInterface } from '../models/categoria';
 import { Ciudades } from '../models/ciudades';
 import { ContribuyenteInterface } from '../models/contribuyente';
 import { EstadoInterface } from '../models/estado';
@@ -33,7 +33,7 @@ export interface VerifyResponse {
     bancos: BancoInterface[];
     ciudades: Ciudades[];
     operadoras: OperadoraInterface[];
-    categorias: Categoria[];
+    categorias: CategoriaInterface[];
     actividades_comerciales: ActividadComercialInterface[];
     planes: PlanInterface[];
     modelos: ModeloInterface[];

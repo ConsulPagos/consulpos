@@ -22,7 +22,7 @@
                             <h6>Documento RIF</h6>
                             <mat-form-field appearance="outline" class="container_box">
                                 <mat-label>Tipo</mat-label>
-                                <mat-select disableRipple formControlName="tipo_doc" (selectionChange)="resetStatus()">
+                                <mat-select disableRipple formControlName="tipo_doc" (selectionChange)="getDoc($event.value)">
                                     <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.id}}>
                                         {{t_doc.t_doc}}
                                     </mat-option>
@@ -39,7 +39,8 @@
                             <div class="container_error_sell"
                                 *ngIf="identity.get('rif').errors && identity.get('rif').hasError('existe')">
                                 <span class="error">El cliente ya existe.</span>
-                                <button class="btn_space" mat-button color='accent'>
+                                <button class="btn_space" mat-button color='accent' 
+                                [routerLink]="['/admin/app',{ outlets: { adr: ['add-venta'] } }]">
                                     <li class="fa fa-cart-plus icon_sell"></li><span>Crear Venta</span>
                                 </button>
                             </div>

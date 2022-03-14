@@ -9,8 +9,9 @@ export const environment = {
   puerto_usuarios: 9001,
   puerto_ventas: 9003,
   puerto_pagos: 9004,
-  puerto_bancario: 9006,
   puerto_clientes: 9005,
+  puerto_bancario: 9006,
+  puerto_inventario: 9007,
   divider: ":",
 
   J_KEY: 'vsPlT8h1qZhMh3gxT0vi4htLMuLvrRRQ',

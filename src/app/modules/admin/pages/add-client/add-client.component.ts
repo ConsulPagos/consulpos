@@ -338,6 +338,11 @@ export class AddClientComponent implements OnInit {
     this.parroquias = JSON.parse(this.storage.get(constant.PARROQUIAS)).parroquias.filter(c => c.id_municipio == id)
   }
 
+  getDoc(id: any): void {
+    this.search_client = true;
+    // this.tipos_clientes = JSON.parse(this.storage.get(constant.T_CLIENTES)).t_clientes.filter(c => c.letra == id)
+  }
+
   getMunicipio(id: any): void {
     this.parroquias = JSON.parse(this.storage.get(constant.PARROQUIAS)).parroquias.filter(c => c.id_municipio == id)
   }

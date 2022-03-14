@@ -11,16 +11,16 @@ export class ToasterService {
 
   success(msg) {
     this._snackBar.open(msg, null, {
-      duration: 2000,
+      duration: 5000,
       horizontalPosition: 'right',
       verticalPosition:'bottom',
-      panelClass: ['ok-snackbar']
+      panelClass: ['ok-snackbar'],
     })
   }
 
   error(msg) {
     this._snackBar.open(msg, null, {
-      duration: 3000,
+      duration: 5000,
       horizontalPosition: 'right',
       verticalPosition:'bottom',
       panelClass: ['error-snackbar']
@@ -29,7 +29,7 @@ export class ToasterService {
 
   progress(msg) {
     this._snackBar.open(msg, null, {
-      duration: 3000,
+      duration: 5000,
       horizontalPosition: 'right',
       verticalPosition:'bottom',
       panelClass: ['progress-snackbar']

@@ -1,15 +1,23 @@
 <div>
-  <div>
-    <mat-form-field appearance="outline" class="mt-4 mx-4">
-      <form [formGroup]="identity">
-        <input matInput (keyup.enter)="_findUser()" placeholder="Buscar" formControlName="cedula" maxlength="9">
-      </form>
-    </mat-form-field>
+  <div class="structur">
+    <div>
+      <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Sucursal"
+        [routerLink]="['/admin/app',{ outlets: { adr: ['add-sucursales'] } }]">
+        <li class="fas fa-user-plus"></li>
+      </a>
+    </div>
+    <div>
+      <mat-form-field appearance="outline" class="mt-4 mx-4">
+        <form [formGroup]="identity">
+          <input matInput (keyup.enter)="_findUser()" placeholder="Buscar" formControlName="sucursal" #input>
+        </form>
+      </mat-form-field>
 
-    <button (click)="load()" mat-raised-button *ngIf="statusFilter">
-      <i class="fas fa-broom broom"></i>
-      Limpiar filtro
-    </button>
+      <button (click)="load()" mat-raised-button *ngIf="statusFilter">
+        <i class="fas fa-broom broom"></i>
+        Limpiar filtro
+      </button>
+    </div>
   </div>
 
   <mat-divider></mat-divider>

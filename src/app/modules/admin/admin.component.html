@@ -5,27 +5,21 @@
 
   <mat-sidenav class="sidenav" [(opened)]="opened" mode="side" opened #drawer>
     <app-admin-sidenav (Toggle)='drawer.toggle()'>
-
     </app-admin-sidenav>
   </mat-sidenav>
 
   <mat-sidenav-content>
-
     <app-admin-navbar></app-admin-navbar>
     <div class="pt-3">
-
       <router-outlet name='adr'></router-outlet>
-
-      <!--  <div class="brand" [class.opened]="opened">
-        <img src="../../../../../assets/images/consulpagos.png" alt="Consulpagos" style="width: auto; height: 50px;">
-      </div>
-
       <button mat-icon-button aria-label="Example icon button with a home icon" (click)='drawer.toggle()'
         class="btn_toggle">
         <i class="fas fa-bars"></i>
-      </button> -->
+      </button>
     </div>
   </mat-sidenav-content>
+
+
 
 </mat-sidenav-container>
 
@@ -34,9 +28,9 @@
 <ng-template #loader>
   <div class="loader" *ngIf="loading">
     <app-loader></app-loader>
-    <!--  <h6>
+    <h6>
       <span class="animated">
       </span>
-    </h6> -->
+    </h6>
   </div>
 </ng-template>

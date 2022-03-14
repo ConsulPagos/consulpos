@@ -1,17 +1,23 @@
 <div>
-  <!-- *ngIf="!loading && !error; else loadingTable" -->
-  <div>
-    <mat-form-field appearance="outline" class="mt-4 mx-4">
-      <form [formGroup]="identity">
-        <input matInput (keyup.enter)="_findClient()" placeholder="Buscar" formControlName="rif" #input>
-      </form>
-    </mat-form-field>
+  <div class="structur">
+    <div>
+      <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Cliente"
+        [routerLink]="['/admin/app',{ outlets: { adr: ['add-client'] } }]">
+        <li class="fas fa-user-plus"></li>
+      </a>
+    </div>
+    <div>
+      <mat-form-field appearance="outline" class="mt-4 mx-4">
+        <form [formGroup]="identity">
+          <input matInput (keyup.enter)="_findClient()" placeholder="Buscar" formControlName="sucursal" #input>
+        </form>
+      </mat-form-field>
 
-    <button (click)="load()" mat-raised-button *ngIf="statusFilter">
-      <i class="fas fa-broom broom"></i>
-      Limpiar filtro
-    </button>
-
+      <button (click)="load()" mat-raised-button *ngIf="statusFilter">
+        <i class="fas fa-broom broom"></i>
+        Limpiar filtro
+      </button>
+    </div>
   </div>
 
   <mat-divider></mat-divider>
@@ -78,10 +84,15 @@
         </button>
 
       </td>
+
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let client; columns: displayedColumns;">
+
+    </tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="10">No se encontro ese cliente porfavor Ingrese los datos correctos</td>
     </tr>
   </table>
 </div>
