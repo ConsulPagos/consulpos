@@ -47,7 +47,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
   showclientResponse: ShowClientsResponse;
   statusFilter = false;
 
-  PAGESIZE = 12
+  PAGESIZE = 10
 
   constructor(
     private session: SesionService,
@@ -57,13 +57,12 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
     private modal: ModalService,
     private toaster: ToasterService,
     private router: Router,
-  ) 
-  {
+  ) {
     this.dataSource = new MatTableDataSource(this.clientes);
   }
 
   identity = new FormGroup({
-    rif: new FormControl(''),
+    rif: new FormControl('', [Validators.minLength(4), Validators.maxLength(30)])
   });
 
   ngAfterViewInit() {
@@ -75,6 +74,12 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
 
+  }
+
+  filtro() {
+    if (this.identity.valid) {
+      this._findClient()
+    }
   }
 
   applyFilter(event: Event) {
@@ -97,8 +102,13 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
             correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
             scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
             init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
-            limit_row: this.crypto.encryptJson(((this.paginator.pageIndex + 1) * this.PAGESIZE).toString()),
+            limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
           }))
+          // console.log(data)
+          // console.log('init_row')
+          // console.log(this.paginator.pageIndex * this.PAGESIZE)
+          // console.log('limit_row')
+          // console.log((this.paginator.pageIndex + 1) * this.PAGESIZE)
           return this.cliente.doAll(`${this.session.getDeviceId()};${data}`)
         }),
         map(data => {
@@ -107,7 +117,6 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
           // console.log("JSON: " + data)
           // console.log("string: " + this.crypto.decryptString(data))
           this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-          // //this.crypto.setKeys(this.showclientResponse.keyS, this.showclientResponse.ivJ, this.showclientResponse.keyJ, this.showclientResponse.ivS)
           this.resultsLength = parseInt(this.showclientResponse.total_row);
           // console.log(this.showclientResponse)
           return this.showclientResponse.clientes;
@@ -225,16 +234,16 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       status_desc: this.crypto.encryptJson('ACTIVO'),
       filter: this.crypto.encryptJson(filter),
-
     }))
     this.isLoadingResults = true;
     this.cliente.doFind(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      // console.log(this.crypto.decryptString(res))
       this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
       this.toaster.success(this.showclientResponse.M)
       this.clientes = this.showclientResponse.clientes
       this.dataSource = new MatTableDataSource(this.clientes);
+      this.resultsLength = parseInt(this.showclientResponse.total_row);
+      this.paginator.pageIndex = 0;
     })
   }
 

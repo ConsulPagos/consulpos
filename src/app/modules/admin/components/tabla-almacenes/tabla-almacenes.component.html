@@ -1,18 +1,24 @@
 <div>
-    <div>
-        <mat-form-field appearance="outline" class="mt-4 mx-4">
+    <div class="structur">
+        <div>
+                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Sucursal"  
+                [routerLink]="['/admin/app',{ outlets: { adr: ['add-almacenes'] } }]" >
+                    <li class="fas fa-user-plus"></li>
+                </a>
+        </div>
+        <div>
+          <mat-form-field appearance="outline" class="mt-4 mx-4">
             <form [formGroup]="identifier">
-                <input matInput (keyup.enter)="_findClient()" placeholder="Buscar" formControlName="almacen" #input>
+              <input matInput (keyup.enter)="_findClient()" placeholder="Buscar" formControlName="rif" #input>
             </form>
-        </mat-form-field>
-
-        <button (click)="load()" mat-raised-button *ngIf="statusFilter">
+          </mat-form-field>
+    
+          <button (click)="load()" mat-raised-button *ngIf="statusFilter">
             <i class="fas fa-broom broom"></i>
             Limpiar filtro
-        </button>
-
-    </div>
-
+          </button>
+        </div>
+      </div>
     <mat-divider></mat-divider>
 
 
@@ -78,7 +84,7 @@
 
         </tr>
         <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="10">No se encontro ese cliente porfavor Ingrese los datos correctos</td>
+            <td class="mat-cell" colspan="10">No se encontró información para su consulta</td>
         </tr>
     </table>
 </div>

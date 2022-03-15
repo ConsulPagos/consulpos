@@ -24,10 +24,12 @@
                     Cliente:
                     <span class="text_rif">{{editClient.t_cliente}}</span>
                 </p>
-                <p class="text-tilte text-uppercase">
-                    Cedula:
-                    <span class="text_rif">{{editClient.c_natural.c_doc}}</span>
-                </p>
+                <div *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'">
+                    <p class="text-tilte text-uppercase">
+                        Cedula:
+                        <span class="text_rif">{{editClient.c_natural.c_doc}}</span>
+                    </p>
+                </div>
             </div>
 
             <mat-vertical-stepper linear #stepper>
@@ -75,7 +77,7 @@
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Fecha de Nacimiento</mat-label>
-                                <input matInput  type="date" formControlName="fecha_nacimiento">
+                                <input matInput type="date" formControlName="fecha_nacimiento">
                                 <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker> -->
                             </mat-form-field>
@@ -85,7 +87,6 @@
                                 <input matInput formControlName="profesion" placeholder="Comerciante" type="text"
                                     maxlength="255">
                             </mat-form-field>
-
                         </form>
 
                         <div>
@@ -224,28 +225,26 @@
                             Anterior
                         </button>
 
-                        <div class="btn_margin">
+                        <div class="btn_margin" *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'">
                             <app-action-btn (onClick)="save()" [loading]="loading" [text]="'Actualizar'"
                                 [isDisabled]="client.invalid || loading">
                             </app-action-btn>
                         </div>
 
-                        <button class="stepBtn btn_margin" *ngIf="getTipoCliente()=='J'" mat-raised-button matStepperNext
-                            [disabled]="client.invalid">
+                        <button class="stepBtn btn_margin" *ngIf="getTipoCliente()=='J'" mat-raised-button
+                            matStepperNext [disabled]="client.invalid">
                             Siguiente
                         </button>
                     </div>
                 </mat-step>
 
                 <div *ngIf="getTipoCliente()=='J'">
-                    <mat-step [stepControl]="agents">
+                    <mat-step [stepControl]="agent">
                         <ng-template matStepLabel>Datos del Representante Legal</ng-template>
                         <h6></h6>
                         <ng-container>
                             <div class="container_agent">
-                                <form [formGroup]="agents[i]" class="formulario"
-                                    *ngFor="let format of formats; let i=index">
-
+                                <form [formGroup]="agent" class="formulario">
                                     <mat-form-field appearance="outline" class="container_box_space">
                                         <mat-label>Primer Nombre</mat-label>
                                         <input matInput formControlName="p_nombre_representante" placeholder="123456789"
@@ -274,7 +273,7 @@
                                         <mat-form-field appearance="outline" class="container_box">
                                             <mat-label>Tipo</mat-label>
                                             <mat-select disableRipple formControlName="tipo_doc_rep">
-                                                <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
+                                                <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.id}}>
                                                     {{t_doc.t_doc}} </mat-option>
                                             </mat-select>
                                         </mat-form-field>
@@ -303,9 +302,9 @@
                                         <input matInput formControlName="email_repre" placeholder="123456789"
                                             type="text">
                                     </mat-form-field>
-
                                 </form>
-                                <div>
+
+                                <!-- <div>
                                     <button class="btn_form_add_agent" mat-icon-button color="primary"
                                         aria-label="Example icon button with a menu icon" (click)="add_agent()"
                                         *ngIf="(formats.length === 1 ||  formats.length === 0)">
@@ -319,15 +318,19 @@
                                         <i class="fas fa-user-minus icon_sell"></i>
                                         Eliminar un Representante Legal
                                     </button>
-                                </div>
-
+                                </div> -->
                             </div>
 
-                            <div>
-                                <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                                <app-action-btn (onClick)="save()" [loading]="loading" [text]="'Actualizar'"
-                                    [isDisabled]="client.invalid || loading">
-                                </app-action-btn>
+                            <div class="container_btn">
+                                <button class="stepBtn btn_margin" mat-raised-button matStepperPrevious>
+                                    Anterior
+                                </button>
+
+                                <div class="btn_margin">
+                                    <app-action-btn (onClick)="save()" [loading]="loading" [text]="'Actualizar'"
+                                        [isDisabled]="client.invalid || loading">
+                                    </app-action-btn>
+                                </div>
                             </div>
                         </ng-container>
                     </mat-step>

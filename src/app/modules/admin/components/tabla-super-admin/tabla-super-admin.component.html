@@ -1,8 +1,8 @@
 <div>
   <div class="structur">
     <div>
-      <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Sucursal"
-        [routerLink]="['/admin/app',{ outlets: { adr: ['add-sucursales'] } }]">
+      <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Usuario"
+        [routerLink]="['/admin/app',{ outlets: { adr: ['nuevo-admin'] } }]">
         <li class="fas fa-user-plus"></li>
       </a>
     </div>
@@ -66,7 +66,7 @@
     <ng-container matColumnDef="Acciones">
       <th mat-header-cell *matHeaderCellDef> Acciones</th>
       <td mat-cell *matCellDef="let user">
-        <button #tooltip="matTooltip" matTooltip="Ver Ficha" matTooltipHideDelay="10" mat-icon-button
+        <button #tooltip="matTooltip" matTooltip="Ver Usuario" matTooltipHideDelay="10" mat-icon-button
           (click)="_showUser(user)" class="container_icon">
           <i class="fas fa-id-card activate_show"></i>
         </button>

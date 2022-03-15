@@ -74,28 +74,28 @@ p {
     color:black;
   }
   
-  .animated:before {
-    content: "cool.";
-    animation: topToBottom 5s infinite 0s;
-  }
+  // .animated:before {
+  //   content: "cool.";
+  //   animation: topToBottom 5s infinite 0s;
+  // }
   
-  @keyframes topToBottom {
-    0% {
-      content: "Calculando ventas";
-    }
-    25% {
-      content: "Verificando datos.";
-    }
-    50% {
-      content: "Procesando archivos";
-    }
-    75% {
-      content: "Creando tablas";
-    }
-    100% {
-      content: "Aplicando estilos.";
-    }
-  }
+  // @keyframes topToBottom {
+  //   0% {
+  //     content: "Calculando ventas";
+  //   }
+  //   25% {
+  //     content: "Verificando datos.";
+  //   }
+  //   50% {
+  //     content: "Procesando archivos";
+  //   }
+  //   75% {
+  //     content: "Creando tablas";
+  //   }
+  //   100% {
+  //     content: "Aplicando estilos.";
+  //   }
+  // }
 
 
  .opened{

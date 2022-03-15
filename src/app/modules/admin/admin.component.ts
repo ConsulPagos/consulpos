@@ -70,6 +70,8 @@ export class AdminComponent implements OnInit {
       this.storage.store(constant.T_DOCS, JSON.stringify(verifyResponse.t_docs))
       this.storage.store(constant.ACTIVIDAD_COMERCIAL, JSON.stringify(verifyResponse.actividades_comerciales))
 
+      this.storage.store(constant.PROFESIONES, JSON.stringify(verifyResponse.profesiones))
+
       //this.storage.store(constant.OPERADORAS, JSON.stringify(verifyResponse.operadoras))
       this.storage.store(constant.MODELOS, JSON.stringify(verifyResponse.modelos))
       this.storage.store(constant.PLANES, JSON.stringify(verifyResponse.planes))

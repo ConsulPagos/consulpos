@@ -215,6 +215,8 @@ export class AddVentaComponent implements OnInit {
   }
 
 
+
+
   submit() {
     console.log(this.formats_buy)
 

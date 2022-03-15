@@ -6,6 +6,8 @@ export const constant = {
     R4:"4",
     USER:"user",
 
+    PROFESIONES:"profesiones",
+
 
     T_DOCS: 't_doc',
     T_DOC_ID: 't_doc_id',

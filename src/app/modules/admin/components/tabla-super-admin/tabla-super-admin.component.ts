@@ -100,7 +100,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
             correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
             scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
             init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
-            limit_row: this.crypto.encryptJson(((this.paginator.pageIndex + 1) * this.PAGESIZE).toString()),
+            limit_row: this.crypto.encryptJson(( this.PAGESIZE).toString()),
           }))
           return this.usuario.doAllUser(`${this.session.getDeviceId()};${data}`)
         }),

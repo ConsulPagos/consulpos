@@ -15,43 +15,11 @@
         </a>
         <!-- ************************************************************************************************** -->
 
-        <!-- ************************************************************************************************** -->
-
-        <!-- Operaciones -->
-        <a class="menu_side" mat-button [matMenuTriggerFor]="operaciones">
-            <li class="fa fa-file-alt icon_side"></li>
-            <span class="text_side">Operaciones</span>
-        </a>
-
-        <mat-menu #operaciones="matMenu">
-
-
-            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['operaciones','asignacion'] } }]"
-                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-exchange-alt"></li> <span class="text_side">Asignacion</span>
-            </a>
-
-            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['operaciones','parametrizacion'] } }]"
-                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-university"></li> <span class="text_side">Parametrizacion</span>
-            </a>
-
-            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['operaciones','configuracion'] } }]"
-                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-book-dead"></li> <span class="text_side">Configuracion</span>
-            </a>
-
-            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['operaciones','entregar'] } }]"
-                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-book-dead"></li> <span class="text_side">Entregar Equipo</span>
-            </a>
-        </mat-menu>
-        <!-- ************************************************************************************************** -->
-
+        
         <!-- Tipos de solicitud -->
         <a class="menu_side" mat-button [matMenuTriggerFor]="solicitud">
             <li class="fa fa-file-alt icon_side"></li>
-            <span class="text_side">Tipo de Solicitud</span>
+            <span class="text_side">Ventas y Solicitudes</span>
         </a>
 
         <mat-menu #solicitud="matMenu">
@@ -87,6 +55,40 @@
                 <li class="fa fa-cart-plus"></li>
                 <span class="text_side">Ventas Consulpos</span>
             </a> -->
+        </mat-menu>
+        <!-- ************************************************************************************************** -->
+
+
+        <!-- ************************************************************************************************** -->
+
+        <!-- Operaciones -->
+        <a class="menu_side" mat-button [matMenuTriggerFor]="operaciones">
+            <li class="fa fa-file-alt icon_side"></li>
+            <span class="text_side">Operaciones</span>
+        </a>
+
+        <mat-menu #operaciones="matMenu">
+
+
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['operaciones','asignacion'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-exchange-alt"></li> <span class="text_side">Asignacion</span>
+            </a>
+
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['operaciones','parametrizacion'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-university"></li> <span class="text_side">Parametrizacion</span>
+            </a>
+
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['operaciones','configuracion'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-book-dead"></li> <span class="text_side">Configuracion</span>
+            </a>
+
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['operaciones','entregar'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-book-dead"></li> <span class="text_side">Entregar Equipo</span>
+            </a>
         </mat-menu>
         <!-- ************************************************************************************************** -->
 

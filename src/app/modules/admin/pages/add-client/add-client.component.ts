@@ -42,6 +42,7 @@ export class AddClientComponent implements OnInit {
   search_client: boolean = true;
   formats: RepresentanteInterface[] = [];
   contribuyentes: ContribuyenteInterface[];
+  profesiones: any[];
   estados: EstadoInterface[];
   municipios: MunicipioInterface[];
   parroquias: ParroquiaInterface[];
@@ -171,6 +172,17 @@ export class AddClientComponent implements OnInit {
     return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
   }
 
+  onlyCaracteres(event) {
+    // console.log(event.charCode)
+    return (event.charCode == 8 || event.charCode == 0) ? null :
+      event.charCode >= 48 && event.charCode <= 57 ||
+      event.charCode >= 64 && event.charCode <= 90 ||
+      event.charCode >= 97 && event.charCode <= 122 ||
+      event.charCode >= 45 && event.charCode <= 46 ||
+      event.charCode == 95 || event.charCode == 241 ||
+      event.charCode == 209;
+  }
+
   getTipoCliente(): string {
     if (this.client_type.valid) {
       return this.tipos_clientes.filter(t => t.id == this.client_type.get('tipo_cliente').value)[0].t_c_letra
@@ -280,7 +292,7 @@ export class AddClientComponent implements OnInit {
             c_doc: this.data_vr.get('cedula').value,
             id_genero: this.data_vr.get('genero').value,
             fecha_nacimiento: this.data_vr.get('fecha_nacimiento').value,
-            profesion: this.data_vr.get('profesion').value,
+            id_profesion: this.data_vr.get('profesion').value,
           }
         )),
         if_natural: this.crypto.encryptJson("true"),
@@ -321,6 +333,8 @@ export class AddClientComponent implements OnInit {
     this.tipo_documentos = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs
     this.actividades_comerciales = JSON.parse(this.storage.get(constant.ACTIVIDAD_COMERCIAL)).actividades_comerciales
     this.generos = JSON.parse(this.storage.get(constant.GENEROS)).generos
+    this.profesiones = JSON.parse(this.storage.get(constant.PROFESIONES)).profesiones
+    
   }
 
   getError() {

@@ -63,8 +63,10 @@ export class EditClientComponent implements OnInit {
     private toaster: ToasterService,
   ) {
 
+
     if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.editClient) {
       this.editClient = this.router.getCurrentNavigation().extras.state.editClient as ClienteRequestInterface;
+      console.log(this.editClient)
     } else {
       this.router.navigateByUrl("/admin/app/(adr:clientela)");
     }
@@ -108,15 +110,15 @@ export class EditClientComponent implements OnInit {
     });
 
     this.agent = new FormGroup({
-      p_nombre_representante: new FormControl(this.editClient, [Validators.required]),
-      s_nombre_representante: new FormControl(this.editClient, [Validators.required]),
-      p_apellido_representante: new FormControl(this.editClient, [Validators.required]),
-      s_apellido_representante: new FormControl(this.editClient, [Validators.required]),
-      cedula_representante: new FormControl(this.editClient, [Validators.required]),
+      p_nombre_representante: new FormControl(this.editClient.legal.l_p_nombre, [Validators.required]),
+      s_nombre_representante: new FormControl(this.editClient.legal.l_s_nombre, [Validators.required]),
+      p_apellido_representante: new FormControl(this.editClient.legal.l_p_apellido, [Validators.required]),
+      s_apellido_representante: new FormControl(this.editClient.legal.l_s_apellido, [Validators.required]),
+      cedula_representante: new FormControl(this.editClient.legal.r_doc, [Validators.required]),
       telefono_local_repre: new FormControl(this.editClient, [Validators.required]),
       telefono_movil_repre: new FormControl(this.editClient, [Validators.required]),
-      email_repre: new FormControl(this.editClient, [Validators.required]),
-      tipo_doc_rep: new FormControl(this.editClient, [Validators.required]),
+      email_repre: new FormControl(this.editClient.legal.r_email, [Validators.required]),
+      tipo_doc_rep: new FormControl(this.editClient.legal.r_t_doc_id, [Validators.required]),
     });
 
   }
@@ -147,22 +149,22 @@ export class EditClientComponent implements OnInit {
   });
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  add_agent() {
-    var newFormat: RepresentanteInterface = {};
-    var agente = new FormGroup({
-      p_nombre_representante: new FormControl('', [Validators.required]),
-      s_nombre_representante: new FormControl('', [Validators.required]),
-      p_apellido_representante: new FormControl('', [Validators.required]),
-      s_apellido_representante: new FormControl('', [Validators.required]),
-      cedula_representante: new FormControl('', [Validators.required]),
-      telefono_local_repre: new FormControl('', [Validators.required]),
-      telefono_movil_repre: new FormControl('', [Validators.required]),
-      email_repre: new FormControl('', [Validators.required]),
-      tipo_doc_rep: new FormControl('', [Validators.required]),
-    });
-    this.agents.push(agente);
-    this.formats.push(newFormat);
-  }
+  // add_agent() {
+  //   var newFormat: RepresentanteInterface = {};
+  //   var agente = new FormGroup({
+  //     p_nombre_representante: new FormControl('', [Validators.required]),
+  //     s_nombre_representante: new FormControl('', [Validators.required]),
+  //     p_apellido_representante: new FormControl('', [Validators.required]),
+  //     s_apellido_representante: new FormControl('', [Validators.required]),
+  //     cedula_representante: new FormControl('', [Validators.required]),
+  //     telefono_local_repre: new FormControl('', [Validators.required]),
+  //     telefono_movil_repre: new FormControl('', [Validators.required]),
+  //     email_repre: new FormControl('', [Validators.required]),
+  //     tipo_doc_rep: new FormControl('', [Validators.required]),
+  //   });
+  //   this.agents.push(agente);
+  //   this.formats.push(newFormat);
+  // }
 
   onlyNumberKey(event) {
     return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
@@ -174,10 +176,10 @@ export class EditClientComponent implements OnInit {
     } return null
   }
 
-  deleteAgent(index: number) {
-    this.formats.splice(index, 1);
-    this.agents.splice(index, 1);
-  }
+  // deleteAgent(index: number) {
+  //   this.formats.splice(index, 1);
+  //   this.agents.splice(index, 1);
+  // }
 
   submit() {
 
@@ -276,7 +278,7 @@ export class EditClientComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Editar Cliente')
-    this.add_agent()
+    // this.add_agent()
     this.estados = JSON.parse(this.storage.get(constant.ESTADOS)).estados
     this.contribuyentes = JSON.parse(this.storage.get(constant.CONTRIBUYENTES)).contribuyentes
     this.municipios = JSON.parse(this.storage.get(constant.MUNICIPIOS)).municipios

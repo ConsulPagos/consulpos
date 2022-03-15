@@ -5,11 +5,9 @@ import { ErrorResponse } from 'src/app/models/auth_response';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { UserInterface } from '../../../../models/user';
 import { SesionObject } from '../../../../models/sesion_response';
-
 import { SesionService } from '../../../../shared/services/sesion.service'
 import { CryptoService } from '../../../../shared/services/crypto.service'
 import { ToasterService } from 'src/app/shared/services/toaster.service';
-
 import { constant } from "../../../../shared/utils/constant";
 
 @Component({
@@ -18,9 +16,7 @@ import { constant } from "../../../../shared/utils/constant";
   styleUrls: ['./login.component.scss']
 })
 
-
 export class LoginComponent implements OnInit {
-
 
   constructor(private session: SesionService, private crypto: CryptoService, private fb: FormBuilder, private route: Router, private toaster: ToasterService, private storage: StorageService) { }
   authForm: FormGroup;
@@ -33,16 +29,23 @@ export class LoginComponent implements OnInit {
 
     this.authForm = this.fb.group(
       {
-        password: ["", [Validators.required, Validators.minLength(5)]],
+        password: ["", [Validators.required, Validators.minLength(6)]],
         email: ["", [Validators.required, Validators.email]]
       }
     );
 
     this.error = {};
-    // this.auth.error.subscribe(e => {
-    //   this.error = e;
-    //   this.loading = false;
-    // })
+  }
+
+  onlyCaracteres(event) {
+    // console.log(event.charCode)
+    return (event.charCode == 8 || event.charCode == 0) ? null :
+      event.charCode >= 48 && event.charCode <= 57 ||
+      event.charCode >= 64 && event.charCode <= 90 ||
+      event.charCode >= 97 && event.charCode <= 122 ||
+      event.charCode >= 45 && event.charCode <= 46 ||
+      event.charCode == 95 || event.charCode == 241 ||
+      event.charCode == 209;
   }
 
   login() {
@@ -59,11 +62,8 @@ export class LoginComponent implements OnInit {
     if (this.authForm.valid) {
 
       this.loading = true;
-
       this.session.doLogin(`${this.session.getDeviceId()};${data}`).toPromise().then(res => {
         var sesionResponse = new SesionObject(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-        // //this.crypto.setKeys(sesionResponse.keyS, sesionResponse.ivJ, sesionResponse.keyJ, sesionResponse.ivS)
-        console.log(sesionResponse)
         switch (sesionResponse.R) {
           case constant.R0:
             this.storage.store(constant.PERMISOS, JSON.stringify(sesionResponse.permisos))
@@ -87,10 +87,10 @@ export class LoginComponent implements OnInit {
     } else {
       if (this.authForm.get('email').errors) {
         if (this.authForm.get('email').errors.required) {
-          this.error.msg = 'Correo electronico es requerido'
+          this.error.msg = 'Correo electrónico es requerido'
           this.error.field = 'email'
         } else if (this.authForm.get('email').errors.email) {
-          this.error.msg = 'Introduzca un correo electronico valido'
+          this.error.msg = 'Introduzca un correo electrónico válido'
           this.error.field = 'email'
         }
       } else if (this.authForm.get('password').errors) {
@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
           this.error.msg = 'Contraseña es requerida';
           this.error.field = 'password';
         } else if (this.authForm.get('password').errors.minlength) {
-          this.error.msg = 'La contraseña debe tener una longitud mínima de 5 caracteres';
+          this.error.msg = 'La contraseña debe tener una longitud mínima de 6 caracteres';
           this.error.field = 'password';
         }
       }
