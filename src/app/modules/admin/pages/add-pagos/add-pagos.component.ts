@@ -66,6 +66,7 @@ export class AddPagosComponent implements OnInit {
     t_pago: new FormControl(null, [Validators.required]),
     monto: new FormControl('', [Validators.required]),
     descripcion: new FormControl(''),
+    fecha: new FormControl(''),
   });
 
   ngOnInit(): void {
@@ -81,6 +82,7 @@ export class AddPagosComponent implements OnInit {
       monto: new FormControl(null, [Validators.required]),
       descripcion: new FormControl(''),
       moneda: new FormControl(null),
+      fecha: new FormControl(''),
     });
     this.payments.push(pay);
     this.formats_payments.push(newFormat);
@@ -195,6 +197,7 @@ export class AddPagosComponent implements OnInit {
         validar: h.validar,
         monto: p.get('monto').value,
         descripcion: p.get('descripcion').value,
+        fecha_pago: p.get('fecha').value,
         caracteristicas: JSON.stringify(inputs),
       })
     })

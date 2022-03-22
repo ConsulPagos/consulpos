@@ -9,6 +9,10 @@
     </div> -->
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
+            <p class="title_mother text-uppercase">
+                Agregar Cliente
+            </p>
+
             <mat-vertical-stepper linear #stepper>
                 <ng-template matStepperIcon="edit">
                     <li class="fa fa-check"></li>
@@ -44,7 +48,7 @@
                                     <li class="fa fa-cart-plus icon_sell"></li><span>Crear Venta</span>
                                 </button>
                             </div>
-                            
+
                         </div>
                     </form>
                     <div *ngIf="!search_client">
@@ -106,7 +110,7 @@
                                 <mat-form-field appearance="outline" class="container_box">
                                     <mat-label>Tipo</mat-label>
                                     <mat-select disableRipple formControlName="c_t_doc_cedula">
-                                        <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.id}}>
+                                        <mat-option *ngFor="let t_doc of t_docs_representantes" value={{t_doc.id}}>
                                             {{t_doc.t_doc}}
                                         </mat-option>
                                     </mat-select>
@@ -292,15 +296,6 @@
                                 </textarea>
                                 </mat-form-field>
                             </div>
-
-                            <div class="direction">
-                                <mat-form-field class="container_box_direction" appearance="outline">
-                                    <mat-label>Localidad</mat-label>
-                                    <textarea matInput placeholder="Pasando Proteccion animal"
-                                        formControlName="localidad" type="text" maxlength="510" minlength="5">
-                                </textarea>
-                                </mat-form-field>
-                            </div>
                         </div>
 
                         <div>
@@ -402,7 +397,8 @@
                                     <mat-form-field appearance="outline">
                                         <mat-label>Correo Electrónico</mat-label>
                                         <input matInput formControlName="email_repre"
-                                            placeholder="ejemplo@consulpagos.com" type="email" (keypress)="onlyCaracteres($event)">
+                                            placeholder="ejemplo@consulpagos.com" type="email"
+                                            (keypress)="onlyCaracteres($event)">
                                     </mat-form-field>
 
                                     <!-- <div>
@@ -431,8 +427,7 @@
                             <div>
                                 <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
 
-                                <button class="stepBtn" mat-raised-button [disabled]="agents.invalid"
-                                    (click)="save()">
+                                <button class="stepBtn" mat-raised-button [disabled]="agents.invalid" (click)="save()">
                                     Finalizar
                                 </button>
                             </div>

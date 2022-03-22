@@ -98,6 +98,7 @@ import { EditMarcasComponent } from './pages/edit-marcas/edit-marcas.component';
 import { EditModelosComponent } from './pages/edit-modelos/edit-modelos.component';
 import { EditPlataformasComponent } from './pages/edit-plataformas/edit-plataformas.component';
 import { EditProductosComponent } from './pages/edit-productos/edit-productos.component';
+import { EquiposAsociadosComponent } from './components/equipos-asociados/equipos-asociados.component';
 
 
 @NgModule({
@@ -185,6 +186,7 @@ import { EditProductosComponent } from './pages/edit-productos/edit-productos.co
     EditModelosComponent,
     EditPlataformasComponent,
     EditProductosComponent,
+    EquiposAsociadosComponent,
   ],
 
   imports: [

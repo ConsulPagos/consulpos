@@ -151,8 +151,6 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
       this.ShowUserResponse = new ShowUsersDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
        //this.crypto.setKeys(this.ShowUserResponse.keyS, this.ShowUserResponse.ivJ, this.ShowUserResponse.keyJ, this.ShowUserResponse.ivS)
-      this.toaster.success(this.ShowUserResponse.M)
-
       this.usuarios = this.ShowUserResponse.usuarios
       this.dataSource = new MatTableDataSource(this.usuarios);
     })

@@ -225,7 +225,6 @@ export class TablaAlmacenesComponent implements OnInit {
       // console.log(this.crypto.decryptString(res))
       this.showAlmacenesResponse = new ShowAlmacenesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-      this.toaster.success(this.showAlmacenesResponse.M)
       this.almacenes = this.showAlmacenesResponse.almacenes
       this.dataSource = new MatTableDataSource(this.almacenes);
     })

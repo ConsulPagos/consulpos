@@ -229,7 +229,6 @@ export class TablaSucursalesComponent implements OnInit {
       // console.log(this.crypto.decryptString(res))
       this.showSucursalesResponse = new ShowSucursalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-      this.toaster.success(this.showSucursalesResponse.M)
       this.sucursales = this.showSucursalesResponse.sucursales
       this.dataSource = new MatTableDataSource(this.sucursales);
     })

@@ -1,16 +1,16 @@
 <h1 mat-dialog-title>
     <span class="field">
-        DIFERIR DEBITO
+        EXCLUIR DEBITO
     </span>
 </h1>
 <div mat-dialog-content class="mat-dialog-content">
-    <p class="bold">Monto a diferir:</p>
+    <p class="bold">Monto:</p>
     <p>{{montoADiferir() | currency}}</p>
-    <p class="bold">Seleccione el tipo de diferido a aplicar:</p>
+    <p class="bold">Seleccione concepto:</p>
 
   <form [formGroup]="form">
     <mat-form-field appearance="outline" class="container_box">
-        <mat-label>Tipo de diferido</mat-label>
+        <mat-label>Concepto</mat-label>
         <mat-select disableRipple formControlName="id_diferido">
             <mat-option *ngFor="let tipo of tipos" value={{tipo.id}}>
                 {{tipo.nombre}}

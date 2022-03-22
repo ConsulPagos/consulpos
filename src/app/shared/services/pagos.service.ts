@@ -11,7 +11,7 @@ export class PagosService {
   constructor(private http: HttpClient) { }
 
   doPaymentInput(data) {
-    var path = `/payment/paymentConstructor`;
+    var path = `/pay/paymentConstructor`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -20,7 +20,7 @@ export class PagosService {
   }
 
   doSavePayment(data) {
-    var path = `/payment/savePayment`;
+    var path = `/pay/savePayment`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -29,7 +29,7 @@ export class PagosService {
   }
 
   doPaymentInfo(data) {
-    var path = `/payment/paymentInfo`;
+    var path = `/pay/paymentInfo`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
@@ -38,7 +38,7 @@ export class PagosService {
   }
 
   doConfirmPayment(data) {
-    var path = `/payment/confirmPayment`;
+    var path = `/pay/confirmPayment`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');

@@ -41,8 +41,7 @@
                     <mat-step [stepControl]="client_type">
                         <form [formGroup]="data_vr">
                             <ng-template matStepLabel>Ingrese los datos personales</ng-template>
-
-                            <h6>Datos del Cliente</h6>
+                            <h6></h6>
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Primer Nombre</mat-label>
                                 <input matInput formControlName="primer_nombre" placeholder="ConsuPagos" type="text"
@@ -77,17 +76,35 @@
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Fecha de Nacimiento</mat-label>
-                                <input matInput type="date" formControlName="fecha_nacimiento">
-                                <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker> -->
+                                <input matInput [matDatepicker]="dp3" disabled [max]="currentYear"
+                                    formControlName="fecha_nacimiento">
+                                <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                                <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Profesión</mat-label>
-                                <input matInput formControlName="profesion" placeholder="Comerciante" type="text"
-                                    maxlength="255">
+                                <mat-select disableRipple formControlName="profesion">
+                                    <mat-option *ngFor="let profesion of profesiones" value={{profesion.id}}>
+                                        {{profesion.nombre}} </mat-option>
+                                </mat-select>
                             </mat-form-field>
                         </form>
+
+                        <div class="container_tlf">
+                            <div class="col-md-12 container_module">
+                                <label class="labels title_data">
+                                    Telefonos:
+                                </label>
+                                <div *ngFor="let telefono of editClient.telefonos"
+                                    class="phone_number text-capitalize">
+                                    {{telefono.identificador}}-{{telefono.telefono}}
+                                </div>
+                            </div>
+                            <button mat-raised-button (click)="openDialog()">
+                                Editar Teléfono
+                            </button>
+                        </div>
 
                         <div>
                             <button class="stepBtn" mat-raised-button matStepperNext
@@ -98,9 +115,9 @@
 
                 <mat-step [stepControl]="client">
                     <form [formGroup]="client" #l="ngForm">
-                        <ng-template matStepLabel>Ingresar los datos del cliente</ng-template>
+                        <ng-template matStepLabel>Datos del cliente</ng-template>
                         <div>
-                            <h6>Datos del Comercio</h6>
+                            <h6></h6>
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Razón Social</mat-label>
                                 <input matInput formControlName="razon_social" placeholder="ConsuPagos" type="text"
@@ -139,10 +156,9 @@
                         </div>
 
                         <div>
-                            <h6>Datos Geográficos</h6>
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Estado</mat-label>
-                                <mat-select disableRipple formControlName="estado">
+                                <mat-select disableRipple formControlName="estado" (selectionChange)="getEstado($event.value)">
                                     <mat-option *ngFor="let estado of estados" value={{estado.id}}>
                                         {{estado.estado}} </mat-option>
                                 </mat-select>
@@ -150,7 +166,7 @@
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Municipio</mat-label>
-                                <mat-select disableRipple formControlName="municipio">
+                                <mat-select disableRipple formControlName="municipio" (selectionChange)="getMunicipio($event.value)">
                                     <mat-option *ngFor="let municipio of municipios" value={{municipio.id}}>
                                         {{municipio.municipio}} </mat-option>
                                 </mat-select>
@@ -197,15 +213,6 @@
                                 </textarea>
                                 </mat-form-field>
                             </div>
-
-                            <div class="direction">
-                                <mat-form-field class="container_box_direction" appearance="outline">
-                                    <mat-label>Localidad</mat-label>
-                                    <textarea matInput placeholder="Pasando Proteccion animal"
-                                        formControlName="localidad" type="text" maxlength="510">
-                                </textarea>
-                                </mat-form-field>
-                            </div>
                         </div>
 
                         <div>
@@ -221,10 +228,6 @@
                     </form>
 
                     <div class="container_btn">
-                        <button class="stepBtn btn_margin" mat-raised-button matStepperPrevious>
-                            Anterior
-                        </button>
-
                         <div class="btn_margin" *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'">
                             <app-action-btn (onClick)="save()" [loading]="loading" [text]="'Actualizar'"
                                 [isDisabled]="client.invalid || loading">
@@ -288,19 +291,19 @@
                                     <mat-form-field appearance="outline" class="container_box_space">
                                         <mat-label>Teléfono Local</mat-label>
                                         <input matInput formControlName="telefono_local_repre" placeholder="123456789"
-                                            type="text">
+                                            type="text" maxlength="11" minlength="10">
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" class="container_box_space">
                                         <mat-label>Teléfono Móvil</mat-label>
                                         <input matInput formControlName="telefono_movil_repre" placeholder="123456789"
-                                            type="text">
+                                            type="text" maxlength="11" minlength="10">
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline">
                                         <mat-label>Correo Electrónico</mat-label>
                                         <input matInput formControlName="email_repre" placeholder="123456789"
-                                            type="text">
+                                            type="email">
                                     </mat-form-field>
                                 </form>
 

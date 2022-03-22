@@ -1,3 +1,9 @@
+.container {
+    padding: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 ::ng-deep .mat-tab-label {
     color: black;
     background-color: transparent;
@@ -17,15 +23,6 @@
     position: absolute;
     top: 8px;
     left: 20px;
-}
-
-.title_mother{
-    display: flex;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 20px;
-    padding-top: 0.25rem;
-    text-align: center;
 }
 
 .edit-btn {
@@ -51,33 +48,34 @@
     text-decoration: none;
     font-size: 22px;
     transition: 0.3s;
-    z-index: 99;
 }
 
 .nav-btn:hover {
     background-color: whitesmoke;
 }
 
-.container_input {
-    margin: 1rem;
+//////////////////////////******** FICHA CLIENTE ********/////////////////////////////
+
+.title_data {
+    font-weight: bold;
 }
 
-.container {
+label {
+    display: inline-block;
+    margin-bottom: 0 !important;
+}
+
+.container_module{
+    margin: .25rem;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+.container_items{
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    margin: 0;
 }
 
-.voucherpay{
-    text-align: center;
-}
-
-.voucherpay > img{
-    width: 250px;
-    height: auto;
-}
-
-.table-pay{
-    width: 100%;
-    text-align: center;
+.diferido{
+    color: blue;
 }

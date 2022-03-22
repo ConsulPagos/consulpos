@@ -25,6 +25,7 @@ import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { CeroValidator } from '../../../../shared/validators/cero.validator'
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-client',
@@ -43,6 +44,7 @@ export class AddClientComponent implements OnInit {
   formats: RepresentanteInterface[] = [];
   contribuyentes: ContribuyenteInterface[];
   profesiones: any[];
+  t_docs_representantes: any[];
   estados: EstadoInterface[];
   municipios: MunicipioInterface[];
   parroquias: ParroquiaInterface[];
@@ -66,12 +68,12 @@ export class AddClientComponent implements OnInit {
     private router: Router,
     private loader: LoaderService,
     private modal: ModalService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
 
     this.identity = this.fb.group({
       tipo_doc: ['', [Validators.required]],
-      rif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(11)]],
+      rif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(11), Validators.pattern("^[0-9]*$")]],
     },
       {
         validator: CeroValidator("rif")
@@ -108,7 +110,6 @@ export class AddClientComponent implements OnInit {
     codpostal: new FormControl('', [Validators.required]),
     act_comercial: new FormControl('', [Validators.required]),
     pto_referencia: new FormControl('', [Validators.required]),
-    localidad: new FormControl('', [Validators.required]),
   });
 
   data_vr = new FormGroup({
@@ -244,7 +245,7 @@ export class AddClientComponent implements OnInit {
       m_contacto_id: this.crypto.encryptJson(this.client.get('contacto').value),
       id_actividad_comercial: this.crypto.encryptJson(this.client.get('act_comercial').value),
       pto_ref: this.crypto.encryptJson(this.client.get('pto_referencia').value),
-      localidad: this.crypto.encryptJson(this.client.get('localidad').value),
+      localidad: this.crypto.encryptJson("hola"),
       telefonos: this.crypto.encryptJson(JSON.stringify([
         {
           number: this.client.get("phone_1").value.number,
@@ -293,6 +294,7 @@ export class AddClientComponent implements OnInit {
             id_genero: this.data_vr.get('genero').value,
             fecha_nacimiento: this.data_vr.get('fecha_nacimiento').value,
             id_profesion: this.data_vr.get('profesion').value,
+            profesion: this.data_vr.get('profesion').value,
           }
         )),
         if_natural: this.crypto.encryptJson("true"),
@@ -334,7 +336,7 @@ export class AddClientComponent implements OnInit {
     this.actividades_comerciales = JSON.parse(this.storage.get(constant.ACTIVIDAD_COMERCIAL)).actividades_comerciales
     this.generos = JSON.parse(this.storage.get(constant.GENEROS)).generos
     this.profesiones = JSON.parse(this.storage.get(constant.PROFESIONES)).profesiones
-    
+    this.t_docs_representantes = JSON.parse(this.storage.get(constant.T_DOCS_REPRESENTANTES)).t_docs
   }
 
   getError() {

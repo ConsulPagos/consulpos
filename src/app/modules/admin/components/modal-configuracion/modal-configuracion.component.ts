@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ConfiguracionResponse, ConfiguracionDecrypter } from 'src/app/models/configuracion_response';
-import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
+import { ConfigDecrypter } from 'src/app/models/config_response';
 import { OperadoraInterface } from 'src/app/models/operadora';
 import { DialogData } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
@@ -118,10 +118,10 @@ export class ModalConfiguracionComponent implements OnInit {
 
       Operaciones: this.crypto.encryptJson(JSON.stringify([
         {
-          cod_serial: serial,
-          terminal: this.configuracion.get('terminal').value,
-          afiliado: this.configuracion.get('afiliado').value,
-          modelo: modelo,
+          // cod_serial: serial,
+          // terminal: this.configuracion.get('terminal').value,
+          // afiliado: this.configuracion.get('afiliado').value,
+          // modelo: modelo,
           sim_serial: this.configuracion.get(inputs),
         }
       ]))
@@ -129,7 +129,9 @@ export class ModalConfiguracionComponent implements OnInit {
     console.log("verify")
     this.venta.doEndAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
-      this.default = new ConfiguracionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log('UBUIIIIII')
+      console.log(JSON.parse(this.crypto.decryptString(res)))
+      this.default = new ConfigDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default)
 
     })

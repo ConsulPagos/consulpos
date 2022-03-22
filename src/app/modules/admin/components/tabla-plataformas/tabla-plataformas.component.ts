@@ -230,7 +230,6 @@ export class TablaPlataformasComponent implements OnInit {
       // console.log(this.crypto.decryptString(res))
       this.showPlataformasResponse = new ShowPlataformasDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-      this.toaster.success(this.showPlataformasResponse.M)
       this.plataforma = this.showPlataformasResponse.plataformas
       this.dataSource = new MatTableDataSource(this.plataforma);
     })

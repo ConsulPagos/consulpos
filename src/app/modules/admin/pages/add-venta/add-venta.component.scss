@@ -25,6 +25,15 @@
     left: 20px;
 }
 
+.title_mother{
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 25px;
+    padding-top: 0.25rem;
+    text-align: center;
+}
+
 .edit-btn {
     border-radius: 10px;
     height: 40px;
@@ -74,4 +83,13 @@
 
 .container_solicitud{
     display: flex;
+}
+
+.container_agent{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+::ng-deep .mat-vertical-stepper-header{
+    pointer-events: none !important;
 }

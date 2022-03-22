@@ -12,7 +12,7 @@
 
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
-            <h6>Agregar pago a la venta {{addPay.number}} - {{addPay.rif}}</h6>
+            <h6 class="title_mother">Agregar pago a la venta {{addPay.number}} - {{addPay.rif}} - {{addPay.razon_social}} - {{addPay.fraccion_desc}}</h6>
 
             <form [formGroup]="formtasa">
                 <mat-form-field appearance="outline">
@@ -37,7 +37,7 @@
                 
                 <form [formGroup]="payments[i]">
                     <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Tipo de Pago</mat-label>
+                        <mat-label>Forma de Pago</mat-label>
                         <mat-select disableRipple formControlName="t_pago"
                             (selectionChange)="buildFormGroup(getInput(payments[i].get('t_pago').value), i)" (click)="clearForm(i)">
                             <mat-option *ngFor="let pago of t_pagos" value={{pago.t_pago_id}}>
@@ -56,6 +56,14 @@
                         <mat-form-field class="box" appearance="outline">
                             <mat-label>Descripcion</mat-label>
                             <input matInput type="text" formControlName="descripcion" maxlength="45">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Fecha del Pago</mat-label>
+                            <input matInput [matDatepicker]="dp3" disabled [max]="currentYear"
+                                formControlName="fecha">
+                            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                         </mat-form-field>
                     </div>
                 </form>

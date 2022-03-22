@@ -24,6 +24,8 @@ import { SesionService } from 'src/app/shared/services/sesion.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { GeneroInterface } from '../../../../models/genero';
+import { EditphoneComponent } from 'src/app/shared/components/editphone/editphone.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-client',
@@ -51,6 +53,9 @@ export class EditClientComponent implements OnInit {
   tipos_clientes: TipoclienteInterface[];
   tipo_documentos: TipodocumentoInterface[];
   generos: GeneroInterface[];
+  profesiones: any[];
+  currentYear = new Date();
+  validacionCliente: ValidacionclienteResponse;
 
   constructor(
     private title: Title,
@@ -61,6 +66,7 @@ export class EditClientComponent implements OnInit {
     private session: SesionService,
     private modal: ModalService,
     private toaster: ToasterService,
+    public dialog: MatDialog,
   ) {
 
 
@@ -106,7 +112,7 @@ export class EditClientComponent implements OnInit {
       cedula: new FormControl(this.editClient.c_natural.c_doc, [Validators.required]),
       genero: new FormControl(this.editClient.c_natural.id_genero, [Validators.required]),
       fecha_nacimiento: new FormControl(this.editClient.c_natural.fecha_nacimiento, [Validators.required]),
-      profesion: new FormControl(this.editClient.c_natural.profesion, [Validators.required]),
+      profesion: new FormControl(this.editClient.c_natural.profesion.id_profesion, [Validators.required]),
     });
 
     this.agent = new FormGroup({
@@ -241,6 +247,7 @@ export class EditClientComponent implements OnInit {
             c_doc: this.data_vr.get('cedula').value,
             id_genero: this.data_vr.get('genero').value,
             fecha_nacimiento: this.data_vr.get('fecha_nacimiento').value,
+            id_profesion: this.data_vr.get('profesion').value,
             profesion: this.data_vr.get('profesion').value,
           }
         )),
@@ -289,6 +296,56 @@ export class EditClientComponent implements OnInit {
     this.tipo_documentos = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs
     this.actividades_comerciales = JSON.parse(this.storage.get(constant.ACTIVIDAD_COMERCIAL)).actividades_comerciales
     this.generos = JSON.parse(this.storage.get(constant.GENEROS)).generos
+    this.profesiones = JSON.parse(this.storage.get(constant.PROFESIONES)).profesiones
+  }
+
+  openDialog(phone): void {
+
+    const dialogRef = this.dialog.open(EditphoneComponent, {
+      height: 'auto',
+      panelClass: 'custom-dialog',
+      data: { field: "Editar Telefono", value: this.editClient.telefonos },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result)
+        this.doEditPhone(result)
+      }
+      this.router.navigateByUrl("/admin/app/(adr:clientela)");
+    });
+  }
+
+  doEditPhone(phone) {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      rif: this.crypto.encryptJson(this.editClient.rif),
+      telefonos: this.crypto.encryptJson(JSON.stringify([
+        {
+          number: phone.phone_1.number,
+          cod_area: phone.phone_1.dialCode,
+          iso: phone.phone_1.countryCode,
+          telefono_id: phone.phone_1_id,
+        },
+        {
+          number: phone.phone_2.number,
+          cod_area: phone.phone_2.dialCode,
+          iso: phone.phone_2.countryCode,
+          telefono_id: phone.phone_2_id,
+        },
+
+      ]))
+    }))
+    console.log(this.editClient.rif)
+    this.cliente.doEditPhone(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      console.log(res)
+      console.log(this.crypto.decryptString(res))
+      this.validacionCliente = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.validacionCliente)
+      console.log(this.crypto.decryptString(res))
+    })
   }
 
   save() {
@@ -298,5 +355,15 @@ export class EditClientComponent implements OnInit {
         this.submit()
       }
     })
+  }
+
+  getEstado(id: any): void {
+    this.municipios = JSON.parse(this.storage.get(constant.MUNICIPIOS)).municipios.filter(c => c.id_estado == id)
+    this.ciudades = JSON.parse(this.storage.get(constant.CIUDADES)).ciudades.filter(c => c.id_estado == id)
+    this.parroquias = JSON.parse(this.storage.get(constant.PARROQUIAS)).parroquias.filter(c => c.id_municipio == id)
+  }
+
+  getMunicipio(id: any): void {
+    this.parroquias = JSON.parse(this.storage.get(constant.PARROQUIAS)).parroquias.filter(c => c.id_municipio == id)
   }
 }

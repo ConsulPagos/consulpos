@@ -1,4 +1,4 @@
 export interface MarcaInterface {
     marca: string;
-    id: number;
+    id_marca: number;
 }

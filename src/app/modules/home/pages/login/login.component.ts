@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
       event.charCode == 209;
   }
 
+
   login() {
     this.error = {};
     this.user.correo = this.crypto.encryptJson(this.authForm.get('email').value)

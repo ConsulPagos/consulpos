@@ -104,11 +104,11 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
             init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
             limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
           }))
-          // console.log(data)
-          // console.log('init_row')
-          // console.log(this.paginator.pageIndex * this.PAGESIZE)
-          // console.log('limit_row')
-          // console.log((this.paginator.pageIndex + 1) * this.PAGESIZE)
+          console.log(data)
+          console.log('init_row')
+          console.log(this.paginator.pageIndex * this.PAGESIZE)
+          console.log('limit_row')
+          console.log((this.paginator.pageIndex + 1) * this.PAGESIZE)
           return this.cliente.doAll(`${this.session.getDeviceId()};${data}`)
         }),
         map(data => {
@@ -117,7 +117,9 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
           // console.log("JSON: " + data)
           // console.log("string: " + this.crypto.decryptString(data))
           this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-          this.resultsLength = parseInt(this.showclientResponse.total_row);
+          if (parseInt(this.showclientResponse.total_row) > 0) {
+            this.resultsLength = parseInt(this.showclientResponse.total_row);
+          }
           // console.log(this.showclientResponse)
           return this.showclientResponse.clientes;
         }),
@@ -239,7 +241,6 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
     this.cliente.doFind(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-      this.toaster.success(this.showclientResponse.M)
       this.clientes = this.showclientResponse.clientes
       this.dataSource = new MatTableDataSource(this.clientes);
       this.resultsLength = parseInt(this.showclientResponse.total_row);
