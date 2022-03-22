@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ContribuyenteInterface } from '../../../../models/contribuyente'
 import { EstadoInterface } from '../../../../models/estado'
@@ -23,8 +23,8 @@ import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { Router } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { LoaderService } from 'src/app/shared/services/loader.service';
-import { TelefonoInterface } from 'src/app/models/telefono';
 import { ModalService } from 'src/app/shared/services/modal.service';
+import { CeroValidator } from '../../../../shared/validators/cero.validator'
 
 @Component({
   selector: 'app-add-client',
@@ -51,6 +51,8 @@ export class AddClientComponent implements OnInit {
   actividades_comerciales: ActividadComercialInterface[];
   tipos_clientes: TipoclienteInterface[];
   tipo_documentos: TipodocumentoInterface[];
+  currentYear = new Date();
+  identity;
 
   //****************************************************************************************//
   constructor(
@@ -63,53 +65,61 @@ export class AddClientComponent implements OnInit {
     private router: Router,
     private loader: LoaderService,
     private modal: ModalService,
-  ) { }
+    private fb: FormBuilder
+  ) {
+
+    this.identity = this.fb.group({
+      tipo_doc: ['', [Validators.required]],
+      rif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(11)]],
+    },
+      {
+        validator: CeroValidator("rif")
+      });
+
+  }
 
   //FORM DEL PRIMER STEP\\
-  identity = new FormGroup({
-    rif: new FormControl('253862510', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
-    tipo_doc: new FormControl('1', [Validators.required]),
-  });
+
 
   //FORM DEL SEGUNDO STEP\\
   client_type = new FormGroup({
-    tipo_cliente: new FormControl('1', [Validators.required]),
+    tipo_cliente: new FormControl('', [Validators.required]),
   });
 
   // *** FORM DEL TERCER STEP *** \\
   client = new FormGroup({
-    razon_social: new FormControl('Consulpagos', [Validators.required]),
-    nombre_comercial: new FormControl('Consulpagos', [Validators.required]),
-    contribuyente: new FormControl('1', [Validators.required]),
-    email: new FormControl('gmail@dmain.com', [
+    razon_social: new FormControl('', [Validators.required]),
+    nombre_comercial: new FormControl('', [Validators.required]),
+    contribuyente: new FormControl('', [Validators.required]),
+    email: new FormControl('', [
       Validators.required,
       Validators.email,
       Validators.pattern('^[a-zA-Z0-9.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')
     ]),
-    phone_1: new FormControl('4242735855', [Validators.required]),
-    phone_2: new FormControl('4242735857', [Validators.required]),
-    estado: new FormControl('1', [Validators.required]),
-    municipio: new FormControl('1', [Validators.required]),
-    parroquia: new FormControl('1', [Validators.required]),
-    ciudad: new FormControl('1', [Validators.required]),
-    direccion: new FormControl('Torre ibm frente al ccct las mercedes, cubo negro', [Validators.required]),
-    contacto: new FormControl('1', [Validators.required]),
-    codpostal: new FormControl('1080', [Validators.required]),
-    act_comercial: new FormControl('112', [Validators.required]),
-    pto_referencia: new FormControl('Torre ibm frente al ccct las mercedes, cubo negro', [Validators.required]),
-    localidad: new FormControl('Torre ibm frente al ccct las mercedes, cubo negro', [Validators.required]),
+    phone_1: new FormControl('', [Validators.required]),
+    phone_2: new FormControl('', [Validators.required]),
+    estado: new FormControl('', [Validators.required]),
+    municipio: new FormControl('', [Validators.required]),
+    parroquia: new FormControl('', [Validators.required]),
+    ciudad: new FormControl('', [Validators.required]),
+    direccion: new FormControl('', [Validators.required]),
+    contacto: new FormControl('', [Validators.required]),
+    codpostal: new FormControl('', [Validators.required]),
+    act_comercial: new FormControl('', [Validators.required]),
+    pto_referencia: new FormControl('', [Validators.required]),
+    localidad: new FormControl('', [Validators.required]),
   });
 
   data_vr = new FormGroup({
-    primer_nombre: new FormControl('Arturo', [Validators.required]),
+    primer_nombre: new FormControl('', [Validators.required]),
     segundo_nombre: new FormControl('',),
-    primer_apellido: new FormControl('Linares', [Validators.required]),
+    primer_apellido: new FormControl('', [Validators.required]),
     segundo_apellido: new FormControl('',),
-    c_t_doc_cedula: new FormControl('1', [Validators.required]),
-    cedula: new FormControl('25386251', [Validators.required]),
-    genero: new FormControl('1', [Validators.required]),
+    c_t_doc_cedula: new FormControl('', [Validators.required]),
+    cedula: new FormControl('', [Validators.required]),
+    genero: new FormControl('', [Validators.required]),
     fecha_nacimiento: new FormControl('', [Validators.required]),
-    profesion: new FormControl('Desarrollador', [Validators.required]),
+    profesion: new FormControl('', [Validators.required]),
   });
 
   //FORM DEL CUARTO STEP\\
@@ -175,20 +185,14 @@ export class AddClientComponent implements OnInit {
   verificar_usuario() {
     this.search_client = true;
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
-    // console.log(rif)
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(rif),
     }))
-    // this.loader.loading()
-    // console.log("verify")
     this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      console.log(res)
-      console.log(JSON.parse(this.crypto.decryptString(res)))
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      console.log(this.validacionresponse)
       this.search_client = this.validacionresponse.value_exists === "true" ? true : false;
       if (this.search_client) {
         this.identity.controls['rif'].setErrors({ 'existe': true });
@@ -197,7 +201,6 @@ export class AddClientComponent implements OnInit {
         this.identity.controls['rif'].updateValueAndValidity()
       }
       this.loading = false
-       //this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
     })
   }
 
@@ -288,16 +291,8 @@ export class AddClientComponent implements OnInit {
     const dataS = this.crypto.encryptString(JSON.stringify(data));
 
     this.loading = true;
-    console.log("verify")
     this.cliente.doSave(`${this.session.getDeviceId()};${dataS}`).subscribe(res => {
-      console.log(data)
-      console.log(res)
-      console.log(this.crypto.decryptString(res))
       this.addClientResponse = new AddClientDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      console.log(this.addClientResponse)
-      // this.loading = false
-       //this.crypto.setKeys(this.addClientResponse.keyS, this.addClientResponse.ivJ, this.addClientResponse.keyJ, this.addClientResponse.ivS)
-
       switch (this.addClientResponse.R) {
         case constant.R0:
           this.router.navigateByUrl('/admin/app/(adr:clientela)')
@@ -336,10 +331,25 @@ export class AddClientComponent implements OnInit {
     this.search_client = true;
   }
 
+
+  getEstado(id: any): void {
+    this.municipios = JSON.parse(this.storage.get(constant.MUNICIPIOS)).municipios.filter(c => c.id_estado == id)
+    this.ciudades = JSON.parse(this.storage.get(constant.CIUDADES)).ciudades.filter(c => c.id_estado == id)
+    this.parroquias = JSON.parse(this.storage.get(constant.PARROQUIAS)).parroquias.filter(c => c.id_municipio == id)
+  }
+
+  getDoc(id: any): void {
+    this.search_client = true;
+    // this.tipos_clientes = JSON.parse(this.storage.get(constant.T_CLIENTES)).t_clientes.filter(c => c.letra == id)
+  }
+
+  getMunicipio(id: any): void {
+    this.parroquias = JSON.parse(this.storage.get(constant.PARROQUIAS)).parroquias.filter(c => c.id_municipio == id)
+  }
+
   save() {
     this.modal.confirm("Desea registrar este cliente?").subscribe(result => {
       if (result) {
-        console.log("acciones")
         this.submit()
       }
     })

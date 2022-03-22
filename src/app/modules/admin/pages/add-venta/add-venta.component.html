@@ -9,7 +9,7 @@
             </a>
         </div>
     </div>
-<!-- ksfjeshekfksehfbjekifhsjhfikfheiu -->
+    <!-- ksfjeshekfksehfbjekifhsjhfikfheiu -->
     <!-- Container de los Componentes -->
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
@@ -20,8 +20,7 @@
                     <li class="fa fa-check"></li>
                 </ng-template>
 
-                <mat-step>
-                    <!-- [stepControl]="identity" -->
+                <mat-step [stepControl]="identity">
                     <form [formGroup]="identity">
                         <ng-template matStepLabel>Ingrese documento de identidad</ng-template>
                         <div>
@@ -64,8 +63,7 @@
                     </div>
                 </mat-step>
 
-                <mat-step>
-                    <!-- [stepControl]="identity" -->
+                <mat-step [stepControl]="solicitud">
                     <form [formGroup]="solicitud">
                         <ng-template matStepLabel>Solicitud</ng-template>
                         <div>
@@ -88,8 +86,7 @@
                     </div>
                 </mat-step>
 
-                <mat-step>
-                    <!-- [stepControl]="buy" -->
+                <mat-step [stepControl]="buies">
                     <form [formGroup]="buies[i]" #f="ngForm" *ngFor="let format of formats_buy; let i=index">
                         <ng-template matStepLabel>Datos de la Venta</ng-template>
                         <div>
@@ -193,7 +190,7 @@
                                         </mat-select>
                                     </mat-form-field>
                                 </form>
-                                
+
                                 <div>
                                     <button class="btn_form_add_agent" mat-icon-button color="primary"
                                         aria-label="Example icon button with a menu icon" (click)="add_sim(i)"
@@ -228,8 +225,7 @@
                     </div>
                 </mat-step>
 
-                <mat-step>
-                    <!-- [stepControl]="client" -->
+                <mat-step [stepControl]="document">
                     <form [formGroup]="document">
                         <ng-template matStepLabel>Carga de Documentos</ng-template>
 
@@ -255,3 +251,4 @@
         </div>
     </div>
 </section>
+

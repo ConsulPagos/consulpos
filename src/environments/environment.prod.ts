@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiHost: 'http://192.168.36.30',
+  apiHost: 'https://administracion.consulpagos.com',
   puerto_sesion: "",
   puerto_usuarios: "",
   puerto_ventas: "",

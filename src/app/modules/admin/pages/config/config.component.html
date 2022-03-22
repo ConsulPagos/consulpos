@@ -6,93 +6,279 @@
         <div class="d-flex justify-content-center">
             <div class="form-container">
                 <div>
-                    <div class="row pl-4 pr-4">
+                    <div class="pl-4 pr-4">
                         <div class="col-12">
                             <div class="box-title d-flex justify-content-center">
                                 <h5 class="bold uppercase mt-3">Configuración</h5>
                             </div>
                         </div>
-                        
+
                         <div class="cards">
-                            <div class="card_box card-1">
-                                <div class="card__icon">
+
+                            <mat-card class="config-card">
+                                <mat-card-title class="title-card">
                                     <i class="fas fa-users"></i>
                                     Usuarios
-                                </div>
-                                <div class="sub_title">
-                                    <p class="p_card">Apartado para agregar nuevos usuarios</p>
-                                </div>
-                                <div class="menu_card">
-                                    <p class="card__apply">
-                                        <a class="card__link"
-                                            [routerLink]="['/admin/app',{ outlets: { adr: ['nuevo-admin'] } }]">
-                                            <i class="fas fa-user-plus"></i>
-                                            Agregar
-                                        </a>
-                                    </p>
-                                    <p class="card__apply">
-                                        <a class="card__link"
-                                            [routerLink]="['/admin/app',{ outlets: { adr: ['super-admin-panel'] } }]">
-                                            <i class="fas fa-address-book"></i>
-                                            Listar
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
+                                </mat-card-title>
 
-                            <div class="card_box card-1">
-                                <div class="card__icon">
-                                    <i class="fas fa-coins"></i>
-                                    Tasa
-                                </div>
-                                <div class="sub_title">
-                                    <p class="p_card">Tipo de cambio referencial al valor del VES</p>
-                                </div>
-                                <div class="menu_card">
-                                    <p class="card__apply">
-                                        <a class="card__link"
-                                            [routerLink]="['/admin/app',{ outlets: { adr: ['add-tasas'] } }]">
-                                            <i class="fas fa-money-bill-wave-alt"></i>
-                                            Agregar
-                                        </a>
-                                    </p>
-                                    <p class="card__apply">
-                                        <a class="card__link"
-                                            [routerLink]="['/admin/app',{ outlets: { adr: ['tasas'] } }]">
-                                            <i class="fas fa-file-invoice-dollar"></i>
-                                            Listar
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
+                                <mat-card-content class="title-card">
+                                    <p>Apartado para agregar nuevos usuarios.</p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <div class="menu_card">
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['nuevo-admin'] } }]">
+                                                <i class="fas fa-user-plus"></i>
+                                                Agregar
+                                            </a>
+                                        </p>
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['super-admin-panel'] } }]">
+                                                <i class="fas fa-address-book"></i>
+                                                Listar
+                                            </a>
+                                        </p>
+                                    </div>
+                                </mat-card-actions>
+                            </mat-card>
 
-                            <div class="card_box card-1">
-                                <div class="card__icon">
-                                    <i class="fas fa-user-lock"></i>
-                                    Roles Y Permisos
-                                </div>
-                                <div class="sub_title">
-                                    <p class="p_card">Configuracion para los usuarios</p>
-                                </div>
-                                <div class="menu_card">
-                                    <p class="card__apply">
-                                        <a class="card__link"
-                                            [routerLink]="['/admin/app',{ outlets: { adr: ['add-rol'] } }]">
-                                            <i class="fas fa-key"></i>
-                                            Agregar
-                                        </a>
-                                    </p>
-                                    <p class="card__apply">
-                                        <a class="card__link"
-                                            [routerLink]="['/admin/app',{ outlets: { adr: ['roles'] } }]">
-                                            <i class="fas fa-unlock"></i>
-                                            Listar
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
+                            <mat-card class="config-card">
+                                <mat-card-title class="title-card"><i class="fas fa-coins"></i> Tasa</mat-card-title>
+                                <mat-card-content class="title-card">
+                                    <p>Tipo de cambio referencial al valor del VES.</p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <div class="menu_card">
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['add-tasas'] } }]">
+                                                <i class="fas fa-money-bill-wave-alt"></i>
+                                                Agregar
+                                            </a>
+                                        </p>
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['tasas'] } }]">
+                                                <i class="fas fa-file-invoice-dollar"></i>
+                                                Listar
+                                            </a>
+                                        </p>
+                                    </div>
+                                </mat-card-actions>
+                            </mat-card>
+
+                            <mat-card class="config-card">
+                                <mat-card-title class="title-card"><i class="fas fa-user-lock"></i> Roles Y Permisos
+                                </mat-card-title>
+                                <mat-card-content class="title-card">
+                                    <p>Configuracion para los usuarios.</p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <div class="menu_card">
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['add-rol'] } }]">
+                                                <i class="fas fa-key"></i>
+                                                Agregar
+                                            </a>
+                                        </p>
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['roles'] } }]">
+                                                <i class="fas fa-unlock"></i>
+                                                Listar
+                                            </a>
+                                        </p>
+                                    </div>
+                                </mat-card-actions>
+                            </mat-card>
+
+                            <!-- New -->
+
+                            <mat-card class="config-card">
+                                <mat-card-title class="title-card"><i class="fas fa-warehouse"></i> Almacén
+                                </mat-card-title>
+                                <mat-card-content class="title-card">
+                                    <p>Configuracion para los Almacenes.</p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <div class="menu_card">
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['add-almacenes'] } }]">
+                                                <i class="fas fa-key"></i>
+                                                Agregar
+                                            </a>
+                                        </p>
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['almacenes'] } }]">
+                                                <i class="fas fa-unlock"></i>
+                                                Listar
+                                            </a>
+                                        </p>
+                                    </div>
+                                </mat-card-actions>
+                            </mat-card>
+
+                            <mat-card class="config-card">
+                                <mat-card-title class="title-card"><i class="fas fa-user-lock"></i> Sucursales
+                                </mat-card-title>
+                                <mat-card-content class="title-card">
+                                    <p>Configuracion para las Sucursales.</p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <div class="menu_card">
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['add-sucursales'] } }]">
+                                                <i class="fas fa-key"></i>
+                                                Agregar
+                                            </a>
+                                        </p>
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['sucursales'] } }]">
+                                                <i class="fas fa-unlock"></i>
+                                                Listar
+                                            </a>
+                                        </p>
+                                    </div>
+                                </mat-card-actions>
+                            </mat-card>
+
+                            <mat-card class="config-card">
+                                <mat-card-title class="title-card"><i class="fas fa-user-lock"></i> Proveedores
+                                </mat-card-title>
+                                <mat-card-content class="title-card">
+                                    <p>Configuracion para los Provedores.</p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <div class="menu_card">
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['add-provedores'] } }]">
+                                                <i class="fas fa-key"></i>
+                                                Agregar
+                                            </a>
+                                        </p>
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['provedores'] } }]">
+                                                <i class="fas fa-unlock"></i>
+                                                Listar
+                                            </a>
+                                        </p>
+                                    </div>
+                                </mat-card-actions>
+                            </mat-card>
+
+                            <mat-card class="config-card">
+                                <mat-card-title class="title-card"><i class="fas fa-user-lock"></i> Marcas
+                                </mat-card-title>
+                                <mat-card-content class="title-card">
+                                    <p>Configuracion para las Marca.</p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <div class="menu_card">
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['add-marcas'] } }]">
+                                                <i class="fas fa-key"></i>
+                                                Agregar
+                                            </a>
+                                        </p>
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['marcas'] } }]">
+                                                <i class="fas fa-unlock"></i>
+                                                Listar
+                                            </a>
+                                        </p>
+                                    </div>
+                                </mat-card-actions>
+                            </mat-card>
+
+                            <mat-card class="config-card">
+                                <mat-card-title class="title-card"><i class="fas fa-user-lock"></i> Modelos
+                                </mat-card-title>
+                                <mat-card-content class="title-card">
+                                    <p>Configuracion para los Modelos.</p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <div class="menu_card">
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['add-modelos'] } }]">
+                                                <i class="fas fa-key"></i>
+                                                Agregar
+                                            </a>
+                                        </p>
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['modelos'] } }]">
+                                                <i class="fas fa-unlock"></i>
+                                                Listar
+                                            </a>
+                                        </p>
+                                    </div>
+                                </mat-card-actions>
+                            </mat-card>
+
+                            <mat-card class="config-card">
+                                <mat-card-title class="title-card"><i class="fas fa-user-lock"></i> Plataformas
+                                </mat-card-title>
+                                <mat-card-content class="title-card">
+                                    <p>Configuracion para las Plataformas.</p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <div class="menu_card">
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['add-plataformas'] } }]">
+                                                <i class="fas fa-key"></i>
+                                                Agregar
+                                            </a>
+                                        </p>
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['plataformas'] } }]">
+                                                <i class="fas fa-unlock"></i>
+                                                Listar
+                                            </a>
+                                        </p>
+                                    </div>
+                                </mat-card-actions>
+                            </mat-card>
+
+                            <mat-card class="config-card">
+                                <mat-card-title class="title-card"><i class="fas fa-user-lock"></i> Productos
+                                </mat-card-title>
+                                <mat-card-content class="title-card">
+                                    <p>Configuracion para los Productos.</p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <div class="menu_card">
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['add-productos'] } }]">
+                                                <i class="fas fa-key"></i>
+                                                Agregar
+                                            </a>
+                                        </p>
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['productos'] } }]">
+                                                <i class="fas fa-unlock"></i>
+                                                Listar
+                                            </a>
+                                        </p>
+                                    </div>
+                                </mat-card-actions>
+                            </mat-card>
                         </div>
-
                     </div>
                 </div>
             </div>

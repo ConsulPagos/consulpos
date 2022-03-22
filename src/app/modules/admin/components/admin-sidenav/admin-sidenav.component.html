@@ -1,9 +1,5 @@
 <div class="sidenav d-flex flex-column">
     <div class="sidenav d-flex flex-column sidenav-items ">
-
-        <div class="brand d-flex align-items-center justify-content-center pt-2 pb-2 mb-2">
-            <img src="../../../../../assets/images/consulpagos.png" alt="Consulpagos">
-        </div>
         <!-- Dashboard -->
         <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['dashboard'] } }]"
             *ngIf="hasPermiso('Dashboard', 'Dashboard', 'Leer')" routerLinkActive="ad-active"
@@ -139,7 +135,8 @@
             </mat-menu>
 
 
-            <a class="menu_side" *ngIf="hasPermiso('Cobro Centralizado', 'Cobro Centralizado', 'Generar Archivo') || hasPermiso('Cobro Centralizado', 'Cobro Centralizado', 'Cargar Archivo')"
+            <a class="menu_side"
+                *ngIf="hasPermiso('Cobro Centralizado', 'Cobro Centralizado', 'Generar Archivo') || hasPermiso('Cobro Centralizado', 'Cobro Centralizado', 'Cargar Archivo')"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['cobro-centralizado'] } }]" routerLinkActive="ad-active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <li class="fas fa-university"></li> <span class="text_side">Cobro Centralizado</span>

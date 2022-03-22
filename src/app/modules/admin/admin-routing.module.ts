@@ -37,6 +37,27 @@ import { FichaSaleComponent } from './pages/ficha-sale/ficha-sale.component';
 import { PagosComponent } from './pages/pagos/pagos.component';
 import { AddPagosComponent } from './pages/add-pagos/add-pagos.component';
 import { ValidarPagoComponent } from './pages/validar-pago/validar-pago.component';
+import { AddAlmacenesComponent } from './pages/add-almacenes/add-almacenes.component';
+import { AddMarcasComponent } from './pages/add-marcas/add-marcas.component';
+import { AddModelosComponent } from './pages/add-modelos/add-modelos.component';
+import { AddPlataformasComponent } from './pages/add-plataformas/add-plataformas.component';
+import { AddProductosComponent } from './pages/add-productos/add-productos.component';
+import { AddProvedoresComponent } from './pages/add-provedores/add-provedores.component';
+import { AddSucursalesComponent } from './pages/add-sucursales/add-sucursales.component';
+import { AlmacenesComponent } from './pages/almacenes/almacenes.component';
+import { EditAlmacenesComponent } from './pages/edit-almacenes/edit-almacenes.component';
+import { EditMarcasComponent } from './pages/edit-marcas/edit-marcas.component';
+import { EditModelosComponent } from './pages/edit-modelos/edit-modelos.component';
+import { EditPlataformasComponent } from './pages/edit-plataformas/edit-plataformas.component';
+import { EditProductosComponent } from './pages/edit-productos/edit-productos.component';
+import { EditProvedoresComponent } from './pages/edit-provedores/edit-provedores.component';
+import { EditSucursalesComponent } from './pages/edit-sucursales/edit-sucursales.component';
+import { MarcasComponent } from './pages/marcas/marcas.component';
+import { ModelosComponent } from './pages/modelos/modelos.component';
+import { PlataformasComponent } from './pages/plataformas/plataformas.component';
+import { ProductosComponent } from './pages/productos/productos.component';
+import { ProvedoresComponent } from './pages/provedores/provedores.component';
+import { SucursalesComponent } from './pages/sucursales/sucursales.component';
 
 const routes: Routes = [
   {
@@ -310,6 +331,196 @@ const routes: Routes = [
         //   permiso: "Crear"
         // }
       },
+      {
+        path: 'add-almacenes', component: AddAlmacenesComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-marcas', component: AddMarcasComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-modelos', component: AddModelosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-plataformas', component: AddPlataformasComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-productos', component: AddProductosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-provedores', component: AddProvedoresComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-sucursales', component: AddSucursalesComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'almacenes', component: AlmacenesComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'edit-almacenes', component: EditAlmacenesComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'edit-marcas', component: EditMarcasComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'edit-modelos', component: EditModelosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'edit-plataformas', component: EditPlataformasComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'edit-productos', component: EditProductosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'edit-provedores', component: EditProvedoresComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'edit-sucursales', component: EditSucursalesComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'marcas', component: MarcasComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'modelos', component: ModelosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'plataformas', component: PlataformasComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'productos', component: ProductosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'provedores', component: ProvedoresComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'sucursales', component: SucursalesComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      
     ],
   }
 ];

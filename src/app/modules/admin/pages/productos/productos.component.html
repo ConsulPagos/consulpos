@@ -1,0 +1,36 @@
+<section id="productos">
+    <div class="title">
+        <div class="d-flex">
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Sucursal"  
+            [routerLink]="['/admin/app',{ outlets: { adr: ['add-productos'] } }]" >
+                <li class="fas fa-user-plus"></li>
+            </a>
+            <!-- <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'"
+                matTooltip="Exportar en formato Excel" (click)="exportXLSX()">
+                <li class="fas fa-file-download"></li>
+            </a> -->
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span 
+                        matBadge={{countNuevos}} 
+                        matBadgeSize="small" 
+                        matBadgeOverlap="false"
+                        matBadgePosition="before">
+                        Listado de Productos
+                        </span>
+                    </ng-template>
+                    <app-tabla-sucursales 
+                    (editProductos)="editProductos($event)" 
+                    (count)='countNuevos = $event' 
+                    class="w-100">
+                    </app-tabla-sucursales>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>

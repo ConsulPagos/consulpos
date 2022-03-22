@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NavigationExtras, Router } from '@angular/router';
 import { ClienteRequestInterface } from 'src/app/models/cliente_request';
-import { ClientesService } from 'src/app/shared/services/clientes.service';
-import { CryptoService } from 'src/app/shared/services/crypto.service';
-import { StorageService } from 'src/app/shared/services/storage.service';
 import { ExportService } from '../../services/export.service';
 
 
