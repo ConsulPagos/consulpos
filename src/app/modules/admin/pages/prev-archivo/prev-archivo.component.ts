@@ -13,9 +13,8 @@ import { PlantillaRespuestaInterface } from 'src/app/models/plantilla_respuesta'
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditFieldDialogComponent } from 'src/app/shared/components/edit-field-dialog/edit-field-dialog.component';
-import { Observable } from 'rxjs';
 
-
+import { ExcelReaderService } from "../../services/excel-reader.service";
 @Component({
   selector: 'app-prev-archivo',
   templateUrl: './prev-archivo.component.html',
@@ -44,6 +43,7 @@ export class PrevArchivoComponent implements OnInit {
     private session: SesionService,
     private toaster: ToasterService,
     private dialog: MatDialog,
+    private excelReader: ExcelReaderService,
     private loader: LoaderService) {
 
     if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.archivo) {
@@ -103,41 +103,41 @@ export class PrevArchivoComponent implements OnInit {
     const reader: FileReader = new FileReader();
 
     reader.readAsBinaryString(target.files[0]);
-
+    var ws: XLSX.WorkSheet
     reader.onload = (e: any) => {
       const binarystr: string = e.target.result;
-      const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
-      //console.info(this.n_pagina)
-      const wsname: string = wb.SheetNames[this.n_pagina];
-      //console.info(wsname)
-      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-      const json = XLSX.utils.sheet_to_json(ws);
-      const nData: any = []
-
-      //console.info(json)
-
-      json.forEach(cuota => {
-        //console.log(cuota)
-        var data = {};
-        for (let index = 0; index < this.plantilla.length; index++) {
-          const col = this.plantilla[index];
-          //console.log(cuota[col.nombre])
-          //data[col.columna] = this.parseValue(col.tipo, cuota[col.nombre], col.decimales);
-          data[col.columna] = this.parseValue(col.tipo, cuota[col.nombre], col.decimales);
-        }
-
-        nData.push(data)
-
-      });
-
-      //console.log(nData)
-      //console.log(columns)
-
-      this.data = nData;
-      this.columns = columns;
-      this.loading = false;
+      this.excelReader.read(binarystr, this.n_pagina)
+      this.excelReader.finished.subscribe(data => {
+        console.log(data)
+      }).unsubscribe()
 
     };
+
+    const json = XLSX.utils.sheet_to_json(ws);
+    const nData: any = []
+
+    //console.info(json)
+
+    /*       json.forEach(cuota => {
+            //console.log(cuota)
+            var data = {};
+            for (let index = 0; index < this.plantilla.length; index++) {
+              const col = this.plantilla[index];
+              //console.log(cuota[col.nombre])
+              //data[col.columna] = this.parseValue(col.tipo, cuota[col.nombre], col.decimales);
+              data[col.columna] = this.parseValue(col.tipo, cuota[col.nombre], col.decimales);
+            }
+    
+            nData.push(data)) */
+
+    //console.log(nData)
+    //console.log(columns)
+
+    this.data = nData;
+    this.columns = columns;
+    this.loading = false;
+
+
   }
 
   onFileChangeTXT(event: any) {
