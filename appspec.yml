@@ -3,12 +3,11 @@ os: linux
 files:
   - source: .
     destination: /home/despliegues/front
-hooks:
-  ApplicationStop:
-    - location: scripts/stop_service.sh
-      timeout: 300
-#      runas: root
-  ApplicationStart:
-    - location: scripts/start_service.sh
-      timeout: 600
-#      runas: root
+permissions:
+  - object: /home/despliegues/front
+    owner: consuladmin
+    mode: 755
+ApplicationStart:
+  - location: scripts/start_service.sh
+    timeout: 600
+    runas: root
