@@ -4,7 +4,7 @@ files:
   - source: .
     destination: /home/despliegues/front
 permissions:
-  - object: /home/despliegues/front
+  - object: /home/despliegues
     owner: root
     mode: 777
 ApplicationStart:
