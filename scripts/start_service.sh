@@ -8,6 +8,8 @@
 
 cd /home/despliegues/front
 
+mkdir test_folder
+
 npm install
 
 npm install -g @angular/cli > /dev/null

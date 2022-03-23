@@ -5,6 +5,7 @@ files:
     destination: /home/despliegues/front
 permissions:
   - object: /home/despliegues
+    owner: consuladmin
     mode: 777
 ApplicationStart:
   - location: scripts/start_service.sh
