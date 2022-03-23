@@ -9,4 +9,4 @@ permissions:
 ApplicationStart:
   - location: scripts/start_service.sh
     timeout: 600
-#    runas: root
+    runas: consuladmin
