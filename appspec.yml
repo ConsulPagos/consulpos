@@ -5,9 +5,8 @@ files:
     destination: /home/despliegues/front
 permissions:
   - object: /home/despliegues
-    owner: root
     mode: 777
 ApplicationStart:
   - location: scripts/start_service.sh
     timeout: 600
-    runas: root
+#    runas: root
