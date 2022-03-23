@@ -16,6 +16,7 @@ import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ExcelReaderService } from '../../services/excel-reader.service';
 
 @Component({
   selector: 'app-clientela-afiliados',
@@ -56,7 +57,6 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
     private cliente: ClientesService,
     private modal: ModalService,
     private toaster: ToasterService,
-    private router: Router,
   ) 
   {
     this.dataSource = new MatTableDataSource(this.clientes);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
@@ -15,6 +15,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditFieldDialogComponent } from 'src/app/shared/components/edit-field-dialog/edit-field-dialog.component';
 
 import { ExcelReaderService } from "../../services/excel-reader.service";
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { merge, of as observableOf } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { ShowClientsDecrypter } from 'src/app/models/showclients_response';
 @Component({
   selector: 'app-prev-archivo',
   templateUrl: './prev-archivo.component.html',
@@ -31,10 +37,12 @@ export class PrevArchivoComponent implements OnInit {
   loading = false;
   plantilla: PlantillaRespuestaInterface[] = null;
   loadingRespuesta = false;
-
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   columns = []
   isCentralizado = false
-
+  dataSource: MatTableDataSource<unknown>;
+  resultsLength: any;
   constructor(private route: ActivatedRoute,
     private router: Router, private modal: ModalService,
     private bancario: BancarioService,
@@ -54,7 +62,6 @@ export class PrevArchivoComponent implements OnInit {
 
       if (this.router.getCurrentNavigation().extras.state.data) {
         this.data = this.router.getCurrentNavigation().extras.state.data
-        //console.log(this.data)
       }
 
       if (this.router.getCurrentNavigation().extras.state.columns) {
@@ -106,89 +113,17 @@ export class PrevArchivoComponent implements OnInit {
     var ws: XLSX.WorkSheet
     reader.onload = (e: any) => {
       const binarystr: string = e.target.result;
-      this.excelReader.read(binarystr, this.n_pagina)
-      this.excelReader.finished.subscribe(data => {
-        console.log(data)
-      }).unsubscribe()
-
-    };
-
-    const json = XLSX.utils.sheet_to_json(ws);
-    const nData: any = []
-
-    //console.info(json)
-
-    /*       json.forEach(cuota => {
-            //console.log(cuota)
-            var data = {};
-            for (let index = 0; index < this.plantilla.length; index++) {
-              const col = this.plantilla[index];
-              //console.log(cuota[col.nombre])
-              //data[col.columna] = this.parseValue(col.tipo, cuota[col.nombre], col.decimales);
-              data[col.columna] = this.parseValue(col.tipo, cuota[col.nombre], col.decimales);
-            }
-    
-            nData.push(data)) */
-
-    //console.log(nData)
-    //console.log(columns)
-
-    this.data = nData;
-    this.columns = columns;
-    this.loading = false;
-
-
-  }
-
-  onFileChangeTXT(event: any) {
-
-    var data: [{}];
-    const columns = []
-
-    this.plantilla.forEach(p => {
-      columns.push(p.nombre);
-    })
-
-    const target: DataTransfer = <DataTransfer>(event.target);
-    if (target.files.length !== 1) {
-      throw new Error('Cannot use multiple files');
-    }
-    const reader: FileReader = new FileReader();
-    //console.log(target.files[0])
-    reader.readAsBinaryString(target.files[0]);
-    reader.onload = (e: any) => {
-      var lines = e.target.result.split('\n');
-
-      lines.forEach((l: string) => {
-        const line = l.trim();
-        var json = {};
-        for (let index = 0; index < this.plantilla.length; index++) {
-
-          const col = this.plantilla[index];
-
-
-          if (line.length > 0) {
-            const value = line.substring(col.inicia, col.inicia + col.longitud);
-            json[`${col.nombre}`] = this.parseValue(col.tipo, value, col.decimales);
-          }
-        }
-
-        if (line.length > 0) {
-          if (data == undefined) {
-            data = [json]
-          } else {
-            data.push(json);
-          }
-        }
-
-      });
-
-      //console.log(data)
-      this.data = data;
-      this.columns = columns;
-
+      this.excelReader.read(binarystr, this.tipo_archivo, this.n_pagina, this.plantilla)
+      this.loading = true
+      const sub = this.excelReader.finished.subscribe((nData: any[]) => {
+        this.loading = false
+        this.data = nData;
+        this.columns = columns;
+        sub.unsubscribe()
+      })
     };
   }
+
 
   get_header_row(sheet) {
     var headers = [];
@@ -207,6 +142,7 @@ export class PrevArchivoComponent implements OnInit {
     }
     return headers;
   }
+
   getTotal() {
     return this.data.map(t => t.cobrado > 0 ? 1 : 0).reduce((acc, value) => acc + value, 0);
   }
@@ -346,14 +282,11 @@ export class PrevArchivoComponent implements OnInit {
 
       switch (json.R) {
         case constant.R0:
-          const response0 = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
           this.plantilla = JSON.parse(this.crypto.decryptJson(json.plantilla)) as PlantillaRespuestaInterface[];
-
           break;
         case constant.R1:
         default:
           const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-
           this.toaster.error(response.M)
           break;
       }
@@ -363,29 +296,6 @@ export class PrevArchivoComponent implements OnInit {
     //**************************************************************************************************************************//
   }
 
-  parseValue(type: string, value: string, d: number) {
-    var data: any = value;
-    switch (type) {
-      case "string":
-        data = value.toString();
-        break;
-      case "int":
-        data = parseInt(value);
-        break;
-      case "double":
-        if (d > 0) {
-          data = (parseFloat(value.toString().trim().replace(".", '').replace(",", '.')) / Math.pow(10, d)).toFixed(d)
-        } else {
-          data = parseFloat(value.toString().trim().replace(".", '').replace(",", '.')).toFixed(2);
-          //console.log(data)
-        }
-        break;
-      default:
-        data = value;
-        break;
-    }
 
-    return data;
-  }
 
 }
