@@ -1,0 +1,19 @@
+export interface InventarioRequestInterface {
+    id?:number;
+    almacen?:string;
+    almacen_id?:string;
+    ciudad?:string;
+    ciudad_id?:string;
+    cod_postal?:string;
+    direccion?:string;
+    email?:string;
+    id_pais?:string;
+    localidad?:string;
+    occ?:string;
+    occ_id?:string;
+    pais?:string;
+    parroquia?:string;
+    parroquia_id?:string;
+    total_pos?:number;
+    total_sim?:number;
+}

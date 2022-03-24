@@ -219,9 +219,10 @@ export class AddClientComponent implements OnInit {
 
   submit() {
     this.search_client = true;
-    var letra = this.tipo_documentos.filter(t => t.id == this.identity.get("tipo_doc").value)[0].t_doc
+    var letra = this.identity.get("tipo_doc").value
+    // this.tipo_documentos.filter(t => t.id == this.identity.get("tipo_doc").value)[0].t_doc
     var rif = letra + this.identity.get('rif').value
-
+    console.log(rif)
     var data: any = {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),

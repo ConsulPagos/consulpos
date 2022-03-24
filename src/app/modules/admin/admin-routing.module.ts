@@ -58,6 +58,10 @@ import { PlataformasComponent } from './pages/plataformas/plataformas.component'
 import { ProductosComponent } from './pages/productos/productos.component';
 import { ProvedoresComponent } from './pages/provedores/provedores.component';
 import { SucursalesComponent } from './pages/sucursales/sucursales.component';
+import { CargarInventarioComponent } from './pages/cargar-inventario/cargar-inventario.component';
+import { InventarioDetalleComponent } from './pages/inventario-detalle/inventario-detalle.component';
+import { InventarioComponent } from './pages/inventario/inventario.component';
+import { MoverInventarioComponent } from './pages/mover-inventario/mover-inventario.component';
 
 const routes: Routes = [
   {
@@ -513,6 +517,45 @@ const routes: Routes = [
       },
       {
         path: 'sucursales', component: SucursalesComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+
+      {
+        path: 'inventario', component: InventarioComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+
+      {
+        path: 'mover-inventario', component: MoverInventarioComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+
+      {
+        path: 'cargar-inventario', component: CargarInventarioComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'inventario/detalle/:id', component: InventarioDetalleComponent, outlet: 'adr',
         // canActivate: [HasPermisoGuard],
         // data: {
         //   modulo: "Configuracion",

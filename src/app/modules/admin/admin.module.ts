@@ -99,6 +99,11 @@ import { EditModelosComponent } from './pages/edit-modelos/edit-modelos.componen
 import { EditPlataformasComponent } from './pages/edit-plataformas/edit-plataformas.component';
 import { EditProductosComponent } from './pages/edit-productos/edit-productos.component';
 import { EquiposAsociadosComponent } from './components/equipos-asociados/equipos-asociados.component';
+import { InventarioComponent } from './pages/inventario/inventario.component';
+import { MoverInventarioComponent } from './pages/mover-inventario/mover-inventario.component';
+import { CargarInventarioComponent } from './pages/cargar-inventario/cargar-inventario.component';
+import { InventarioDetalleComponent } from './pages/inventario-detalle/inventario-detalle.component';
+import { TablaInventarioComponent } from './components/tabla-inventario/tabla-inventario.component';
 
 
 @NgModule({
@@ -187,6 +192,11 @@ import { EquiposAsociadosComponent } from './components/equipos-asociados/equipo
     EditPlataformasComponent,
     EditProductosComponent,
     EquiposAsociadosComponent,
+    InventarioComponent,
+    MoverInventarioComponent,
+    CargarInventarioComponent,
+    InventarioDetalleComponent,
+    TablaInventarioComponent,
   ],
 
   imports: [

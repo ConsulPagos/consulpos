@@ -1,0 +1,21 @@
+<section id="inventario">
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">
+                            Listado Inventario
+                        </span>
+                    </ng-template>
+                    <app-tabla-inventario 
+                    (showInventario)="showInventario($event)"
+                    (count)='countNuevos = $event' 
+                    class="w-100">
+                    </app-tabla-inventario>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>

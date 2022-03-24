@@ -27,7 +27,7 @@
                                 <mat-label>Tipo</mat-label>
                                 <mat-select disableRipple formControlName="tipo_doc"
                                     (selectionChange)="getDoc($event.value)">
-                                    <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.id}}>
+                                    <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
                                         {{t_doc.t_doc}}
                                     </mat-option>
                                 </mat-select>

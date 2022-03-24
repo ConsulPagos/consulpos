@@ -1,0 +1,99 @@
+<section>
+    <div class="structur">
+        <div>
+            <mat-form-field appearance="outline" class="mt-4 mx-4">
+                <form [formGroup]="identity">
+                    <input matInput (keyup.enter)="filtro()" placeholder="Buscar" formControlName="rif" #input
+                        maxlength="30" minlength="4">
+                </form>
+            </mat-form-field>
+
+            <button (click)="load()" mat-raised-button *ngIf="statusFilter">
+                <i class="fas fa-broom broom"></i>
+                Limpiar filtro
+            </button>
+        </div>
+
+        <div>
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Inventario"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['cargar-inventario'] } }]">
+                <li class="fas fa-user-plus"></li>
+            </a>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Almacen </th>
+            <td mat-cell *matCellDef="let inventario"> {{inventario.almacen}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cantidad_equipos">
+            <th mat-header-cell *matHeaderCellDef> Cantidad de Equipos </th>
+            <td mat-cell *matCellDef="let inventario"> {{inventario.total_pos}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cantidad_sim">
+            <th mat-header-cell *matHeaderCellDef> Cantidad de Sim </th>
+            <td mat-cell *matCellDef="let inventario"> {{inventario.total_sim}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="occ">
+            <th mat-header-cell *matHeaderCellDef> Sucursal </th>
+            <td mat-cell *matCellDef="let inventario"> {{inventario.occ}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones</th>
+            <td mat-cell *matCellDef="let inventario">
+                <button #tooltip="matTooltip" matTooltip="Ver Almacen" matTooltipHideDelay="10" mat-icon-button
+                    (click)="_showInventario(inventario)" class="container_icon">
+                    <i class="fas fa-id-card activate_show"></i>
+                </button>
+
+                <button #tooltip="matTooltip" matTooltip="Desafiliar" matTooltipHideDelay="10"
+                    *ngIf="inventario.status_desc == 'ACTIVO'" mat-icon-button class="container_icon"
+                    (click)="saveDesativate(inventario)">
+                    <i class="fas fa-ban activate_ban"></i>
+                </button>
+
+                <button #tooltip="matTooltip" matTooltip="Activar" matTooltipHideDelay="10"
+                    *ngIf="inventario.status_desc == 'DESAFILIADO'" mat-icon-button class="container_icon"
+                    (click)="saveActive(inventario)">
+                    <i class="fas fa-check-square activate_check"></i>
+                </button>
+
+            </td>
+
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let inventario; columns: displayedColumns;">
+
+        </tr>
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="10">No se encontró información para su consulta</td>
+        </tr>
+    </table>
+</section>
+
+<mat-paginator [length]="resultsLength" [pageSize]="PAGESIZE" showFirstLastButtons></mat-paginator>
+
+<ng-template #loadingTable>
+    <div class="loading d-flex justify-content-center align-items-center p-4">
+        <button class="loading-btn" mat-raised-button *ngIf="loading">
+            <mat-spinner [diameter]="20"></mat-spinner>
+        </button>
+        <button class="loading-btn" *ngIf="error" (click)="load()" mat-raised-button>
+            <li class="fas fa-redo-alt"></li>
+        </button>
+    </div>
+</ng-template>

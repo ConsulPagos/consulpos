@@ -1,4 +1,7 @@
 <div class="sidenav d-flex flex-column">
+    <div class="logo-cp">
+        <img src="../../../../../assets/images/consulpagos.png" alt="Consulpagos" style="width: auto; height: 50px;">
+    </div>
     <div class="sidenav d-flex flex-column sidenav-items ">
         <!-- Dashboard -->
         <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['dashboard'] } }]"
@@ -15,7 +18,7 @@
         </a>
         <!-- ************************************************************************************************** -->
 
-        
+
         <!-- Tipos de solicitud -->
         <a class="menu_side" mat-button [matMenuTriggerFor]="solicitud">
             <li class="fa fa-file-alt icon_side"></li>
@@ -88,6 +91,28 @@
             <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['operaciones','entregar'] } }]"
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-book-dead"></li> <span class="text_side">Entregar Equipo</span>
+            </a>
+        </mat-menu>
+        <!-- ************************************************************************************************** -->
+
+        <!-- Inventario -->
+        <a class="menu_side" mat-button [matMenuTriggerFor]="inventario">
+            <li class="fa fa-file-alt icon_side"></li>
+            <span class="text_side">Inventario</span>
+        </a>
+
+        <mat-menu #inventario="matMenu">
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['inventario'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-exchange-alt"></li> <span class="text_side">Inventario</span>
+            </a>
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['cargar-inventario'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-university"></li> <span class="text_side">Cargar Inventario</span>
+            </a>
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['mover-inventario'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-book-dead"></li> <span class="text_side">Mover Inventario</span>
             </a>
         </mat-menu>
         <!-- ************************************************************************************************** -->
@@ -190,4 +215,5 @@
             <li class="fa fa-cogs"></li><span class="text_side">Configuración</span>
         </a>
         <!-- ************************************************************************************************** -->
+
     </div>
