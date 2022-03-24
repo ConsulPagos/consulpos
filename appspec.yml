@@ -7,7 +7,8 @@ permissions:
   - object: /home/despliegues
 #    owner: consuladmin
     mode: 777
-ApplicationStart:
-  - location: scripts/start_seervice.sh
-    timeout: 600
-#    runas: consuladmin
+hooks:
+  ApplicationStart:
+    - location: scripts/start_seervice.sh
+      timeout: 600
+#      runas: consuladmin
