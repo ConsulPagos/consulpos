@@ -4,9 +4,7 @@
 
 cd /home/despliegues/front
 
-mkdir test_folder
-
-npm install
+nvm install 12
 
 npm install -g @angular/cli > /dev/null
 
