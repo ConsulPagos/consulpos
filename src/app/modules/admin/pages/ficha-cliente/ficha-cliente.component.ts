@@ -86,7 +86,6 @@ export class FichaClienteComponent implements OnInit {
   openDialog(phone): void {
 
     const dialogRef = this.dialog.open(EditphoneComponent, {
-      // width: '100%',
       height: 'auto',
       panelClass: 'custom-dialog',
       data: { field: "Editar Telefono", value: this.showClient.telefonos },

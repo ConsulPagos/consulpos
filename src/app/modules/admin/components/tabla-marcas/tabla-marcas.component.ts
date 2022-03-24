@@ -95,7 +95,7 @@ export class TablaMarcasComponent implements OnInit {
             correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
             scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
             init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
-            limit_row: this.crypto.encryptJson(((this.paginator.pageIndex + 1) * this.PAGESIZE).toString()),
+            limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
           }))
           return this.inventario.doAllMarcas(`${this.session.getDeviceId()};${data}`)
         }),
@@ -228,7 +228,6 @@ export class TablaMarcasComponent implements OnInit {
       // console.log(this.crypto.decryptString(res))
       this.showMarcasResponse = new ShowMarcasDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-      this.toaster.success(this.showMarcasResponse.M)
       this.marcas = this.showMarcasResponse.marcas
       this.dataSource = new MatTableDataSource(this.marcas);
     })

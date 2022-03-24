@@ -1,0 +1,74 @@
+<section id="estado-cuenta">
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;" class="w-100">
+
+
+            <div class="d-flex justify-content-center align-items-center mb-3" style="padding-top: 2rem;">
+                <h4 class="text-right">RIF: {{rif}}</h4>
+            </div>
+
+            <!-- <div>
+                <mat-form-field appearance="outline" class="mt-4 mx-4">
+                    <form [formGroup]="identity">
+                        <input matInput (keyup.enter)="_findSim()" placeholder="Buscar" formControlName="serial" #input
+                            maxlength="30" minlength="4">
+                    </form>
+                </mat-form-field>
+
+                <button (click)="load()" mat-raised-button *ngIf="statusFilter">
+                    <i class="fas fa-broom broom"></i>
+                    Limpiar filtro
+                </button>
+            </div> -->
+
+            <hr>
+            <div class="col-md-12 container_module w-100" *ngIf="showItemClient">
+                <div class="text-capitalize">
+                    <div class="w-100">
+                        <table class="w-100" mat-table [dataSource]="dataSource" matSort>
+
+                            <ng-container matColumnDef="categoria">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Categoria </th>
+                                <td mat-cell *matCellDef="let row"> {{row.categoria}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="marca">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Marca </th>
+                                <td mat-cell *matCellDef="let row"> {{row.marca}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="modelo">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Modelo</th>
+                                <td mat-cell *matCellDef="let row"> {{row.modelo}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="cod_serial">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial </th>
+                                <td mat-cell *matCellDef="let row"> {{row.cod_serial}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="precio">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
+                                <td mat-cell *matCellDef="let row"> {{row.precio}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="complemento_d">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Complemento del POS </th>
+                                <td mat-cell *matCellDef="let row"> {{row.complemento_d}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status_desc">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
+                                <td mat-cell *matCellDef="let row"> {{row.status_desc}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let item; columns: displayedColumns;">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

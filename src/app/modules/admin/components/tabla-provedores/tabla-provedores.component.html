@@ -1,8 +1,8 @@
 <div>
-    <div class="structur"> 
+    <div class="structur">
         <div>
-            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Sucursal"
-                [routerLink]="['/admin/app',{ outlets: { adr: ['add-sucursales'] } }]">
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Proveedores"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['add-provedores'] } }]">
                 <li class="fas fa-user-plus"></li>
             </a>
         </div>
@@ -71,7 +71,7 @@
 
         </tr>
         <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="10">No se encontro ese cliente porfavor Ingrese los datos correctos</td>
+            <td class="mat-cell" colspan="10">No se encontró información para su consulta</td>
         </tr>
     </table>
 </div>

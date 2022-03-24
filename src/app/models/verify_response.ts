@@ -54,6 +54,8 @@ export interface VerifyResponse {
     generos: GeneroInterface[];
     tipo_tasas: TipoTasasInterface[];
     tipos_diferido: TipoDiferidoInterface[];
+    profesiones: any[];
+    t_docs_representantes: any[];
     R: string;
     M: string;
     /*     keyS: string;
@@ -114,6 +116,9 @@ export class VerifyDecrypter {
             generos: JSON.parse(this.crypto.decryptJson(value.generos)),
             tipo_tasas: JSON.parse(this.crypto.decryptJson(value.tipo_tasas)),
             tipos_diferido: JSON.parse(this.crypto.decryptJson(value.tipos_diferido)),
+            profesiones: JSON.parse(this.crypto.decryptJson(value.profesiones)),
+            t_docs_representantes: JSON.parse(this.crypto.decryptJson(value.t_docs_representantes)),
+            
 
         }
         console.log(verify)

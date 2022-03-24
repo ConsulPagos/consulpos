@@ -95,7 +95,7 @@ export class TablaProvedoresComponent implements OnInit {
             correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
             scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
             init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
-            limit_row: this.crypto.encryptJson(((this.paginator.pageIndex + 1) * this.PAGESIZE).toString()),
+            limit_row: this.crypto.encryptJson(( this.PAGESIZE).toString()),
           }))
           return this.inventario.doAllProveedores(`${this.session.getDeviceId()};${data}`)
         }),
@@ -230,7 +230,6 @@ export class TablaProvedoresComponent implements OnInit {
       // console.log(this.crypto.decryptString(res))
       this.showprovedoresResponse = new ShowProvedoresDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-      this.toaster.success(this.showprovedoresResponse.M)
       this.provedores = this.showprovedoresResponse.proveedores
       this.dataSource = new MatTableDataSource(this.provedores);
     })

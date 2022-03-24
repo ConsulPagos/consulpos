@@ -34,6 +34,8 @@ import { ValidacionventaRese, ValidacionventadosDecrypter } from '../../../../mo
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { SaleRequestInterface } from 'src/app/models/sales';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { ShowClientsDecrypter, ShowClientsResponse } from 'src/app/models/showclients_response';
+import { MarcaInterface } from 'src/app/models/marca';
 //****************************************************************************************//
 
 @Component({
@@ -49,7 +51,7 @@ export class AddVentaComponent implements OnInit {
   search_client: boolean = true;
   modelos: ModeloInterface[];
   fraccion_pagos: FraccionPagoInterface[];
-  validacionresponse: ValidacionclienteResponse;
+  validacionresponse: ShowClientsResponse;
   validacionoccresponse: ValidacionOccResponse;
   validacionsimresponse: ValidacionSimResponse;
   validacionres: ValidacionventaRese;
@@ -60,6 +62,7 @@ export class AddVentaComponent implements OnInit {
   operadoras: OperadoraInterface[];
   tipocobros: TipoCobroInterface[];
   planes: PlanInterface[];
+  marcas: MarcaInterface[];
   tipo_documentos: TipodocumentoInterface[];
   tipos_ventas: TipoventaInterface[];
   occs: OccInterface[];
@@ -87,7 +90,7 @@ export class AddVentaComponent implements OnInit {
   //****************************************************************************************//
 
   identity = new FormGroup({
-    rif: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
+    rif: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(11), Validators.pattern("^[0-9]*$")]),
     tipo_doc: new FormControl('', [Validators.required]),
   });
 
@@ -117,16 +120,19 @@ export class AddVentaComponent implements OnInit {
     this.tipo_documentos = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs
     this.bancos = JSON.parse(this.storage.get(constant.BANCOS)).bancos
     this.t_pagos = JSON.parse(this.storage.get(constant.T_PAGOS)).t_pagos
+    this.marcas = JSON.parse(this.storage.get(constant.MARCAS)).marcas
+    console.log(this.marcas)
   }
 
   add_buy() {
     var newFormat: SaleRequestInterface = {};
     var buy = new FormGroup({
+      // marca: new FormControl('', [Validators.required]),
       modelo: new FormControl('', [Validators.required]),
       plataforma: new FormControl('', [Validators.required]),
       banco: new FormControl('', [Validators.required]),
-      numero_cuenta_pos: new FormControl('', [Validators.required]),
-      precio_usd: new FormControl('', [Validators.required]),
+      numero_cuenta_pos: new FormControl('', [Validators.required, Validators.minLength(20)]),
+      precio_usd: new FormControl(''),
       lugar_entrega: new FormControl('', [Validators.required]),
       tipocobro: new FormControl('', [Validators.required]),
       plan: new FormControl('', [Validators.required]),
@@ -165,14 +171,14 @@ export class AddVentaComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      rif: this.crypto.encryptJson(rif),
+      filter: this.crypto.encryptJson(rif),
     }))
     this.loading = true;
     console.log("verify")
-    this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+    this.cliente.doFind(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.validacionresponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionresponse)
-      this.search_client = this.validacionresponse.value_exists === "false" ? true : false;
+      this.search_client = this.validacionresponse.clientes.length === 0 ? true : false;
       if (!this.search_client) {
         this.identity.controls['rif'].setErrors({ 'existe': null });
         this.identity.controls['rif'].updateValueAndValidity()
@@ -181,7 +187,7 @@ export class AddVentaComponent implements OnInit {
         this.identity.controls['rif'].setErrors({ 'existe': true });
       }
       this.loading = false
-       //this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
+      //this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
     })
   }
 
@@ -195,7 +201,7 @@ export class AddVentaComponent implements OnInit {
     this.venta.doOccUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.validacionoccresponse = new ValidacionOccDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.occs = JSON.parse(this.validacionoccresponse.occ_usuarios)
-       //this.crypto.setKeys(this.validacionoccresponse.keyS, this.validacionoccresponse.ivJ, this.validacionoccresponse.keyJ, this.validacionoccresponse.ivS)
+      //this.crypto.setKeys(this.validacionoccresponse.keyS, this.validacionoccresponse.ivJ, this.validacionoccresponse.keyJ, this.validacionoccresponse.ivS)
       this.doSimModels()
     })
   }
@@ -210,21 +216,20 @@ export class AddVentaComponent implements OnInit {
     this.venta.doSimModels(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.validacionsimresponse = new ValidacionSimDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.operadoras = JSON.parse(this.validacionsimresponse.modelos)
-       //this.crypto.setKeys(this.validacionsimresponse.keyS, this.validacionsimresponse.ivJ, this.validacionsimresponse.keyJ, this.validacionsimresponse.ivS)
+      //this.crypto.setKeys(this.validacionsimresponse.keyS, this.validacionsimresponse.ivJ, this.validacionsimresponse.keyJ, this.validacionsimresponse.ivS)
     })
   }
 
+  getMarca(id: any): void {
+    this.modelos = JSON.parse(this.storage.get(constant.MODELOS)).modelos.filter(c => c.id_marca == id)
+  }
 
   submit() {
     console.log(this.formats_buy)
-
     var solicitudes_banco_sell: any = [];
-
     for (let index = 0; index < this.buies.length; index++) {
-
-      const buy = this.buies[index];    
+      const buy = this.buies[index];
       var items = [];
-
       const f = this.formats_buy[index];
       f.sims.forEach(sim => {
         items.push({
@@ -278,7 +283,7 @@ export class AddVentaComponent implements OnInit {
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.validacionres = new ValidacionventadosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionres)
-       //this.crypto.setKeys(this.validacionres.keyS, this.validacionres.ivJ, this.validacionres.keyJ, this.validacionres.ivS)
+      //this.crypto.setKeys(this.validacionres.keyS, this.validacionres.ivJ, this.validacionres.keyJ, this.validacionres.ivS)
       switch (this.validacionres.R) {
         case constant.R0:
           this.toaster.success(this.validacionres.M)
@@ -314,12 +319,43 @@ export class AddVentaComponent implements OnInit {
     return precio
   }
 
+  total_price() {
+    var total = 0;
+    this.buies.forEach(buies => {
+      if (this.modelos.filter(it => it.id == buies.get("modelo").value).length > 0) {
+        total += parseFloat(this.modelos.filter(it => it.id == buies.get("modelo").value)[0].precio)
+      }
+    })
+    return total
+  }
+
+  // name() {
+  //   var name;
+  //   this.validacionresponse.clientes[0].comercio
+  //   return name
+  // }
+
   save() {
     this.modal.confirm("Desea confirmar el registro de la venta").subscribe(result => {
       if (result) {
         this.submit()
       }
     })
+  }
+
+  buiesInvalid() {
+    var invalid = false;
+
+    for (let index = 0; index < this.buies.length; index++) {
+      if(this.buies[index].invalid){
+        invalid = true
+        break;
+      }
+    }
+
+    return invalid
+
+
   }
 
 }

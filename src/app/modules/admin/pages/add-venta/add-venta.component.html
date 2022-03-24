@@ -13,6 +13,9 @@
     <!-- Container de los Componentes -->
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
+            <p class="title_mother text-uppercase">
+                Agregar Venta
+            </p>
 
             <!-- Container del Stepper -->
             <mat-vertical-stepper linear #stepper>
@@ -22,10 +25,9 @@
 
                 <mat-step [stepControl]="identity">
                     <form [formGroup]="identity">
-                        <ng-template matStepLabel>Ingrese documento de identidad</ng-template>
+                        <ng-template matStepLabel>Ingrese documento fiscal</ng-template>
+                        <h6></h6>
                         <div>
-                            <h6>Documento de identidad</h6>
-
                             <mat-form-field appearance="outline" class="container_box">
                                 <mat-label>Tipo</mat-label>
                                 <mat-select disableRipple formControlName="tipo_doc" (selectionChange)="resetStatus()">
@@ -35,14 +37,17 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline">
+                            <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>
                                     Rif
                                 </mat-label>
                                 <input matInput formControlName="rif" placeholder="123456789" type="text"
-                                    (keypress)="onlyNumberKey($event)" maxlength="9"
-                                    (keyup.enter)="verificar_usuario()">
+                                    (keypress)="onlyNumberKey($event)" maxlength="11">
+                            </mat-form-field>
 
+                            <mat-form-field appearance="outline" class="container_box_space" *ngIf="validacionresponse && validacionresponse.clientes && validacionresponse.clientes.length > 0">
+                                <mat-label>Nombre Comercial</mat-label>
+                                <input matInput value={{validacionresponse.clientes[0].comercio}} type="text">
                             </mat-form-field>
 
                             <div class="container_error_sell"
@@ -51,18 +56,24 @@
                                 <button class="btn_space" mat-button color='accent'
                                     [routerLink]="['/admin/app',{ outlets: { adr: ['add-client'] } }]">
                                     <li class="fa fa-cart-plus icon_sell"></li><span>Registrar Cliente</span>
-
                                 </button>
                             </div>
                         </div>
                     </form>
-                    <!-- Bootn de siguiente strepper -->
-                    <div>
+                    <div *ngIf="search_client">
+                        <button class="stepBtn" mat-raised-button [disabled]="identity.invalid"
+                            (click)="verificar_usuario()">
+                            Validar
+                        </button>
+                    </div>
+                    <div *ngIf="!search_client">
                         <button class="stepBtn" mat-raised-button matStepperNext
-                            [disabled]="identity.invalid || search_client ">Siguiente</button>
+                            [disabled]="identity.invalid || search_client">
+                            Siguiente
+                        </button>
                     </div>
                 </mat-step>
-
+                <!-- 
                 <mat-step [stepControl]="solicitud">
                     <form [formGroup]="solicitud">
                         <ng-template matStepLabel>Solicitud</ng-template>
@@ -78,15 +89,27 @@
                             </mat-form-field>
                         </div>
                     </form>
-                    <!-- Bootn de siguiente strepper -->
                     <div>
                         <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
                         <button class="stepBtn" mat-raised-button matStepperNext
                             [disabled]="solicitud.invalid">Siguiente</button>
                     </div>
-                </mat-step>
+                </mat-step> -->
 
                 <mat-step [stepControl]="buies">
+                    <form [formGroup]="solicitud">
+                        <ng-template matStepLabel>Solicitud</ng-template>
+                        <div>
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Surcusal</mat-label>
+                                <mat-select disableRipple formControlName="occ">
+                                    <mat-option *ngFor="let occ of occs" value={{occ.occ_id}}>
+                                        {{occ.occ_name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </form>
                     <form [formGroup]="buies[i]" #f="ngForm" *ngFor="let format of formats_buy; let i=index">
                         <ng-template matStepLabel>Datos de la Venta</ng-template>
                         <div>
@@ -100,15 +123,54 @@
                                     </button>
                                 </div>
                                 <h6>Datos del Equipo</h6>
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Modelo</mat-label>
-                                    <mat-select disableRipple formControlName="modelo">
-                                        <mat-option *ngFor="let modelo of modelos" value={{modelo.id}}>
-                                            {{modelo.modelo}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
 
-                                <h6>Banco y Cuenta</h6>
+                                <!-- <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Marca</mat-label>
+                                    <mat-select disableRipple formControlName="marca"
+                                        (selectionChange)="getMarca($event.value)">
+                                        <mat-option *ngFor="let marca of marcas" value={{marca.id_marca}}>
+                                            {{marca.marca}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field> -->
+                                <div class="container_agent">
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Modelo</mat-label>
+                                        <mat-select disableRipple formControlName="modelo">
+                                            <mat-option *ngFor="let modelo of modelos" value={{modelo.id}}>
+                                                {{modelo.modelo}} </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <div class="container_agent">
+                                        <form [formGroup]="formats_buy[i].sims[isim]" class="formulario"
+                                            *ngFor="let format of formats_buy[i].sims; let isim=index">
+                                            <mat-form-field appearance="outline" class="container_box_space">
+                                                <mat-label>Operadora Tlf.</mat-label>
+                                                <mat-select disableRipple formControlName="operadora">
+                                                    <mat-option *ngFor="let sim of operadoras" value={{sim.sim_id}}>
+                                                        {{sim.sim}} </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </form>
+                                    </div>
+                                </div>
+
+
+                                <div>
+                                    <button class="btn_form_add_agent" mat-icon-button color="primary"
+                                        aria-label="Example icon button with a menu icon" (click)="add_sim(i)"
+                                        *ngIf="(formats_buy[i].sims.length === 1 ||  formats_buy[i].sims.length === 0)">
+                                        <i class="fas fa-user-plus icon_sell"></i>
+                                        Agregar Sim
+                                    </button>
+
+                                    <button mat-icon-button class="btn_form_add_agent" color="primary"
+                                        aria-label="Example icon button with a menu icon" (click)="deleteSim(i, isim)"
+                                        *ngIf="(formats_buy[i].sims.length === 2)">
+                                        <i class="fas fa-user-minus icon_sell"></i>
+                                        Eliminar una Sim
+                                    </button>
+                                </div>
 
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Plataforma de Pago</mat-label>
@@ -119,30 +181,18 @@
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Banco</mat-label>
-                                    <mat-select disableRipple formControlName="banco">
-                                        <mat-option *ngFor="let nombre of bancos" value={{nombre.codigo}}>
-                                            {{nombre.nombre}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Numero de cuenta POS</mat-label>
-                                    <input matInput formControlName="numero_cuenta_pos" placeholder="1234" type="text">
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Precio USD</mat-label>
-                                    <input matInput disabled value={{price_model(buies[i])}}>
-                                </mat-form-field>
-
-                                <h6>Otros</h6>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Plan</mat-label>
                                     <mat-select disableRipple formControlName="plan">
                                         <mat-option *ngFor="let plan of planes" value={{plan.id}}>
                                             {{plan.nombre}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Tipo de Venta</mat-label>
+                                    <mat-select disableRipple formControlName="tipo_venta">
+                                        <mat-option *ngFor="let nombre of fraccion_pagos" value={{nombre.id}}>
+                                            {{nombre.nombre}} </mat-option>
                                     </mat-select>
                                 </mat-form-field>
 
@@ -160,55 +210,39 @@
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Banco</mat-label>
+                                    <mat-select disableRipple formControlName="banco">
+                                        <mat-option *ngFor="let nombre of bancos" value={{nombre.codigo}}>
+                                            {{nombre.nombre}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Numero de cuenta POS</mat-label>
+                                    <input matInput formControlName="numero_cuenta_pos" placeholder="1234" type="text"
+                                        (keypress)="onlyNumberKey($event)" maxlength="20">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Código de afiliado</mat-label>
-                                    <input matInput formControlName="cod_afiliado" placeholder="1234" type="text">
+                                    <input matInput formControlName="cod_afiliado" placeholder="1234" type="text"
+                                        (keypress)="onlyNumberKey($event)" maxlength="8">
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Terminal</mat-label>
-                                    <input matInput formControlName="terminal" placeholder="1234" type="text">
+                                    <input matInput formControlName="terminal" placeholder="1234" type="text"
+                                        (keypress)="onlyNumberKey($event)" maxlength="2">
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Tipo de Venta</mat-label>
-                                    <mat-select disableRipple formControlName="tipo_venta">
-                                        <mat-option *ngFor="let nombre of fraccion_pagos" value={{nombre.id}}>
-                                            {{nombre.nombre}} </mat-option>
-                                    </mat-select>
+                                    <mat-label>Precio USD</mat-label>
+                                    <input matInput disabled value={{price_model(buies[i])}}>
                                 </mat-form-field>
-                            </div>
-                            <h6>SimCard</h6>
-                            <div class="container_agent">
-                                <form [formGroup]="formats_buy[i].sims[isim]" class="formulario"
-                                    *ngFor="let format of formats_buy[i].sims; let isim=index">
-
-                                    <mat-form-field appearance="outline" class="container_box_space">
-                                        <mat-label>Operadora Tlf.</mat-label>
-                                        <mat-select disableRipple formControlName="operadora">
-                                            <mat-option *ngFor="let sim of operadoras" value={{sim.sim_id}}>
-                                                {{sim.sim}} </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </form>
-
-                                <div>
-                                    <button class="btn_form_add_agent" mat-icon-button color="primary"
-                                        aria-label="Example icon button with a menu icon" (click)="add_sim(i)"
-                                        *ngIf="(formats_buy[i].sims.length === 1 ||  formats_buy[i].sims.length === 0)">
-                                        <i class="fas fa-user-plus icon_sell"></i>
-                                        Agregar Sim
-                                    </button>
-
-                                    <button mat-icon-button class="btn_form_add_agent" color="primary"
-                                        aria-label="Example icon button with a menu icon" (click)="deleteSim(i, isim)"
-                                        *ngIf="(formats_buy[i].sims.length === 2)">
-                                        <i class="fas fa-user-minus icon_sell"></i>
-                                        Eliminar una Sim
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </form>
+
                     <div>
                         <button class="btn_form_add_agent" mat-icon-button color="primary"
                             aria-label="Example icon button with a menu icon" (click)="add_buy()"
@@ -218,10 +252,16 @@
                         </button>
                         <br>
                     </div>
-                    <!-- Bootn de siguiente strepper -->
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Monto total USD</mat-label>
+                        <input matInput disabled value={{total_price()}}>
+                    </mat-form-field>
+
                     <div>
                         <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                        <button class="stepBtn" mat-raised-button matStepperNext>Siguiente</button>
+                        <button class="stepBtn" mat-raised-button matStepperNext
+                            [disabled]="buiesInvalid()">Siguiente</button>
                     </div>
                 </mat-step>
 
@@ -251,4 +291,3 @@
         </div>
     </div>
 </section>
-

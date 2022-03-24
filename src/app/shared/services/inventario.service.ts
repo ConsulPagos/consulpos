@@ -360,6 +360,24 @@ export class InventarioService {
     return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
+  doDisponibilidadAlmacen(data) {
+    var path = `/stock/disponibilidadPorAlmacen`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  doDetalleAlmacen(data) {
+    var path = `/stock/detalleDisponibilidadPorAlmacen`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
 
 
 }

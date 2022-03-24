@@ -1,15 +1,18 @@
 <section id="addClient">
-    <div class="title">
-        <div class="d-flex">
+    <!-- <div class="structur">
+        <div>
             <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]">
                 <li class="fas fa-arrow-left"></li>
             </a>
         </div>
-    </div>
-
+    </div> -->
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
+            <p class="title_mother text-uppercase">
+                Agregar Cliente
+            </p>
+
             <mat-vertical-stepper linear #stepper>
                 <ng-template matStepperIcon="edit">
                     <li class="fa fa-check"></li>
@@ -22,8 +25,9 @@
                             <h6>Documento RIF</h6>
                             <mat-form-field appearance="outline" class="container_box">
                                 <mat-label>Tipo</mat-label>
-                                <mat-select disableRipple formControlName="tipo_doc" (selectionChange)="getDoc($event.value)">
-                                    <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.id}}>
+                                <mat-select disableRipple formControlName="tipo_doc"
+                                    (selectionChange)="getDoc($event.value)">
+                                    <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
                                         {{t_doc.t_doc}}
                                     </mat-option>
                                 </mat-select>
@@ -39,11 +43,12 @@
                             <div class="container_error_sell"
                                 *ngIf="identity.get('rif').errors && identity.get('rif').hasError('existe')">
                                 <span class="error">El cliente ya existe.</span>
-                                <button class="btn_space" mat-button color='accent' 
-                                [routerLink]="['/admin/app',{ outlets: { adr: ['add-venta'] } }]">
+                                <button class="btn_space" mat-button color='accent'
+                                    [routerLink]="['/admin/app',{ outlets: { adr: ['add-venta'] } }]">
                                     <li class="fa fa-cart-plus icon_sell"></li><span>Crear Venta</span>
                                 </button>
                             </div>
+
                         </div>
                     </form>
                     <div *ngIf="!search_client">
@@ -105,7 +110,7 @@
                                 <mat-form-field appearance="outline" class="container_box">
                                     <mat-label>Tipo</mat-label>
                                     <mat-select disableRipple formControlName="c_t_doc_cedula">
-                                        <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.id}}>
+                                        <mat-option *ngFor="let t_doc of t_docs_representantes" value={{t_doc.id}}>
                                             {{t_doc.t_doc}}
                                         </mat-option>
                                     </mat-select>
@@ -138,15 +143,20 @@
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Profesión</mat-label>
-                                <input matInput formControlName="profesion" placeholder="Comerciante" type="text"
-                                    maxlength="255" minlength="3">
+                                <mat-select disableRipple formControlName="profesion">
+                                    <mat-option *ngFor="let profesion of profesiones" value={{profesion.id}}>
+                                        {{profesion.nombre}} </mat-option>
+                                </mat-select>
                             </mat-form-field>
-
                         </form>
 
                         <div>
-                            <button class="stepBtn" mat-raised-button matStepperNext
-                                [disabled]="data_vr.invalid">Siguiente</button>
+                            <button class="stepBtn" mat-raised-button matStepperPrevious>
+                                Anterior
+                            </button>
+                            <button class="stepBtn" mat-raised-button matStepperNext [disabled]="data_vr.invalid">
+                                Siguiente
+                            </button>
                         </div>
                     </mat-step>
                 </div>
@@ -159,13 +169,13 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Razón Social</mat-label>
                                 <input matInput formControlName="razon_social" placeholder="ConsuPagos" type="text"
-                                    maxlength="255" minlength="10">
+                                    maxlength="255" minlength="5">
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Nombre Comercial</mat-label>
                                 <input matInput formControlName="nombre_comercial" placeholder="ConsuPagos" type="text"
-                                    maxlength="255" minlength="10">
+                                    maxlength="255" minlength="5">
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="container_box_space">
@@ -229,7 +239,8 @@
                             <h6>Datos Geográficos</h6>
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Estado</mat-label>
-                                <mat-select disableRipple formControlName="estado" (selectionChange)="getEstado($event.value)">
+                                <mat-select disableRipple formControlName="estado"
+                                    (selectionChange)="getEstado($event.value)">
                                     <mat-option *ngFor="let estado of estados" value={{estado.id}}>
                                         {{estado.estado}} </mat-option>
                                 </mat-select>
@@ -237,7 +248,8 @@
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Municipio</mat-label>
-                                <mat-select disableRipple formControlName="municipio" (selectionChange)="getMunicipio($event.value)">
+                                <mat-select disableRipple formControlName="municipio"
+                                    (selectionChange)="getMunicipio($event.value)">
                                     <mat-option *ngFor="let municipio of municipios" value={{municipio.id}}>
                                         {{municipio.municipio}} </mat-option>
                                 </mat-select>
@@ -271,7 +283,7 @@
                                 <mat-form-field class="container_box_direction" appearance="outline">
                                     <mat-label>Dirección</mat-label>
                                     <textarea matInput placeholder="Av. Ernesto Blohm" formControlName="direccion"
-                                        type="text" maxlength="510" minlength="20">
+                                        type="text" maxlength="510" minlength="5">
                                 </textarea>
                                 </mat-form-field>
                             </div>
@@ -280,16 +292,7 @@
                                 <mat-form-field class="container_box_direction" appearance="outline">
                                     <mat-label>Punto de referencia</mat-label>
                                     <textarea matInput placeholder="Pasando Proteccion animal"
-                                        formControlName="pto_referencia" type="text" maxlength="510" minlength="20">
-                                </textarea>
-                                </mat-form-field>
-                            </div>
-
-                            <div class="direction">
-                                <mat-form-field class="container_box_direction" appearance="outline">
-                                    <mat-label>Localidad</mat-label>
-                                    <textarea matInput placeholder="Pasando Proteccion animal"
-                                        formControlName="localidad" type="text" maxlength="510" minlength="20">
+                                        formControlName="pto_referencia" type="text" maxlength="510" minlength="5">
                                 </textarea>
                                 </mat-form-field>
                             </div>
@@ -394,7 +397,8 @@
                                     <mat-form-field appearance="outline">
                                         <mat-label>Correo Electrónico</mat-label>
                                         <input matInput formControlName="email_repre"
-                                            placeholder="ejemplo@consulpagos.com" type="email">
+                                            placeholder="ejemplo@consulpagos.com" type="email"
+                                            (keypress)="onlyCaracteres($event)">
                                     </mat-form-field>
 
                                     <!-- <div>
@@ -423,8 +427,7 @@
                             <div>
                                 <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
 
-                                <button class="stepBtn" mat-raised-button [disabled]="agents.invalid"
-                                    (click)="submit()">
+                                <button class="stepBtn" mat-raised-button [disabled]="agents.invalid" (click)="save()">
                                     Finalizar
                                 </button>
                             </div>

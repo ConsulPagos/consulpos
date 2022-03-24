@@ -1,10 +1,12 @@
 export const constant = {
     SCOD: "scod",
     EMAIL: "email",
-    R0:"0",
-    R1:"1",
-    R4:"4",
-    USER:"user",
+    R0: "0",
+    R1: "1",
+    R4: "4",
+    USER: "user",
+    MARCAS: "marcas",
+    PROFESIONES: "profesiones",
 
 
     T_DOCS: 't_doc',
@@ -24,8 +26,8 @@ export const constant = {
 
     OCCS: 'occs',
 
-    T_PAGOS:'t_pagos',
-    
+    T_PAGOS: 't_pagos',
+    T_DOCS_REPRESENTANTES: 't_docs_representantes',
 
     RAZON_SOCIAL: 'razon_social',
     NOMBRE_COMERCIAL: 'nombre_comercial',
@@ -35,25 +37,25 @@ export const constant = {
     CONTRIBUYENTE_ID: 'contribuyente_id',
 
     CORREO: 'correo',
-    TELEFONO_LOCAL:'telefono_local',
-    TELEFONO_MOVIL:'telefono_movil',
+    TELEFONO_LOCAL: 'telefono_local',
+    TELEFONO_MOVIL: 'telefono_movil',
 
-    ESTADOS:'estados',
-    ESTADO_ID:'estado_id',
+    ESTADOS: 'estados',
+    ESTADO_ID: 'estado_id',
 
-    MUNICIPIOS:'municipio',
-    MUNICIPIO_ID:'municipio_id',
+    MUNICIPIOS: 'municipio',
+    MUNICIPIO_ID: 'municipio_id',
 
-    GENEROS:'genero',
+    GENEROS: 'genero',
 
-    PARROQUIAS:'parroquias',
-    PARROQUIA_ID:'parroquia_id',
+    PARROQUIAS: 'parroquias',
+    PARROQUIA_ID: 'parroquia_id',
 
-    CIUDADES:'ciudades',
-    CIUDAD_ID:'ciudad_id',
+    CIUDADES: 'ciudades',
+    CIUDAD_ID: 'ciudad_id',
 
-    CODPOSTAL:'codpostal',
-    DIRECCION:'direccion',
+    CODPOSTAL: 'codpostal',
+    DIRECCION: 'direccion',
 
     M_CONTACTO: 'medio_contacto',
     M_CONTACTO_ID: 'medio_contacto_id',

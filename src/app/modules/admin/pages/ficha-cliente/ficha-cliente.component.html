@@ -204,9 +204,6 @@
                                                     {{telefono.identificador}}-{{telefono.telefono}}
                                                 </div>
                                             </div>
-                                            <button mat-raised-button style="margin-left: 1rem;" (click)="openDialog()">
-                                                Editar
-                                            </button>
                                         </div>
 
                                         <div class="col-md-12 container_module">
@@ -226,6 +223,30 @@
                                                 {{showClient.fecha_registro}}
                                             </span>
                                         </div>
+
+                                        <div class="col-md-12 container_module">
+                                            <label class="labels title_data">
+                                                Fecha de última Actualización:
+                                            </label>
+                                            <span class="text-capitalize">
+                                                {{showClient.fecha_registro}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngFor="let solicitud of showClient.solicitudes_banco; let data = index"
+                                    class="text-capitalize">
+                                    <h5 class="labels title_data">Datos Registrados {{data + 1}}:</h5>
+                                    <div>
+                                        <div>
+                                            <span>Número afiliado:</span> {{solicitud.afiliado}}
+                                        </div>
+                                        <div>
+                                            <span>Banco:</span> {{solicitud.banco}}
+                                        </div>
+                                        <div>
+                                            <span>Número Cuenta:</span> {{solicitud.cuenta}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -233,76 +254,17 @@
                     </ng-template>
                 </mat-tab>
 
-                <mat-tab label="Estado de Cuenta">
+                <mat-tab label="Estatus de Cobro">
                     <ng-template matTabContent>
                         <app-estado-cuenta [rif]="showClient.rif" [client]="showClient">
                         </app-estado-cuenta>
                     </ng-template>
                 </mat-tab>
 
-                <mat-tab label="Equipos Asociados">
+                <mat-tab label="Productos Asociados">
                     <ng-template matTabContent>
-                        <div class="d-flex justify-content-center align-items-center mb-3" style="padding-top: 2rem;">
-                            <h4 class="text-right">RIF: {{showClient.rif}}</h4>
-                        </div>
-                        <hr>
-                        <div class="container-fluid rounded bg-white mb-5">
-                            <label class="labels title_data">
-
-                            </label>
-                            <div class="col-md-12 container_module container_items" *ngIf="showItemClient">
-                                <div *ngFor="let item of showItemClient.items; let equipo = index"
-                                    class="text-capitalize">
-                                    <h4 class="labels title_data">Equipo {{equipo + 1}}:</h4>
-
-                                    <div>
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Serial:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{item.cod_serial}}
-                                            </span>
-                                        </div>
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Marca:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{item.marca}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Modelo:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{item.modelo}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Precio:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{item.precio}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Estatus del Equipo:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{item.status_desc}}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <app-equipos-asociados [rif]="showClient.rif">
+                        </app-equipos-asociados>
                     </ng-template>
                 </mat-tab>
 

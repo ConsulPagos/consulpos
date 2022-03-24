@@ -29,7 +29,12 @@ export class AdminComponent implements OnInit {
 
 
 
-  constructor(private cdr: ChangeDetectorRef, private sesion: SesionService, private crypto: CryptoService, private storage: StorageService, private loader: LoaderService) { }
+  constructor(
+    private cdr: ChangeDetectorRef, 
+    private sesion: SesionService, 
+    private crypto: CryptoService, 
+    private storage: StorageService, 
+    private loader: LoaderService) { }
 
 
   ngOnInit(): void {
@@ -68,10 +73,14 @@ export class AdminComponent implements OnInit {
       this.storage.store(constant.PARROQUIAS, JSON.stringify(verifyResponse.parroquias))
       this.storage.store(constant.T_CLIENTES, JSON.stringify(verifyResponse.t_clientes))
       this.storage.store(constant.T_DOCS, JSON.stringify(verifyResponse.t_docs))
+      this.storage.store(constant.T_DOCS_REPRESENTANTES, JSON.stringify(verifyResponse.t_docs_representantes))
       this.storage.store(constant.ACTIVIDAD_COMERCIAL, JSON.stringify(verifyResponse.actividades_comerciales))
+
+      this.storage.store(constant.PROFESIONES, JSON.stringify(verifyResponse.profesiones))
 
       //this.storage.store(constant.OPERADORAS, JSON.stringify(verifyResponse.operadoras))
       this.storage.store(constant.MODELOS, JSON.stringify(verifyResponse.modelos))
+      this.storage.store(constant.MARCAS, JSON.stringify(verifyResponse.marcas))
       this.storage.store(constant.PLANES, JSON.stringify(verifyResponse.planes))
       this.storage.store(constant.PLATAFORMAS, JSON.stringify(verifyResponse.plataformas))
       this.storage.store(constant.T_COBROS, JSON.stringify(verifyResponse.t_cobros))
@@ -79,6 +88,7 @@ export class AdminComponent implements OnInit {
       this.storage.store(constant.GENEROS, JSON.stringify(verifyResponse.generos))
       this.storage.store(constant.MONEDAS, JSON.stringify(verifyResponse.monedas))
       this.storage.store(constant.TIPO_TASAS, JSON.stringify(verifyResponse.tipo_tasas))
+      this.storage.store(constant.TIPOS_DIFERIDO, JSON.stringify(verifyResponse.tipos_diferido))
 
       this.storage.store(constant.OCCS, JSON.stringify(verifyResponse.occs))
       this.storage.store(constant.T_PAGOS, JSON.stringify(verifyResponse.t_pagos))

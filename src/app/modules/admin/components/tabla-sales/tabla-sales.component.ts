@@ -61,7 +61,7 @@ export class TablaSalesComponent implements OnInit {
   }
 
   identity = new FormGroup({
-    rzo: new FormControl(''),
+    rif: new FormControl(''),
   });
 
   ngAfterViewInit() {
@@ -95,7 +95,7 @@ export class TablaSalesComponent implements OnInit {
             correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
             scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
             init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
-            limit_row: this.crypto.encryptJson(((this.paginator.pageIndex + 1) * this.PAGESIZE).toString()),
+            limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
           }))
           return this.venta.doAllSale(`${this.session.getDeviceId()};${data}`)
         }),
@@ -135,7 +135,7 @@ export class TablaSalesComponent implements OnInit {
   }
 
   _findSale() {
-    var filter = this.identity.get('rzo').value
+    var filter = this.identity.get('rif').value
     this.statusFilter = true;
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
@@ -150,7 +150,6 @@ export class TablaSalesComponent implements OnInit {
       console.log(this.crypto.decryptString(res))
       this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-      this.toaster.success(this.ShowSalesResponse.M)
       this.ventas = this.ShowSalesResponse.ventas
       this.dataSource = new MatTableDataSource(this.ventas);
     })

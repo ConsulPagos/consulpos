@@ -1,0 +1,42 @@
+<section id="inventario-detalle">
+    <div class="title">
+        <div class="d-flex">
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['super-admin-panel'] } }]">
+                <li class="fas fa-arrow-left"></li>
+            </a>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <mat-tab-group>
+                <mat-tab label="Información">
+                    <ng-template matTabContent>
+                        <div class="container-fluid rounded bg-white mb-5">
+                            <div class="row container-ficha">
+                                <div class="col-lg-4 col-md-12">
+                                    <h4 class="text-center">
+                                        Inventario Detallado Almacen
+                                    </h4>
+
+                                    {{this.inventarios.almacen}}
+                                    {{this.inventarios.ciudad}}
+                                    {{this.inventarios.cod_postal}}
+                                    {{this.inventarios.occ}}
+                                    {{this.inventarios.parroquia}}
+                                    {{this.inventarios.direccion}}
+                                    <div *ngFor="let detalle of this.inventarios.detalle_inventario">
+                                        {{detalle.categoria}}
+                                        {{detalle.modelo}}
+                                        {{detalle.total}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>
