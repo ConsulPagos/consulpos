@@ -5,7 +5,7 @@ name: PROD CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
