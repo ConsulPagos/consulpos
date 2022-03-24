@@ -6,6 +6,8 @@ cd /home/despliegues/front
 
 nvm install 12
 
+nvm use 12.22
+
 npm install -g @angular/cli > /dev/null
 
 ng build --prod
