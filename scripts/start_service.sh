@@ -15,4 +15,3 @@ ng build --prod
 # rm -rf /var/www/html/*
 
 # cp -rf ./dist/* /var/www/html
-
