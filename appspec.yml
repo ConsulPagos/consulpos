@@ -9,6 +9,6 @@ permissions:
     mode: 777
 hooks:
   ApplicationStart:
-    - location: scripts/start_seervice.sh
+    - location: scripts/start_service.sh
       timeout: 600
 #      runas: consuladmin
