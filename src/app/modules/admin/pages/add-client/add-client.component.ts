@@ -81,7 +81,10 @@ export class AddClientComponent implements OnInit {
 
   }
 
-  //FORM DEL PRIMER STEP\\
+  getDoc(t_cliente: any): void {
+    this.resetStatus()
+    // this.tipos_clientes = JSON.parse(this.storage.get(constant.T_CLIENTES)).t_clientes.filter(c => c.t == t_cliente)
+  }
 
 
   //FORM DEL SEGUNDO STEP\\
@@ -353,11 +356,6 @@ export class AddClientComponent implements OnInit {
     this.municipios = JSON.parse(this.storage.get(constant.MUNICIPIOS)).municipios.filter(c => c.id_estado == id)
     this.ciudades = JSON.parse(this.storage.get(constant.CIUDADES)).ciudades.filter(c => c.id_estado == id)
     this.parroquias = JSON.parse(this.storage.get(constant.PARROQUIAS)).parroquias.filter(c => c.id_municipio == id)
-  }
-
-  getDoc(id: any): void {
-    this.search_client = true;
-    // this.tipos_clientes = JSON.parse(this.storage.get(constant.T_CLIENTES)).t_clientes.filter(c => c.letra == id)
   }
 
   getMunicipio(id: any): void {
