@@ -4,7 +4,7 @@
 
 cd /home/despliegues/front
 
-npm install -g node@12.20 --force
+# npm install -g node@16 --force
 
 # npm install -g @angular/cli > /dev/null
 
