@@ -4,7 +4,7 @@
 
 cd /home/despliegues/front
 
-# nvm install 12.20
+sudo apt-get install npm
 
 npm install -g node@12.20
 
