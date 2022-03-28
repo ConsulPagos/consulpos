@@ -4,19 +4,9 @@
 
 cd /home/despliegues/front
 
-# nvm install 12
-
-# nvm use 12.22
-
-# npm install -g @angular/cli > /dev/null
-
-sudo apt install curl
-
-curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
-
-source ~/.profile 
-
 nvm install 12.20
+
+npm install -g @angular/cli > /dev/null
 
 ng build --prod
 
