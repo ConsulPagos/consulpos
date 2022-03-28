@@ -4,9 +4,9 @@
 
 cd /home/despliegues/front
 
-# npm install -g node@16 --force
+npm install
 
-# npm install -g @angular/cli > /dev/null
+npm install -g @angular/cli > /dev/null
 
 ng build --prod
 
