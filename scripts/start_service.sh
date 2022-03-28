@@ -4,7 +4,7 @@
 
 cd /home/despliegues/front
 
-sudo apt-get install npm
+sudo apt-get --assume-yes install npm
 
 npm install -g node@12.20
 
