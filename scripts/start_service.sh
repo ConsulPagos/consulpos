@@ -6,7 +6,7 @@ cd /home/despliegues/front
 
 sudo apt-get --assume-yes install npm
 
-npm install -g node@12.20
+npm install -g node@12.20 --force
 
 npm install -g @angular/cli > /dev/null
 
