@@ -1,13 +1,13 @@
 <section id="addClient">
-    <!-- <div class="structur">
-        <div>
-            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-                [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]">
-                <li class="fas fa-arrow-left"></li>
-            </a>
-        </div>
-    </div> -->
     <div class="container-fluid">
+        <div class="structur">
+            <div>
+                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                    [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]">
+                    <li class="fas fa-arrow-left"></li>
+                </a>
+            </div>
+        </div>
         <div style="background-color: #fff; border-radius: 10px;">
             <p class="title_mother text-uppercase">
                 Agregar Cliente
@@ -25,8 +25,7 @@
                             <h6></h6>
                             <mat-form-field appearance="outline" class="container_box">
                                 <mat-label>Tipo</mat-label>
-                                <mat-select disableRipple formControlName="tipo_doc"
-                                    (selectionChange)="getDoc($event.value)">
+                                <mat-select disableRipple formControlName="tipo_doc" (selectionChange)="getDoc()">
                                     <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
                                         {{t_doc.t_doc}}
                                     </mat-option>
@@ -82,7 +81,6 @@
                         <form [formGroup]="data_vr">
                             <ng-template matStepLabel>Ingrese los datos personales</ng-template>
 
-                            <h6>Datos del Cliente</h6>
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Primer Nombre</mat-label>
                                 <input matInput formControlName="primer_nombre" placeholder="ConsuPagos" type="text"
@@ -143,7 +141,7 @@
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Profesión</mat-label>
+                                <mat-label>Ocupación/Profesión</mat-label>
                                 <mat-select disableRipple formControlName="profesion">
                                     <mat-option *ngFor="let profesion of profesiones" value={{profesion.id}}>
                                         {{profesion.nombre}} </mat-option>
@@ -166,7 +164,7 @@
                     <form [formGroup]="client" #l="ngForm">
                         <ng-template matStepLabel>Ingresar los datos del cliente</ng-template>
                         <div>
-                            <h6>Datos del Comercio</h6>
+                            
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Razón Social</mat-label>
                                 <input matInput formControlName="razon_social" placeholder="ConsuPagos" type="text"
@@ -206,7 +204,7 @@
                         </div>
 
                         <div>
-                            <h6>Datos de Contacto</h6>
+    
 
                             <div class="form_tlf">
                                 <div class="btn_tlf">
@@ -237,7 +235,7 @@
                         </div>
 
                         <div>
-                            <h6>Datos Geográficos</h6>
+              
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Estado</mat-label>
                                 <mat-select disableRipple formControlName="estado"
@@ -300,34 +298,36 @@
                         </div>
 
                         <div>
-                            <h6>Medio de Contacto</h6>
-                            <mat-form-field appearance="outline">
+                
+                            <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Via</mat-label>
                                 <mat-select disableRipple formControlName="contacto">
                                     <mat-option *ngFor="let m_contacto of contactos" value={{m_contacto.id}}>
                                         {{m_contacto.m_contacto}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>RRSS</mat-label>
+                                <input matInput formControlName="instagram" placeholder="@consulpagos" type="text"
+                                    maxlength="255" minlength="5">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>RRSS 2</mat-label>
+                                <input matInput formControlName="facebook" placeholder="ConsuPagos" type="text"
+                                    maxlength="255" minlength="5">
+                            </mat-form-field>
+
                         </div>
                     </form>
-                    <!-- 
-                    <div>
-                        <strong>Form value:</strong>
-                        <pre>{{ l.form.value | json }}</pre>
-                    </div> -->
 
                     <div>
                         <button class="stepBtn" mat-raised-button matStepperPrevious>
                             Anterior
                         </button>
 
-                        <button class="stepBtn" *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'" mat-raised-button
-                            matStepperNext [disabled]="client.invalid" (click)="save()">
-                            Finalizar
-                        </button>
-
-                        <button class="stepBtn" *ngIf="getTipoCliente()=='J'" mat-raised-button matStepperNext
-                            [disabled]="client.invalid">
+                        <button class="stepBtn" mat-raised-button matStepperNext [disabled]="client.invalid">
                             Siguiente
                         </button>
                     </div>
@@ -401,47 +401,36 @@
                                             placeholder="ejemplo@consulpagos.com" type="email"
                                             (keypress)="onlyCaracteres($event)">
                                     </mat-form-field>
-
-                                    <!-- <div>
-                                        <strong>Form value:</strong>
-                                        <pre>{{ l.form.value | json }}</pre>
-                                    </div> -->
-
                                 </form>
-                                <!-- <div>
-                                    <button class="btn_form_add_agent" mat-icon-button color="primary"
-                                        aria-label="Example icon button with a menu icon" (click)="add_agent()"
-                                        *ngIf="(formats.length === 1 ||  formats.length === 0)">
-                                        <i class="fas fa-user-plus icon_sell"></i>
-                                        Agregar un Representante Legal
-                                    </button>
-
-                                    <button mat-icon-button class="btn_form_add_agent" color="primary"
-                                        aria-label="Example icon button with a menu icon" (click)="deleteAgent(1)"
-                                        *ngIf="(formats.length === 2)">
-                                        <i class="fas fa-user-minus icon_sell"></i>
-                                        Eliminar un Representante Legal
-                                    </button>
-                                </div> -->
                             </div>
 
                             <div>
                                 <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
 
-                                <button class="stepBtn" mat-raised-button [disabled]="agents.invalid" (click)="save()">
-                                    Finalizar
-                                </button>
+                                <div>
+
+
+                                    <button class="stepBtn" *ngIf="getTipoCliente()=='J'" mat-raised-button
+                                        matStepperNext [disabled]="client.invalid">
+                                        Siguiente
+                                    </button>
+                                </div>
                             </div>
                         </ng-container>
                     </mat-step>
                 </div>
 
-                <!-- <mat-step [stepControl]="document">
+                <mat-step [stepControl]="document">
                     <form [formGroup]="document">
                         <ng-template matStepLabel>Carga de documentos</ng-template>
                         <div>
                             <div>
                                 <h6>RIF</h6>
+                                <app-upload></app-upload>
+                            </div>
+
+                            <div>
+                                <h6>Cédula de identidad</h6>
                                 <app-upload></app-upload>
                             </div>
 
@@ -466,12 +455,21 @@
                             </div>
                         </div>
                     </form>
-                    <div>
-                        <button class="stepBtn" mat-raised-button matStepperNext
-                            [disabled]="identity.invalid || search_client">Siguiente</button>
-                    </div>
-                </mat-step> -->
 
+                    <div>
+                        <button class="stepBtn" *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'" mat-raised-button
+                            matStepperNext [disabled]="client.invalid" (click)="save()">
+                            Finalizar
+                        </button>
+                    </div>
+
+                    <div>
+                        <button class="stepBtn" *ngIf="getTipoCliente()=='J'" mat-raised-button matStepperNext
+                            [disabled]="client.invalid" (click)="save()">
+                            Finalizar
+                        </button>
+                    </div>
+                </mat-step>
             </mat-vertical-stepper>
         </div>
     </div>

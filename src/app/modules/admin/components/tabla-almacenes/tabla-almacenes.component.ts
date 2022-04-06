@@ -43,7 +43,7 @@ export class TablaAlmacenesComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   showAlmacenesResponse: ShowAlmacenesResponse;
   statusFilter = false;
-  PAGESIZE = 12
+  PAGESIZE = 25
 
   constructor(
     private session: SesionService,

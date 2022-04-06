@@ -104,6 +104,13 @@ import { MoverInventarioComponent } from './pages/mover-inventario/mover-inventa
 import { CargarInventarioComponent } from './pages/cargar-inventario/cargar-inventario.component';
 import { InventarioDetalleComponent } from './pages/inventario-detalle/inventario-detalle.component';
 import { TablaInventarioComponent } from './components/tabla-inventario/tabla-inventario.component';
+import { PedidosComponent } from './pages/pedidos/pedidos.component';
+import { AddPedidosComponent } from './pages/add-pedidos/add-pedidos.component';
+import { EditPedidosComponent } from './pages/edit-pedidos/edit-pedidos.component';
+import { TablaPedidosComponent } from './components/tabla-pedidos/tabla-pedidos.component';
+import { CargarInventarioSimComponent } from './pages/cargar-inventario-sim/cargar-inventario-sim.component';
+import { ModalKeySoComponent } from './components/modal-key-so/modal-key-so.component';
+import { ModalCambioAlmacenComponent } from './components/modal-cambio-almacen/modal-cambio-almacen.component';
 
 
 @NgModule({
@@ -197,6 +204,13 @@ import { TablaInventarioComponent } from './components/tabla-inventario/tabla-in
     CargarInventarioComponent,
     InventarioDetalleComponent,
     TablaInventarioComponent,
+    PedidosComponent,
+    AddPedidosComponent,
+    EditPedidosComponent,
+    TablaPedidosComponent,
+    CargarInventarioSimComponent,
+    ModalKeySoComponent,
+    ModalCambioAlmacenComponent,
   ],
 
   imports: [

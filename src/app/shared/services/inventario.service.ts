@@ -378,6 +378,84 @@ export class InventarioService {
     return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
+  doCargarInventarioDePos(data) {
+    var path = `/stock/cargarInventarioDePos`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
 
+  doMoverInventarioDePos(data) {
+    var path = `/stock/moverInventario`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
 
+  doListarPosConfigurados(data) {
+    var path = `/stock/listarPosConfigurados`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  doConfirmarConfiguracionPos(data) {
+    var path = `/stock/confirmarConfiguracionPos`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  doListarPedidos(data) {
+    var path = `/stock/listarPedidos`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  doEncontrarPedidos(data) {
+    var path = `/stock/encontrarPedidos`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  doCrearPedido(data) {
+    var path = `/stock/crearPedido`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  doPedidosAbiertos(data) {
+    var path = `/stock/pedidosAbiertos`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  doCoprobarSerialItem(data) {
+    var path = `/stock/comprobarExistenciaItem`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
 }

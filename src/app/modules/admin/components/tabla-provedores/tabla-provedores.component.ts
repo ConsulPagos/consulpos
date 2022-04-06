@@ -45,7 +45,7 @@ export class TablaProvedoresComponent implements OnInit {
   defaultResponse: DefaultResponse;
   statusFilter = false;
 
-  PAGESIZE = 12
+  PAGESIZE = 25
 
   constructor(
     private session: SesionService,

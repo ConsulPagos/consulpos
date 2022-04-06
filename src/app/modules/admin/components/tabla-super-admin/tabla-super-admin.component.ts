@@ -55,7 +55,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
   @Output() editUser = new EventEmitter<any>();
   @Output() showUser = new EventEmitter<any>();
 
-  PAGESIZE = 12
+  PAGESIZE = 25
 
   constructor(
     private session: SesionService,

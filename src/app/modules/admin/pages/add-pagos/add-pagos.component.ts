@@ -15,6 +15,7 @@ import { constant } from 'src/app/shared/utils/constant';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { DefaultDecrypter } from 'src/app/models/default_response';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
+import { BancoInterface } from 'src/app/models/banco';
 
 @Component({
   selector: 'app-add-pagos',
@@ -35,6 +36,7 @@ export class AddPagosComponent implements OnInit {
   tasas: any[];
   tasa: TasaInterface[];
   totalPago: number = 0;
+  bancos: BancoInterface[];
 
   constructor(
     private crypto: CryptoService,
@@ -73,6 +75,7 @@ export class AddPagosComponent implements OnInit {
     this.getTasas()
     this.tipoPagos()
     this.add_pay()
+    this.bancos = JSON.parse(this.storage.get(constant.BANCOS)).bancos
   }
 
   add_pay() {
@@ -236,10 +239,6 @@ export class AddPagosComponent implements OnInit {
         this.submit()
       }
     })
-  }
-
-  deleteimg() {
-
   }
 
   getTasas() {

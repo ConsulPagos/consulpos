@@ -41,7 +41,7 @@ export class TablaSalesComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<any>(true, []);
   statusFilter = false;
-  PAGESIZE = 12;
+  PAGESIZE = 25;
 
   @Output() editSale = new EventEmitter<any>();
   @Output() showSale = new EventEmitter<any>();

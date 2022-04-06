@@ -112,7 +112,7 @@ export class EditClientComponent implements OnInit {
       cedula: new FormControl(this.editClient.c_natural.c_doc, [Validators.required]),
       genero: new FormControl(this.editClient.c_natural.id_genero, [Validators.required]),
       fecha_nacimiento: new FormControl(this.editClient.c_natural.fecha_nacimiento, [Validators.required]),
-      profesion: new FormControl(this.editClient.c_natural.profesion.id_profesion, [Validators.required]),
+      profesion: new FormControl(this.editClient.c_natural.profesion?.id_profesion, [Validators.required]),
     });
 
     this.agent = new FormGroup({
@@ -255,6 +255,8 @@ export class EditClientComponent implements OnInit {
         if_legal: this.crypto.encryptJson("false"),
       }
     }
+
+    console.log(this.data_vr)
     
     const dataS = this.crypto.encryptString(JSON.stringify(data));
 

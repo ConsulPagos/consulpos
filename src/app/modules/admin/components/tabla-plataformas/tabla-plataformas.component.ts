@@ -45,7 +45,7 @@ export class TablaPlataformasComponent implements OnInit {
   showPlataformasResponse: ShowPlataformasResponse;
   statusFilter = false;
 
-  PAGESIZE = 12
+  PAGESIZE = 25
 
   constructor(
     private session: SesionService,

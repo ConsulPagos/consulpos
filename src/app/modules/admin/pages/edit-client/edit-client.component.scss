@@ -126,3 +126,7 @@
     width: 100%;
     flex-wrap: wrap;
 }
+
+::ng-deep .mat-vertical-stepper-header{
+    pointer-events: none !important;
+}

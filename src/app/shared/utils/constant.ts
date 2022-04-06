@@ -7,6 +7,9 @@ export const constant = {
     USER: "user",
     MARCAS: "marcas",
     PROFESIONES: "profesiones",
+    PROVEEDORES:"proveedores",
+    ALMACENES:"almacenes",
+    
 
 
     T_DOCS: 't_doc',

@@ -46,7 +46,7 @@ export class TablaInventarioComponent implements OnInit {
   resultsLength;
   firstLoading = false;
   statusFilter = false;
-  PAGESIZE = 10
+  PAGESIZE = 25
 
   constructor(
     private session: SesionService,

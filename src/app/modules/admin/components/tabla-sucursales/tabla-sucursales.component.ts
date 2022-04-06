@@ -45,7 +45,7 @@ export class TablaSucursalesComponent implements OnInit {
   showSucursalesResponse: ShowSucursalesResponse;
   statusFilter = false;
 
-  PAGESIZE = 12
+  PAGESIZE = 25
 
   constructor(
     private session: SesionService,

@@ -36,6 +36,10 @@ import { SaleRequestInterface } from 'src/app/models/sales';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ShowClientsDecrypter, ShowClientsResponse } from 'src/app/models/showclients_response';
 import { MarcaInterface } from 'src/app/models/marca';
+import { CategoriaInterface } from 'src/app/models/categoria';
+import { ValidacionCategoriasDecrypter, ValidacionCategoriasResponse } from 'src/app/models/validacioncategoria_response';
+import { ValidacionMarcaDecrypter, ValidacionMarcaResponse } from 'src/app/models/validacionmarca_response';
+import { InventarioService } from 'src/app/shared/services/inventario.service';
 //****************************************************************************************//
 
 @Component({
@@ -62,7 +66,6 @@ export class AddVentaComponent implements OnInit {
   operadoras: OperadoraInterface[];
   tipocobros: TipoCobroInterface[];
   planes: PlanInterface[];
-  marcas: MarcaInterface[];
   tipo_documentos: TipodocumentoInterface[];
   tipos_ventas: TipoventaInterface[];
   occs: OccInterface[];
@@ -71,6 +74,12 @@ export class AddVentaComponent implements OnInit {
   buies = [];
   formats: SimInterface[] = [];
   formats_buy: SaleRequestInterface[] = [];
+
+  marcaResponse: ValidacionMarcaResponse;
+  marcas: MarcaInterface[];
+
+  categoriaResponse: ValidacionCategoriasResponse;
+  categorias: CategoriaInterface[];
 
   //****************************************************************************************//
   constructor(
@@ -84,6 +93,7 @@ export class AddVentaComponent implements OnInit {
     private venta: VentasService,
     private modal: ModalService,
     private loader: LoaderService,
+    private inventario: InventarioService,
   ) {
 
   }
@@ -112,6 +122,8 @@ export class AddVentaComponent implements OnInit {
     this.occUser()
     // this.doSimModels()
     this.add_buy()
+    this.marca()
+    this.categoria()
     this.fraccion_pagos = JSON.parse(this.storage.get(constant.FRACCIONES_PAGO)).fracciones_pago
     this.modelos = JSON.parse(this.storage.get(constant.MODELOS)).modelos
     this.planes = JSON.parse(this.storage.get(constant.PLANES)).planes
@@ -133,7 +145,7 @@ export class AddVentaComponent implements OnInit {
       banco: new FormControl('', [Validators.required]),
       numero_cuenta_pos: new FormControl('', [Validators.required, Validators.minLength(20)]),
       precio_usd: new FormControl(''),
-      lugar_entrega: new FormControl('', [Validators.required]),
+      lugar_entrega: new FormControl(''),
       tipocobro: new FormControl('', [Validators.required]),
       plan: new FormControl('', [Validators.required]),
       tipo_venta: new FormControl('', [Validators.required]),
@@ -329,11 +341,29 @@ export class AddVentaComponent implements OnInit {
     return total
   }
 
-  // name() {
-  //   var name;
-  //   this.validacionresponse.clientes[0].comercio
-  //   return name
-  // }
+  marca() {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+    }))
+    this.inventario.doListMarcas(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.marcaResponse = new ValidacionMarcaDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.marcas = JSON.parse(this.marcaResponse.marcas)
+    })
+  }
+
+  categoria() {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+    }))
+    this.inventario.doListCategorias(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.categoriaResponse = new ValidacionCategoriasDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.categorias = JSON.parse(this.categoriaResponse.categorias)
+    })
+  }
 
   save() {
     this.modal.confirm("Desea confirmar el registro de la venta").subscribe(result => {

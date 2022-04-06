@@ -47,7 +47,7 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
   showclientResponse: ShowClientsResponse;
   statusFilter = false;
 
-  PAGESIZE = 10
+  PAGESIZE = 25
 
   constructor(
     private session: SesionService,

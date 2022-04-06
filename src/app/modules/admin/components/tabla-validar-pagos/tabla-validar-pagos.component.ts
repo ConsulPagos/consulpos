@@ -42,7 +42,7 @@ export class TablaValidarPagosComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<any>(true, []);
   statusFilter = false;
-  PAGESIZE = 12;
+  PAGESIZE = 25;
 
   @Output() addPay = new EventEmitter<any>();
   ShowSalesResponse: ShowSalesResponse;

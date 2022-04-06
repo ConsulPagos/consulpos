@@ -1,17 +1,13 @@
-<!-- Vista de Agregar Cliente -->
 <section id="addClient">
-    <!-- Botones del Navbar -->
-    <div class="title">
-        <div class="d-flex">
-            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]">
-                <li class="fas fa-arrow-left"></li>
-            </a>
-        </div>
-    </div>
-    <!-- ksfjeshekfksehfbjekifhsjhfikfheiu -->
-    <!-- Container de los Componentes -->
     <div class="container-fluid">
+        <div class="structur">
+            <div>
+                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                    [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]">
+                    <li class="fas fa-arrow-left"></li>
+                </a>
+            </div>
+        </div>
         <div style="background-color: #fff; border-radius: 10px;">
             <p class="title_mother text-uppercase">
                 Agregar Venta
@@ -45,7 +41,8 @@
                                     (keypress)="onlyNumberKey($event)" maxlength="11">
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline" class="container_box_space" *ngIf="validacionresponse && validacionresponse.clientes && validacionresponse.clientes.length > 0">
+                            <mat-form-field appearance="outline" class="container_box_space"
+                                *ngIf="validacionresponse && validacionresponse.clientes && validacionresponse.clientes.length > 0">
                                 <mat-label>Nombre Comercial</mat-label>
                                 <input matInput value={{validacionresponse.clientes[0].comercio}} type="text">
                             </mat-form-field>
@@ -122,8 +119,6 @@
                                         <i class="fas fa-minus-circle"></i>
                                     </button>
                                 </div>
-                                <h6>Datos del Equipo</h6>
-
                                 <!-- <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Marca</mat-label>
                                     <mat-select disableRipple formControlName="marca"
@@ -133,6 +128,26 @@
                                     </mat-select>
                                 </mat-form-field> -->
                                 <div class="container_agent">
+
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Categoria</mat-label>
+                                        <mat-select disableRipple formControlName="categoria">
+                                            <mat-option *ngFor="let categoria of categorias" value={{categoria.id}}>
+                                                {{categoria.categoria}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Marca</mat-label>
+                                        <mat-select disableRipple formControlName="marca">
+                                            <mat-option *ngFor="let marca of marcas" value={{marca.id}}>
+                                                {{marca.marca}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+
                                     <mat-form-field appearance="outline" class="container_box_space">
                                         <mat-label>Modelo</mat-label>
                                         <mat-select disableRipple formControlName="modelo">
@@ -204,10 +219,10 @@
                                     </mat-select>
                                 </mat-form-field>
 
-                                <mat-form-field appearance="outline" class="container_box_space">
+                                <!-- <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Lugar de la entrega</mat-label>
                                     <input matInput formControlName="lugar_entrega" placeholder="1234" type="text">
-                                </mat-form-field>
+                                </mat-form-field> -->
 
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Banco</mat-label>
@@ -274,6 +289,24 @@
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>
                                     Referencia Bancaria
+                                </mat-label>
+                                <input matInput formControlName="referencia" placeholder="Referencia Bancaria"
+                                    type="text">
+                            </mat-form-field>
+
+                            <h6>Autorizacion cargo a cuenta</h6>
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>
+                                    Autorizacion cargo a cuenta
+                                </mat-label>
+                                <input matInput formControlName="referencia" placeholder="Referencia Bancaria"
+                                    type="text">
+                            </mat-form-field>
+
+                            <h6>Contrato</h6>
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>
+                                    Contrato
                                 </mat-label>
                                 <input matInput formControlName="referencia" placeholder="Referencia Bancaria"
                                     type="text">

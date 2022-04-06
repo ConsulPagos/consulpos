@@ -12,12 +12,13 @@
 
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
-            <h6 class="title_mother">Agregar pago a la venta {{addPay.number}} - {{addPay.rif}} - {{addPay.razon_social}} - {{addPay.fraccion_desc}}</h6>
+            <h6 class="title_mother">Agregar pago a la venta {{addPay.number}} - {{addPay.rif}} -
+                {{addPay.razon_social}} - {{addPay.fraccion_desc}}</h6>
 
             <form [formGroup]="formtasa">
                 <mat-form-field appearance="outline">
                     <mat-label>Tasa a aplicar USD</mat-label>
-                    <mat-select disableRipple formControlName="dollar" >
+                    <mat-select disableRipple formControlName="dollar">
                         <mat-option *ngFor="let tasa of tasas" value={{tasa.monto}}>
                             {{tasa.monto}}
                         </mat-option>
@@ -34,12 +35,13 @@
                         <i class="fas fa-minus-circle"></i>
                     </button>
                 </div>
-                
+
                 <form [formGroup]="payments[i]">
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Forma de Pago</mat-label>
                         <mat-select disableRipple formControlName="t_pago"
-                            (selectionChange)="buildFormGroup(getInput(payments[i].get('t_pago').value), i)" (click)="clearForm(i)">
+                            (selectionChange)="buildFormGroup(getInput(payments[i].get('t_pago').value), i)"
+                            (click)="clearForm(i)">
                             <mat-option *ngFor="let pago of t_pagos" value={{pago.t_pago_id}}>
                                 {{pago.pago}}
                             </mat-option>
@@ -60,8 +62,7 @@
 
                         <mat-form-field appearance="outline" class="container_box_space">
                             <mat-label>Fecha del Pago</mat-label>
-                            <input matInput [matDatepicker]="dp3" disabled [max]="currentYear"
-                                formControlName="fecha">
+                            <input matInput [matDatepicker]="dp3" disabled [max]="currentYear" formControlName="fecha">
                             <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                             <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                         </mat-form-field>
@@ -71,6 +72,7 @@
                     <div *ngIf="payments[i].get('t_pago').value != null">
                         <div *ngFor="let caracteristica of getInput(payments[i].get('t_pago').value)">
                             <div [ngSwitch]="caracteristica.tipo">
+
                                 <div *ngSwitchCase="'string'">
                                     <mat-form-field class="box" appearance="outline">
                                         <mat-label>{{caracteristica.caracteristica}}</mat-label>
@@ -78,6 +80,17 @@
                                             [formControlName]="caracteristica.id_caracteristica">
                                     </mat-form-field>
                                 </div>
+
+                                <div *ngSwitchCase="'select'">
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Banco</mat-label>
+                                        <mat-select disableRipple [formControlName]="caracteristica.id_caracteristica">
+                                            <mat-option *ngFor="let nombre of bancos" value={{nombre.codigo}}>
+                                                {{nombre.nombre}} </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
                                 <div *ngSwitchCase="'int'">
                                     <mat-form-field class="box" appearance="outline">
                                         <mat-label>{{caracteristica.caracteristica}}</mat-label>
@@ -88,8 +101,8 @@
                                 <div *ngSwitchCase="'file'">
                                     <app-upload
                                         (url)="formDinamic[i].get(caracteristica.id_caracteristica).value=$event">
-
                                     </app-upload>
+
                                     <div *ngIf="formDinamic[i].get(caracteristica.id_caracteristica).value"
                                         class="voucherpay">
                                         <img src={{formDinamic[i].get(caracteristica.id_caracteristica).value}}
@@ -139,8 +152,8 @@
                 </table>
             </div>
             <div>
-                <button mat-raised-button (click)="save()"
-                    [disabled]="isInvalid() || totalPago != 0">Cargar Pago</button>
+                <button mat-raised-button (click)="save()" [disabled]="isInvalid() || totalPago != 0">Cargar
+                    Pago</button>
             </div>
         </div>
     </div>

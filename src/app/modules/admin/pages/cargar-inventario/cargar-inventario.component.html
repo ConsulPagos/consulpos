@@ -1,1 +1,109 @@
-<p>cargar-inventario works!</p>
+<section id="cargar-inventario">
+    <div class="container-fluid">
+        <div>
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['inventario'] } }]">
+                <li class="fas fa-arrow-left"></li>
+            </a>
+        </div>
+        <div style="background-color: #fff; border-radius: 10px;">
+            <div class="box-title d-flex justify-content-center">
+                <h5 class="bold uppercase mt-3">Cargar Inevntario POS</h5>
+            </div>
+            <form [formGroup]="form">
+                <div class="container">
+                    <!-- <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Categoria</mat-label>
+                        <mat-select disableRipple formControlName="categoria">
+                            <mat-option *ngFor="let categoria of categorias" value={{categoria.id}}>
+                                {{categoria.categoria}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+
+                    <!-- <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Marca</mat-label>
+                        <mat-select disableRipple formControlName="marca">
+                            <mat-option *ngFor="let marca of marcas" value={{marca.id}}>
+                                {{marca.marca}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Modelo</mat-label>
+                        <mat-select disableRipple formControlName="modelo" (selectionChange)="clearinputs()">
+                            <mat-option *ngFor="let modelo of modelos" value={{modelo.id}}>
+                                {{modelo.modelo}} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Almacen</mat-label>
+                        <mat-select disableRipple formControlName="almacen">
+                            <mat-option *ngFor="let almacen of almacenes" value={{almacen.almacen_id}}>
+                                {{almacen.nombre}} </mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+
+                    <!-- <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Número de Factura</mat-label>
+                        <input matInput formControlName="factura" placeholder="Número" type="text" maxlength="255"
+                            minlength="3" (keypress)="onlyCaracteres($event)">
+                    </mat-form-field> -->
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Proveedor</mat-label>
+                        <mat-select disableRipple formControlName="proveedor">
+                            <mat-option *ngFor="let provedor of provedores" value={{provedor.proveedor_id}}>
+                                {{provedor.nombre}} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Pedido Nº</mat-label>
+                        <mat-select disableRipple formControlName="pedido">
+                            <mat-option *ngFor="let pedido of pedidos" value={{pedido.id}}>
+                                {{pedido.numero_orden}} - {{pedido.fecha}} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </form>
+
+            <div *ngIf="!form.invalid">
+                <form [formGroup]="serialForm">
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                    <mat-label>Serial</mat-label>
+                    <input matInput placeholder="serial" type="text" maxlength="255" minlength="3"
+                        (change)="cargarSerial($event.target.value)" formControlName="serial" (keypress)="onlyCaracteres($event)">
+                </mat-form-field>
+                </form>
+
+                <!-- <button mat-button>
+                    Cargar Manual
+                </button> -->
+            </div>
+
+            <div *ngFor="let serial of seriales">
+                <p>
+                    {{serial.cod_serial}} 
+                    <button mat-icon-button (click)="deleteSerial(serial)">
+                        X
+                    </button>
+                </p>
+            </div>
+
+            <div class="btn_form">
+                <button (click)="clear()" class="btn btn-danger bg-danger text-white w-25 mt-3 mb-3 text-uppercase"
+                    mat-button>
+                    Limpiar
+                </button>
+
+                <button (click)="save()" class="btn btn-success bg-success text-white w-25 mt-3 mb-3 text-uppercase"
+                    mat-button [disabled]="form.invalid">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</section>

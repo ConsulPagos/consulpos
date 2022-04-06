@@ -15,9 +15,19 @@
         </div>
 
         <div>
-            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Inventario"
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Inventario Pos"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['cargar-inventario'] } }]">
-                <li class="fas fa-user-plus"></li>
+                <li class="fas fa-warehouse"></li>
+            </a>
+
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Inventario Sim"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['cargar-inventario-sim'] } }]">
+                <li class="fas fa-sim-card"></li>
+            </a>
+
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Mover Inventario"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['mover-inventario'] } }]">
+                <li class="fas fa-truck-moving"></li>
             </a>
         </div>
     </div>

@@ -102,6 +102,10 @@
         </a>
 
         <mat-menu #inventario="matMenu">
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['pedidos'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-exchange-alt"></li> <span class="text_side">Pedidos</span>
+            </a>
             <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['inventario'] } }]"
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-exchange-alt"></li> <span class="text_side">Inventario</span>

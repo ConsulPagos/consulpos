@@ -52,7 +52,7 @@ export class AddClientComponent implements OnInit {
   contactos: ContactoInterface[];
   generos: GeneroInterface[];
   actividades_comerciales: ActividadComercialInterface[];
-  tipos_clientes: TipoclienteInterface[];
+  tipos_clientes: any[];
   tipo_documentos: TipodocumentoInterface[];
   currentYear = new Date();
   identity;
@@ -78,12 +78,11 @@ export class AddClientComponent implements OnInit {
       {
         validator: CeroValidator("rif")
       });
-
   }
 
-  getDoc(t_cliente: any): void {
+  getDoc(): void {
     this.resetStatus()
-    // this.tipos_clientes = JSON.parse(this.storage.get(constant.T_CLIENTES)).t_clientes.filter(c => c.t == t_cliente)
+    this.tipos_clientes = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs.filter(c => c.t_doc == this.identity.get('tipo_doc').value)[0].clientes_por_documento
   }
 
 
@@ -113,6 +112,8 @@ export class AddClientComponent implements OnInit {
     codpostal: new FormControl('', [Validators.required]),
     act_comercial: new FormControl('', [Validators.required]),
     pto_referencia: new FormControl('', [Validators.required]),
+    facebook: new FormControl(''),
+    instagram: new FormControl(''),
   });
 
   data_vr = new FormGroup({
@@ -127,9 +128,8 @@ export class AddClientComponent implements OnInit {
     profesion: new FormControl('', [Validators.required]),
   });
 
-  //FORM DEL CUARTO STEP\\
   document = new FormGroup({
-    id: new FormControl('', [Validators.required]),
+    id: new FormControl(''),
   });
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -188,8 +188,14 @@ export class AddClientComponent implements OnInit {
   }
 
   getTipoCliente(): string {
-    if (this.client_type.valid) {
-      return this.tipos_clientes.filter(t => t.id == this.client_type.get('tipo_cliente').value)[0].t_c_letra
+    if (this.tipos_clientes && this.client_type.valid) {
+      const resultado = this.tipos_clientes.filter(t => t.id == this.client_type.get('tipo_cliente').value)[0]
+      console.log('AQUIII')
+      console.log(resultado)
+      if (!resultado) {
+        return null
+      }
+      return resultado.identificador
     } return null
   }
 

@@ -4,7 +4,8 @@
     <div>
       <mat-form-field appearance="outline" class="mt-4 mx-4">
         <form [formGroup]="identity">
-          <input matInput (keyup.enter)="filtro()" placeholder="Buscar" formControlName="rif" #input maxlength="30" minlength="4">
+          <input matInput (keyup.enter)="filtro()" placeholder="Buscar" formControlName="rif" #input maxlength="30"
+            minlength="4">
         </form>
       </mat-form-field>
 
@@ -69,9 +70,10 @@
         </button>
 
         <button #tooltip="matTooltip" matTooltip="Editar Cliente" matTooltipHideDelay="10" mat-icon-button
-          (click)="_editClient(client)" class="container_icon">
+          (click)="_editClient(client)" class="container_icon" *ngIf="client.status_desc == 'ACTIVO'">
           <i class="fas fa-user-edit activate_edit"></i>
         </button>
+
 
         <button #tooltip="matTooltip" matTooltip="Desafiliar" matTooltipHideDelay="10"
           *ngIf="client.status_desc == 'ACTIVO'" mat-icon-button class="container_icon"

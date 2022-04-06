@@ -45,7 +45,7 @@ export class TablaMarcasComponent implements OnInit {
   showMarcasResponse: ShowMarcasResponse;
   statusFilter = false;
 
-  PAGESIZE = 12
+  PAGESIZE = 25
 
   constructor(
     private session: SesionService,
