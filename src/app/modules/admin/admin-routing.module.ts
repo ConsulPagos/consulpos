@@ -66,6 +66,10 @@ import { AddPedidosComponent } from './pages/add-pedidos/add-pedidos.component';
 import { PedidosComponent } from './pages/pedidos/pedidos.component';
 import { EditPedidosComponent } from './pages/edit-pedidos/edit-pedidos.component';
 import { CargarInventarioSimComponent } from './pages/cargar-inventario-sim/cargar-inventario-sim.component';
+import { PagoManualComponent } from './pages/pago-manual/pago-manual.component';
+import { TraspasoComponent } from './pages/traspaso/traspaso.component';
+import { CambioBancoComponent } from './pages/cambio-banco/cambio-banco.component';
+import { CorrectivosComponent } from './pages/correctivos/correctivos.component';
 
 const routes: Routes = [
   {
@@ -611,7 +615,43 @@ const routes: Routes = [
         //   permiso: "Crear"
         // }
       },
-      
+      {
+        path: 'pago-manual', component: PagoManualComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'traspaso', component: TraspasoComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'cambio-banco', component: CambioBancoComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'correctivos', component: CorrectivosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+
     ],
   }
 ];
