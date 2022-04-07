@@ -62,6 +62,33 @@
                                 <td mat-cell *matCellDef="let row"> {{row.status_desc}} </td>
                             </ng-container>
 
+                            <ng-container matColumnDef="acciones">
+                                <th mat-header-cell *matHeaderCellDef> Acciones</th>
+                                <td mat-cell *matCellDef="let item">
+
+                                    <button #tooltip="matTooltip" matTooltip="Traspaso" matTooltipHideDelay="10"
+                                        mat-icon-button (click)="traspaso(item)" class="container_icon">
+                                        <i class="fas fa-id-card activate_show"></i>
+                                    </button>
+
+                                    <button #tooltip="matTooltip" matTooltip="Cambio de Banco" matTooltipHideDelay="10"
+                                        mat-icon-button (click)="changeBank(item)" class="container_icon">
+                                        <i class="fas fa-id-card activate_show"></i>
+                                    </button>
+
+                                    <button #tooltip="matTooltip" matTooltip="Reparación" matTooltipHideDelay="10"
+                                        mat-icon-button (click)="reparar(item)" class="container_icon">
+                                        <i class="fas fa-id-card activate_show"></i>
+                                    </button>
+
+                                    <button #tooltip="matTooltip" matTooltip="Desafiliación" matTooltipHideDelay="10"
+                                        mat-icon-button (click)="desafiliacion(item)" class="container_icon">
+                                        <i class="fas fa-id-card activate_show"></i>
+                                    </button>
+
+                                </td>
+                            </ng-container>
+
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             <tr mat-row *matRowDef="let item; columns: displayedColumns;">
                         </table>

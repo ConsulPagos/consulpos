@@ -32,7 +32,12 @@
                 <span class="text_side">Ventas</span>
             </a>
 
-            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]"
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['correctivos'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-exchange-alt"></li> <span class="text_side">Correctivos</span>
+            </a>
+
+            <!-- <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]"
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-exchange-alt"></li> <span class="text_side">Traspaso</span>
             </a>
@@ -45,7 +50,7 @@
             <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]"
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-book-dead"></li> <span class="text_side">Desafiliación</span>
-            </a>
+            </a> -->
         </mat-menu>
 
         <mat-menu #venta="matMenu">
@@ -138,7 +143,12 @@
             <mat-menu #pago="matMenu">
                 <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['pagos'] } }]"
                     routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-                    <li class="fa fa-dollar-sign"></li><span class="text_side">Pagos</span>
+                    <li class="fa fa-dollar-sign"></li><span class="text_side">Pagos de Pos</span>
+                </a>
+
+                <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['pago-manual'] } }]"
+                    routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                    <li class="fa fa-dollar-sign"></li><span class="text_side">Pagos de Correctivos</span>
                 </a>
 
                 <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['validar-pago'] } }]"

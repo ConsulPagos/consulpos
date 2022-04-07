@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ClienteRequestInterface } from 'src/app/models/cliente_request';
+import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
 import { ItemInterface } from 'src/app/models/item';
 import { ItemEstadoCuentaInterface } from 'src/app/models/itemestadocuenta';
 import { ShowClientsDecrypter } from 'src/app/models/showclients_response';
@@ -16,6 +17,7 @@ import { BancarioService } from 'src/app/shared/services/bancario.service';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { ModalService } from 'src/app/shared/services/modal.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
@@ -28,7 +30,7 @@ import { ShowItemDecrypter } from '../../../../models/showitem';
   styleUrls: ['./equipos-asociados.component.scss']
 })
 export class EquiposAsociadosComponent implements OnInit {
-  displayedColumns: string[] = ["categoria","marca", 'modelo', "cod_serial", 'precio', 'complemento_d', 'status_desc'];
+  displayedColumns: string[] = ["categoria", "marca", 'modelo', "cod_serial", 'precio', 'complemento_d', 'status_desc', 'acciones'];
   dataSource: MatTableDataSource<any>;
   countNuevos = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -39,7 +41,7 @@ export class EquiposAsociadosComponent implements OnInit {
   showItemClient: ShowItemResponse;
   @Input() rif;
   selection = new SelectionModel<ItemEstadoCuentaInterface>(true, []);
-
+  defaultResponse: DefaultResponse;
 
   constructor(
     private title: Title,
@@ -51,7 +53,8 @@ export class EquiposAsociadosComponent implements OnInit {
     private session: SesionService,
     private dialog: MatDialog,
     private loader: LoaderService,
-    private toaster: ToasterService
+    private toaster: ToasterService,
+    private modal: ModalService,
   ) {
 
   }
@@ -59,8 +62,6 @@ export class EquiposAsociadosComponent implements OnInit {
   identity = new FormGroup({
     serial: new FormControl('', [Validators.minLength(4), Validators.maxLength(30)])
   });
-
-
 
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Estado de Cuenta')
@@ -98,12 +99,135 @@ export class EquiposAsociadosComponent implements OnInit {
     }))
     this.isLoadingResults = true;
     this.cliente.doFind(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      // this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      // this.isLoadingResults = false;
-      // this.clientes = this.showclientResponse.clientes
-      // this.dataSource = new MatTableDataSource(this.clientes);
-      // this.resultsLength = parseInt(this.showclientResponse.total_row);
       this.paginator.pageIndex = 0;
+    })
+  }
+
+  changeI(item: any) {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+    }))
+    this.loading = true;
+    this.cliente.doDelete(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.loading = false
+      switch (this.defaultResponse.R) {
+        case constant.R0:
+          this.toaster.success(this.defaultResponse.M)
+          break;
+        case constant.R1:
+          this.toaster.error(this.defaultResponse.M)
+          break;
+        default:
+          this.toaster.default_error()
+          break;
+      }
+    })
+  }
+
+  traspasoI(item: any) {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+    }))
+    this.loading = true;
+    this.cliente.doDelete(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.loading = false
+      switch (this.defaultResponse.R) {
+        case constant.R0:
+          this.toaster.success(this.defaultResponse.M)
+          break;
+        case constant.R1:
+          this.toaster.error(this.defaultResponse.M)
+          break;
+        default:
+          this.toaster.default_error()
+          break;
+      }
+    })
+  }
+
+  repararI(item: any) {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+    }))
+    this.loading = true;
+    this.cliente.doDelete(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.loading = false
+      switch (this.defaultResponse.R) {
+        case constant.R0:
+          this.toaster.success(this.defaultResponse.M)
+          break;
+        case constant.R1:
+          this.toaster.error(this.defaultResponse.M)
+          break;
+        default:
+          this.toaster.default_error()
+          break;
+      }
+    })
+  }
+
+  desafiliarI(item: any) {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+    }))
+    this.loading = true;
+    this.cliente.doDelete(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.loading = false
+      switch (this.defaultResponse.R) {
+        case constant.R0:
+          this.toaster.success(this.defaultResponse.M)
+          break;
+        case constant.R1:
+          this.toaster.error(this.defaultResponse.M)
+          break;
+        default:
+          this.toaster.default_error()
+          break;
+      }
+    })
+  }
+
+  changeBank(item: any) {
+    this.modal.confirm("¿Desea realizar un cambio de banco a este equipo?").subscribe(result => {
+      if (result) {
+        this.changeI(item)
+      }
+    })
+  }
+
+  traspaso(item: any) {
+    this.modal.confirm("¿Desea realizar un traspaso a este equipo?").subscribe(result => {
+      if (result) {
+        this.traspasoI(item)
+      }
+    })
+  }
+
+  reparar(item: any) {
+    this.modal.confirm("¿Desea mover a reparar este equipo?").subscribe(result => {
+      if (result) {
+        this.repararI(item)
+      }
+    })
+  }
+
+  desafiliacion(item: any) {
+    this.modal.confirm("¿Desea realizar una desafiliacion a este equipo?").subscribe(result => {
+      if (result) {
+        this.desafiliarI(item)
+      }
     })
   }
 
