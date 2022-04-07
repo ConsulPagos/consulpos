@@ -10,7 +10,7 @@ cd /home/despliegues/front
 
 ng build --prod
 
-# rm -rf /var/www/html/*
+rm -rf /var/www/html/*
 
-cp -rf ./dist /var/www/html
+cp -rf ./dist/* /var/www/html
 
