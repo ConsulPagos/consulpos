@@ -1,0 +1,49 @@
+<h1 mat-dialog-title>
+    <li class="fa fa-edit mr-2"></li>
+    <span class="field">
+        Motivo de la desafiliación
+    </span>
+</h1>
+<div mat-dialog-content class="mat-dialog-content">
+    <div class="pt-2 pb-1 less-padding">
+        <form [formGroup]="form">
+
+            <mat-form-field appearance="outline" class="container_box_space">
+                <mat-label>Motivo</mat-label>
+                <mat-select disableRipple formControlName="motivo">
+                    <mat-option *ngFor="let almacen of almacenes" value={{almacen.almacen_id}}>
+                        {{almacen.nombre}} </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="container_box">
+                <mat-label>Tipo</mat-label>
+                <mat-select disableRipple formControlName="tipo_doc">
+                    <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
+                        {{t_doc.t_doc}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>
+                    Rif
+                </mat-label>
+                <input matInput formControlName="rif" placeholder="123456789" type="text"
+                    (keypress)="onlyNumberKey($event)" maxlength="11">
+            </mat-form-field>
+
+        </form>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <div class="d-flex w-100">
+        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null">
+            <li class="fa fa-times text-dark"></li>
+        </button>
+        <button class="flex-fill confirm action_button" [disabled]="false" mat-button cdkFocusInitial
+            [mat-dialog-close]="form.value" (click)="submit(serial)">
+            <li class="fa fa-check"></li>
+        </button>
+    </div>
+</div>

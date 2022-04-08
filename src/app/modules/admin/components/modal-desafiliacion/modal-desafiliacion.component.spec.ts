@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TablaCorrectivosComponent } from './tabla-correctivos.component';
+import { ModalDesafiliacionComponent } from './modal-desafiliacion.component';
 
-describe('TablaCorrectivosComponent', () => {
-  let component: TablaCorrectivosComponent;
-  let fixture: ComponentFixture<TablaCorrectivosComponent>;
+describe('ModalDesafiliacionComponent', () => {
+  let component: ModalDesafiliacionComponent;
+  let fixture: ComponentFixture<ModalDesafiliacionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TablaCorrectivosComponent ]
+      declarations: [ ModalDesafiliacionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TablaCorrectivosComponent);
+    fixture = TestBed.createComponent(ModalDesafiliacionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
