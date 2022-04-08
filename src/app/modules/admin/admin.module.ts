@@ -114,8 +114,6 @@ import { ModalCambioAlmacenComponent } from './components/modal-cambio-almacen/m
 import { TraspasoComponent } from './pages/traspaso/traspaso.component';
 import { CambioBancoComponent } from './pages/cambio-banco/cambio-banco.component';
 import { PagoManualComponent } from './pages/pago-manual/pago-manual.component';
-import { CorrectivosComponent } from './pages/correctivos/correctivos.component';
-import { TablaCorrectivosComponent } from './components/tabla-correctivos/tabla-correctivos.component';
 import { ModalDesafiliacionComponent } from './components/modal-desafiliacion/modal-desafiliacion.component';
 import { AddTraspasoComponent } from './pages/add-traspaso/add-traspaso.component';
 import { TablaTraspasoComponent } from './components/tabla-traspaso/tabla-traspaso.component';

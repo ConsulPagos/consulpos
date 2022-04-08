@@ -69,7 +69,6 @@ import { CargarInventarioSimComponent } from './pages/cargar-inventario-sim/carg
 import { PagoManualComponent } from './pages/pago-manual/pago-manual.component';
 import { TraspasoComponent } from './pages/traspaso/traspaso.component';
 import { CambioBancoComponent } from './pages/cambio-banco/cambio-banco.component';
-import { CorrectivosComponent } from './pages/correctivos/correctivos.component';
 import { AddTraspasoComponent } from './pages/add-traspaso/add-traspaso.component';
 
 const routes: Routes = [

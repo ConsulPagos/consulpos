@@ -116,7 +116,7 @@ export class AddTraspasoComponent implements OnInit {
 
   //****************************************************************************************//
   ngOnInit(): void {
-    this.title.setTitle('ConsulPos | Agregar Venta')
+    this.title.setTitle('ConsulPos | Agregar Traspaso')
     this.occUser()
     // this.doSimModels()
     this.add_buy()
@@ -239,8 +239,8 @@ export class AddTraspasoComponent implements OnInit {
       solicitudes_banco_sell.push({
         id_t_cobro: buy.get('tipocobro').value,
         monto_cuota: "30",
-        fraccion_pago_id: buy.get('tipo_venta').value,
         plan_id: buy.get('plan').value,
+        fraccion_pago_id: "1",
         modelo_id: buy.get('modelo').value,
         terminal: buy.get('terminal').value,
         afiliado: buy.get('cod_afiliado').value,
@@ -275,16 +275,16 @@ export class AddTraspasoComponent implements OnInit {
         },
       ]))
     }))
-    console.log("verify")
-    console.log(solicitudes_banco_sell)
-    this.venta.doSale(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    console.log("verify");
+    console.log(solicitudes_banco_sell);
+    this.venta.doCrearTraspaso(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      console.log(res)
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.validacionres = new ValidacionventadosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionres)
       switch (this.validacionres.R) {
         case constant.R0:
           this.toaster.success(this.validacionres.M)
-          this.router.navigateByUrl('/admin/app/(adr:ventas)')
           break;
         case constant.R1:
           this.toaster.error(this.validacionres.M)
