@@ -70,6 +70,7 @@ import { PagoManualComponent } from './pages/pago-manual/pago-manual.component';
 import { TraspasoComponent } from './pages/traspaso/traspaso.component';
 import { CambioBancoComponent } from './pages/cambio-banco/cambio-banco.component';
 import { CorrectivosComponent } from './pages/correctivos/correctivos.component';
+import { AddTraspasoComponent } from './pages/add-traspaso/add-traspaso.component';
 
 const routes: Routes = [
   {
@@ -643,7 +644,7 @@ const routes: Routes = [
         // }
       },
       {
-        path: 'correctivos', component: CorrectivosComponent, outlet: 'adr',
+        path: 'add-traspaso', component: AddTraspasoComponent, outlet: 'adr',
         // canActivate: [HasPermisoGuard],
         // data: {
         //   modulo: "Configuracion",

@@ -43,18 +43,16 @@ import { InventarioService } from 'src/app/shared/services/inventario.service';
 //****************************************************************************************//
 
 @Component({
-  selector: 'app-add-venta',
-  templateUrl: './add-venta.component.html',
-  styleUrls: ['./add-venta.component.scss']
+  selector: 'app-add-traspaso',
+  templateUrl: './add-traspaso.component.html',
+  styleUrls: ['./add-traspaso.component.scss']
 })
-
-export class AddVentaComponent implements OnInit {
+export class AddTraspasoComponent implements OnInit {
 
   // *** VARIABLES GLOBALES *** \\
   loading = false;
   search_client: boolean = true;
   modelos: ModeloInterface[];
-  fraccion_pagos: FraccionPagoInterface[];
   validacionresponse: ShowClientsResponse;
   validacionoccresponse: ValidacionOccResponse;
   validacionsimresponse: ValidacionSimResponse;
@@ -124,7 +122,6 @@ export class AddVentaComponent implements OnInit {
     this.add_buy()
     this.marca()
     this.categoria()
-    this.fraccion_pagos = JSON.parse(this.storage.get(constant.FRACCIONES_PAGO)).fracciones_pago
     this.modelos = JSON.parse(this.storage.get(constant.MODELOS)).modelos
     this.planes = JSON.parse(this.storage.get(constant.PLANES)).planes
     this.plataformas = JSON.parse(this.storage.get(constant.PLATAFORMAS)).plataformas
@@ -143,11 +140,9 @@ export class AddVentaComponent implements OnInit {
       plataforma: new FormControl('', [Validators.required]),
       banco: new FormControl('', [Validators.required]),
       numero_cuenta_pos: new FormControl('', [Validators.required, Validators.minLength(20)]),
-      precio_usd: new FormControl(''),
       lugar_entrega: new FormControl(''),
       tipocobro: new FormControl('', [Validators.required]),
       plan: new FormControl('', [Validators.required]),
-      tipo_venta: new FormControl('', [Validators.required]),
       terminal: new FormControl(''),
       cod_afiliado: new FormControl(''),
     });
@@ -157,11 +152,6 @@ export class AddVentaComponent implements OnInit {
     newFormat.sims = [sim]
     this.buies.push(buy);
     this.formats_buy.push(newFormat);
-  }
-
-  deleteBuy(index: number) {
-    this.formats_buy.splice(index, 1);
-    this.buies.splice(index, 1);
   }
 
   add_sim(index: number) {
@@ -175,7 +165,6 @@ export class AddVentaComponent implements OnInit {
     this.formats_buy[index].sims.splice(indexsim, 1);
   }
 
-  // *** FUNCION VALIDADORA DE EXISTENCIA DE USUARIOS *** \\
   verificar_usuario() {
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
     const data = this.crypto.encryptString(JSON.stringify({
@@ -198,7 +187,6 @@ export class AddVentaComponent implements OnInit {
         this.identity.controls['rif'].setErrors({ 'existe': true });
       }
       this.loading = false
-      //this.crypto.setKeys(this.validacionresponse.keyS, this.validacionresponse.ivJ, this.validacionresponse.keyJ, this.validacionresponse.ivS)
     })
   }
 
@@ -212,7 +200,6 @@ export class AddVentaComponent implements OnInit {
     this.venta.doOccUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.validacionoccresponse = new ValidacionOccDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.occs = JSON.parse(this.validacionoccresponse.occ_usuarios)
-      //this.crypto.setKeys(this.validacionoccresponse.keyS, this.validacionoccresponse.ivJ, this.validacionoccresponse.keyJ, this.validacionoccresponse.ivS)
       this.doSimModels()
     })
   }
@@ -294,7 +281,6 @@ export class AddVentaComponent implements OnInit {
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.validacionres = new ValidacionventadosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionres)
-      //this.crypto.setKeys(this.validacionres.keyS, this.validacionres.ivJ, this.validacionres.keyJ, this.validacionres.ivS)
       switch (this.validacionres.R) {
         case constant.R0:
           this.toaster.success(this.validacionres.M)
@@ -318,26 +304,6 @@ export class AddVentaComponent implements OnInit {
   onlyNumberKey(event) {
     this.resetStatus()
     return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
-  }
-
-  price_model(buies: FormGroup) {
-    var precio;
-    if (buies != null) {
-      if (this.modelos.filter(it => it.id == buies.get("modelo").value).length > 0) {
-        precio = this.modelos.filter(it => it.id == buies.get("modelo").value)[0].precio
-      }
-    }
-    return precio
-  }
-
-  total_price() {
-    var total = 0;
-    this.buies.forEach(buies => {
-      if (this.modelos.filter(it => it.id == buies.get("modelo").value).length > 0) {
-        total += parseFloat(this.modelos.filter(it => it.id == buies.get("modelo").value)[0].precio)
-      }
-    })
-    return total
   }
 
   marca() {
@@ -374,17 +340,12 @@ export class AddVentaComponent implements OnInit {
 
   buiesInvalid() {
     var invalid = false;
-
     for (let index = 0; index < this.buies.length; index++) {
-      if(this.buies[index].invalid){
+      if (this.buies[index].invalid) {
         invalid = true
         break;
       }
     }
-
     return invalid
-
-
   }
-
 }

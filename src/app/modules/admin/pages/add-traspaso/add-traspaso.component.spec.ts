@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CorrectivosComponent } from './correctivos.component';
+import { AddTraspasoComponent } from './add-traspaso.component';
 
-describe('CorrectivosComponent', () => {
-  let component: CorrectivosComponent;
-  let fixture: ComponentFixture<CorrectivosComponent>;
+describe('AddTraspasoComponent', () => {
+  let component: AddTraspasoComponent;
+  let fixture: ComponentFixture<AddTraspasoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CorrectivosComponent ]
+      declarations: [ AddTraspasoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CorrectivosComponent);
+    fixture = TestBed.createComponent(AddTraspasoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
