@@ -14,24 +14,29 @@ import { EditFieldDialogComponent } from '../edit-field-dialog/edit-field-dialog
 export class EditphoneComponent implements OnInit {
 
   editPhone: TelefonoInterface;
-
+  phones: any
   separateDialCode = false;
-	SearchCountryField = SearchCountryField;
-	CountryISO = CountryISO;
+  SearchCountryField = SearchCountryField;
+  CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
-	preferredCountries: CountryISO[] = [CountryISO.Venezuela, CountryISO.UnitedStates];
+  preferredCountries: CountryISO[] = [CountryISO.Venezuela, CountryISO.UnitedStates];
 
   constructor(public dialogRef: MatDialogRef<EditFieldDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
+    console.log(this.data)
+    if (this.data.value.length > 0) {
+      this.phones = new FormGroup({
+        phone_1: new FormControl(this.data.value[0].identificador + this.data.value[0].telefono, [Validators.required]),
+        phone_1_id: new FormControl(this.data.value[0].telefono_id, [Validators.required]),
+        phone_2: new FormControl(this.data.value[1].identificador + this.data.value[1].telefono, [Validators.required]),
+        phone_2_id: new FormControl(this.data.value[1].telefono_id, [Validators.required]),
+      });
+    }
   }
 
-  phones = new FormGroup({
-    phone_1: new FormControl(this.data.value[0].identificador + this.data.value[0].telefono, [Validators.required]),
-    phone_1_id : new FormControl(this.data.value[0].telefono_id, [Validators.required]),
-    phone_2: new FormControl(this.data.value[1].identificador + this.data.value[1].telefono, [Validators.required]),
-    phone_2_id : new FormControl(this.data.value[1].telefono_id, [Validators.required]),
-  });
+
+
 
 }

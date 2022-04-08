@@ -27,7 +27,7 @@
                                                 <label class="labels title_data">
                                                     Nombre Comercial:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.comercio}}
                                                 </span>
                                             </div>
@@ -36,7 +36,7 @@
                                                 <label class="labels title_data">
                                                     Razón Social:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.razon_social}}
                                                 </span>
                                             </div>
@@ -45,7 +45,7 @@
                                                 <label class="labels title_data">
                                                     Actividad Comercial:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.a_c_des}}
                                                 </span>
                                             </div>
@@ -56,7 +56,7 @@
                                                 <label class="labels title_data">
                                                     Tipo de Contribuyente:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.contribuyente}}
                                                 </span>
                                             </div>
@@ -65,7 +65,7 @@
                                                 <label class="labels title_data">
                                                     Tipo de Cliente:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.t_cliente}}
                                                 </span>
                                             </div>
@@ -74,7 +74,7 @@
                                                 <label class="labels title_data">
                                                     Tipo de Documento:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.t_doc_desc}}
                                                 </span>
                                             </div>
@@ -83,7 +83,7 @@
                                                 <label class="labels title_data">
                                                     Estatus del cliente:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.status_desc}}
                                                 </span>
                                             </div>
@@ -100,7 +100,7 @@
                                                 <label class="labels title_data">
                                                     Estado:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.estado}}
                                                 </span>
                                             </div>
@@ -109,7 +109,7 @@
                                                 <label class="labels title_data">
                                                     Ciudad:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.ciudad}}
                                                 </span>
                                             </div>
@@ -118,7 +118,7 @@
                                                 <label class="labels title_data">
                                                     Municipio:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.municipio}}
                                                 </span>
                                             </div>
@@ -127,7 +127,7 @@
                                                 <label class="labels title_data">
                                                     Parroquia:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.parroquia}}
                                                 </span>
                                             </div>
@@ -136,7 +136,7 @@
                                                 <label class="labels title_data">
                                                     Localidad:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.localidad}}
                                                 </span>
                                             </div>
@@ -145,7 +145,7 @@
                                                 <label class="labels title_data">
                                                     Direccion:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.direccion}}
                                                 </span>
                                             </div>
@@ -154,7 +154,7 @@
                                                 <label class="labels title_data">
                                                     Codigo Postal:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.cod_postal}}
                                                 </span>
                                             </div>
@@ -162,7 +162,7 @@
                                                 <label class="labels title_data">
                                                     Punto de referencia:
                                                 </label>
-                                                <span class="text-capitalize">
+                                                <span class="">
                                                     {{showClient.pto_ref}}
                                                 </span>
                                             </div>
@@ -178,7 +178,7 @@
                                             <label class="labels title_data">
                                                 Nombre y Apellido:
                                             </label>
-                                            <span class="text-capitalize">
+                                            <span class="">
                                                 {{showClient.c_natural.c_p_nombre}}
                                                 {{showClient.c_natural.c_p_apellido}}
                                             </span>
@@ -200,20 +200,17 @@
                                                     Telefonos:
                                                 </label>
                                                 <div *ngFor="let telefono of showClient.telefonos"
-                                                    class="phone_number text-capitalize">
+                                                    class="phone_number ">
                                                     {{telefono.identificador}}-{{telefono.telefono}}
                                                 </div>
                                             </div>
-                                            <button mat-raised-button style="margin-left: 1rem;" (click)="openDialog()">
-                                                Editar
-                                            </button>
                                         </div>
 
                                         <div class="col-md-12 container_module">
                                             <label class="labels title_data">
                                                 Contactó via:
                                             </label>
-                                            <span class="text-capitalize">
+                                            <span class="">
                                                 {{showClient.m_contacto}}
                                             </span>
                                         </div>
@@ -222,9 +219,36 @@
                                             <label class="labels title_data">
                                                 Fecha de Registro:
                                             </label>
-                                            <span class="text-capitalize">
+                                            <span class="">
                                                 {{showClient.fecha_registro}}
                                             </span>
+                                        </div>
+
+                                        <div class="col-md-12 container_module">
+                                            <label class="labels title_data">
+                                                Fecha de última Actualización:
+                                            </label>
+                                            <span class="">
+                                                {{showClient.ultima_actualizacion}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngFor="let solicitud of showClient.solicitudes_banco; let data = index"
+                                    class="text-capitalize">
+                                    <div>
+                                        <h5 class="labels title_data">Datos Bancarios {{data + 1}}:</h5>
+                                        <div>
+                                            <span>Venta Nº:</span> {{solicitud.solicitud}}
+                                        </div>
+                                        <div>
+                                            <span>Número afiliado:</span> {{solicitud.afiliado}}
+                                        </div>
+                                        <div>
+                                            <span>Banco:</span> {{solicitud.banco}}
+                                        </div>
+                                        <div>
+                                            <span>Número Cuenta:</span> {{solicitud.cuenta}}
                                         </div>
                                     </div>
                                 </div>
@@ -233,76 +257,17 @@
                     </ng-template>
                 </mat-tab>
 
-                <mat-tab label="Estado de Cuenta">
+                <mat-tab label="Estatus de Cobro">
                     <ng-template matTabContent>
                         <app-estado-cuenta [rif]="showClient.rif" [client]="showClient">
                         </app-estado-cuenta>
                     </ng-template>
                 </mat-tab>
 
-                <mat-tab label="Equipos Asociados">
+                <mat-tab label="Productos Asociados">
                     <ng-template matTabContent>
-                        <div class="d-flex justify-content-center align-items-center mb-3" style="padding-top: 2rem;">
-                            <h4 class="text-right">RIF: {{showClient.rif}}</h4>
-                        </div>
-                        <hr>
-                        <div class="container-fluid rounded bg-white mb-5">
-                            <label class="labels title_data">
-
-                            </label>
-                            <div class="col-md-12 container_module container_items" *ngIf="showItemClient">
-                                <div *ngFor="let item of showItemClient.items; let equipo = index"
-                                    class="text-capitalize">
-                                    <h4 class="labels title_data">Equipo {{equipo + 1}}:</h4>
-
-                                    <div>
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Serial:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{item.cod_serial}}
-                                            </span>
-                                        </div>
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Marca:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{item.marca}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Modelo:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{item.modelo}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Precio:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{item.precio}}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-12 container_module">
-                                            <label class="labels title_data">
-                                                Estatus del Equipo:
-                                            </label>
-                                            <span class="text-capitalize">
-                                                {{item.status_desc}}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <app-equipos-asociados [rif]="showClient.rif">
+                        </app-equipos-asociados>
                     </ng-template>
                 </mat-tab>
 

@@ -1,5 +1,3 @@
-/////// Parte 1
-
 .title {
     font-family: "Montserrat", "black" !important;
     font-weight: 600;
@@ -44,10 +42,6 @@
     background-color: rgb(255, 255, 255);
 }
 
-.container-ficha {
-    justify-content: center;
-}
-
 label {
     display: inline-block;
     margin-bottom: 0 !important;
@@ -56,4 +50,25 @@ label {
 
 .container_module {
     margin: 0.55rem;
+}
+
+////////////////////////////////////////
+.sub-title {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.text-sub-title {
+    padding: 0.5rem;
+}
+
+.date-sale {
+    display: flex;
+    justify-content: end;
+    color: #8b8b8b;
+}
+
+.date-sale > h6 {
+    font-size: small;
 }

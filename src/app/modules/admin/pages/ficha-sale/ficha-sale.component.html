@@ -14,62 +14,170 @@
                 <mat-tab label="Venta">
                     <ng-template matTabContent>
                         <div class="container-fluid rounded bg-white mb-5">
-                            <div class="row container-ficha">
-                                <div class="col-lg-4 col-md-12">
+                            <div>
+                                <div>
                                     <h4 class="text-center">
                                         Información de la venta
                                     </h4>
 
-                                    <!-- {{showSale.afiliado}}
-                                    {{showSale.banco}}
-                                    {{showSale.codigo_banco}}
-                                    {{showSale.cuenta}}
-                                    {{showSale.fecha}}
-                                    {{showSale.fraccion_desc}}
-                                    {{showSale.number}}
-                                    {{showSale.razon_social}}
-                                    {{showSale.rif}}
-                                    {{showSale.status_desc}} -->
+                                    <div class="sub-title">
+                                        <div class="text-sub-title">
+                                            <h6>
+                                                <strong>Venta Nº: </strong>{{showSale.number}}
+                                            </h6>
+                                        </div>
+                                        <div class="text-sub-title">
+                                            <h6>
+                                                <strong>Estatus: </strong>{{showSale.status_desc}}
+                                            </h6>
+                                        </div>
+                                        <div class="text-sub-title">
+                                            <h6>
+                                                <strong>Rif: </strong>{{showSale.rif}}
+                                            </h6>
+                                        </div>
+                                        <div class="text-sub-title">
+                                            <h6>
+                                                <strong>Cliente: </strong>{{showSale.razon_social}}
+                                            </h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="conatiner-text">
+                                        <div class="content-text">
+                                            <h6>
+                                                <strong>Tipo de Venta: </strong>{{showSale.fraccion_desc}}
+                                            </h6>
+                                        </div>
+                                        <div class="content-text">
+                                            <h6>
+                                                <strong>Banco: </strong>{{showSale.banco}}
+                                            </h6>
+                                        </div>
+                                        <div class="content-text">
+                                            <h6>
+                                                <strong>Nº Cuenta: </strong>{{showSale.cuenta}}
+                                            </h6>
+                                        </div>
+                                        <div class="content-text">
+                                            <h6>
+                                                <strong>Codigo Afiliado: </strong>{{showSale.afiliado}}
+                                            </h6>
+                                        </div>
+                                        <div class="content-text">
+                                            <h6>
+                                                <strong>Terminal: </strong>{{showSale.terminal}}
+                                            </h6>
+                                        </div>
+                                        <div class="content-text">
+                                            <h6>
+                                                <strong>Plataforma: </strong>
+                                            </h6>
+                                        </div>
+                                        <div class="content-text">
+                                            <h6>
+                                                <strong>Plan: </strong>
+                                            </h6>
+                                        </div>
+                                        <div class="content-text">
+                                            <h6>
+                                                <strong>Tipo de Cobro: </strong>
+                                            </h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="date-sale">
+                                        <h6>
+                                            <strong>Fecha de venta: </strong>{{showSale.fecha}}
+                                        </h6>
+                                    </div>
+
                                     <h4>EQUIPO</h4>
 
                                     <div *ngFor="let item of showSale.items">
-
                                         <div *ngIf="!item.complemento_d">
-
-                                            {{item.cod_serial}}
-                                            {{item.marca}}
-                                            {{item.modelo}}
-                                            {{item.precio}}
+                                            <div class="conatiner-text">
+                                                <div class="content-text">
+                                                    <h6>
+                                                        <strong>Marca: </strong>{{item.marca}}
+                                                    </h6>
+                                                </div>
+                                                <div class="content-text">
+                                                    <h6>
+                                                        <strong>Modelo: </strong>{{item.modelo}}
+                                                    </h6>
+                                                </div>
+                                                <div class="content-text">
+                                                    <h6>
+                                                        <strong>Serial Nº: </strong>{{item.cod_serial}}
+                                                    </h6>
+                                                </div>
+                                                <div class="content-text">
+                                                    <h6>
+                                                        <strong>Monto: </strong>{{item.precio | currency}}
+                                                    </h6>
+                                                </div>
+                                            </div>
                                         </div>
-
                                     </div>
+
+                                    <div *ngIf="showSale.items.length  == 0">
+                                        <div *ngFor="let modelos of showSale.modelos">
+                                            <div *ngFor="let equipo of modelos.caracteristicas">
+                                                <div class="conatiner-text">
+                                                    <div class="content-text">
+                                                        <h6>
+                                                            <strong>Marca: </strong>{{equipo.marca}}
+                                                        </h6>
+                                                    </div>
+                                                    <div class="content-text">
+                                                        <h6>
+                                                            <strong>Modelo: </strong>{{equipo.modelo}}
+                                                        </h6>
+                                                    </div>
+                                                    <div class="content-text">
+                                                        <h6>
+                                                            <strong>Serial Nº: </strong>{{equipo.cod_serial}}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <h4>SIMS</h4>
 
                                     <div *ngFor="let item of showSale.items">
-
-
                                         <div *ngIf="item.complemento_d">
-                                            {{item.cod_serial}}
-                                            {{item.marca}}
-                                            {{item.modelo}}
+
+
+
                                             {{item.precio}}
+                                            <div class="conatiner-text">
+                                                <div class="content-text">
+                                                    <h6>
+                                                        <strong>Sim: </strong>
+                                                    </h6>
+                                                </div>
+                                                <div class="content-text">
+                                                    <h6>
+                                                        <strong>Marca: </strong>{{item.marca}}
+                                                    </h6>
+                                                </div>
+                                                <div class="content-text">
+                                                    <h6>
+                                                        <strong>Modelo: </strong>{{item.modelo}}
+                                                    </h6>
+                                                </div>
+                                                <div class="content-text">
+                                                    <h6>
+                                                        <strong>Serial Nº: </strong>{{item.cod_serial}}
+                                                    </h6>
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </div>
-
-
-                                    <!-- {{showSale.afiliado}}
-                                    {{showSale.afiliado}}
-                                    {{showSale.afiliado}}
-                                    {{showSale.afiliado}}
-                                    {{showSale.afiliado}}
-                                    {{showSale.afiliado}}
-                                    {{showSale.afiliado}}
-                                    {{showSale.afiliado}}
-                                    {{showSale.afiliado}}
-                                    {{showSale.afiliado}}
-                                    {{showSale.afiliado}} -->
-
                                 </div>
                             </div>
                         </div>

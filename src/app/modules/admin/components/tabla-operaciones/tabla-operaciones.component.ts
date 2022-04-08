@@ -45,7 +45,7 @@ export class TablaOperacionesComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<any>(true, []);
   statusFilter = false;
-  PAGESIZE = 12;
+  PAGESIZE = 25;
 
   @Output() editSale = new EventEmitter<any>();
   @Output() showSale = new EventEmitter<any>();
@@ -177,7 +177,7 @@ export class TablaOperacionesComponent implements OnInit {
             correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
             scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
             init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
-            limit_row: this.crypto.encryptJson(((this.paginator.pageIndex + 1) * this.PAGESIZE).toString()),
+            limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
             status_desc: this.crypto.encryptJson(this.tipo_operacion.toUpperCase()),
           }))
           return this.venta.doFindSalesByStatus(`${this.session.getDeviceId()};${data}`)

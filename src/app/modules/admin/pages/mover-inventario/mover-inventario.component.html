@@ -1,0 +1,89 @@
+<section id="cargar-inventario">
+    <div class="container-fluid">
+        <div>
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['inventario'] } }]">
+                <li class="fas fa-arrow-left"></li>
+            </a>
+        </div>
+        <div style="background-color: #fff; border-radius: 10px;">
+            <div class="box-title d-flex justify-content-center">
+                <h5 class="bold uppercase mt-3">Mover inventario POS</h5>
+            </div>
+            <form [formGroup]="form">
+                <div class="container">
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Almacen</mat-label>
+                        <mat-select disableRipple formControlName="almacen_origen" (selectionChange)="searchPos()">
+                            <mat-option *ngFor="let almacen of almacenes" value={{almacen.almacen_id}}>
+                                {{almacen.nombre}} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </form>
+
+            <div *ngIf="!this.selection.isEmpty() ">
+                <button mat-raised-button color="accent" (click)="openDialogKey()">
+                    Editar
+                </button>
+
+                <button mat-raised-button color="accent" (click)="openDialogMove()">
+                    Mover Items
+                </button>
+            </div>
+
+            <div class="w-100">
+                <table class="w-100" mat-table [dataSource]="dataSource" matSort>
+
+                    <!-- Checkbox Column -->
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="marca">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Marca </th>
+                        <td mat-cell *matCellDef="let row"> {{row.marca}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="modelo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Modelo</th>
+                        <td mat-cell *matCellDef="let row"> {{row.modelo}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="serial">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial </th>
+                        <td mat-cell *matCellDef="let row"> {{row.cod_serial}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="aplicativo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Aplicativo </th>
+                        <td mat-cell *matCellDef="let row"> {{row.so}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="llave">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> llave </th>
+                        <td mat-cell *matCellDef="let row"> {{row.llave}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="estatus">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
+                        <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

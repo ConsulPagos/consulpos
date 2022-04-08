@@ -65,12 +65,18 @@ label {
     margin-bottom: 0 !important;
 }
 
-.container_module{
-    margin: .25rem;
+.container_module {
+    margin: 0.25rem;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-.container_items{
+.container_items {
     display: flex;
+}
+
+.text-capitalize {
+    padding: 0 1rem;
+    display: flex;
+    flex-wrap: wrap;
 }

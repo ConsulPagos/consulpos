@@ -55,7 +55,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
   @Output() editUser = new EventEmitter<any>();
   @Output() showUser = new EventEmitter<any>();
 
-  PAGESIZE = 12
+  PAGESIZE = 25
 
   constructor(
     private session: SesionService,
@@ -100,7 +100,7 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
             correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
             scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
             init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
-            limit_row: this.crypto.encryptJson(((this.paginator.pageIndex + 1) * this.PAGESIZE).toString()),
+            limit_row: this.crypto.encryptJson(( this.PAGESIZE).toString()),
           }))
           return this.usuario.doAllUser(`${this.session.getDeviceId()};${data}`)
         }),
@@ -151,8 +151,6 @@ export class TablaSuperAdminComponent implements AfterViewInit, OnInit {
       this.ShowUserResponse = new ShowUsersDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
        //this.crypto.setKeys(this.ShowUserResponse.keyS, this.ShowUserResponse.ivJ, this.ShowUserResponse.keyJ, this.ShowUserResponse.ivS)
-      this.toaster.success(this.ShowUserResponse.M)
-
       this.usuarios = this.ShowUserResponse.usuarios
       this.dataSource = new MatTableDataSource(this.usuarios);
     })

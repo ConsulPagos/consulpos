@@ -15,6 +15,7 @@ import { constant } from 'src/app/shared/utils/constant';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { DefaultDecrypter } from 'src/app/models/default_response';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
+import { BancoInterface } from 'src/app/models/banco';
 
 @Component({
   selector: 'app-add-pagos',
@@ -35,6 +36,7 @@ export class AddPagosComponent implements OnInit {
   tasas: any[];
   tasa: TasaInterface[];
   totalPago: number = 0;
+  bancos: BancoInterface[];
 
   constructor(
     private crypto: CryptoService,
@@ -66,12 +68,14 @@ export class AddPagosComponent implements OnInit {
     t_pago: new FormControl(null, [Validators.required]),
     monto: new FormControl('', [Validators.required]),
     descripcion: new FormControl(''),
+    fecha: new FormControl(''),
   });
 
   ngOnInit(): void {
     this.getTasas()
     this.tipoPagos()
     this.add_pay()
+    this.bancos = JSON.parse(this.storage.get(constant.BANCOS)).bancos
   }
 
   add_pay() {
@@ -81,6 +85,7 @@ export class AddPagosComponent implements OnInit {
       monto: new FormControl(null, [Validators.required]),
       descripcion: new FormControl(''),
       moneda: new FormControl(null),
+      fecha: new FormControl(''),
     });
     this.payments.push(pay);
     this.formats_payments.push(newFormat);
@@ -195,6 +200,7 @@ export class AddPagosComponent implements OnInit {
         validar: h.validar,
         monto: p.get('monto').value,
         descripcion: p.get('descripcion').value,
+        fecha_pago: p.get('fecha').value,
         caracteristicas: JSON.stringify(inputs),
       })
     })
@@ -233,10 +239,6 @@ export class AddPagosComponent implements OnInit {
         this.submit()
       }
     })
-  }
-
-  deleteimg() {
-
   }
 
   getTasas() {

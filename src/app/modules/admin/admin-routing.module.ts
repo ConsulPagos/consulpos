@@ -58,6 +58,14 @@ import { PlataformasComponent } from './pages/plataformas/plataformas.component'
 import { ProductosComponent } from './pages/productos/productos.component';
 import { ProvedoresComponent } from './pages/provedores/provedores.component';
 import { SucursalesComponent } from './pages/sucursales/sucursales.component';
+import { CargarInventarioComponent } from './pages/cargar-inventario/cargar-inventario.component';
+import { InventarioDetalleComponent } from './pages/inventario-detalle/inventario-detalle.component';
+import { InventarioComponent } from './pages/inventario/inventario.component';
+import { MoverInventarioComponent } from './pages/mover-inventario/mover-inventario.component';
+import { AddPedidosComponent } from './pages/add-pedidos/add-pedidos.component';
+import { PedidosComponent } from './pages/pedidos/pedidos.component';
+import { EditPedidosComponent } from './pages/edit-pedidos/edit-pedidos.component';
+import { CargarInventarioSimComponent } from './pages/cargar-inventario-sim/cargar-inventario-sim.component';
 
 const routes: Routes = [
   {
@@ -367,15 +375,15 @@ const routes: Routes = [
         //   permiso: "Crear"
         // }
       },
-      {
-        path: 'add-productos', component: AddProductosComponent, outlet: 'adr',
-        // canActivate: [HasPermisoGuard],
-        // data: {
-        //   modulo: "Configuracion",
-        //   submodulo: "Tasas",
-        //   permiso: "Crear"
-        // }
-      },
+      // {
+      //   path: 'add-productos', component: AddProductosComponent, outlet: 'adr',
+      //   // canActivate: [HasPermisoGuard],
+      //   // data: {
+      //   //   modulo: "Configuracion",
+      //   //   submodulo: "Tasas",
+      //   //   permiso: "Crear"
+      //   // }
+      // },
       {
         path: 'add-provedores', component: AddProvedoresComponent, outlet: 'adr',
         // canActivate: [HasPermisoGuard],
@@ -439,15 +447,15 @@ const routes: Routes = [
         //   permiso: "Crear"
         // }
       },
-      {
-        path: 'edit-productos', component: EditProductosComponent, outlet: 'adr',
-        // canActivate: [HasPermisoGuard],
-        // data: {
-        //   modulo: "Configuracion",
-        //   submodulo: "Tasas",
-        //   permiso: "Crear"
-        // }
-      },
+      // {
+      //   path: 'edit-productos', component: EditProductosComponent, outlet: 'adr',
+      //   // canActivate: [HasPermisoGuard],
+      //   // data: {
+      //   //   modulo: "Configuracion",
+      //   //   submodulo: "Tasas",
+      //   //   permiso: "Crear"
+      //   // }
+      // },
       {
         path: 'edit-provedores', component: EditProvedoresComponent, outlet: 'adr',
         // canActivate: [HasPermisoGuard],
@@ -493,15 +501,15 @@ const routes: Routes = [
         //   permiso: "Crear"
         // }
       },
-      {
-        path: 'productos', component: ProductosComponent, outlet: 'adr',
-        // canActivate: [HasPermisoGuard],
-        // data: {
-        //   modulo: "Configuracion",
-        //   submodulo: "Tasas",
-        //   permiso: "Crear"
-        // }
-      },
+      // {
+      //   path: 'productos', component: ProductosComponent, outlet: 'adr',
+      //   // canActivate: [HasPermisoGuard],
+      //   // data: {
+      //   //   modulo: "Configuracion",
+      //   //   submodulo: "Tasas",
+      //   //   permiso: "Crear"
+      //   // }
+      // },
       {
         path: 'provedores', component: ProvedoresComponent, outlet: 'adr',
         // canActivate: [HasPermisoGuard],
@@ -513,6 +521,89 @@ const routes: Routes = [
       },
       {
         path: 'sucursales', component: SucursalesComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+
+      {
+        path: 'inventario', component: InventarioComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+
+      {
+        path: 'mover-inventario', component: MoverInventarioComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'cargar-inventario', component: CargarInventarioComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'inventario/detalle/:id', component: InventarioDetalleComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'pedidos', component: PedidosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-pedidos', component: AddPedidosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'edit-pedidos', component: EditPedidosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'cargar-inventario-sim', component: CargarInventarioSimComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'mover-inventario', component: MoverInventarioComponent, outlet: 'adr',
         // canActivate: [HasPermisoGuard],
         // data: {
         //   modulo: "Configuracion",

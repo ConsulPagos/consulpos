@@ -6,5 +6,11 @@ export interface ClienteNaturalInterface {
     c_s_nombre?: string;
     fecha_nacimiento?: string;
     id_genero?: string;
-    profesion?: string;
+    profesion?: ProfesionInterface;
 }
+
+export interface ProfesionInterface {
+    profesion?: string;
+    id_profesion?: string;
+}
+

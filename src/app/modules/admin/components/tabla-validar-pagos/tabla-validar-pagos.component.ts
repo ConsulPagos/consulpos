@@ -42,7 +42,7 @@ export class TablaValidarPagosComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<any>(true, []);
   statusFilter = false;
-  PAGESIZE = 12;
+  PAGESIZE = 25;
 
   @Output() addPay = new EventEmitter<any>();
   ShowSalesResponse: ShowSalesResponse;
@@ -97,7 +97,7 @@ export class TablaValidarPagosComponent implements OnInit {
             correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
             scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
             init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
-            limit_row: this.crypto.encryptJson(((this.paginator.pageIndex + 1) * this.PAGESIZE).toString()),
+            limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
             status_desc: this.crypto.encryptJson("VALIDAR PAGO"),
           }))
           return this.venta.doFindSalesByStatus(`${this.session.getDeviceId()};${data}`)
@@ -168,8 +168,6 @@ export class TablaValidarPagosComponent implements OnInit {
       console.log(this.crypto.decryptString(res))
       this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-       //this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
-      this.toaster.success(this.ShowSalesResponse.M)
       this.ventas = this.ShowSalesResponse.ventas
       this.dataSource = new MatTableDataSource(this.ventas);
     })

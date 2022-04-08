@@ -18,7 +18,6 @@ import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { constant } from 'src/app/shared/utils/constant';
-import pdfMaker from 'src/app/shared/utils/pdf';
 import { StatusAccountDecrypter, StatusAccountResponse } from '../../../../models/statusaccount';
 import { DiferirDeudaComponent } from '../../components/diferir-deuda/diferir-deuda.component';
 

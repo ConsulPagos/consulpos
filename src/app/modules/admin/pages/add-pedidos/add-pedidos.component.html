@@ -1,0 +1,97 @@
+<section id="add-provedores">
+    <div class="container-fluid">
+        <div>
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['pedidos'] } }]">
+                <li class="fas fa-arrow-left"></li>
+            </a>
+        </div>
+        <div style="background-color: #fff; border-radius: 10px;">
+            <div class="box-title d-flex justify-content-center">
+                <h5 class="bold uppercase mt-3">Agregar un pedido</h5>
+            </div>
+            <form [formGroup]="form">
+                <div class="container">
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Numero de orden</mat-label>
+                        <input matInput formControlName="num_order" placeholder="123" type="text">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Numero de factura</mat-label>
+                        <input matInput formControlName="num_factura" placeholder="123" type="text">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Fecha del pedido</mat-label>
+                        <input matInput [matDatepicker]="dp3" disabled [max]="currentYear"
+                            formControlName="fecha_pedido">
+                        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Proveedor</mat-label>
+                        <mat-select disableRipple formControlName="proveedor">
+                            <mat-option *ngFor="let provedor of provedores" value={{provedor.proveedor_id}}>
+                                {{provedor.nombre}} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </form>
+
+            <form [formGroup]="models[i]" #f="ngForm" *ngFor="let format of formats_model; let i=index">
+                <ng-template matStepLabel>Datos de la Venta</ng-template>
+                <div>
+                    <div>
+                        <div class="d-flex align-items-center ">
+                            <h6>Modelo {{i + 1}}</h6>
+                            <button mat-icon-button class="ml-4" color="primary"
+                                aria-label="Example icon button with a menu icon" (click)="deleteModel(i)"
+                                *ngIf="(formats_model.length > 1 && i >  0)">
+                                <i class="fas fa-minus-circle"></i>
+                            </button>
+                        </div>
+                        <div class="container">
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Modelo</mat-label>
+                                <mat-select disableRipple formControlName="modelo">
+                                    <mat-option *ngFor="let modelo of modelos" value={{modelo.id}}>
+                                        {{modelo.modelo}} </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Cantidad</mat-label>
+                                <input matInput formControlName="cantidad" placeholder="123" type="text">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div>
+                <button class="btn_form_add_agent" mat-icon-button color="primary"
+                    aria-label="Example icon button with a menu icon" (click)="add_model()"
+                    *ngIf="(formats_model.length <= 10)">
+                    <i class="fas fa-plus icon_sell"></i>
+                    Agregar Modelo
+                </button>
+                <br>
+            </div>
+
+            <div class="btn_form">
+                <button (click)="clear()" class="btn btn-danger bg-danger text-white w-25 mt-3 mb-3 text-uppercase"
+                    mat-button>
+                    Limpiar
+                </button>
+
+                <button (click)="save()" class="btn btn-success bg-success text-white w-25 mt-3 mb-3 text-uppercase"
+                    mat-button [disabled]="form.invalid">
+                    Guardar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</section>

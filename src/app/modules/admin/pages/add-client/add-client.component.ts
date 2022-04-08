@@ -25,6 +25,7 @@ import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { CeroValidator } from '../../../../shared/validators/cero.validator'
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-client',
@@ -42,6 +43,8 @@ export class AddClientComponent implements OnInit {
   search_client: boolean = true;
   formats: RepresentanteInterface[] = [];
   contribuyentes: ContribuyenteInterface[];
+  profesiones: any[];
+  t_docs_representantes: any[];
   estados: EstadoInterface[];
   municipios: MunicipioInterface[];
   parroquias: ParroquiaInterface[];
@@ -49,7 +52,7 @@ export class AddClientComponent implements OnInit {
   contactos: ContactoInterface[];
   generos: GeneroInterface[];
   actividades_comerciales: ActividadComercialInterface[];
-  tipos_clientes: TipoclienteInterface[];
+  tipos_clientes: any[];
   tipo_documentos: TipodocumentoInterface[];
   currentYear = new Date();
   identity;
@@ -65,20 +68,22 @@ export class AddClientComponent implements OnInit {
     private router: Router,
     private loader: LoaderService,
     private modal: ModalService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
 
     this.identity = this.fb.group({
       tipo_doc: ['', [Validators.required]],
-      rif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(11)]],
+      rif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(11), Validators.pattern("^[0-9]*$")]],
     },
       {
         validator: CeroValidator("rif")
       });
-
   }
 
-  //FORM DEL PRIMER STEP\\
+  getDoc(): void {
+    this.resetStatus()
+    this.tipos_clientes = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs.filter(c => c.t_doc == this.identity.get('tipo_doc').value)[0].clientes_por_documento
+  }
 
 
   //FORM DEL SEGUNDO STEP\\
@@ -107,7 +112,8 @@ export class AddClientComponent implements OnInit {
     codpostal: new FormControl('', [Validators.required]),
     act_comercial: new FormControl('', [Validators.required]),
     pto_referencia: new FormControl('', [Validators.required]),
-    localidad: new FormControl('', [Validators.required]),
+    facebook: new FormControl(''),
+    instagram: new FormControl(''),
   });
 
   data_vr = new FormGroup({
@@ -122,9 +128,8 @@ export class AddClientComponent implements OnInit {
     profesion: new FormControl('', [Validators.required]),
   });
 
-  //FORM DEL CUARTO STEP\\
   document = new FormGroup({
-    id: new FormControl('', [Validators.required]),
+    id: new FormControl(''),
   });
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,9 +176,26 @@ export class AddClientComponent implements OnInit {
     return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
   }
 
+  onlyCaracteres(event) {
+    // console.log(event.charCode)
+    return (event.charCode == 8 || event.charCode == 0) ? null :
+      event.charCode >= 48 && event.charCode <= 57 ||
+      event.charCode >= 64 && event.charCode <= 90 ||
+      event.charCode >= 97 && event.charCode <= 122 ||
+      event.charCode >= 45 && event.charCode <= 46 ||
+      event.charCode == 95 || event.charCode == 241 ||
+      event.charCode == 209;
+  }
+
   getTipoCliente(): string {
-    if (this.client_type.valid) {
-      return this.tipos_clientes.filter(t => t.id == this.client_type.get('tipo_cliente').value)[0].t_c_letra
+    if (this.tipos_clientes && this.client_type.valid) {
+      const resultado = this.tipos_clientes.filter(t => t.id == this.client_type.get('tipo_cliente').value)[0]
+      console.log('AQUIII')
+      console.log(resultado)
+      if (!resultado) {
+        return null
+      }
+      return resultado.identificador
     } return null
   }
 
@@ -206,9 +228,10 @@ export class AddClientComponent implements OnInit {
 
   submit() {
     this.search_client = true;
-    var letra = this.tipo_documentos.filter(t => t.id == this.identity.get("tipo_doc").value)[0].t_doc
+    var letra = this.identity.get("tipo_doc").value
+    // this.tipo_documentos.filter(t => t.id == this.identity.get("tipo_doc").value)[0].t_doc
     var rif = letra + this.identity.get('rif').value
-
+    console.log(rif)
     var data: any = {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
@@ -232,7 +255,7 @@ export class AddClientComponent implements OnInit {
       m_contacto_id: this.crypto.encryptJson(this.client.get('contacto').value),
       id_actividad_comercial: this.crypto.encryptJson(this.client.get('act_comercial').value),
       pto_ref: this.crypto.encryptJson(this.client.get('pto_referencia').value),
-      localidad: this.crypto.encryptJson(this.client.get('localidad').value),
+      localidad: this.crypto.encryptJson("hola"),
       telefonos: this.crypto.encryptJson(JSON.stringify([
         {
           number: this.client.get("phone_1").value.number,
@@ -280,6 +303,7 @@ export class AddClientComponent implements OnInit {
             c_doc: this.data_vr.get('cedula').value,
             id_genero: this.data_vr.get('genero').value,
             fecha_nacimiento: this.data_vr.get('fecha_nacimiento').value,
+            id_profesion: this.data_vr.get('profesion').value,
             profesion: this.data_vr.get('profesion').value,
           }
         )),
@@ -321,6 +345,8 @@ export class AddClientComponent implements OnInit {
     this.tipo_documentos = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs
     this.actividades_comerciales = JSON.parse(this.storage.get(constant.ACTIVIDAD_COMERCIAL)).actividades_comerciales
     this.generos = JSON.parse(this.storage.get(constant.GENEROS)).generos
+    this.profesiones = JSON.parse(this.storage.get(constant.PROFESIONES)).profesiones
+    this.t_docs_representantes = JSON.parse(this.storage.get(constant.T_DOCS_REPRESENTANTES)).t_docs
   }
 
   getError() {
@@ -336,11 +362,6 @@ export class AddClientComponent implements OnInit {
     this.municipios = JSON.parse(this.storage.get(constant.MUNICIPIOS)).municipios.filter(c => c.id_estado == id)
     this.ciudades = JSON.parse(this.storage.get(constant.CIUDADES)).ciudades.filter(c => c.id_estado == id)
     this.parroquias = JSON.parse(this.storage.get(constant.PARROQUIAS)).parroquias.filter(c => c.id_municipio == id)
-  }
-
-  getDoc(id: any): void {
-    this.search_client = true;
-    // this.tipos_clientes = JSON.parse(this.storage.get(constant.T_CLIENTES)).t_clientes.filter(c => c.letra == id)
   }
 
   getMunicipio(id: any): void {

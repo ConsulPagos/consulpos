@@ -49,6 +49,10 @@
     color: black;
 }
 
+.container_tlf{
+    padding: 1rem;
+}
+
 .nav-btn {
     color: #858598;
     height: 45px;
@@ -121,4 +125,8 @@
     display: flex;
     width: 100%;
     flex-wrap: wrap;
+}
+
+::ng-deep .mat-vertical-stepper-header{
+    pointer-events: none !important;
 }

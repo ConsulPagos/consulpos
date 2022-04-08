@@ -4,18 +4,18 @@
 
         <div class="container0">
             <div class="login-page">
-               
             </div>
             <div class="login-container">
                 <app-title [title]="'Inicia Sesión'"></app-title>
                 <form [formGroup]="authForm" class="mt-4">
                     <div class="input-container">
                         <input formControlName="email" type="text" class="form-control" id="email"
-                            placeholder="Correo electronico" name="email">
+                            placeholder="Correo electrónico" name="email" maxlength="45"
+                            (keypress)="onlyCaracteres($event)">
                     </div>
                     <div class="input-container">
                         <input formControlName="password" type="password" class="form-control" placeholder="Contraseña"
-                            name="password">
+                            name="password" maxlength="45" minlength="6">
                     </div>
                     <div class="error-message small d-flex justify-content-center">
                         {{error.msg}}
@@ -31,13 +31,7 @@
                 </form>
             </div>
         </div>
-
-        <div class="brand">
-            <!-- <img src="../../../../../assets/images/logo.png" alt="Consulpagos"> -->
-        </div>
-
     </div>
-
 </section>
 
 <ng-template #loadingTemplate>
