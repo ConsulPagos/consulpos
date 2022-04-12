@@ -21,7 +21,7 @@ export class ModalDescargarEcComponent implements OnInit {
 
   currentDay = new Date();
   oneMonthAgo = new Date();
-  sixMonthAgo = new Date();
+  oneYearAgo = new Date();
   pipe = new DatePipe('en-US');
 
   constructor(
@@ -36,7 +36,7 @@ export class ModalDescargarEcComponent implements OnInit {
 
   ngOnInit(): void {
     this.oneMonthAgo.setMonth(this.currentDay.getMonth() - 1);
-    this.sixMonthAgo.setMonth(this.currentDay.getMonth() - 6);
+    this.oneYearAgo.setMonth(this.currentDay.getMonth() - 12);
 
     this.form = new FormGroup({
       initial: new FormControl(this.oneMonthAgo, [Validators.required]),

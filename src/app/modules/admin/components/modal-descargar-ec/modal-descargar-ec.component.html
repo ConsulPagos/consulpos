@@ -12,7 +12,7 @@
 
             <mat-form-field appearance="outline" class="container_box_space">
                 <mat-label>Desde</mat-label>
-                <input matInput [matDatepicker]="dp3" disabled [max]="currentDay" [min]="sixMonthAgo"
+                <input matInput [matDatepicker]="dp3" disabled [max]="currentDay" [min]="oneYearAgo"
                     formControlName="initial">
                 <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                 <mat-datepicker #dp3 disabled="false"></mat-datepicker>
@@ -20,7 +20,7 @@
 
             <mat-form-field appearance="outline" class="container_box_space">
                 <mat-label>Hasta</mat-label>
-                <input matInput [matDatepicker]="dp3" disabled [max]="currentDay" [min]="sixMonthAgo"
+                <input matInput [matDatepicker]="dp3" disabled [max]="currentDay" [min]="oneYearAgo"
                     formControlName="final">
                 <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                 <mat-datepicker #dp3 disabled="false"></mat-datepicker>
