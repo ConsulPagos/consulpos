@@ -117,6 +117,7 @@ import { PagoManualComponent } from './pages/pago-manual/pago-manual.component';
 import { ModalDesafiliacionComponent } from './components/modal-desafiliacion/modal-desafiliacion.component';
 import { AddTraspasoComponent } from './pages/add-traspaso/add-traspaso.component';
 import { TablaTraspasoComponent } from './components/tabla-traspaso/tabla-traspaso.component';
+import { ModalDescargarEcComponent } from './components/modal-descargar-ec/modal-descargar-ec.component';
 
 
 @NgModule({
@@ -223,6 +224,7 @@ import { TablaTraspasoComponent } from './components/tabla-traspaso/tabla-traspa
     ModalDesafiliacionComponent,
     AddTraspasoComponent,
     TablaTraspasoComponent,
+    ModalDescargarEcComponent,
   ],
 
   imports: [
