@@ -23,6 +23,7 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { ShowItemDecrypter } from '../../../../models/showitem';
+import { ModalDesafiliacionComponent } from '../modal-desafiliacion/modal-desafiliacion.component';
 
 @Component({
   selector: 'app-equipos-asociados',
@@ -103,11 +104,12 @@ export class EquiposAsociadosComponent implements OnInit {
     })
   }
 
-  changeI(item: any) {
+  submit(item: any) {
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+
     }))
     this.loading = true;
     this.cliente.doDelete(`${this.session.getDeviceId()};${data}`).subscribe(res => {
@@ -127,108 +129,17 @@ export class EquiposAsociadosComponent implements OnInit {
     })
   }
 
-  traspasoI(item: any) {
-    const data = this.crypto.encryptString(JSON.stringify({
-      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-    }))
-    this.loading = true;
-    this.cliente.doDelete(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.loading = false
-      switch (this.defaultResponse.R) {
-        case constant.R0:
-          this.toaster.success(this.defaultResponse.M)
-          break;
-        case constant.R1:
-          this.toaster.error(this.defaultResponse.M)
-          break;
-        default:
-          this.toaster.default_error()
-          break;
-      }
-    })
-  }
-
-  repararI(item: any) {
-    const data = this.crypto.encryptString(JSON.stringify({
-      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-    }))
-    this.loading = true;
-    this.cliente.doDelete(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.loading = false
-      switch (this.defaultResponse.R) {
-        case constant.R0:
-          this.toaster.success(this.defaultResponse.M)
-          break;
-        case constant.R1:
-          this.toaster.error(this.defaultResponse.M)
-          break;
-        default:
-          this.toaster.default_error()
-          break;
-      }
-    })
-  }
-
-  desafiliarI(item: any) {
-    const data = this.crypto.encryptString(JSON.stringify({
-      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-    }))
-    this.loading = true;
-    this.cliente.doDelete(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.loading = false
-      switch (this.defaultResponse.R) {
-        case constant.R0:
-          this.toaster.success(this.defaultResponse.M)
-          break;
-        case constant.R1:
-          this.toaster.error(this.defaultResponse.M)
-          break;
-        default:
-          this.toaster.default_error()
-          break;
-      }
-    })
-  }
-
-  changeBank(item: any) {
-    this.modal.confirm("¿Desea realizar un cambio de banco a este equipo?").subscribe(result => {
+  openDialog(items): void {
+    const dialogRef = this.dialog.open(ModalDesafiliacionComponent, {
+      height: 'auto',
+      panelClass: 'custom-dialog',
+      data: { items: items },
+    });
+    dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.changeI(item)
+        console.log(result)
       }
-    })
-  }
-
-  traspaso(item: any) {
-    this.modal.confirm("¿Desea realizar un traspaso a este equipo?").subscribe(result => {
-      if (result) {
-        this.traspasoI(item)
-      }
-    })
-  }
-
-  reparar(item: any) {
-    this.modal.confirm("¿Desea mover a reparar este equipo?").subscribe(result => {
-      if (result) {
-        this.repararI(item)
-      }
-    })
-  }
-
-  desafiliacion(item: any) {
-    this.modal.confirm("¿Desea realizar una desafiliacion a este equipo?").subscribe(result => {
-      if (result) {
-        this.desafiliarI(item)
-      }
-    })
+    });
   }
 
 }

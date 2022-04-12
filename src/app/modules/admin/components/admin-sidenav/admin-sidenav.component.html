@@ -32,25 +32,10 @@
                 <span class="text_side">Ventas</span>
             </a>
 
-            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['correctivos'] } }]"
-                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-exchange-alt"></li> <span class="text_side">Correctivos</span>
+            <a class="menu_side" mat-menu-item [matMenuTriggerFor]="correctivo">
+                <li class="fa fa-file-alt icon_side"></li>
+                <span class="text_side">Correctivos</span>
             </a>
-
-            <!-- <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]"
-                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-exchange-alt"></li> <span class="text_side">Traspaso</span>
-            </a>
-
-            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]"
-                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-university"></li> <span class="text_side">Cambio de Banco</span>
-            </a>
-
-            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]"
-                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-book-dead"></li> <span class="text_side">Desafiliación</span>
-            </a> -->
         </mat-menu>
 
         <mat-menu #venta="matMenu">
@@ -58,16 +43,19 @@
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-cart-plus"></li> <span class="text_side">Ventas</span>
             </a>
-
-            <!-- <a mat-button class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['venta-consulpos'] } }]">
-                <li class="fa fa-cart-plus"></li>
-                <span class="text_side">Ventas Consulpos</span>
-            </a> -->
         </mat-menu>
-        <!-- ************************************************************************************************** -->
 
+        <mat-menu #correctivo="matMenu">
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['traspaso'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-cart-plus"></li> <span class="text_side">Traspaso</span>
+            </a>
 
-        <!-- ************************************************************************************************** -->
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['cambiobanco'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-cart-plus"></li> <span class="text_side">Cambio de Banco</span>
+            </a>
+        </mat-menu>
 
         <!-- Operaciones -->
         <a class="menu_side" mat-button [matMenuTriggerFor]="operaciones">

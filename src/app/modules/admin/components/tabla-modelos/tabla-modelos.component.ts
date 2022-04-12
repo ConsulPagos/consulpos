@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { merge, of as observableOf } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { DefaultResponse, DefaultDecrypter } from 'src/app/models/default_response';
-import { ShowModelosResponse, ShowModelosDecrypter } from 'src/app/models/showModelos_response';
+import { ShowModelosResponse, ShowModelosDecrypter } from 'src/app/models/showmodelos_response';
 import { InventarioService } from 'src/app/shared/services/inventario.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { ModalService } from 'src/app/shared/services/modal.service';

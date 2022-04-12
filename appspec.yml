@@ -1,0 +1,14 @@
+version: 0.0
+os: linux
+files:
+  - source: .
+    destination: /home/despliegues/front
+permissions:
+  - object: /home/despliegues
+#    owner: consuladmin
+    mode: 777
+hooks:
+  ApplicationStart:
+    - location: scripts/start_service.sh
+      timeout: 600
+      runas: root

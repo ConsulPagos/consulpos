@@ -111,6 +111,12 @@ import { TablaPedidosComponent } from './components/tabla-pedidos/tabla-pedidos.
 import { CargarInventarioSimComponent } from './pages/cargar-inventario-sim/cargar-inventario-sim.component';
 import { ModalKeySoComponent } from './components/modal-key-so/modal-key-so.component';
 import { ModalCambioAlmacenComponent } from './components/modal-cambio-almacen/modal-cambio-almacen.component';
+import { TraspasoComponent } from './pages/traspaso/traspaso.component';
+import { CambioBancoComponent } from './pages/cambio-banco/cambio-banco.component';
+import { PagoManualComponent } from './pages/pago-manual/pago-manual.component';
+import { ModalDesafiliacionComponent } from './components/modal-desafiliacion/modal-desafiliacion.component';
+import { AddTraspasoComponent } from './pages/add-traspaso/add-traspaso.component';
+import { TablaTraspasoComponent } from './components/tabla-traspaso/tabla-traspaso.component';
 
 
 @NgModule({
@@ -211,6 +217,12 @@ import { ModalCambioAlmacenComponent } from './components/modal-cambio-almacen/m
     CargarInventarioSimComponent,
     ModalKeySoComponent,
     ModalCambioAlmacenComponent,
+    TraspasoComponent,
+    CambioBancoComponent,
+    PagoManualComponent,
+    ModalDesafiliacionComponent,
+    AddTraspasoComponent,
+    TablaTraspasoComponent,
   ],
 
   imports: [

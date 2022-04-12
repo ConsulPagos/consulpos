@@ -25,6 +25,15 @@
     left: 20px;
 }
 
+.title_mother{
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 25px;
+    padding-top: 0.25rem;
+    text-align: center;
+}
+
 .edit-btn {
     border-radius: 10px;
     height: 40px;
@@ -48,31 +57,41 @@
     text-decoration: none;
     font-size: 22px;
     transition: 0.3s;
+    position: fixed;
+    z-index: 99;
 }
 
 .nav-btn:hover {
     background-color: whitesmoke;
 }
 
-.title_data {
-    font-weight: bold;
+.container_box {
+    width: 80px;
+    margin-right: 10px;
 }
 
-label {
-    display: inline-block;
-    margin-bottom: 0 !important;
+.container_box_space {
+    margin-right: 10px;
 }
 
-.container_module {
-    margin: 0.25rem;
+.title_container_file_upload{
+    display: flex;
+    justify-content: center;
 }
 
-.container_items {
+.icon_sell {
+    margin-right: 0.5rem;
+}
+
+.container_solicitud{
     display: flex;
 }
 
-.text-capitalize {
-    padding: 0 1rem;
+.container_agent{
     display: flex;
     flex-wrap: wrap;
+}
+
+::ng-deep .mat-vertical-stepper-header{
+    pointer-events: none !important;
 }
