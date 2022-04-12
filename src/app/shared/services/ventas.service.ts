@@ -163,4 +163,78 @@ export class VentasService {
     return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
   }
 
+  ///////////////////////////////////////////////////////////////
+
+  solicitudesPorTipo(data) {
+    var path = `/sell/solicitudesPorTipo`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  estadoCuentaEquipo(data) {
+    var path = `/sell/estadoCuentaEquipo`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  equiposPorCliente(data) {
+    var path = `/sell/equiposPorCliente`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  desafiliar(data) {
+    var path = `/sell/desafiliar`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  crearTraspaso(data) {
+    var path = `/sell/crearTraspaso`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  asignacionManual(data) {
+    var path = `/sell/asignacionManual`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  parametrizacionManual(data) {
+    var path = `/sell/ParametrizacionManual`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  configuracionManual(data) {
+    var path = `/sell/configuracionManual`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_ventas}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
 }

@@ -260,7 +260,8 @@ export class AddTraspasoComponent implements OnInit {
       solicitud: this.crypto.encryptJson(JSON.stringify(
         {
           occ_id: this.solicitud.get('occ').value,
-          t_sol_id: "1",
+          //Revisar mandarlo automatico x verify
+          t_sol_id: "4",
         }
       )),
 
@@ -284,6 +285,7 @@ export class AddTraspasoComponent implements OnInit {
       console.log(this.validacionres)
       switch (this.validacionres.R) {
         case constant.R0:
+          this.router.navigateByUrl('/admin/app/(adr:traspaso)')
           this.toaster.success(this.validacionres.M)
           break;
         case constant.R1:

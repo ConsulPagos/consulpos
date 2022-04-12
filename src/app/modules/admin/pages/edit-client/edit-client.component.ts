@@ -105,9 +105,9 @@ export class EditClientComponent implements OnInit {
 
     this.data_vr = new FormGroup({
       primer_nombre: new FormControl(this.editClient.c_natural.c_p_nombre, [Validators.required]),
-      segundo_nombre: new FormControl(this.editClient.c_natural.c_s_nombre,),
+      segundo_nombre: new FormControl(this.editClient.c_natural.c_s_nombre),
       primer_apellido: new FormControl(this.editClient.c_natural.c_p_apellido, [Validators.required]),
-      segundo_apellido: new FormControl(this.editClient.c_natural.c_s_apellido,),
+      segundo_apellido: new FormControl(this.editClient.c_natural.c_s_apellido),
       // tipo_doc_cedula: new FormControl(this.editClient.c_natural, [Validators.required]),
       cedula: new FormControl(this.editClient.c_natural.c_doc, [Validators.required]),
       genero: new FormControl(this.editClient.c_natural.id_genero, [Validators.required]),
@@ -117,11 +117,11 @@ export class EditClientComponent implements OnInit {
 
     this.agent = new FormGroup({
       p_nombre_representante: new FormControl(this.editClient.legal.l_p_nombre, [Validators.required]),
-      s_nombre_representante: new FormControl(this.editClient.legal.l_s_nombre, [Validators.required]),
+      s_nombre_representante: new FormControl(this.editClient.legal.l_s_nombre),
       p_apellido_representante: new FormControl(this.editClient.legal.l_p_apellido, [Validators.required]),
-      s_apellido_representante: new FormControl(this.editClient.legal.l_s_apellido, [Validators.required]),
+      s_apellido_representante: new FormControl(this.editClient.legal.l_s_apellido),
       cedula_representante: new FormControl(this.editClient.legal.r_doc, [Validators.required]),
-      telefono_local_repre: new FormControl(this.editClient, [Validators.required]),
+      telefono_local_repre: new FormControl(this.editClient.telefonos, [Validators.required]),
       telefono_movil_repre: new FormControl(this.editClient, [Validators.required]),
       email_repre: new FormControl(this.editClient.legal.r_email, [Validators.required]),
       tipo_doc_rep: new FormControl(this.editClient.legal.r_t_doc_id, [Validators.required]),
@@ -197,8 +197,8 @@ export class EditClientComponent implements OnInit {
 
       t_doc_id: this.crypto.encryptJson(this.identity.get('tipo_doc').value),
       rif: this.crypto.encryptJson(this.editClient.rif),
-      t_cliente_id: this.crypto.encryptJson(this.client_type.get('tipo_cliente').value),
 
+      t_cliente_id: this.crypto.encryptJson(this.client_type.get('tipo_cliente').value),
       razon_social: this.crypto.encryptJson(this.client.get('razon_social').value),
       comercio: this.crypto.encryptJson(this.client.get('nombre_comercial').value),
       contribuyente_id: this.crypto.encryptJson(this.client.get('contribuyente').value),
@@ -220,15 +220,13 @@ export class EditClientComponent implements OnInit {
         ...data,        
         legal: this.crypto.encryptJson(JSON.stringify(
           {
-            p_nombre_representante: this.agent.get('p_nombre_representante').value,
-            s_nombre_representante: this.agent.get('s_nombre_representante').value,
-            p_apellido_representante: this.agent.get('p_apellido_representante').value,
-            s_apellido_representante: this.agent.get('s_apellido_representante').value,
-            tipo_doc_rep: this.agent.get('tipo_doc_rep').value,
-            cedula_representante: this.agent.get('cedula_representante').value,
-            telefono_local_repre: this.agent.get('telefono_local_repre').value,
-            telefono_movil_repre: this.agent.get('telefono_movil_repre').value,
-            email_repre:this.agent.get('email_repre').value,
+            l_p_nombre: this.agent.get('p_nombre_representante').value,
+            l_s_nombre: this.agent.get('s_nombre_representante').value,
+            l_p_apellido: this.agent.get('p_apellido_representante').value,
+            l_s_apellido: this.agent.get('s_apellido_representante').value,
+            r_t_doc_id: this.agent.get('tipo_doc_rep').value,
+            r_doc: this.agent.get('cedula_representante').value,
+            r_email:this.agent.get('email_repre').value,
           }
         )),
         if_natural: this.crypto.encryptJson("false"),

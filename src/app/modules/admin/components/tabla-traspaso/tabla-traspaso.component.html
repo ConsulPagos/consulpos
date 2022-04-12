@@ -32,51 +32,51 @@
 
         <ng-container matColumnDef="number">
             <th mat-header-cell *matHeaderCellDef> Traspaso Nº </th>
-            <td mat-cell *matCellDef="let venta"> {{venta.number}} </td>
+            <td mat-cell *matCellDef="let solicitud"> {{solicitud.number}} </td>
         </ng-container>
 
         <ng-container matColumnDef="rif">
             <th mat-header-cell *matHeaderCellDef> Rif </th>
-            <td mat-cell *matCellDef="let venta"> {{venta.rif}} </td>
+            <td mat-cell *matCellDef="let solicitud"> {{solicitud.rif}} </td>
         </ng-container>
 
         <ng-container matColumnDef="razon_social">
             <th mat-header-cell *matHeaderCellDef> Razón Social </th>
-            <td mat-cell *matCellDef="let venta"> {{venta.razon_social}} </td>
+            <td mat-cell *matCellDef="let solicitud"> {{solicitud.razon_social}} </td>
         </ng-container>
 
         <ng-container matColumnDef="fecha">
             <th mat-header-cell *matHeaderCellDef> Fecha del Traspaso </th>
-            <td mat-cell *matCellDef="let venta"> {{venta.fecha}} </td>
+            <td mat-cell *matCellDef="let solicitud"> {{solicitud.fecha}} </td>
         </ng-container>
 
         <ng-container matColumnDef="status_desc">
             <th mat-header-cell *matHeaderCellDef> estatus </th>
-            <td mat-cell *matCellDef="let venta">
-                <div class={{statusColor(venta.status_desc)}}>
-                    {{venta.status_desc}}
+            <td mat-cell *matCellDef="let solicitud">
+                <div class={{statusColor(solicitud.status_desc)}}>
+                    {{solicitud.status_desc}}
                 </div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="Acciones">
             <th mat-header-cell *matHeaderCellDef> Acciones</th>
-            <td mat-cell *matCellDef="let venta">
+            <td mat-cell *matCellDef="let solicitud">
 
-                <button #tooltip="matTooltip" matTooltip="Ver Venta" matTooltipHideDelay="10" mat-icon-button
-                    (click)="_showSale(venta)" class="container_icon">
+                <button #tooltip="matTooltip" matTooltip="Ver solicitud" matTooltipHideDelay="10" mat-icon-button
+                    (click)="_showSale(solicitud)" class="container_icon">
                     <i class="fas fa-id-card activate_show"></i>
                 </button>
 
-                <!-- <button #tooltip="matTooltip" matTooltip="Editar Venta" matTooltipHideDelay="10" mat-icon-button
-                    (click)="_editSale(venta)" class="container_icon">
+                <!-- <button #tooltip="matTooltip" matTooltip="Editar solicitud" matTooltipHideDelay="10" mat-icon-button
+                    (click)="_editSale(solicitud)" class="container_icon">
                     <i class="fas fa-edit activate_edit"></i>
                 </button> -->
             </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let venta; columns: displayedColumns;">
+        <tr mat-row *matRowDef="let solicitud; columns: displayedColumns;">
         </tr>
     </table>
 </div>

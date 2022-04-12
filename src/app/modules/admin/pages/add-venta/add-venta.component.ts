@@ -273,7 +273,7 @@ export class AddVentaComponent implements OnInit {
       solicitud: this.crypto.encryptJson(JSON.stringify(
         {
           occ_id: this.solicitud.get('occ').value,
-          t_sol_id: "1",
+          // t_sol_id: "1",
         }
       )),
 

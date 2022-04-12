@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -16,11 +16,14 @@ import { VentasService } from 'src/app/shared/services/ventas.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { ShowSalesDecrypter, ShowSalesResponse } from 'src/app/models/showsales_response';
 import { LoaderService } from 'src/app/shared/services/loader.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalAsignacionComponent } from '../modal-asignacion/modal-asignacion.component';
 import { ModalParametrizacionComponent } from '../modal-parametrizacion/modal-parametrizacion.component';
 import { ModalConfiguracionComponent } from '../modal-configuracion/modal-configuracion.component';
+import { ModalAsignacionManualComponent } from '../modal-asignacion-manual/modal-asignacion-manual.component';
 import { ModalEntregaComponent } from '../modal-entrega/modal-entrega.component';
+import { DialogData } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { ModalConfiguracionManualComponent } from '../modal-configuracion-manual/modal-configuracion-manual.component';
 
 @Component({
   selector: 'app-tabla-operaciones',
@@ -29,7 +32,7 @@ import { ModalEntregaComponent } from '../modal-entrega/modal-entrega.component'
 })
 export class TablaOperacionesComponent implements OnInit {
 
-  displayedColumns: string[] = ['number', 'rif', 'razon_social', 'fecha', 'status_desc', 'Acciones'];
+  displayedColumns: string[] = ['number', 'rif', 'razon_social', 'fecha', 'status_desc', 'solicitud', 'Acciones'];
   ventas = [];
 
   isLoadingResults = false;
@@ -54,7 +57,6 @@ export class TablaOperacionesComponent implements OnInit {
   @Input() cambioOperacion: Observable<string>;
   tipo_operacion: string;
 
-
   constructor
     (
       private session: SesionService,
@@ -67,7 +69,6 @@ export class TablaOperacionesComponent implements OnInit {
       private router: Router,
       private route: ActivatedRoute,
       public dialog: MatDialog,
-
   ) {
 
     this.route.paramMap.subscribe(paramMap => {
@@ -101,16 +102,29 @@ export class TablaOperacionesComponent implements OnInit {
   openDialog(venta): void {
     switch (this.tipo_operacion) {
       case 'asignacion':
-        var dialogRef:any = this.dialog.open(ModalAsignacionComponent, {
-          height: 'auto',
-          panelClass: 'custom-dialog',
-          data: { venta: venta },
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result) {
+        if (venta.solicitud === "TRASPASO") {
+          var dialogRef: any = this.dialog.open(ModalAsignacionManualComponent, {
+            height: 'auto',
+            panelClass: 'custom-dialog',
+            data: { venta: venta },
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result) {
 
-          }
-        });
+            }
+          });
+        } else if (venta.solicitud === "VENTA POS") {
+          var dialogRef: any = this.dialog.open(ModalAsignacionComponent, {
+            height: 'auto',
+            panelClass: 'custom-dialog',
+            data: { venta: venta },
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+
+            }
+          });
+        }
         break;
 
       case 'parametrizacion':
@@ -127,16 +141,31 @@ export class TablaOperacionesComponent implements OnInit {
         break;
 
       case 'configuracion':
-        dialogRef = this.dialog.open(ModalConfiguracionComponent, {
-          height: 'auto',
-          panelClass: 'custom-dialog',
-          data: { venta: venta },
-        });
 
-        dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-          }
-        });
+
+        if (venta.solicitud === "TRASPASO") {
+          dialogRef = this.dialog.open(ModalConfiguracionManualComponent, {
+            height: 'auto',
+            panelClass: 'custom-dialog',
+            data: { venta: venta },
+          });
+
+          dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+            }
+          });
+        } else if (venta.solicitud === "VENTA POS") {
+          dialogRef = this.dialog.open(ModalConfiguracionComponent, {
+            height: 'auto',
+            panelClass: 'custom-dialog',
+            data: { venta: venta },
+          });
+
+          dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+            }
+          });
+        }
         break;
 
       case 'entregar':
@@ -187,7 +216,6 @@ export class TablaOperacionesComponent implements OnInit {
           console.log("JSON: " + data)
           console.log("string: " + this.crypto.decryptString(data))
           this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-           //this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
           this.resultsLength = parseInt(this.ShowSalesResponse.total_row);
           console.log(this.ShowSalesResponse)
           this.loader.stop()
@@ -238,8 +266,6 @@ export class TablaOperacionesComponent implements OnInit {
       console.log(this.crypto.decryptString(res))
       this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-       //this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
-      // this.toaster.success(this.ShowSalesResponse.M)
       this.ventas = this.ShowSalesResponse.ventas
       this.dataSource = new MatTableDataSource(this.ventas);
     })

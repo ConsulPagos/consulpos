@@ -1,1 +1,20 @@
-<p>pago-manual works!</p>
+<section id="pago-manual">
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">Listado de Pagos</span>
+                    </ng-template>
+                    <app-tabla-pagos 
+                    (addPay)="_addPay($event)" 
+                    (count)='countNuevos = $event' 
+                    class="w-100" 
+                    [access_level]="0">
+                    </app-tabla-pagos>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>
