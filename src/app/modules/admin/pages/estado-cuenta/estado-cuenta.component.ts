@@ -192,4 +192,22 @@ export class EstadoCuentaComponent implements OnInit {
     return valid
   }
 
+  getSummary() {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      rif: this.crypto.encryptJson(this.rif)
+    }))
+
+    this.loader.loading()
+    this.cliente.doSummaryPdf(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      const pdf = new Blob([res], { type: 'application/pdf' });
+      const fileURL = URL.createObjectURL(pdf);
+      window.open(fileURL, '_blank');
+      this.loader.stop()
+      console.log(res)
+    })
+  }
+
 }

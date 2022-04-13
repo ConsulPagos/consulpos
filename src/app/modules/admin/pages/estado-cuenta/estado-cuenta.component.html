@@ -5,6 +5,8 @@
             <div class="d-flex justify-content-center align-items-center mb-3" style="padding-top: 2rem;">
                 <h4 class="text-right">RIF: {{rif}}</h4>
             </div>
+            <button mat-button (click)="getSummary()"> Descargar estado de cuenta</button>
+
                 <hr>
                 <div class="col-md-12 container_module w-100" *ngIf="showStatusAccount">
                     <div class="text-capitalize">
