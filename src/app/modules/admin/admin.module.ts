@@ -118,6 +118,8 @@ import { ModalDesafiliacionComponent } from './components/modal-desafiliacion/mo
 import { AddTraspasoComponent } from './pages/add-traspaso/add-traspaso.component';
 import { TablaTraspasoComponent } from './components/tabla-traspaso/tabla-traspaso.component';
 import { ModalDescargarEcComponent } from './components/modal-descargar-ec/modal-descargar-ec.component';
+import { ModalAsignacionManualComponent } from './components/modal-asignacion-manual/modal-asignacion-manual.component';
+import { ModalConfiguracionManualComponent } from './components/modal-configuracion-manual/modal-configuracion-manual.component';
 
 
 @NgModule({
@@ -225,6 +227,8 @@ import { ModalDescargarEcComponent } from './components/modal-descargar-ec/modal
     AddTraspasoComponent,
     TablaTraspasoComponent,
     ModalDescargarEcComponent,
+    ModalAsignacionManualComponent,
+    ModalConfiguracionManualComponent
   ],
 
   imports: [

@@ -1,16 +1,15 @@
 <!-- Vista de Agregar Cliente -->
 <section id="editClient">
     <!-- Botones del Navbar -->
-    <div class="title">
-        <div class="d-flex">
-            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-                [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]">
-                <li class="fas fa-arrow-left"></li>
-            </a>
-        </div>
-    </div>
-
     <div class="container-fluid">
+        <div class="structur">
+            <div>
+                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                    [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]">
+                    <li class="fas fa-arrow-left"></li>
+                </a>
+            </div>
+        </div>
         <div style="background-color: #fff; border-radius: 10px;">
             <p class="title_mother text-uppercase">
                 Editar Cliente
@@ -202,7 +201,7 @@
                                 <mat-form-field class="container_box_direction" appearance="outline">
                                     <mat-label>Dirección</mat-label>
                                     <textarea matInput placeholder="Av. Ernesto Blohm" formControlName="direccion"
-                                        type="text" maxlength="510">
+                                        type="text" maxlength="255">
                                 </textarea>
                                 </mat-form-field>
                             </div>
@@ -211,7 +210,7 @@
                                 <mat-form-field class="container_box_direction" appearance="outline">
                                     <mat-label>Punto de referencia</mat-label>
                                     <textarea matInput placeholder="Pasando Proteccion animal"
-                                        formControlName="pto_referencia" type="text" maxlength="510">
+                                        formControlName="pto_referencia" type="text" maxlength="255">
                                 </textarea>
                                 </mat-form-field>
                             </div>
@@ -230,10 +229,6 @@
                     </form>
 
                     <div class="container_btn">
-                        <button class="stepBtn" mat-raised-button matStepperPrevious>
-                            Anterior
-                        </button>
-                        
                         <div class="btn_margin" *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'">
                             <app-action-btn (onClick)="save()" [loading]="loading" [text]="'Actualizar'"
                                 [isDisabled]="client.invalid || loading">
@@ -294,7 +289,7 @@
                                         </mat-form-field>
                                     </div>
 
-                                    <mat-form-field appearance="outline" class="container_box_space">
+                                    <!-- <mat-form-field appearance="outline" class="container_box_space">
                                         <mat-label>Teléfono Local</mat-label>
                                         <input matInput formControlName="telefono_local_repre" placeholder="123456789"
                                             type="text" maxlength="11" minlength="10">
@@ -304,7 +299,22 @@
                                         <mat-label>Teléfono Móvil</mat-label>
                                         <input matInput formControlName="telefono_movil_repre" placeholder="123456789"
                                             type="text" maxlength="11" minlength="10">
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+
+                                    <div class="container_tlf">
+                                        <div class="col-md-12 container_module">
+                                            <label class="labels title_data">
+                                                Telefonos:
+                                            </label>
+                                            <div *ngFor="let telefono of editClient.telefonos"
+                                                class="phone_number text-capitalize">
+                                                {{telefono.identificador}}-{{telefono.telefono}}
+                                            </div>
+                                        </div>
+                                        <button mat-raised-button (click)="openDialog()">
+                                            Editar Teléfono
+                                        </button>
+                                    </div>
 
                                     <mat-form-field appearance="outline">
                                         <mat-label>Correo Electrónico</mat-label>
@@ -350,8 +360,3 @@
         </div>
     </div>
 </section>
-<!-- <div>
-                        <strong>Form value:</strong>
-                        <pre>{{ l.form.value | json }}</pre>
-                    </div> -->
-<!-- Bootn de siguiente strepper -->

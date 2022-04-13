@@ -6,17 +6,13 @@
 </h1>
 <div mat-dialog-content class="mat-dialog-content">
     <div class="pt-2 pb-1 less-padding">
-        <p>
-            Se asignaran Seriales a los siguientes modelos:
-        </p>
-        <div *ngFor="let modelo of dataVenta.modelos">
-            <p>{{modelo.caracteristicas[0].modelo}}</p>
-        </div>
 
-        <button (click)="findPos()">
-            asignar
-        </button>
-
+        <form [formGroup]="form">
+            <mat-form-field class="box" appearance="outline">
+                <mat-label>Serial</mat-label>
+                <input matInput type="text" formControlName="serial">
+            </mat-form-field>
+        </form>
     </div>
 </div>
 <div mat-dialog-actions>
@@ -24,7 +20,7 @@
         <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null">
             <li class="fa fa-times text-dark"></li>
         </button>
-        <button class="flex-fill confirm action_button" (click)="save()" [disabled]="false" mat-button cdkFocusInitial
+        <button class="flex-fill confirm action_button" (click)="saveAsignacionManual()" [disabled]="false" mat-button cdkFocusInitial
             [mat-dialog-close]="true">
             <li class="fa fa-check"></li>
         </button>

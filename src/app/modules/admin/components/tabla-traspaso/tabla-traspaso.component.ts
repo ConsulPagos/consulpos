@@ -16,6 +16,8 @@ import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { VentasService } from 'src/app/shared/services/ventas.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { ShowSalesDecrypter, ShowSalesResponse } from 'src/app/models/showsales_response';
+import { ShowSolicitudesDecrypter, ShowSolicitudesResponse } from 'src/app/models/showsolicitudes_response';
+
 
 @Component({
   selector: 'app-tabla-traspaso',
@@ -23,8 +25,8 @@ import { ShowSalesDecrypter, ShowSalesResponse } from 'src/app/models/showsales_
   styleUrls: ['./tabla-traspaso.component.scss']
 })
 export class TablaTraspasoComponent implements OnInit {
-  displayedColumns: string[] = ['number', 'rif','razon_social','fecha','status_desc','Acciones'];
-  ventas = [];
+  displayedColumns: string[] = ['number', 'rif', 'razon_social', 'fecha', 'status_desc', 'Acciones'];
+  solicitudes = [];
 
   isLoadingResults = false;
   expandedElement: any | null;
@@ -45,6 +47,7 @@ export class TablaTraspasoComponent implements OnInit {
   @Output() editSale = new EventEmitter<any>();
   @Output() showSale = new EventEmitter<any>();
   ShowSalesResponse: ShowSalesResponse;
+  showSolicitudes: ShowSolicitudesResponse;
 
   constructor
     (
@@ -56,7 +59,7 @@ export class TablaTraspasoComponent implements OnInit {
       private toaster: ToasterService,
       private router: Router,
   ) {
-    this.dataSource = new MatTableDataSource(this.ventas);
+    this.dataSource = new MatTableDataSource(this.solicitudes);
   }
 
   identity = new FormGroup({
@@ -95,18 +98,19 @@ export class TablaTraspasoComponent implements OnInit {
             scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
             init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
             limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
+            t_sol_id: this.crypto.encryptJson("4"),
           }))
-          return this.venta.doAllSale(`${this.session.getDeviceId()};${data}`)
+          return this.venta.solicitudesPorTipo(`${this.session.getDeviceId()};${data}`)
         }),
         map(data => {
           this.firstLoading = false;
           this.isLoadingResults = false;
           console.log("JSON: " + data)
           console.log("string: " + this.crypto.decryptString(data))
-          this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-          this.resultsLength = parseInt(this.ShowSalesResponse.total_row);
-          console.log(this.ShowSalesResponse)
-          return this.ShowSalesResponse.ventas;
+          this.showSolicitudes = new ShowSolicitudesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
+          this.resultsLength = parseInt(this.showSolicitudes.total_row);
+          console.log(this.showSolicitudes)
+          return this.showSolicitudes.solicitudes;
         }),
         catchError((e) => {
           this.firstLoading = false;
@@ -116,8 +120,8 @@ export class TablaTraspasoComponent implements OnInit {
           return observableOf([]);
         })
       ).subscribe(data => {
-        this.ventas = data
-        this.dataSource = new MatTableDataSource(this.ventas);
+        this.solicitudes = data
+        this.dataSource = new MatTableDataSource(this.solicitudes);
         this.identity.reset();
         this.statusFilter = false;
       });
@@ -147,10 +151,10 @@ export class TablaTraspasoComponent implements OnInit {
     this.isLoadingResults = true;
     this.venta.doFindSales(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(this.crypto.decryptString(res))
-      this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.showSolicitudes = new ShowSolicitudesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-      this.ventas = this.ShowSalesResponse.ventas
-      this.dataSource = new MatTableDataSource(this.ventas);
+      this.solicitudes = this.showSolicitudes.solicitudes
+      this.dataSource = new MatTableDataSource(this.solicitudes);
     })
   }
 

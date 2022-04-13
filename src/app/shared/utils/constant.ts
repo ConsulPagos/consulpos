@@ -19,6 +19,7 @@ export const constant = {
 
     T_CLIENTES: 't_cliente',
     T_CLIENTE_ID: 't_cliente_id',
+    T_SOLICITUDES: 't_solicitudes',
 
     FRACCIONES_PAGO: 'fracciones_pago',
     OPERADORAS: 'operadoras',

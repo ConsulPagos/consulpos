@@ -60,10 +60,8 @@ export interface VerifyResponse {
     M: string;
     almacenes: any[];
     proveedores: any[];
-    /*     keyS: string;
-        ivS: string;
-        keyJ: string;
-        ivJ: string; */
+    t_solicitudes: any[];
+
 }
 
 import { CryptoService } from "../shared/services/crypto.service";
@@ -82,12 +80,6 @@ export class VerifyDecrypter {
 
         const verify: VerifyResponse = {
             M: this.crypto.decryptJson(value.M),
-            /*          keyS: this.crypto.decryptString(value.keyS),
-                        ivS: this.crypto.decryptString(value.ivS),
-                        keyJ: this.crypto.decryptJson(value.keyJ),
-                        ivJ: this.crypto.decryptJson(value.ivJ), 
-            */
-
             municipios: JSON.parse(this.crypto.decryptJson(value.municipios)),
             contribuyentes: JSON.parse(this.crypto.decryptJson(value.contribuyentes)),
             //roles: JSON.parse(this.crypto.decryptJson(value.roles)),
@@ -122,6 +114,7 @@ export class VerifyDecrypter {
             t_docs_representantes: JSON.parse(this.crypto.decryptJson(value.t_docs_representantes)),
             almacenes: JSON.parse(this.crypto.decryptJson(value.almacenes)),
             proveedores: JSON.parse(this.crypto.decryptJson(value.proveedores)),
+            t_solicitudes: JSON.parse(this.crypto.decryptJson(value.t_solicitudes)),
         }
         console.log(verify)
         return verify

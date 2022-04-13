@@ -55,6 +55,7 @@
 
 .nav-btn {
     color: #858598;
+    background-color: white;
     height: 45px;
     width: 45px;
     display: flex;
@@ -64,6 +65,7 @@
     text-decoration: none;
     font-size: 22px;
     transition: 0.3s;
+    position: fixed;
     z-index: 99;
 }
 

@@ -112,8 +112,8 @@ export class AddClientComponent implements OnInit {
     codpostal: new FormControl('', [Validators.required]),
     act_comercial: new FormControl('', [Validators.required]),
     pto_referencia: new FormControl('', [Validators.required]),
-    facebook: new FormControl(''),
-    instagram: new FormControl(''),
+    red_social_a: new FormControl(''),
+    red_social_b: new FormControl(''),
   });
 
   data_vr = new FormGroup({
@@ -255,7 +255,9 @@ export class AddClientComponent implements OnInit {
       m_contacto_id: this.crypto.encryptJson(this.client.get('contacto').value),
       id_actividad_comercial: this.crypto.encryptJson(this.client.get('act_comercial').value),
       pto_ref: this.crypto.encryptJson(this.client.get('pto_referencia').value),
-      localidad: this.crypto.encryptJson("hola"),
+      red_social_a: this.crypto.encryptJson(this.client.get('red_social_a').value),
+      red_social_b: this.crypto.encryptJson(this.client.get('red_social_b').value),
+      localidad: this.crypto.encryptJson("Undefined"),
       telefonos: this.crypto.encryptJson(JSON.stringify([
         {
           number: this.client.get("phone_1").value.number,
