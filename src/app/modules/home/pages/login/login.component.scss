@@ -92,6 +92,16 @@ button {
   height: 30px;
 }
 
+.version{
+  color: black;
+  text-align: center;
+  margin: 0;
+}
+
+.version p{
+  margin: 0;
+}
+
 /* This approximates the ease-in-out-bounce animation from easings.net, which would require a plug-in to use*/
 @keyframes bounce {
   0% {
