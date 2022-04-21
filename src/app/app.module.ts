@@ -22,7 +22,6 @@ import { environment } from '../environments/environment';
 import { AngularFireStorageModule } from '@angular/fire/storage'
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { ChartsModule } from 'ng2-charts';
-import { DashboardComponent } from './modules/admin/pages/dashboard/dashboard.component';
 import { LoginComponent } from './modules/home/pages/login/login.component';
 import { ChangePasswordDialogComponent } from './shared/components/change-password-dialog/change-password-dialog.component';
 import { EditphoneComponent } from './shared/components/editphone/editphone.component';
@@ -33,8 +32,7 @@ import { AngularFireModule } from '@angular/fire';
     AppComponent,
     LoginComponent,
     ChangePasswordDialogComponent,
-    EditphoneComponent,
-  ],
+    EditphoneComponent,  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

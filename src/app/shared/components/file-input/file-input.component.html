@@ -1,0 +1,6 @@
+<input [(ngModel)]="file" id="uploadFile" class="f-input" disabled />
+<div class="fileUpload btn btn--browse">
+    <span>Seleccionar</span>
+    <span [class.spinner]="loading" class="btn-spinner"></span>
+    <input (change)="onChange($event)" id="uploadBtn" type="file" class="upload"  accept={{accept}} />
+</div>

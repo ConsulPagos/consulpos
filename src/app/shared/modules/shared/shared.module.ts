@@ -34,6 +34,7 @@ import { LoaderComponent } from '../../components/loader/loader.component';
 import { ActionBtnComponent } from '../../components/action-btn/action-btn.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { FileInputComponent } from '../../components/file-input/file-input.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     DateAgoPipe,
     BottomFormComponent,
     LoaderComponent,
-    ActionBtnComponent
+    ActionBtnComponent,
+    FileInputComponent
 
   ],
   imports: [
@@ -117,7 +119,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     ActionBtnComponent,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatInputModule 
+    MatInputModule ,
+    FileInputComponent
+
 
   ]
 })
