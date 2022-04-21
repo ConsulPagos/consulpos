@@ -8,7 +8,6 @@ import { ParroquiaInterface } from '../../../../models/parroquia'
 import { MunicipioInterface } from '../../../../models/municipio'
 import { ContactoInterface } from '../../../../models/contacto'
 import { TipodocumentoInterface } from '../../../../models/tipo_documento'
-import { TipoclienteInterface } from '../../../../models/tipo_cliente'
 import { RepresentanteInterface } from 'src/app/models/user';
 import { ValidacionclienteDecrypter, ValidacionclienteResponse } from 'src/app/models/validacioncliente_response';
 import { AddClientDecrypter, AddClientResponse } from 'src/app/models/add_clients_response';
@@ -25,7 +24,6 @@ import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { CeroValidator } from '../../../../shared/validators/cero.validator'
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-client',
@@ -57,7 +55,6 @@ export class AddClientComponent implements OnInit {
   currentYear = new Date();
   identity;
 
-  //****************************************************************************************//
   constructor(
     private title: Title,
     private crypto: CryptoService,
@@ -85,13 +82,10 @@ export class AddClientComponent implements OnInit {
     this.tipos_clientes = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs.filter(c => c.t_doc == this.identity.get('tipo_doc').value)[0].clientes_por_documento
   }
 
-
-  //FORM DEL SEGUNDO STEP\\
   client_type = new FormGroup({
     tipo_cliente: new FormControl('', [Validators.required]),
   });
 
-  // *** FORM DEL TERCER STEP *** \\
   client = new FormGroup({
     razon_social: new FormControl('', [Validators.required]),
     nombre_comercial: new FormControl('', [Validators.required]),
@@ -133,13 +127,11 @@ export class AddClientComponent implements OnInit {
   });
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
   separateDialCode = false;
   SearchCountryField = SearchCountryField;
   CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
   preferredCountries: CountryISO[] = [CountryISO.Venezuela, CountryISO.UnitedStates];
-
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   agent = new FormGroup({
@@ -177,7 +169,6 @@ export class AddClientComponent implements OnInit {
   }
 
   onlyCaracteres(event) {
-    // console.log(event.charCode)
     return (event.charCode == 8 || event.charCode == 0) ? null :
       event.charCode >= 48 && event.charCode <= 57 ||
       event.charCode >= 64 && event.charCode <= 90 ||
@@ -190,8 +181,6 @@ export class AddClientComponent implements OnInit {
   getTipoCliente(): string {
     if (this.tipos_clientes && this.client_type.valid) {
       const resultado = this.tipos_clientes.filter(t => t.id == this.client_type.get('tipo_cliente').value)[0]
-      console.log('AQUIII')
-      console.log(resultado)
       if (!resultado) {
         return null
       }
@@ -229,19 +218,15 @@ export class AddClientComponent implements OnInit {
   submit() {
     this.search_client = true;
     var letra = this.identity.get("tipo_doc").value
-    // this.tipo_documentos.filter(t => t.id == this.identity.get("tipo_doc").value)[0].t_doc
     var rif = letra + this.identity.get('rif').value
     console.log(rif)
     var data: any = {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-
       t_doc_id: this.crypto.encryptJson(this.identity.get('tipo_doc').value),
       rif: this.crypto.encryptJson(rif),
-
       t_cliente_id: this.crypto.encryptJson(this.client_type.get('tipo_cliente').value),
-
       razon_social: this.crypto.encryptJson(this.client.get('razon_social').value),
       comercio: this.crypto.encryptJson(this.client.get('nombre_comercial').value),
       contribuyente_id: this.crypto.encryptJson(this.client.get('contribuyente').value),
@@ -271,7 +256,7 @@ export class AddClientComponent implements OnInit {
         }
       ]))
     }
-
+    
     if (this.getTipoCliente() == 'J') {
       data = {
         ...data,
@@ -313,9 +298,7 @@ export class AddClientComponent implements OnInit {
         if_legal: this.crypto.encryptJson("false"),
       }
     }
-
     const dataS = this.crypto.encryptString(JSON.stringify(data));
-
     this.loading = true;
     this.cliente.doSave(`${this.session.getDeviceId()};${dataS}`).subscribe(res => {
       this.addClientResponse = new AddClientDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))

@@ -66,12 +66,14 @@ export class ModalConfiguracionComponent implements OnInit {
       const item = this.dataVenta.modelos[index];
       console.log(item)
       for (let z = 0; z < item.caracteristicas.length; z++) {
+        const c = item.caracteristicas[z];
+        const d = this.dataVenta.items.filter(i => i.solicitud_banco.solicitud_banco_id == c.solicitud_banco.solicitud_banco_id)[0];
         this.formDinamic.push(new FormGroup({
-          serial_sim: new FormControl(null, [Validators.required]),
+          sim_serial: new FormControl(null, [Validators.required]),
+          solicitud_banco_id: new FormControl(c.solicitud_banco.solicitud_banco_id),
+          cod_serial: new FormControl(d.cod_serial),
         }))
       }
-
-      console.log(this.formDinamic)
     }
   }
 
@@ -83,31 +85,44 @@ export class ModalConfiguracionComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       modelo: this.crypto.encryptJson(sim),
     }))
-
     var x;
     this.venta.doFindSim(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
-      console.log(JSON.parse(this.crypto.decryptString(res)))
-      console.log(this.crypto.decryptString(res))
-      console.log(res)
       this.default = new ConfiguracionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      console.log(json)
-      console.log(this.default)
-      form.get("serial_sim").setValue(this.default.item.cod_serial)
+      form.get("sim_serial").setValue(this.default.item.cod_serial)
       x = this.default.item.cod_serial
       console.log(x)
     })
   }
 
-  saveConfig(modelo, serial) {
-
+  liberarSim(modelo, serial) {
     const inputs = [];
-
     this.formDinamic.forEach(f => {
-      inputs.push({
-        input_id: f.get('serial_sim').value,
-      })
+      inputs.push(f.value)
     })
+    console.log('MARAVILLA')
+    console.log(this.formDinamic)
+    console.log(inputs)
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      items: this.crypto.encryptJson(JSON.stringify(inputs))
+    }))
+    this.venta.liberarSim(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      const json = JSON.parse(this.crypto.decryptString(res))
+      this.default = new ConfigDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+    })
+  }
+
+  saveConfig(modelo, serial) {
+    const inputs = [];
+    this.formDinamic.forEach(f => {
+      inputs.push(f.value)
+    })
+    console.log('MARAVILLA')
+    console.log(this.formDinamic)
+    console.log(inputs)
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
@@ -115,25 +130,32 @@ export class ModalConfiguracionComponent implements OnInit {
       solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
       solicitud_banco_id: this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
       accion: this.crypto.encryptJson("CONFIGURACION"),
-
-      Operaciones: this.crypto.encryptJson(JSON.stringify([
-        {
-          // cod_serial: serial,
-          // terminal: this.configuracion.get('terminal').value,
-          // afiliado: this.configuracion.get('afiliado').value,
-          // modelo: modelo,
-          sim_serial: this.configuracion.get(inputs),
-        }
-      ]))
+      Operaciones: this.crypto.encryptJson(JSON.stringify(
+        inputs
+      ))
     }))
-    console.log("verify")
-    this.venta.doEndAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.venta.doSaveConfig(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
-      console.log('UBUIIIIII')
-      console.log(JSON.parse(this.crypto.decryptString(res)))
       this.default = new ConfigDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      console.log(this.default)
+    })
+    this.end()
+  }
 
+
+
+  end() {
+    console.log()
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
+      accion: this.crypto.encryptJson("CONFIGURACION"),
+    }))
+    this.venta.doEndAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      console.log(this.crypto.decryptString(res))
+      const json = JSON.parse(this.crypto.decryptString(res))
+      this.default = new ConfigDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
     })
   }
 

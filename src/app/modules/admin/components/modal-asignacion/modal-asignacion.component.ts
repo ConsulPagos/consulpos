@@ -60,7 +60,11 @@ export class ModalAsignacionComponent implements OnInit {
       modelos.push(
         {
           modelo: m.caracteristicas[0].modelo,
-          solicitud_banco_id: this.dataVenta.solicitud_banco_id,
+          // solicitud_banco: m.caracteristicas[0].solicitud_banco,
+          afiliado:m.caracteristicas[0].solicitud_banco.afiliado,
+          terminal:m.caracteristicas[0].solicitud_banco.terminal,
+          cuenta:m.caracteristicas[0].solicitud_banco.cuenta,
+          solicitud_banco_id:m.caracteristicas[0].solicitud_banco.solicitud_banco_id,
         }
       )
     });
@@ -100,7 +104,7 @@ export class ModalAsignacionComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
       // solicitud_banco_id: this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
-      // accion: this.crypto.encryptJson("ASIGNACION"),
+      accion: this.crypto.encryptJson("ASIGNACION"),
       // Operaciones: this.crypto.encryptJson(JSON.stringify([
       //   {
       //     cod_serial: this.asignacion.get('serial').value,

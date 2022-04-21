@@ -104,6 +104,7 @@ export class TablaOperacionesComponent implements OnInit {
       case 'asignacion':
         if (venta.solicitud === "TRASPASO") {
           var dialogRef: any = this.dialog.open(ModalAsignacionManualComponent, {
+            disableClose: true,
             height: 'auto',
             panelClass: 'custom-dialog',
             data: { venta: venta },
@@ -115,6 +116,7 @@ export class TablaOperacionesComponent implements OnInit {
           });
         } else if (venta.solicitud === "VENTA POS") {
           var dialogRef: any = this.dialog.open(ModalAsignacionComponent, {
+            disableClose: true,
             height: 'auto',
             panelClass: 'custom-dialog',
             data: { venta: venta },
@@ -129,6 +131,7 @@ export class TablaOperacionesComponent implements OnInit {
 
       case 'parametrizacion':
         dialogRef = this.dialog.open(ModalParametrizacionComponent, {
+          disableClose: true,
           height: 'auto',
           panelClass: 'custom-dialog',
           data: { venta: venta },
@@ -145,6 +148,7 @@ export class TablaOperacionesComponent implements OnInit {
 
         if (venta.solicitud === "TRASPASO") {
           dialogRef = this.dialog.open(ModalConfiguracionManualComponent, {
+            disableClose: true,
             height: 'auto',
             panelClass: 'custom-dialog',
             data: { venta: venta },
@@ -156,6 +160,7 @@ export class TablaOperacionesComponent implements OnInit {
           });
         } else if (venta.solicitud === "VENTA POS") {
           dialogRef = this.dialog.open(ModalConfiguracionComponent, {
+            disableClose: true,
             height: 'auto',
             panelClass: 'custom-dialog',
             data: { venta: venta },
@@ -170,6 +175,7 @@ export class TablaOperacionesComponent implements OnInit {
 
       case 'entregar':
         dialogRef = this.dialog.open(ModalEntregaComponent, {
+          disableClose: true,
           height: 'auto',
           panelClass: 'custom-dialog',
           data: { venta: venta },

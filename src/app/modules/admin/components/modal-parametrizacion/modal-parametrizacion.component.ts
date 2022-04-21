@@ -27,6 +27,7 @@ export class ModalParametrizacionComponent implements OnInit {
   default: DefaultResponse
   serial: any;
   modelo: any;
+  solicitud_banco_id: any;
 
   constructor(
     private title: Title,
@@ -50,40 +51,51 @@ export class ModalParametrizacionComponent implements OnInit {
     // });
   }
 
-  formDinamic = [];
+  formDinamic;
   parametrizacion: FormGroup;
 
   ngOnInit(): void {
+    this.formDinamic = [];
     console.log(this.dataVenta.items)
     for (let t = 0; t < this.dataVenta.items.length; t++) {
       const item = this.dataVenta.items[t]
       if (!item.complemento_d) {
+        console.log(item)
         this.formDinamic.push(new FormGroup({
-          afiliado: new FormControl(this.dataVenta.afiliado, [Validators.required]),
-          terminal: new FormControl(null, [Validators.required]),
+          afiliado: new FormControl(item.solicitud_banco.afiliado, [Validators.required]),
+          terminal: new FormControl(item.solicitud_banco.terminal, [Validators.required]),
+          solicitud_banco_id: new FormControl(item.solicitud_banco.solicitud_banco_id),
+          cod_serial: new FormControl(item.cod_serial),
+          modelo: new FormControl(item.modelo),
         }))
       }
+
       console.log(this.formDinamic)
     }
   }
 
-  saveConfig(serial, modelo) {
+  saveConfig(serial, modelo, solicitud_banco_id) {
+    console.log(this.formDinamic)
+    const items = []
+    this.formDinamic.forEach(h => {
+      items.push({
+        cod_serial: h.get('cod_serial').value,
+        terminal: h.get('terminal').value,
+        afiliado: h.get('afiliado').value,
+        modelo: h.get('modelo').value,
+        solicitud_banco_id: h.get('solicitud_banco_id').value,
+      })
+    });
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
-      solicitud_banco_id: this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
       accion: this.crypto.encryptJson("PARAMETRIZACION"),
 
-      Operaciones: this.crypto.encryptJson(JSON.stringify([
-        {
-          cod_serial: serial,
-          terminal: this.formDinamic[0].get('terminal').value,
-          afiliado: this.formDinamic[0].get('afiliado').value,
-          modelo: modelo,
-        }
-      ]))
+      Operaciones: this.crypto.encryptJson(JSON.stringify(
+        items
+      ))
     }))
     console.log("verify")
     this.venta.doSaveConfig(`${this.session.getDeviceId()};${data}`).subscribe(res => {
