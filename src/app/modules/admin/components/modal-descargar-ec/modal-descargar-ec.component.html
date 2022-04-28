@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>
+    <li class="fa fa-edit mr-2"></li>
+    <span class="field">
+        Generar estado de cuenta
+    </span>
+</h1>
+<div mat-dialog-content class="mat-dialog-content">
+    <div class="pt-2 pb-1 less-padding">
+        <form [formGroup]="form">
+
+            <p>Seleccione el periodo deseado:</p>
+
+            <mat-form-field appearance="outline" class="container_box_space">
+                <mat-label>Desde</mat-label>
+                <input matInput [matDatepicker]="dp3" disabled [max]="currentDay" [min]="oneYearAgo"
+                    formControlName="initial">
+                <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="container_box_space">
+                <mat-label>Hasta</mat-label>
+                <input matInput [matDatepicker]="dp3" disabled [max]="currentDay" [min]="oneYearAgo"
+                    formControlName="final">
+                <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+            </mat-form-field>
+
+        </form>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <div class="d-flex w-100">
+        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null">
+            <li class="fa fa-times text-dark"></li>
+        </button>
+        <button class="flex-fill confirm action_button" [disabled]="form.invalid" mat-button cdkFocusInitial
+            (click)="generate()" >
+            <li class="fa fa-check"></li>
+        </button>
+    </div>
+</div>
