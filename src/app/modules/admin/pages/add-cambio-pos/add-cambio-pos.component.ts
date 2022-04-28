@@ -212,9 +212,10 @@ export class AddCambioPosComponent implements OnInit {
     console.log(this.buy)
     var solicitudes_banco_sell: any = [];
     var items: any = [];
-
+    var serial_sim
     for (let index = 0; index < this.validacionPos.item.sim.length; index++) {
       const c = this.validacionPos.item.sim[index];
+      serial_sim = c.cod_serial
       items.push({
         modelo_id: this.buy.get('modelo2').value,
         sim_id: c.modelo_id,
@@ -243,7 +244,7 @@ export class AddCambioPosComponent implements OnInit {
       rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
       cod_serial: this.crypto.encryptJson(this.solicitud.get('serial').value),
       modelo: this.crypto.encryptJson(this.buy.get('modelo2').value),
-
+      sim_serial: this.crypto.encryptJson(serial_sim),
       solicitud: this.crypto.encryptJson(JSON.stringify(
         {
           occ_id: this.solicitud.get('occ').value,

@@ -130,11 +130,11 @@ export class EquiposAsociadosComponent implements OnInit {
     })
   }
 
-  openDialog(items): void {
+  openDialog(item): void {
     const dialogRef = this.dialog.open(ModalDesafiliacionComponent, {
       height: 'auto',
       panelClass: 'custom-dialog',
-      data: { items: items },
+      data: { serial:item.cod_serial },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
