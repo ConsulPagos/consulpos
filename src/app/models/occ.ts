@@ -7,4 +7,5 @@ export interface OccInterface {
     localidad?: string;
     nombre?: string;
     id_parroquia?: number;
+    occ_id?: number;
 }

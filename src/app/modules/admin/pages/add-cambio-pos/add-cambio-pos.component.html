@@ -1,0 +1,221 @@
+<section id="addCambioPos">
+    <div class="container-fluid">
+        <div class="structur">
+            <div>
+                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                    [routerLink]="['/admin/app',{ outlets: { adr: ['cambio-pos'] } }]">
+                    <li class="fas fa-arrow-left"></li>
+                </a>
+            </div>
+        </div>
+        <div style="background-color: #fff; border-radius: 10px;">
+            <p class="title_mother text-uppercase">
+                Agregar cambio POS
+            </p>
+
+            <!-- Container del Stepper -->
+            <mat-vertical-stepper linear #stepper>
+                <ng-template matStepperIcon="edit">
+                    <li class="fa fa-check"></li>
+                </ng-template>
+
+                <mat-step [stepControl]="identity">
+                    <form [formGroup]="identity">
+                        <ng-template matStepLabel>Ingrese documento fiscal del nuevo propietario</ng-template>
+                        <h6></h6>
+                        <div>
+                            <mat-form-field appearance="outline" class="container_box">
+                                <mat-label>Tipo</mat-label>
+                                <mat-select disableRipple formControlName="tipo_doc" (selectionChange)="resetStatus()">
+                                    <mat-option *ngFor="let t_doc of tipo_documentos" value={{t_doc.t_doc}}>
+                                        {{t_doc.t_doc}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>
+                                    Rif
+                                </mat-label>
+                                <input matInput formControlName="rif" placeholder="123456789" type="text"
+                                    (keypress)="onlyNumberKey($event)" maxlength="11">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="container_box_space"
+                                *ngIf="validacionresponse && validacionresponse.clientes && validacionresponse.clientes.length > 0">
+                                <mat-label>Nombre Comercial</mat-label>
+                                <input matInput value={{validacionresponse.clientes[0].comercio}} type="text" disabled>
+                            </mat-form-field>
+
+                            <div class="container_error_sell"
+                                *ngIf="identity.get('rif').errors && identity.get('rif').hasError('existe')">
+                                <span class="error">El cliente no existe.</span>
+                                <button class="btn_space" mat-button color='accent'
+                                    [routerLink]="['/admin/app',{ outlets: { adr: ['add-client'] } }]">
+                                    <li class="fa fa-cart-plus icon_sell"></li><span>Registrar Cliente</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div *ngIf="search_client">
+                        <button class="stepBtn" mat-raised-button [disabled]="identity.invalid"
+                            (click)="verificar_usuario()">
+                            Validar
+                        </button>
+                    </div>
+                    <div *ngIf="!search_client">
+                        <button class="stepBtn" mat-raised-button matStepperNext
+                            [disabled]="identity.invalid || search_client">
+                            Siguiente
+                        </button>
+                    </div>
+                </mat-step>
+
+                <mat-step [stepControl]="buy">
+                    <form [formGroup]="solicitud">
+                        <ng-template matStepLabel>Solicitud</ng-template>
+                        <div *ngIf="occs">
+                            <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-label>Surcusal</mat-label>
+                                <mat-select disableRipple formControlName="occ" disabled>
+                                    <mat-option *ngFor="let occ of occs" value={{occ.occ_id}}>
+                                        {{occ.occ_name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <div>
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>
+                                        Serial
+                                    </mat-label>
+                                    <input matInput formControlName="serial" placeholder="123456789" type="text">
+                                </mat-form-field>
+
+                                <button class="stepBtn" mat-raised-button (click)="buscarPos()">
+                                    Buscar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <form [formGroup]="buy">
+                        <ng-template matStepLabel>Datos de la Venta</ng-template>
+                        <div>
+                            <div>
+                                <div class="container_agent">
+                                    <mat-form-field appearance="outline" class="ocultar">
+                                        <mat-label>Modelo</mat-label>
+                                        <mat-select disableRipple formControlName="modelo">
+                                            <mat-option *ngFor="let modelo of modelos" value={{modelo.id}}>
+                                                {{modelo.modelo}} </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Modelo Nuevo</mat-label>
+                                        <mat-select disableRipple formControlName="modelo2">
+                                            <mat-option *ngFor="let modelo of modelos" value={{modelo.id}}>
+                                                {{modelo.modelo}} </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <div *ngIf="validacionPos">
+                                        <div *ngFor="let sim of validacionPos.item.sim">
+                                            <mat-form-field appearance="outline" class="ocultar">
+                                                <mat-label>
+                                                    Operadora
+                                                </mat-label>
+                                                <input matInput type="text" disabled value="{{sim.modelo}}">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- <div>
+                                    <button class="btn_form_add_agent" mat-icon-button color="primary"
+                                        aria-label="Example icon button with a menu icon" (click)="add_sim(i)"
+                                        *ngIf="(formats_buy[i].sims.length === 1 ||  formats_buy[i].sims.length === 0)">
+                                        <i class="fas fa-user-plus icon_sell"></i>
+                                        Agregar Sim
+                                    </button>
+
+                                    <button mat-icon-button class="btn_form_add_agent" color="primary"
+                                        aria-label="Example icon button with a menu icon" (click)="deleteSim(i, isim)"
+                                        *ngIf="(formats_buy[i].sims.length === 2)">
+                                        <i class="fas fa-user-minus icon_sell"></i>
+                                        Eliminar una Sim
+                                    </button>
+                                </div> -->
+
+                                <mat-form-field appearance="outline" class="ocultar">
+                                    <mat-label>Plataforma de Pago</mat-label>
+                                    <mat-select disableRipple formControlName="plataforma" disabled>
+                                        <mat-option *ngFor="let plataforma of plataformas" value={{plataforma.id}}>
+                                            {{plataforma.plataforma}}  </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="ocultar">
+                                    <mat-label>Plan</mat-label>
+                                    <mat-select disableRipple formControlName="plan" disabled>
+                                        <mat-option *ngFor="let plan of planes" value={{plan.id}}>
+                                            {{plan.nombre}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="ocultar">
+                                    <mat-label>Tipo de Cobro</mat-label>
+                                    <mat-select disableRipple formControlName="tipocobro" disabled>
+                                        <mat-option *ngFor="let t_cobro of tipocobros" value={{t_cobro.id}}>
+                                            {{t_cobro.t_cobro}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="ocultar">
+                                    <mat-label>Banco</mat-label>
+                                    <mat-select disableRipple formControlName="banco" disabled>
+                                        <mat-option *ngFor="let nombre of bancos" value={{nombre.codigo}}>
+                                            {{nombre.nombre}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="ocultar">
+                                    <mat-label>Numero de cuenta POS</mat-label>
+                                    <input matInput formControlName="numero_cuenta_pos" placeholder="1234" type="text"
+                                        (keypress)="onlyNumberKey($event)" maxlength="20" readonly>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="ocultar">
+                                    <mat-label>Código de afiliado</mat-label>
+                                    <input matInput formControlName="cod_afiliado" placeholder="1234" type="text"
+                                        (keypress)="onlyNumberKey($event)" maxlength="8" readonly>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="ocultar">
+                                    <mat-label>Terminal</mat-label>
+                                    <input matInput formControlName="terminal" placeholder="1234" type="text"
+                                        (keypress)="onlyNumberKey($event)" maxlength="3" readonly>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="ocultar">
+                                    <mat-label>Monto</mat-label>
+                                    <input matInput formControlName="monto" placeholder="1234" type="text"
+                                        (keypress)="onlyNumberKey($event)" maxlength="3">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div>
+                        <div>
+                            <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
+                            <button class="stepBtn" mat-raised-button (click)="save()">Finalizar</button>
+                        </div>
+                    </div>
+                </mat-step>
+            </mat-vertical-stepper>
+        </div>
+    </div>
+</section>

@@ -196,6 +196,7 @@ export class AddPagosComponent implements OnInit {
 
       pago.push({
         solicitud_id: this.addPay.number,
+        t_sol_id: this.addPay.t_sol_id,
         t_pago_id: p.get('t_pago').value,
         validar: h.validar,
         monto: p.get('monto').value,
@@ -210,6 +211,7 @@ export class AddPagosComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       pagos: this.crypto.encryptJson(JSON.stringify(pago)),
+      t_sol_id: this.crypto.encryptJson(this.addPay.t_sol_id),
     }))
     this.loading = true;
     console.log("verify")

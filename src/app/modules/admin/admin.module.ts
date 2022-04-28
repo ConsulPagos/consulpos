@@ -119,6 +119,14 @@ import { AddTraspasoComponent } from './pages/add-traspaso/add-traspaso.componen
 import { TablaTraspasoComponent } from './components/tabla-traspaso/tabla-traspaso.component';
 import { ModalAsignacionManualComponent } from './components/modal-asignacion-manual/modal-asignacion-manual.component';
 import { ModalConfiguracionManualComponent } from './components/modal-configuracion-manual/modal-configuracion-manual.component';
+import { TablaCambioEquipoComponent } from './components/tabla-cambio-equipo/tabla-cambio-equipo.component';
+import { TablaCambioSimComponent } from './components/tabla-cambio-sim/tabla-cambio-sim.component';
+import { AddCambioPosComponent } from './pages/add-cambio-pos/add-cambio-pos.component';
+import { AddCambioSimComponent } from './pages/add-cambio-sim/add-cambio-sim.component';
+import { CambioSimComponent } from './pages/cambio-sim/cambio-sim.component';
+import { CambioPosComponent } from './pages/cambio-pos/cambio-pos.component';
+import { AddCambioBancoComponent } from './pages/add-cambio-banco/add-cambio-banco.component';
+import { TablaCambioBancoComponent } from './components/tabla-cambio-banco/tabla-cambio-banco.component';
 
 
 @NgModule({
@@ -226,7 +234,15 @@ import { ModalConfiguracionManualComponent } from './components/modal-configurac
     AddTraspasoComponent,
     TablaTraspasoComponent,
     ModalAsignacionManualComponent,
-    ModalConfiguracionManualComponent
+    ModalConfiguracionManualComponent,
+    TablaCambioEquipoComponent,
+    TablaCambioSimComponent,
+    AddCambioPosComponent,
+    AddCambioSimComponent,
+    CambioSimComponent,
+    CambioPosComponent,
+    AddCambioBancoComponent,
+    TablaCambioBancoComponent,
   ],
 
   imports: [

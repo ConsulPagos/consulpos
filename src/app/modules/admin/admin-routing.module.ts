@@ -15,8 +15,6 @@ import { AddVentaComponent } from './pages/add-venta/add-venta.component';
 import { EditAdminComponent } from './pages/edit-admin/edit-admin.component';
 import { EditClientComponent } from './pages/edit-client/edit-client.component';
 import { PrevArchivoComponent } from './pages/prev-archivo/prev-archivo.component';
-import { VerifyKeysGuard } from './guards/verify-keys.guard'
-import { HasPermisoGuard } from './guards/has-permiso.guard'
 
 import { VentaConsulposComponent } from './pages/venta-consulpos/venta-consulpos.component';
 import { FichaClienteComponent } from './pages/ficha-cliente/ficha-cliente.component';
@@ -70,6 +68,11 @@ import { PagoManualComponent } from './pages/pago-manual/pago-manual.component';
 import { TraspasoComponent } from './pages/traspaso/traspaso.component';
 import { CambioBancoComponent } from './pages/cambio-banco/cambio-banco.component';
 import { AddTraspasoComponent } from './pages/add-traspaso/add-traspaso.component';
+import { AddCambioPosComponent } from './pages/add-cambio-pos/add-cambio-pos.component';
+import { AddCambioSimComponent } from './pages/add-cambio-sim/add-cambio-sim.component';
+import { CambioSimComponent } from './pages/cambio-sim/cambio-sim.component';
+import { CambioPosComponent } from './pages/cambio-pos/cambio-pos.component';
+import { AddCambioBancoComponent } from './pages/add-cambio-banco/add-cambio-banco.component';
 
 const routes: Routes = [
   {
@@ -651,6 +654,52 @@ const routes: Routes = [
         //   permiso: "Crear"
         // }
       },
+      {
+        path: 'add-cambio-banco', component: AddCambioBancoComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-cambio-pos', component: AddCambioPosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-cambio-sim', component: AddCambioSimComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'cambio-pos', component: CambioPosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'cambio-sim', component: CambioSimComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+
 
     ],
   }

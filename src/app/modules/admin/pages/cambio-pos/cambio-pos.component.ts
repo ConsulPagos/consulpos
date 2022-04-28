@@ -3,11 +3,11 @@ import { Title } from '@angular/platform-browser';
 import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-cambio-banco',
-  templateUrl: './cambio-banco.component.html',
-  styleUrls: ['./cambio-banco.component.scss']
+  selector: 'app-cambio-pos',
+  templateUrl: './cambio-pos.component.html',
+  styleUrls: ['./cambio-pos.component.scss']
 })
-export class CambioBancoComponent implements OnInit {
+export class CambioPosComponent implements OnInit {
 
   countNuevos;
 
@@ -19,16 +19,16 @@ export class CambioBancoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.title.setTitle('ConsulPos | Cambio Banco')
+    this.title.setTitle('ConsulPos | Cambio POS')
   }
 
-  _changeBanco(change) {
+  _changePos(change) {
     const navigationExtras: NavigationExtras = {
       state: {
         changePos: change
       }
     }
-    this.router.navigateByUrl("/admin/app/(adr:add-cambio-banco)", navigationExtras)
+    this.router.navigateByUrl("/admin/app/(adr:add-cambio-pos)", navigationExtras)
   }
 
 }

@@ -51,9 +51,19 @@
                 <li class="fa fa-cart-plus"></li> <span class="text_side">Traspaso</span>
             </a>
 
-            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['cambiobanco'] } }]"
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['cambio-banco'] } }]"
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-cart-plus"></li> <span class="text_side">Cambio de Banco</span>
+            </a>
+
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['cambio-pos'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-cart-plus"></li> <span class="text_side">Cambio de POS</span>
+            </a>
+
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['cambio-sim'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-cart-plus"></li> <span class="text_side">Cambio de Sim</span>
             </a>
         </mat-menu>
 
