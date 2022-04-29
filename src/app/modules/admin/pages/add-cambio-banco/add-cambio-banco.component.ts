@@ -216,7 +216,7 @@ export class AddCambioBancoComponent implements OnInit {
    for (let index = 0; index < this.validacionPos.item.sim.length; index++) {
      const c = this.validacionPos.item.sim[index];
      items.push({
-       modelo_id: this.buy.get('modelo2').value,
+       modelo_id: this.validacionPos.item.modelo_id,
        sim_id: c.modelo_id,
        monto: "150",
      })
