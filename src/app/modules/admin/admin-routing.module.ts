@@ -73,6 +73,10 @@ import { AddCambioSimComponent } from './pages/add-cambio-sim/add-cambio-sim.com
 import { CambioSimComponent } from './pages/cambio-sim/cambio-sim.component';
 import { CambioPosComponent } from './pages/cambio-pos/cambio-pos.component';
 import { AddCambioBancoComponent } from './pages/add-cambio-banco/add-cambio-banco.component';
+import { ReactivacionComponent } from './pages/reactivacion/reactivacion.component';
+import { DesinstalacionComponent } from './pages/desinstalacion/desinstalacion.component';
+import { AddDesinstalacionComponent } from './pages/add-desinstalacion/add-desinstalacion.component';
+import { AddReactivacionComponent } from './pages/add-reactivacion/add-reactivacion.component';
 
 const routes: Routes = [
   {
@@ -692,6 +696,42 @@ const routes: Routes = [
       },
       {
         path: 'cambio-sim', component: CambioSimComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'reactivacion', component: ReactivacionComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'desinstalacion', component: DesinstalacionComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-desinstalacion', component: AddDesinstalacionComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-reactivacion', component: AddReactivacionComponent, outlet: 'adr',
         // canActivate: [HasPermisoGuard],
         // data: {
         //   modulo: "Configuracion",

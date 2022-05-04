@@ -149,7 +149,7 @@ export class AddPagosComponent implements OnInit {
       console.log(this.crypto.decryptJson(json.t_pagos))
       this.t_pagos = JSON.parse(this.crypto.decryptJson(json.t_pagos))
       console.log(this.t_pagos)
-      this.total = JSON.parse(this.crypto.decryptJson(json.total))
+      this.total = JSON.parse(this.crypto.decryptJson(json.total_dolar))
       console.log(this.total)
       this.default = new PagosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default)

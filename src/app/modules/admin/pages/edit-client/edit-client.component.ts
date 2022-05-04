@@ -97,6 +97,9 @@ export class EditClientComponent implements OnInit {
       act_comercial: new FormControl(this.editClient.id_actividad_comercial, [Validators.required]),
       pto_referencia: new FormControl(this.editClient.pto_ref, [Validators.required]),
       localidad: new FormControl(this.editClient.localidad, [Validators.required]),
+      red_social_a: new FormControl(this.editClient.red_social_a, [Validators.required]),
+      red_social_b: new FormControl(this.editClient.red_social_b, [Validators.required]),
+
     });
 
     this.client_type = new FormGroup({
@@ -213,6 +216,8 @@ export class EditClientComponent implements OnInit {
       id_actividad_comercial: this.crypto.encryptJson(this.client.get('act_comercial').value),
       pto_ref: this.crypto.encryptJson(this.client.get('pto_referencia').value),
       localidad: this.crypto.encryptJson(this.client.get('localidad').value),
+      red_social_a: this.crypto.encryptJson(this.client.get('red_social_a').value),
+      red_social_b: this.crypto.encryptJson(this.client.get('red_social_b').value),
     }
 
     if (this.getTipoCliente() == 'J') {

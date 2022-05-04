@@ -65,6 +65,16 @@
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-cart-plus"></li> <span class="text_side">Cambio de Sim</span>
             </a>
+
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['desinstalacion'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-cart-plus"></li> <span class="text_side">Desinstalacion</span>
+            </a>
+
+            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['reactivacion'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-cart-plus"></li> <span class="text_side">Reactivacion</span>
+            </a>
         </mat-menu>
 
         <!-- Operaciones -->

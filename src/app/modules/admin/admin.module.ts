@@ -128,6 +128,12 @@ import { CambioPosComponent } from './pages/cambio-pos/cambio-pos.component';
 import { AddCambioBancoComponent } from './pages/add-cambio-banco/add-cambio-banco.component';
 import { TablaCambioBancoComponent } from './components/tabla-cambio-banco/tabla-cambio-banco.component';
 import { ModalDescargarEcComponent } from './components/modal-descargar-ec/modal-descargar-ec.component';
+import { ReactivacionComponent } from './pages/reactivacion/reactivacion.component';
+import { DesinstalacionComponent } from './pages/desinstalacion/desinstalacion.component';
+import { AddDesinstalacionComponent } from './pages/add-desinstalacion/add-desinstalacion.component';
+import { AddReactivacionComponent } from './pages/add-reactivacion/add-reactivacion.component';
+import { TablaReactivacionComponent } from './components/tabla-reactivacion/tabla-reactivacion.component';
+import { TablaDesinstalacionComponent } from './components/tabla-desinstalacion/tabla-desinstalacion.component';
 
 
 @NgModule({
@@ -245,6 +251,12 @@ import { ModalDescargarEcComponent } from './components/modal-descargar-ec/modal
     AddCambioBancoComponent,
     TablaCambioBancoComponent,
     ModalDescargarEcComponent,
+    ReactivacionComponent,
+    DesinstalacionComponent,
+    AddDesinstalacionComponent,
+    AddReactivacionComponent,
+    TablaReactivacionComponent,
+    TablaDesinstalacionComponent,
   ],
 
   imports: [
