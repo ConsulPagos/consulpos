@@ -4,17 +4,28 @@
         Motivo de la desafiliación
     </span>
 </h1>
+
 <div mat-dialog-content class="mat-dialog-content">
     <div class="pt-2 pb-1 less-padding">
-        <form [formGroup]="form">
-            <mat-form-field appearance="outline" class="container_box_space">
-                <mat-label>Motivo</mat-label>
-                <mat-select disableRipple formControlName="motivo">
-                    <mat-option *ngFor="let solicitud of solicitudes" value="{{solicitud.id}}-{{solicitud.solicitud}}">
-                        {{solicitud.solicitud}} </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </form>
+
+        <div>
+            <button mat-button (click)="estadoCuenta()">
+                <li class="fa fa-check"></li>
+            </button>
+        </div>
+
+        <div *ngIf="this.solvenciaResponse && this.solvenciaResponse.solvente == 'true'">
+            <form [formGroup]="form">
+                <mat-form-field appearance="outline" class="container_box_space">
+                    <mat-label>Motivo</mat-label>
+                    <mat-select disableRipple formControlName="motivo">
+                        <mat-option *ngFor="let solicitud of solicitudes"
+                            value="{{solicitud.id}}-{{solicitud.solicitud}}">
+                            {{solicitud.solicitud}} </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+        </div>
     </div>
 </div>
 <div mat-dialog-actions>

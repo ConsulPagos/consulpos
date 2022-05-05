@@ -117,9 +117,23 @@ import { PagoManualComponent } from './pages/pago-manual/pago-manual.component';
 import { ModalDesafiliacionComponent } from './components/modal-desafiliacion/modal-desafiliacion.component';
 import { AddTraspasoComponent } from './pages/add-traspaso/add-traspaso.component';
 import { TablaTraspasoComponent } from './components/tabla-traspaso/tabla-traspaso.component';
-import { ModalDescargarEcComponent } from './components/modal-descargar-ec/modal-descargar-ec.component';
 import { ModalAsignacionManualComponent } from './components/modal-asignacion-manual/modal-asignacion-manual.component';
 import { ModalConfiguracionManualComponent } from './components/modal-configuracion-manual/modal-configuracion-manual.component';
+import { TablaCambioEquipoComponent } from './components/tabla-cambio-equipo/tabla-cambio-equipo.component';
+import { TablaCambioSimComponent } from './components/tabla-cambio-sim/tabla-cambio-sim.component';
+import { AddCambioPosComponent } from './pages/add-cambio-pos/add-cambio-pos.component';
+import { AddCambioSimComponent } from './pages/add-cambio-sim/add-cambio-sim.component';
+import { CambioSimComponent } from './pages/cambio-sim/cambio-sim.component';
+import { CambioPosComponent } from './pages/cambio-pos/cambio-pos.component';
+import { AddCambioBancoComponent } from './pages/add-cambio-banco/add-cambio-banco.component';
+import { TablaCambioBancoComponent } from './components/tabla-cambio-banco/tabla-cambio-banco.component';
+import { ModalDescargarEcComponent } from './components/modal-descargar-ec/modal-descargar-ec.component';
+import { ReactivacionComponent } from './pages/reactivacion/reactivacion.component';
+import { DesinstalacionComponent } from './pages/desinstalacion/desinstalacion.component';
+import { AddDesinstalacionComponent } from './pages/add-desinstalacion/add-desinstalacion.component';
+import { AddReactivacionComponent } from './pages/add-reactivacion/add-reactivacion.component';
+import { TablaReactivacionComponent } from './components/tabla-reactivacion/tabla-reactivacion.component';
+import { TablaDesinstalacionComponent } from './components/tabla-desinstalacion/tabla-desinstalacion.component';
 
 
 @NgModule({
@@ -226,9 +240,23 @@ import { ModalConfiguracionManualComponent } from './components/modal-configurac
     ModalDesafiliacionComponent,
     AddTraspasoComponent,
     TablaTraspasoComponent,
-    ModalDescargarEcComponent,
     ModalAsignacionManualComponent,
-    ModalConfiguracionManualComponent
+    ModalConfiguracionManualComponent,
+    TablaCambioEquipoComponent,
+    TablaCambioSimComponent,
+    AddCambioPosComponent,
+    AddCambioSimComponent,
+    CambioSimComponent,
+    CambioPosComponent,
+    AddCambioBancoComponent,
+    TablaCambioBancoComponent,
+    ModalDescargarEcComponent,
+    ReactivacionComponent,
+    DesinstalacionComponent,
+    AddDesinstalacionComponent,
+    AddReactivacionComponent,
+    TablaReactivacionComponent,
+    TablaDesinstalacionComponent,
   ],
 
   imports: [

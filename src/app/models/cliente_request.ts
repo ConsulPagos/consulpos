@@ -37,4 +37,6 @@ t_doc_id?:string;
 telefonos?: TelefonoInterface[];
 c_natural?: ClienteNaturalInterface;
 legal?: ClienteLegalInterface;
+red_social_a?:string; 
+red_social_b?:string; 
 }

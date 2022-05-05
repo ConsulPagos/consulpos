@@ -158,7 +158,7 @@ export class TablaOperacionesComponent implements OnInit {
             if (result) {
             }
           });
-        } else if (venta.solicitud === "VENTA POS") {
+        } else if (venta.solicitud === "VENTA POS" || venta.solicitud === "CAMBIO DE SIM") {
           dialogRef = this.dialog.open(ModalConfiguracionComponent, {
             disableClose: true,
             height: 'auto',

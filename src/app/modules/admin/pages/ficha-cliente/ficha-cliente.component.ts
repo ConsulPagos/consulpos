@@ -16,6 +16,7 @@ import { ModalService } from 'src/app/shared/services/modal.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
+import { VentasService } from 'src/app/shared/services/ventas.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { StatusAccountDecrypter, StatusAccountResponse } from '../../../../models/statusaccount';
 
@@ -44,6 +45,7 @@ export class FichaClienteComponent implements OnInit {
     private toaster: ToasterService,
     public dialog: MatDialog,
     private loader: LoaderService,
+    private venta: VentasService,
   ) {
     if (
       this.router.getCurrentNavigation() &&
@@ -78,11 +80,10 @@ export class FichaClienteComponent implements OnInit {
       this.showItemClient = new ShowItemDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.showItemClient)
       console.log(this.crypto.decryptString(res))
-      // this.loading = false
-       //this.crypto.setKeys(this.showItemClient.keyS, this.showItemClient.ivJ, this.showItemClient.keyJ, this.showItemClient.ivS)
+
     })
   }
-
+  
   openDialog(phone): void {
 
     const dialogRef = this.dialog.open(EditphoneComponent, {
@@ -131,7 +132,6 @@ export class FichaClienteComponent implements OnInit {
       console.log(this.validacionCliente)
       console.log(this.crypto.decryptString(res))
       this.loader.stop()
-       //this.crypto.setKeys(this.validacionCliente.keyS, this.validacionCliente.ivJ, this.validacionCliente.keyJ, this.validacionCliente.ivS)
     })
   }
 
