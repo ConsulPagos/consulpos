@@ -254,12 +254,6 @@ export class AddReactivacionComponent implements OnInit {
        solicitudes_banco_sell
      )),
 
-     documentos: this.crypto.encryptJson(JSON.stringify([
-       {
-         link: this.document.get("referencia").value,
-         id_doc: "1"
-       },
-     ]))
    }))
    console.log("verify")
    console.log(solicitudes_banco_sell)
