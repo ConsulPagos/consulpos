@@ -139,6 +139,7 @@ export class AddPagosComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_id: this.crypto.encryptJson(this.addPay.number),
+      t_sol_id: this.crypto.encryptJson(this.addPay.t_sol_id),
     }))
     this.loader.loading()
     this.pago.doPaymentInput(`${this.session.getDeviceId()};${data}`).subscribe(res => {
