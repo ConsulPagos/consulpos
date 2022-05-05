@@ -21,6 +21,7 @@ export class ModalAsignacionManualComponent implements OnInit {
 
   default: AsignacionResponse;
   dataVenta: any;
+  a: any;
 
   constructor(
     private modal: ModalService,
@@ -38,6 +39,14 @@ export class ModalAsignacionManualComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    for (let index = 0; index < this.dataVenta.modelos.length; index++) {
+      const item = this.dataVenta.modelos[index];
+      for (let z = 0; z < item.caracteristicas.length; z++) {
+        const c = item.caracteristicas[z];
+          this.a = c.solicitud_banco.solicitud_banco_id
+      }
+    }
   }
 
   form = new FormGroup({
@@ -52,7 +61,7 @@ export class ModalAsignacionManualComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
       cod_serial: this.crypto.encryptJson(this.form.get('serial').value),
-      solicitud_banco_id: this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
+      solicitud_banco_id: this.crypto.encryptJson(this.a),
     }))
     console.log("verify")
     this.venta.asignacionManual(`${this.session.getDeviceId()};${data}`).subscribe(res => {

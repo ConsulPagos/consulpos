@@ -95,14 +95,11 @@ export class ModalConfiguracionComponent implements OnInit {
     })
   }
 
-  liberarSim(modelo, serial) {
+  liberarSim() {
     const inputs = [];
     this.formDinamic.forEach(f => {
       inputs.push(f.value)
     })
-    console.log('MARAVILLA')
-    console.log(this.formDinamic)
-    console.log(inputs)
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
@@ -115,7 +112,7 @@ export class ModalConfiguracionComponent implements OnInit {
     })
   }
 
-  saveConfig(modelo, serial) {
+  saveConfig() {
     const inputs = [];
     this.formDinamic.forEach(f => {
       inputs.push(f.value)

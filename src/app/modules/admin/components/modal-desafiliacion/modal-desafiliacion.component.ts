@@ -14,6 +14,8 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { VentasService } from 'src/app/shared/services/ventas.service';
 import { constant } from 'src/app/shared/utils/constant';
+import { ValidarSolvenciaResponse, ValidarSolvenciaDecrypter } from 'src/app/models/validarsolvencia_response';
+
 
 @Component({
   selector: 'app-modal-desafiliacion',
@@ -26,6 +28,7 @@ export class ModalDesafiliacionComponent implements OnInit {
   tipos_clientes: any[];
   tipo_documentos: TipodocumentoInterface[];
   defaultResponse: DefaultResponse;
+  solvenciaResponse:ValidarSolvenciaResponse;
   serial: any;
   items: any;
 
@@ -43,9 +46,7 @@ export class ModalDesafiliacionComponent implements OnInit {
 
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {
-    this.items = data['items']
-  }
+  ) { }
 
   form = new FormGroup({
     motivo: new FormControl('', [Validators.required]),
@@ -69,7 +70,7 @@ export class ModalDesafiliacionComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       t_sol_id: this.crypto.encryptJson((this.form.get('motivo').value).split("-")[0]),
       tipo_solicitud: this.crypto.encryptJson((this.form.get('motivo').value).split("-")[1]),
-      cod_serial: this.crypto.encryptJson(this.items.cod_serial),
+      cod_serial: this.crypto.encryptJson(this.data["serial"]),
     }))
 
     console.log(this.data)
@@ -87,6 +88,19 @@ export class ModalDesafiliacionComponent implements OnInit {
           this.toaster.default_error()
           break;
       }
+    })
+  }
+
+  estadoCuenta() {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      cod_serial: this.crypto.encryptJson(this.data["serial"]),
+    }))
+    this.venta.estadoCuentaEquipo(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.solvenciaResponse = new ValidarSolvenciaDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.solvenciaResponse)
     })
   }
 

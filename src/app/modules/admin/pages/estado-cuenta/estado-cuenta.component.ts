@@ -40,7 +40,7 @@ export class EstadoCuentaComponent implements OnInit {
   showItemClient: ShowItemResponse;
   showStatusAccount: StatusAccountResponse;
   @Input() rif;
-  @Input() client:ClienteRequestInterface;
+  @Input() client: ClienteRequestInterface;
   selection = new SelectionModel<ItemEstadoCuentaInterface>(true, []);
 
 
@@ -87,11 +87,13 @@ export class EstadoCuentaComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.showStatusAccount.estado_de_cuenta.items)
       console.log(this.crypto.decryptString(res))
       this.loading = false
-       //this.crypto.setKeys(this.showStatusAccount.keyS, this.showStatusAccount.ivJ, this.showStatusAccount.keyJ, this.showStatusAccount.ivS)
+      //this.crypto.setKeys(this.showStatusAccount.keyS, this.showStatusAccount.ivJ, this.showStatusAccount.keyJ, this.showStatusAccount.ivS)
       //const pdf = new pdfMaker()
       //pdf.createPdf(this.client, this.showStatusAccount.estado_de_cuenta)
     })
   }
+
+
 
   doDiferir(id_diferido: string, cuotas) {
 
@@ -107,13 +109,13 @@ export class EstadoCuentaComponent implements OnInit {
     this.loading = true;
     this.loader.loading()
     this.bancario.doDiferir(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      
+
       const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.loader.stop()
       this.loading = false
       console.log(response)
-      
-       
+
+
 
       if (response.R === "0") {
         this.selection.clear()
@@ -122,7 +124,7 @@ export class EstadoCuentaComponent implements OnInit {
         this.toaster.success(response.M)
       }
 
-      
+
     })
   }
 
@@ -188,6 +190,24 @@ export class EstadoCuentaComponent implements OnInit {
 
     }
     return valid
+  }
+
+  getSummary() {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      rif: this.crypto.encryptJson(this.rif)
+    }))
+
+    this.loader.loading()
+    this.cliente.doSummaryPdf(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      const pdf = new Blob([res], { type: 'application/pdf' });
+      const fileURL = URL.createObjectURL(pdf);
+      window.open(fileURL, '_blank');
+      this.loader.stop()
+      console.log(res)
+    })
   }
 
 }

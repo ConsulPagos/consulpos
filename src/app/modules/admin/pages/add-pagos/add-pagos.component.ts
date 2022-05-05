@@ -139,6 +139,7 @@ export class AddPagosComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_id: this.crypto.encryptJson(this.addPay.number),
+      t_sol_id: this.crypto.encryptJson(this.addPay.t_sol_id),
     }))
     this.loader.loading()
     this.pago.doPaymentInput(`${this.session.getDeviceId()};${data}`).subscribe(res => {
@@ -149,7 +150,7 @@ export class AddPagosComponent implements OnInit {
       console.log(this.crypto.decryptJson(json.t_pagos))
       this.t_pagos = JSON.parse(this.crypto.decryptJson(json.t_pagos))
       console.log(this.t_pagos)
-      this.total = JSON.parse(this.crypto.decryptJson(json.total))
+      this.total = JSON.parse(this.crypto.decryptJson(json.total_dolar))
       console.log(this.total)
       this.default = new PagosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default)
@@ -196,6 +197,7 @@ export class AddPagosComponent implements OnInit {
 
       pago.push({
         solicitud_id: this.addPay.number,
+        t_sol_id: this.addPay.t_sol_id,
         t_pago_id: p.get('t_pago').value,
         validar: h.validar,
         monto: p.get('monto').value,
@@ -210,6 +212,7 @@ export class AddPagosComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       pagos: this.crypto.encryptJson(JSON.stringify(pago)),
+      t_sol_id: this.crypto.encryptJson(this.addPay.t_sol_id),
     }))
     this.loading = true;
     console.log("verify")

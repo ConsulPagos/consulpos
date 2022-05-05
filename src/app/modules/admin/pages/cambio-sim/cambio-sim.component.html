@@ -1,0 +1,20 @@
+<section id="cambio-sim">
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">Listado de Cambios de Sim</span>
+                    </ng-template>
+                    <app-tabla-cambio-sim 
+                    (editSale)="editSale($event)" 
+                    (showSale)="showSale($event)"
+                    (count)='countNuevos = $event' 
+                    class="w-100">
+                    </app-tabla-cambio-sim>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>

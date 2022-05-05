@@ -137,7 +137,7 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <app-action-btn class="btn-submit" (onClick)="submit()" [loading]="loading"
+                            <app-action-btn class="btn-submit" (onClick)="submit()" [loading]="loading" *ngIf="form.get('banco').value && tasas"
                                 [text]="'Generar archivo'" [isDisabled]="isInvalid() || loading"></app-action-btn>
 
                         </div>

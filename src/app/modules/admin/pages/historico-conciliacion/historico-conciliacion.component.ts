@@ -16,6 +16,9 @@ import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { ShowClientsDecrypter } from 'src/app/models/showclients_response';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { NavigationExtras, Router } from '@angular/router';
+import { PlantillaRespuestaInterface } from 'src/app/models/plantilla_respuesta';
+import { ExportService } from '../../services/export.service';
 
 @Component({
   selector: 'app-historico-conciliacion',
@@ -26,8 +29,8 @@ export class HistoricoConciliacionComponent implements OnInit {
 
   loading = false;
   data;
-  columns = ["id", "fecha_generacion", "fecha_respuesta", "fecha_conciliacion", "cuotas", "monto_enviado", "monto_cobrado", "efectividad", "descripcion"]
-  columnsCC = ["id", "fecha_respuesta", "fecha_conciliacion", "cuotas", "monto_cobrado", "descripcion"]
+  columns = ["id", "fecha_generacion", "fecha_respuesta", "fecha_conciliacion", "cuotas", "monto_enviado", "monto_cobrado", "efectividad", "descripcion", "acciones"]
+  columnsCC = ["id", "fecha_respuesta", "fecha_conciliacion", "cuotas", "monto_cobrado", "descripcion", "acciones"]
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   bancos: BancoInterface[];
@@ -47,7 +50,10 @@ export class HistoricoConciliacionComponent implements OnInit {
     private session: SesionService,
     private toaster: ToasterService,
     private bancario: BancarioService,
-    private loader: LoaderService,) { }
+    private router: Router,
+    private loader: LoaderService,
+    private exportService: ExportService,
+  ) { }
 
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Historico de Conciliación')
@@ -90,7 +96,7 @@ export class HistoricoConciliacionComponent implements OnInit {
           this.data = JSON.parse(this.crypto.decryptJson(json.archivos))
           console.log(this.data)
           this.resultsLength = parseInt(this.crypto.decryptJson(json.total));
-    
+
           return this.data;
 
         }),
@@ -155,6 +161,112 @@ export class HistoricoConciliacionComponent implements OnInit {
   reset() {
     this.form.get('banco').reset()
     this.data = null
+  }
+
+  getArchivo(archivo) {
+
+    this.loader.loading()
+
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      id_archivo: this.crypto.encryptJson(archivo.id),
+      oper: this.crypto.encryptJson(this.form.get('oper').value),
+    }))
+
+
+    this.bancario.doGetArchivo(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      const json = JSON.parse(this.crypto.decryptString(res))
+      this.loader.stop()
+      console.log(JSON.parse(this.crypto.decryptString(res)))
+      switch (json.R) {
+        case constant.R0:
+          const response0 = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+          this.view(JSON.parse(this.crypto.decryptJson(json.archivo)), archivo);
+
+          //this.toaster.success(response0.M)
+          break
+        case constant.R1:
+        default:
+          const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+
+          this.toaster.error(response.M)
+          break;
+      }
+    })
+  }
+
+  view(data: any, archivo: any) {
+
+    const plantilla: PlantillaRespuestaInterface[] = [{
+      nombre: "serial",
+      columna: "serial",
+      decimales: null,
+      inicia: null,
+      longitud: null,
+      posicion: 1,
+      tipo: "string"
+    }, {
+      nombre: "afiliado",
+      columna: "afiliado",
+      decimales: null,
+      inicia: null,
+      longitud: null,
+      posicion: 2,
+      tipo: "string"
+    }, {
+      nombre: "cobrado",
+      columna: "cobrado",
+      decimales: 2,
+      inicia: null,
+      longitud: null,
+      posicion: 3,
+      tipo: "string"
+    }
+    ]
+
+    const extras: NavigationExtras = {
+      state: {
+        archivo: archivo,
+        columns: ["afiliado", "serial", "cobrado"],
+        data: data
+      }
+    }
+    this.router.navigateByUrl(`/admin/app/(adr:previsualizar-archivo/${archivo.id})`, extras);
+  }
+
+  download(archivo) {
+
+    this.loader.loading()
+
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      id_archivo: this.crypto.encryptJson(archivo.id),
+      oper: this.crypto.encryptJson(this.form.get('oper').value),
+    }))
+
+    this.bancario.doGetArchivo(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      const json = JSON.parse(this.crypto.decryptString(res))
+      this.loader.stop()
+      console.log(JSON.parse(this.crypto.decryptString(res)))
+      switch (json.R) {
+        case constant.R0:
+          var result = [
+            { id_archivo_cobranza: "Id de archivo", id: "Id de linea", rif: "RIF", serial: "Serial", afiliado: "Afiliado", cuenta: "Numero de cuenta", enviado: "Monto Enviado", cobrado: "Monto Cobrado", mensaje: "Mensaje" },
+            ...JSON.parse(this.crypto.decryptJson(json.archivo))]
+          console.log(result)
+          this.exportService.exportExcel(result, archivo.descripcion);
+          break
+        case constant.R1:
+        default:
+          const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+          this.toaster.error(response.M)
+          break;
+      }
+    })
   }
 
 }
