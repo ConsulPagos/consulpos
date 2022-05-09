@@ -23,8 +23,11 @@ import { BancoInterface } from 'src/app/models/banco';
   styleUrls: ['./add-pagos.component.scss']
 })
 export class AddPagosComponent implements OnInit {
-
+  total_Bs: number;
   total: number;
+  total_IGTF: number;
+  total_IVA: number;
+  tasa: number;
   t_pagos: any[];
   default: PagosResponse;
   addPay: any = {};
@@ -34,7 +37,6 @@ export class AddPagosComponent implements OnInit {
   formats: any[] = [];
   formDinamic = [];
   tasas: any[];
-  tasa: TasaInterface[];
   totalPago: number = 0;
   bancos: BancoInterface[];
 
@@ -101,6 +103,9 @@ export class AddPagosComponent implements OnInit {
     car.forEach(c => {
       this.formDinamic[i].addControl(c.id_caracteristica, new FormControl('', [Validators.required]))
     })
+
+    console.log(this.formDinamic);
+
   }
 
   clearForm(i) {
@@ -116,12 +121,13 @@ export class AddPagosComponent implements OnInit {
 
   getMonto() {
     var totalPago = 0;
-    if (this.t_pagos && this.tasas) {
+    var tasa = this.tasa;
+    if (this.t_pagos && this.tasa) {
       for (let index = 0; index < this.payments.length; index++) {
         const m = this.payments[index];
         if (m.valid) {
           if (m.get('moneda').value == "VES") {
-            totalPago += parseFloat((parseFloat(m.get('monto').value) / parseFloat(this.formtasa.get("dollar").value)).toFixed(2))
+            totalPago += (parseFloat(m.get('monto').value) / tasa)
           } else {
             totalPago += parseFloat((parseFloat(m.get('monto').value)).toFixed(2))
           }
@@ -152,6 +158,14 @@ export class AddPagosComponent implements OnInit {
       console.log(this.t_pagos)
       this.total = JSON.parse(this.crypto.decryptJson(json.total_dolar))
       console.log(this.total)
+      this.total_Bs = JSON.parse(this.crypto.decryptJson(json.total_Bs))
+      console.log(this.total_Bs)
+      this.total_IGTF = JSON.parse(this.crypto.decryptJson(json.total_IGTF))
+      console.log(this.total_IGTF)
+      this.total_IVA = JSON.parse(this.crypto.decryptJson(json.total_IVA))
+      console.log(this.total_IVA)
+      this.tasa = JSON.parse(this.crypto.decryptJson(json.tasa))
+      console.log(this.tasa)
       this.default = new PagosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default)
       this.t_pagos = JSON.parse(this.default.t_pagos)
@@ -184,16 +198,23 @@ export class AddPagosComponent implements OnInit {
   submit() {
     const inputs = [];
     var pago = [];
+    console.log(this.formDinamic);
 
-    this.payments.forEach(p => {
+    for (let j = 0; j < this.payments.length; j++) {
+      const p = this.payments[j];
       const h = this.t_pagos.filter(t => t.t_pago_id == p.get('t_pago').value)[0];
 
-      this.getInput(p.get('t_pago').value).forEach(c => {
+      for (let index = 0; index < this.getInput(p.get('t_pago').value).length; index++) {
+
+        const c = this.getInput(p.get('t_pago').value)[index];
+        console.log('index ' + index + j);
+        console.log(c.id_caracteristica);
         inputs.push({
           input_id: c.id_caracteristica,
-          input: this.formDinamic[0].get(c.id_caracteristica).value
+          input: this.formDinamic[index + j].get(c.id_caracteristica).value
         })
-      })
+
+      }
 
       pago.push({
         solicitud_id: this.addPay.number,
@@ -205,7 +226,8 @@ export class AddPagosComponent implements OnInit {
         fecha_pago: p.get('fecha').value,
         caracteristicas: JSON.stringify(inputs),
       })
-    })
+    }
+
 
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
