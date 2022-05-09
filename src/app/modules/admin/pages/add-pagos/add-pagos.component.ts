@@ -199,7 +199,7 @@ export class AddPagosComponent implements OnInit {
     const inputs = [];
     var pago = [];
     console.log(this.formDinamic);
-
+//
     for (let j = 0; j < this.payments.length; j++) {
       const p = this.payments[j];
       const h = this.t_pagos.filter(t => t.t_pago_id == p.get('t_pago').value)[0];
