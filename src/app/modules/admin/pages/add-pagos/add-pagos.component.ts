@@ -184,10 +184,14 @@ export class AddPagosComponent implements OnInit {
 
   isInvalid() {
     var invalid = false;
+
     for (let index = 0; index < this.payments.length; index++) {
+
       const m = this.payments[index];
       const d = this.formDinamic[index];
       if (m.invalid || d.invalid) {
+        console.log(d);
+        console.log(m);
         invalid = true;
         break;
       }
