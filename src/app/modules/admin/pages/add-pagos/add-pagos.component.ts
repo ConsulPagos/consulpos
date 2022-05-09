@@ -199,20 +199,37 @@ export class AddPagosComponent implements OnInit {
     const inputs = [];
     var pago = [];
     console.log(this.formDinamic);
-//
+    //
     for (let j = 0; j < this.payments.length; j++) {
       const p = this.payments[j];
       const h = this.t_pagos.filter(t => t.t_pago_id == p.get('t_pago').value)[0];
+      console.log(p);
+
+      let aux = null;
 
       for (let index = 0; index < this.getInput(p.get('t_pago').value).length; index++) {
 
         const c = this.getInput(p.get('t_pago').value)[index];
-        console.log('index ' + index + j);
-        console.log(c.id_caracteristica);
-        inputs.push({
-          input_id: c.id_caracteristica,
-          input: this.formDinamic[index + j].get(c.id_caracteristica).value
-        })
+
+        if (!aux) {
+          console.log('index ' + index + j);
+          console.log(c.id_caracteristica);
+
+          inputs.push({
+            input_id: c.id_caracteristica,
+            input: this.formDinamic[index + j].get(c.id_caracteristica).value
+          })
+          aux = index + j;
+        } else {
+          console.log('index ' + aux);
+          console.log(c.id_caracteristica);
+
+          inputs.push({
+            input_id: c.id_caracteristica,
+            input: this.formDinamic[aux].get(c.id_caracteristica).value
+          })
+
+        }
 
       }
 
