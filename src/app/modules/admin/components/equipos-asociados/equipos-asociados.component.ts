@@ -24,6 +24,7 @@ import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { ShowItemDecrypter } from '../../../../models/showitem';
 import { ModalDesafiliacionComponent } from '../modal-desafiliacion/modal-desafiliacion.component';
+import { ModalDescargarEcComponent } from '../modal-descargar-ec/modal-descargar-ec.component';
 
 @Component({
   selector: 'app-equipos-asociados',
@@ -129,11 +130,11 @@ export class EquiposAsociadosComponent implements OnInit {
     })
   }
 
-  openDialog(items): void {
+  openDialog(item): void {
     const dialogRef = this.dialog.open(ModalDesafiliacionComponent, {
       height: 'auto',
       panelClass: 'custom-dialog',
-      data: { items: items },
+      data: { serial:item.cod_serial },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -141,5 +142,20 @@ export class EquiposAsociadosComponent implements OnInit {
       }
     });
   }
+
+  downloadSA(item): void {
+    const dialogRef = this.dialog.open(ModalDescargarEcComponent, {
+      height: 'auto',
+      panelClass: 'custom-dialog',
+      data: { rif: this.rif, serial:item.cod_serial },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result)
+      }
+    });
+  }
+
+  
 
 }

@@ -1,0 +1,19 @@
+<section id="cambio-equipo">
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">Listado de Cambios de Equipos</span>
+                    </ng-template>
+                    <app-tabla-cambio-equipo 
+                    (changePos)="_changePos($event)"
+                    (count)='countNuevos = $event' 
+                    class="w-100" >
+                    </app-tabla-cambio-equipo>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>

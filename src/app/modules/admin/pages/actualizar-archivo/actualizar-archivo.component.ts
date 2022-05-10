@@ -36,9 +36,7 @@ export class ActualizarArchivoComponent implements OnInit {
     private crypto: CryptoService,
     private session: SesionService,
     private bancario: BancarioService,
-    private toaster: ToasterService,
-    private loader:LoaderService
-  ) { }
+    private toaster: ToasterService  ) { }
 
   ngOnInit(): void {
     this.title.setTitle('ConsulPos | Conciliar Archivo')
@@ -88,7 +86,6 @@ export class ActualizarArchivoComponent implements OnInit {
         case constant.R0:
           this.actualizacionResponse = new ActualizacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
           this.archivos = this.actualizacionResponse.archivos
-           //this.crypto.setKeys(this.actualizacionResponse.keyS, this.actualizacionResponse.ivJ, this.actualizacionResponse.keyJ, this.actualizacionResponse.ivS)
           break;
         case constant.R1:
         default:

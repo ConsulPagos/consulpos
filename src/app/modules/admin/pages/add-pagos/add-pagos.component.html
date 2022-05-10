@@ -15,7 +15,7 @@
             <h6 class="title_mother">Agregar pago a la venta {{addPay.number}} - {{addPay.rif}} -
                 {{addPay.razon_social}} - {{addPay.fraccion_desc}}</h6>
 
-            <form [formGroup]="formtasa">
+            <!-- <form [formGroup]="formtasa">
                 <mat-form-field appearance="outline">
                     <mat-label>Tasa a aplicar USD</mat-label>
                     <mat-select disableRipple formControlName="dollar">
@@ -24,7 +24,7 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-            </form>
+            </form> -->
 
             <div *ngFor="let format of formats_payments; let i=index">
                 <div class="d-flex align-items-center ">
@@ -100,7 +100,7 @@
                                 </div>
                                 <div *ngSwitchCase="'file'">
                                     <app-upload
-                                        (url)="formDinamic[i].get(caracteristica.id_caracteristica).value=$event">
+                                        (url)="formDinamic[i].get(caracteristica.id_caracteristica).setValue($event)">
                                     </app-upload>
 
                                     <div *ngIf="formDinamic[i].get(caracteristica.id_caracteristica).value"
@@ -134,7 +134,9 @@
                         <td>
                             <p>{{total}}</p>
                         </td>
-                        <td>{{(total * (this.formtasa.get("dollar").value)).toFixed(2)}}</td>
+                        <td>
+                            <p>{{total_Bs}}</p>
+                        </td>
                         <!-- <td>{{(total / 1.13).toFixed(2)}}</td> -->
                     </tr>
                     <tr>
@@ -146,7 +148,7 @@
                         <td>
                             <p>{{totalPago.toFixed(2)}}</p>
                         </td>
-                        <td>{{(totalPago * (this.formtasa.get("dollar").value)).toFixed(2)}}</td>
+                        <td>{{totalPago * tasa}}</td>
                         <!-- <td>{{(totalPago / 1.13).toFixed(2)}}</td> -->
                     </tr>
                 </table>

@@ -4,7 +4,11 @@ export interface PagosResponse {
     R?: string;
     M?: string;
     t_pagos?: string;
-    total?: string;
+    total_dolar?: string;
+    total_Bs?: string;
+    total_IGTF?: string;
+    total_IVA?: string;
+    tasa?: string;
     session_valid?: string;
 }
 
@@ -20,7 +24,11 @@ export class PagosDecrypter {
             R: value.R,
             M: this.crypto.decryptJson(value.M),
             t_pagos: this.crypto.decryptJson(value.t_pagos),
-            total: this.crypto.decryptJson(value.total),
+            total_dolar: this.crypto.decryptJson(value.total_dolar),
+            total_Bs: this.crypto.decryptJson(value.total_Bs),
+            total_IGTF: this.crypto.decryptJson(value.total_IGTF),
+            total_IVA: this.crypto.decryptJson(value.total_IVA),
+            tasa: this.crypto.decryptJson(value.tasa),
             session_valid: this.crypto.decryptJson(value.session_valid),
         }
         return data

@@ -65,10 +65,14 @@
                             <ng-container matColumnDef="acciones">
                                 <th mat-header-cell *matHeaderCellDef> Acciones</th>
                                 <td mat-cell *matCellDef="let item">
-                                    <button #tooltip="matTooltip" matTooltip="Desafiliar" matTooltipHideDelay="10"
+                                    <button *ngIf="item.categoria == 'POS'" #tooltip="matTooltip" matTooltip="Desafiliar" matTooltipHideDelay="10"
                                         mat-icon-button (click)="openDialog(item)" class="container_icon">
                                         <i class="fas fa-id-card activate_show"></i>
                                     </button>
+                                    <button *ngIf="item.categoria == 'POS'" #tooltip="matTooltip" matTooltip="Descargar estado de cuenta" matTooltipHideDelay="10"
+                                    mat-icon-button (click)="downloadSA(item)" class="container_icon">
+                                    <i class="fas fa-download activate_show"></i>
+                                </button>
                                 </td>
                             </ng-container>
 

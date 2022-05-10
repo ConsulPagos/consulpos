@@ -32,6 +32,8 @@ export class ModalConfiguracionManualComponent implements OnInit {
   modelo: any;
   serial: any;
   sim: any;
+  a: any;
+  b: any;
 
   operadoras: OperadoraInterface[];
   validacionsimresponse: ValidacionSimResponse;
@@ -53,8 +55,7 @@ export class ModalConfiguracionManualComponent implements OnInit {
     this.dataVenta = data['venta']
 
     this.configuracion = new FormGroup({
-      serial_sim: new FormControl(this.x, [Validators.required]),
-      operadora: new FormControl('', [Validators.required]),
+      sim_serial: new FormControl(this.x, [Validators.required]),
     });
   }
 
@@ -68,42 +69,42 @@ export class ModalConfiguracionManualComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    for (let index = 0; index < this.dataVenta.items.length; index++) {
+      const item = this.dataVenta.items[index];
+      this.b = item.cod_serial
+      console.log(this.b)
+    }
+
     for (let index = 0; index < this.dataVenta.modelos.length; index++) {
       const item = this.dataVenta.modelos[index];
-      console.log(item)
       for (let z = 0; z < item.caracteristicas.length; z++) {
+        const c = item.caracteristicas[z];
+        this.a = c.solicitud_banco.solicitud_banco_id
+        const d = this.dataVenta.items.filter(i => i.solicitud_banco.solicitud_banco_id == c.solicitud_banco.solicitud_banco_id)[0];
         this.formDinamic.push(new FormGroup({
-          serial_sim: new FormControl(null, [Validators.required]),
-          operadora: new FormControl('', [Validators.required]),
+          sim_serial: new FormControl('', [Validators.required]),
+          solicitud_banco_id: new FormControl(c.solicitud_banco.solicitud_banco_id),
+          cod_serial: new FormControl(d.cod_serial),
         }))
       }
-
-      console.log(this.formDinamic)
     }
     this.doSimModels()
   }
 
   findSim(sim: string, form: FormGroup) {
-    console.log(sim)
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      modelo: this.crypto.encryptJson(form.get('operadora').value),
+      modelo: this.crypto.encryptJson(sim),
     }))
-    console.log(form.value)
     var x;
     this.venta.doFindSim(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
-      console.log(JSON.parse(this.crypto.decryptString(res)))
-      console.log(this.crypto.decryptString(res))
-      console.log(res)
       this.default = new ConfiguracionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      console.log(json)
-      console.log(this.default)
-      form.get("serial_sim").setValue(this.default.item.cod_serial)
+      form.get("sim_serial").setValue(this.default.item.cod_serial)
       x = this.default.item.cod_serial
-      console.log(x)
     })
   }
 
@@ -119,28 +120,25 @@ export class ModalConfiguracionManualComponent implements OnInit {
     })
   }
 
-  saveConfig(modelo, serial) {
-
+  saveConfig() {
     const inputs = [];
 
     this.formDinamic.forEach(f => {
       inputs.push({
-        input_id: f.get('serial_sim').value,
+        sim_serial: f.get('sim_serial').value,
+        cod_serial: this.b,
       })
     })
+
+    console.log(inputs)
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
-      solicitud_banco_id: this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
-      cod_serial: this.crypto.encryptJson(serial),
-      items: this.crypto.encryptJson(JSON.stringify([
-        {
-          sim_serial: this.configuracion.get(inputs),
-          cod_serial: serial,
-        }
-      ]))
+      solicitud_banco_id: this.crypto.encryptJson(this.a),
+      cod_serial: this.crypto.encryptJson(this.b),
+      items: this.crypto.encryptJson(JSON.stringify(inputs))
     }))
     console.log("verify")
     this.venta.configuracionManual(`${this.session.getDeviceId()};${data}`).subscribe(res => {

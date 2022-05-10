@@ -43,46 +43,48 @@
                                         </div>
                                     </div>
 
-                                    <div class="conatiner-text">
-                                        <div class="content-text">
-                                            <h6>
-                                                <strong>Tipo de Venta: </strong>{{showSale.fraccion_desc}}
-                                            </h6>
-                                        </div>
-                                        <div class="content-text">
-                                            <h6>
-                                                <strong>Banco: </strong>{{showSale.banco}}
-                                            </h6>
-                                        </div>
-                                        <div class="content-text">
-                                            <h6>
-                                                <strong>Nº Cuenta: </strong>{{showSale.cuenta}}
-                                            </h6>
-                                        </div>
-                                        <div class="content-text">
-                                            <h6>
-                                                <strong>Codigo Afiliado: </strong>{{showSale.afiliado}}
-                                            </h6>
-                                        </div>
-                                        <div class="content-text">
-                                            <h6>
-                                                <strong>Terminal: </strong>{{showSale.terminal}}
-                                            </h6>
-                                        </div>
-                                        <div class="content-text">
-                                            <h6>
-                                                <strong>Plataforma: </strong>
-                                            </h6>
-                                        </div>
-                                        <div class="content-text">
-                                            <h6>
-                                                <strong>Plan: </strong>
-                                            </h6>
-                                        </div>
-                                        <div class="content-text">
-                                            <h6>
-                                                <strong>Tipo de Cobro: </strong>
-                                            </h6>
+                                    <div *ngFor="let solicitud of showSale.solicitudes_banco">
+                                        <div class="conatiner-text">
+                                            <div class="content-text">
+                                                <h6>
+                                                    <strong>Tipo de Venta: </strong>{{solicitud.fraccion_desc}}
+                                                </h6>
+                                            </div>
+                                            <div class="content-text">
+                                                <h6>
+                                                    <strong>Banco: </strong>{{solicitud.banco}}
+                                                </h6>
+                                            </div>
+                                            <div class="content-text">
+                                                <h6>
+                                                    <strong>Nº Cuenta: </strong>{{solicitud.cuenta}}
+                                                </h6>
+                                            </div>
+                                            <div class="content-text">
+                                                <h6>
+                                                    <strong>Codigo Afiliado: </strong>{{solicitud.afiliado}}
+                                                </h6>
+                                            </div>
+                                            <div class="content-text">
+                                                <h6>
+                                                    <strong>Terminal: </strong>{{solicitud.terminal}}
+                                                </h6>
+                                            </div>
+                                            <div class="content-text">
+                                                <h6>
+                                                    <strong>Plataforma: </strong>
+                                                </h6>
+                                            </div>
+                                            <div class="content-text">
+                                                <h6>
+                                                    <strong>Plan: </strong>
+                                                </h6>
+                                            </div>
+                                            <div class="content-text">
+                                                <h6>
+                                                    <strong>Tipo de Cobro: </strong>
+                                                </h6>
+                                            </div>
                                         </div>
                                     </div>
 
