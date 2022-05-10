@@ -100,7 +100,7 @@
                                 </div>
                                 <div *ngSwitchCase="'file'">
                                     <app-upload
-                                        (url)="formDinamic[i].get(caracteristica.id_caracteristica).value=$event">
+                                        (url)="formDinamic[i].get(caracteristica.id_caracteristica).setValue($event)">
                                     </app-upload>
 
                                     <div *ngIf="formDinamic[i].get(caracteristica.id_caracteristica).value"

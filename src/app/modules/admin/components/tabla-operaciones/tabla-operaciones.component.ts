@@ -114,7 +114,7 @@ export class TablaOperacionesComponent implements OnInit {
 
             }
           });
-        } else if (venta.solicitud === "VENTA POS") {
+        } else if (venta.solicitud === "VENTA POS" || venta.solicitud === "CAMBIO DE EQUIPO") {
           var dialogRef: any = this.dialog.open(ModalAsignacionComponent, {
             disableClose: true,
             height: 'auto',
