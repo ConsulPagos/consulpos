@@ -132,10 +132,11 @@
                                 <div>
                                     <button class="btn_form_add_agent" mat-icon-button color="primary"
                                         aria-label="Example icon button with a menu icon" (click)="add_sim(i)"
-                                        *ngIf="(formats_buy[i].sims.length === 1 ||  formats_buy[i].sims.length === 0)">
+                                        *ngIf="(formats_buy[i].sims.length === 1 || formats_buy[i].sims.length === 0)">
                                         <i class="fas fa-user-plus icon_sell"></i>
                                         Agregar Sim
                                     </button>
+
 
                                     <button mat-icon-button class="btn_form_add_agent" color="primary"
                                         aria-label="Example icon button with a menu icon" (click)="deleteSim(i, isim)"
@@ -231,11 +232,15 @@
                         <input matInput disabled value={{total_price()}}>
                     </mat-form-field>
 
-                    <div>
-                        <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                        <button class="stepBtn" mat-raised-button matStepperNext
-                            [disabled]="buiesInvalid()">Siguiente</button>
+                    <div class="btn-next">
+                        <button class="stepBtn" mat-raised-button matStepperPrevious>
+                            Anterior
+                        </button>
+                        <button class="stepBtn" mat-raised-button matStepperNext [disabled]="buiesInvalid()">
+                            Siguiente
+                        </button>
                     </div>
+
                 </mat-step>
 
                 <mat-step [stepControl]="document">
@@ -273,9 +278,14 @@
                         <!-- <div *ngIf="getTipoCliente()=='N'"> -->
                     </form>
                     <!-- Bootn de siguiente strepper -->
-                    <div>
-                        <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                        <button class="stepBtn" mat-raised-button (click)="save()">Finalizar</button>
+                    <div class="btn-next">
+                        <button class="stepBtn" mat-raised-button matStepperPrevious>
+                            Anterior
+                        </button>
+
+                        <button class="stepBtn" mat-raised-button (click)="save()">
+                            Finalizar
+                        </button>
                     </div>
                 </mat-step>
             </mat-vertical-stepper>

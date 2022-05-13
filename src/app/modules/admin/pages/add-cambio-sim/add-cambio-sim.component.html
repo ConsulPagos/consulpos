@@ -210,11 +210,14 @@
                         </div>
                     </form>
 
-                    <div>
-                        <div>
-                            <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                            <button class="stepBtn" mat-raised-button (click)="save()">Finalizar</button>
-                        </div>
+                    <div class="btn-next">
+                        <button class="stepBtn" mat-raised-button matStepperPrevious>
+                            Anterior
+                        </button>
+
+                        <button class="stepBtn" mat-raised-button (click)="save()">
+                            Finalizar
+                        </button>
                     </div>
                 </mat-step>
             </mat-vertical-stepper>

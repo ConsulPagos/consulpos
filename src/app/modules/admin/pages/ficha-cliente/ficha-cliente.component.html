@@ -170,10 +170,19 @@
                                             <label class="labels title_data">
                                                 Nombre y Apellido:
                                             </label>
-                                            <span class="">
-                                                {{showClient.c_natural.c_p_nombre}}
-                                                {{showClient.c_natural.c_p_apellido}}
-                                            </span>
+                                            <div *ngIf="showClient.t_doc =='V' || showClient.t_doc =='P' || showClient.t_doc =='E'">
+                                                <span class="">
+                                                    {{showClient.c_natural.c_p_nombre}}
+                                                    {{showClient.c_natural.c_p_apellido}}
+                                                </span>
+                                            </div>
+                                            <div *ngIf="showClient.t_doc =='J' || showClient.t_doc =='G' || showClient.t_doc =='C'">
+                                                <span class="">
+                                                    {{showClient.legal.l_p_nombre}}
+                                                    {{showClient.legal.l_p_apellido}}
+                                                </span>
+                                            </div>
+
                                         </div>
 
 

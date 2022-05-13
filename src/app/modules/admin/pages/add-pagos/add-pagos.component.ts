@@ -269,7 +269,7 @@ export class AddPagosComponent implements OnInit {
       switch (this.default.R) {
         case constant.R0:
           this.toaster.success(this.default.M)
-          this.router.navigateByUrl('/admin/app/(adr:dashboard)')
+          this.router.navigateByUrl('/admin/app/(adr:pagos)')
           break;
         case constant.R1:
           this.toaster.error(this.default.M)

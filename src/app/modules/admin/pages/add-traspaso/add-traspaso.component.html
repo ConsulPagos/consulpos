@@ -190,10 +190,13 @@
                         </div>
                     </form>
 
-                    <div>
-                        <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                        <button class="stepBtn" mat-raised-button matStepperNext
-                            [disabled]="buiesInvalid()">Siguiente</button>
+                    <div class="btn-next">
+                        <button class="stepBtn" mat-raised-button matStepperPrevious>
+                            Anterior
+                        </button>
+                        <button class="stepBtn" mat-raised-button matStepperNext [disabled]="buiesInvalid()">
+                            Siguiente
+                        </button>
                     </div>
                 </mat-step>
 
@@ -232,9 +235,14 @@
                         <!-- <div *ngIf="getTipoCliente()=='N'"> -->
                     </form>
                     <!-- Bootn de siguiente strepper -->
-                    <div>
-                        <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
-                        <button class="stepBtn" mat-raised-button (click)="save()">Finalizar</button>
+                    <div class="btn-next">
+                        <button class="stepBtn" mat-raised-button matStepperPrevious>
+                            Anterior
+                        </button>
+
+                        <button class="stepBtn" mat-raised-button (click)="save()">
+                            Finalizar
+                        </button>
                     </div>
                 </mat-step>
             </mat-vertical-stepper>

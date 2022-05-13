@@ -12,8 +12,8 @@
 
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
-            <h6 class="title_mother">Agregar pago a la venta {{addPay.number}} - {{addPay.rif}} -
-                {{addPay.razon_social}} - {{addPay.fraccion_desc}}</h6>
+            <h6 class="title_mother" *ngFor="let item of addPay.solicitudes_banco">Agregar pago a la venta {{addPay.number}} - {{addPay.rif}} -
+                {{addPay.razon_social}} - {{item.fraccion_desc}}</h6>
 
             <!-- <form [formGroup]="formtasa">
                 <mat-form-field appearance="outline">

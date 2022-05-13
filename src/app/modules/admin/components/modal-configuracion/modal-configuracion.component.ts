@@ -153,6 +153,15 @@ export class ModalConfiguracionComponent implements OnInit {
       console.log(this.crypto.decryptString(res))
       const json = JSON.parse(this.crypto.decryptString(res))
       this.default = new ConfigDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      switch (this.default.R) {
+        case constant.R0:
+          this.toaster.success(this.default.M)
+
+          break;
+        case constant.R1:
+          this.toaster.error(this.default.M)
+          break;
+      }
     })
   }
 
