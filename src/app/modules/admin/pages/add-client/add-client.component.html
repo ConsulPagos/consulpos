@@ -426,7 +426,7 @@
                 <mat-step [stepControl]="document">
                     <form [formGroup]="document">
                         <ng-template matStepLabel>Carga de documentos</ng-template>
-                        <div>
+                        <div *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'">
                             <div>
                                 <h6>RIF</h6>
                                 <app-upload></app-upload>
@@ -434,6 +434,17 @@
 
                             <div>
                                 <h6>Cédula de identidad</h6>
+                                <app-upload></app-upload>
+                            </div>
+
+                            <div>
+                                <h6>Otro</h6>
+                                <app-upload></app-upload>
+                            </div>
+                        </div>
+                        <div *ngIf="getTipoCliente()=='J'">
+                            <div>
+                                <h6>RIF</h6>
                                 <app-upload></app-upload>
                             </div>
 
@@ -464,12 +475,12 @@
                         <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
                         <div>
                             <div>
-                                <button class="stepBtn" *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'" mat-raised-button
-                                    matStepperNext [disabled]="client.invalid" (click)="save()">
+                                <button class="stepBtn" *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'"
+                                    mat-raised-button matStepperNext [disabled]="client.invalid" (click)="save()">
                                     Finalizar
                                 </button>
                             </div>
-        
+
                             <div>
                                 <button class="stepBtn" *ngIf="getTipoCliente()=='J'" mat-raised-button matStepperNext
                                     [disabled]="client.invalid" (click)="save()">

@@ -10,10 +10,10 @@
             Se asignaran Seriales a los siguientes modelos:
         </p>
         <div *ngFor="let modelo of dataVenta.modelos">
-            <p>{{modelo.caracteristicas[0].modelo}}</p>
+            <p>{{modelo.caracteristicas[0].modelo}} - <span>{{this.x}}</span></p>
         </div>
 
-        <button (click)="findPos()">
+        <button mat-raised-button (click)="findPos()">
             asignar
         </button>
 

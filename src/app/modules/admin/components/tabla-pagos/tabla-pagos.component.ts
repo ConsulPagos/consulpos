@@ -158,7 +158,7 @@ export class TablaPagosComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      status_desc: this.crypto.encryptJson('ACTIVO'),
+      status_desc: this.crypto.encryptJson('EN ESPERA DE PAGO'),
       filter: this.crypto.encryptJson(filter),
     }))
 

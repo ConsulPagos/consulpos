@@ -63,7 +63,6 @@ export class AddClientComponent implements OnInit {
     private session: SesionService,
     private toaster: ToasterService,
     private router: Router,
-    private loader: LoaderService,
     private modal: ModalService,
     private fb: FormBuilder,
   ) {
