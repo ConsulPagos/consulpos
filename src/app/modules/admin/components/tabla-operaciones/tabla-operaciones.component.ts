@@ -139,7 +139,7 @@ export class TablaOperacionesComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-            window.location.reload()
+            // window.location.reload()
           }
         });
         break;
@@ -157,7 +157,7 @@ export class TablaOperacionesComponent implements OnInit {
 
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
-              window.location.reload()
+              // window.location.reload()
             }
           });
         } else if (venta.solicitud === "VENTA POS" || venta.solicitud === "CAMBIO DE SIM" || venta.solicitud === "CAMBIO DE EQUIPO") {
@@ -170,7 +170,7 @@ export class TablaOperacionesComponent implements OnInit {
 
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
-              window.location.reload()
+              // window.location.reload()
             }
           });
         }

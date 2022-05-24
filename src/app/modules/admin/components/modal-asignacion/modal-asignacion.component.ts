@@ -103,16 +103,7 @@ export class ModalAsignacionComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
-      // solicitud_banco_id: this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
       accion: this.crypto.encryptJson("ASIGNACION"),
-      // Operaciones: this.crypto.encryptJson(JSON.stringify([
-      //   {
-      //     cod_serial: this.asignacion.get('serial').value,
-      //     terminal: "",
-      //     afiliado: this.asignacion.get('afiliado').value,
-      //     modelo: modelo,
-      //   }
-      // ]))
     }))
     console.log("verify")
     this.venta.doEndAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
