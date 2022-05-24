@@ -238,7 +238,7 @@ export class VentasService {
   }
 
   liberarSim(data) {
-    var path = `/sell/liberarSim`;
+    var path = `/sell/liberarItem`;
     var headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain')
     headers.set('Accept', 'text/plain');
