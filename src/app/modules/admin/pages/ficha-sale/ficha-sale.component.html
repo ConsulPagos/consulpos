@@ -82,7 +82,8 @@
                                             </div>
                                             <div class="content-text">
                                                 <h6>
-                                                    <strong>Tipo de Cobro: </strong> {{solicitud.plataforma.fraccion_desc}}
+                                                    <strong>Tipo de Cobro: </strong>
+                                                    {{solicitud.plataforma.fraccion_desc}}
                                                 </h6>
                                             </div>
                                         </div>
@@ -150,35 +151,18 @@
                                     <h4>SIMS</h4>
 
                                     <div *ngFor="let item of showSale.items">
-                                        <div *ngIf="item.complemento_d">
-
-
-
-                                            {{item.precio}}
-                                            <div class="conatiner-text">
-                                                <div class="content-text">
-                                                    <h6>
-                                                        <strong>Sim: </strong>
-                                                    </h6>
-                                                </div>
-                                                <div class="content-text">
-                                                    <h6>
-                                                        <strong>Marca: </strong>{{item.marca}}
-                                                    </h6>
-                                                </div>
-                                                <div class="content-text">
-                                                    <h6>
-                                                        <strong>Modelo: </strong>{{item.modelo}}
-                                                    </h6>
-                                                </div>
-                                                <div class="content-text">
-                                                    <h6>
-                                                        <strong>Serial Nº: </strong>{{item.cod_serial}}
-                                                    </h6>
-                                                </div>
+                                        <div *ngFor="let sim of item.sim">
+                                            <div class="content-text">
+                                                <h6>
+                                                    <strong>Modelo: </strong>{{sim.modelo}}
+                                                </h6>
+                                            </div>
+                                            <div class="content-text">
+                                                <h6>
+                                                    <strong>Serial Nº: </strong>{{sim.cod_serial}}
+                                                </h6>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

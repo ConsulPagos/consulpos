@@ -21,7 +21,8 @@
 </div>
 <div mat-dialog-actions>
     <div class="d-flex w-100">
-        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null">
+        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null"
+        (click)="liberarSim()">
             <li class="fa fa-times text-dark"></li>
         </button>
         <button class="flex-fill confirm action_button" (click)="save()" [disabled]="false" mat-button cdkFocusInitial

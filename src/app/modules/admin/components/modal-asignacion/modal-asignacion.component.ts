@@ -14,6 +14,7 @@ import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { VentasService } from 'src/app/shared/services/ventas.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { AsignacionDecrypter, AsignacionResponse } from 'src/app/models/asignacion_response';
+import { ConfigDecrypter } from 'src/app/models/config_response';
 
 
 @Component({
@@ -76,7 +77,8 @@ export class ModalAsignacionComponent implements OnInit {
       solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
       modelos: this.crypto.encryptJson(JSON.stringify(
         modelos
-      ))
+      )),
+      correctivo: this.crypto.encryptJson(this.dataVenta.correctivo),
     }))
         console.log("verify")
     this.venta.doAutomaticAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
@@ -120,6 +122,22 @@ export class ModalAsignacionComponent implements OnInit {
       }
       console.log(this.default)
 
+    })
+  }
+  liberarSim() {
+    const inputs = [];
+    this.dataVenta.modelos.forEach(f => {
+      inputs.push(f.value)
+    })
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      items: this.crypto.encryptJson(JSON.stringify(inputs))
+    }))
+    this.venta.liberarSim(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      const json = JSON.parse(this.crypto.decryptString(res))
+      this.default = new ConfigDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
     })
   }
 

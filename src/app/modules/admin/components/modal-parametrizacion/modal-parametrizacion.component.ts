@@ -92,10 +92,10 @@ export class ModalParametrizacionComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
       accion: this.crypto.encryptJson("PARAMETRIZACION"),
-
       Operaciones: this.crypto.encryptJson(JSON.stringify(
         items
-      ))
+      )),
+      correctivo: this.crypto.encryptJson(this.dataVenta.correctivo),
     }))
     console.log("verify")
     this.venta.doSaveConfig(`${this.session.getDeviceId()};${data}`).subscribe(res => {

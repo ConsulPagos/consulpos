@@ -129,7 +129,8 @@ export class ModalConfiguracionComponent implements OnInit {
       accion: this.crypto.encryptJson("CONFIGURACION"),
       Operaciones: this.crypto.encryptJson(JSON.stringify(
         inputs
-      ))
+      )),
+      correctivo: this.crypto.encryptJson(this.dataVenta.correctivo),
     }))
     this.venta.doSaveConfig(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
