@@ -134,6 +134,11 @@ import { AddDesinstalacionComponent } from './pages/add-desinstalacion/add-desin
 import { AddReactivacionComponent } from './pages/add-reactivacion/add-reactivacion.component';
 import { TablaReactivacionComponent } from './components/tabla-reactivacion/tabla-reactivacion.component';
 import { TablaDesinstalacionComponent } from './components/tabla-desinstalacion/tabla-desinstalacion.component';
+import { TablaPruebaComponent } from './components/tabla-prueba/tabla-prueba.component';
+import { PruebaComponent } from './pages/prueba/prueba.component';
+import { ValidarPruebaComponent } from './pages/validar-prueba/validar-prueba.component';
+import { ValidarPruebaFichaComponent } from './pages/validar-prueba-ficha/validar-prueba-ficha.component';
+import { TablaValidarPruebaComponent } from './components/tabla-validar-prueba/tabla-validar-prueba.component';
 
 
 @NgModule({
@@ -257,6 +262,11 @@ import { TablaDesinstalacionComponent } from './components/tabla-desinstalacion/
     AddReactivacionComponent,
     TablaReactivacionComponent,
     TablaDesinstalacionComponent,
+    TablaPruebaComponent,
+    PruebaComponent,
+    ValidarPruebaComponent,
+    ValidarPruebaFichaComponent,
+    TablaValidarPruebaComponent,
   ],
 
   imports: [

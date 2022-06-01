@@ -77,6 +77,9 @@ import { ReactivacionComponent } from './pages/reactivacion/reactivacion.compone
 import { DesinstalacionComponent } from './pages/desinstalacion/desinstalacion.component';
 import { AddDesinstalacionComponent } from './pages/add-desinstalacion/add-desinstalacion.component';
 import { AddReactivacionComponent } from './pages/add-reactivacion/add-reactivacion.component';
+import { PruebaComponent } from './pages/prueba/prueba.component';
+import { ValidarPruebaComponent } from './pages/validar-prueba/validar-prueba.component';
+import { ValidarPruebaFichaComponent } from './pages/validar-prueba-ficha/validar-prueba-ficha.component';
 
 const routes: Routes = [
   {
@@ -732,6 +735,33 @@ const routes: Routes = [
       },
       {
         path: 'add-reactivacion', component: AddReactivacionComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'prueba', component: PruebaComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'validar-prueba/:id', component: ValidarPruebaComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'validar-prueba-ficha', component: ValidarPruebaFichaComponent, outlet: 'adr',
         // canActivate: [HasPermisoGuard],
         // data: {
         //   modulo: "Configuracion",

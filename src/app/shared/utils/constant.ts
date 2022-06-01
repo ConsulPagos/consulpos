@@ -11,6 +11,8 @@ export const constant = {
     ALMACENES:"almacenes",
     
 
+    BANCOS_FRACCION:"bancos_franccion",
+
 
     T_DOCS: 't_doc',
     T_DOC_ID: 't_doc_id',

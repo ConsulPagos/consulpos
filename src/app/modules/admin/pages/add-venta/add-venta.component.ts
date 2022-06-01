@@ -13,7 +13,7 @@ import { PlanInterface } from '../../../../models/plan';
 import { SimInterface } from '../../../../models/sim';
 import { TipoventaInterface } from '../../../../models/tipo_venta';
 import { TipoclienteInterface } from 'src/app/models/tipo_cliente';
-import { TipodocumentoInterface } from 'src/app/models/tipo_documento';
+import { TipoBancoInterface, TipodocumentoInterface } from 'src/app/models/tipo_documento';
 import { ValidacionOccDecrypter, ValidacionOccResponse } from '../../../../models/validacionocc_response';
 import { ValidacionSimDecrypter, ValidacionSimResponse } from '../../../../models/validacionsim_response';
 import { FraccionPagoInterface } from 'src/app/models/fraccion_pago';
@@ -62,6 +62,10 @@ export class AddVentaComponent implements OnInit {
   tipos_clientes: TipoclienteInterface[];
   plataformas: PlataformaInterface[];
   bancos: BancoInterface[];
+
+  bancos_fraccion: TipoBancoInterface[];
+  fraccion_pago: any[];
+
   comunicaciones: ComunicacionInterface[];
   operadoras: OperadoraInterface[];
   tipocobros: TipoCobroInterface[];
@@ -133,7 +137,9 @@ export class AddVentaComponent implements OnInit {
     this.bancos = JSON.parse(this.storage.get(constant.BANCOS)).bancos
     this.t_pagos = JSON.parse(this.storage.get(constant.T_PAGOS)).t_pagos
     this.marcas = JSON.parse(this.storage.get(constant.MARCAS)).marcas
-    console.log(this.marcas)
+    this.bancos_fraccion = JSON.parse(this.storage.get(constant.BANCOS_FRACCION)).bancos
+    console.log("Banco francciomn")
+    console.log(this.bancos_fraccion)
   }
 
   add_buy() {
@@ -340,6 +346,12 @@ export class AddVentaComponent implements OnInit {
     return total
   }
 
+  getFraccion(i:number): void {
+    console.log("ajaa", this.bancos_fraccion.filter(c => c.codigo == this.buies[i].get('banco').value)[0]);
+    
+    this.fraccion_pago = this.bancos_fraccion.filter(c => c.codigo == this.buies[i].get('banco').value)[0].fraccion_pago
+  }
+
   marca() {
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
@@ -376,7 +388,7 @@ export class AddVentaComponent implements OnInit {
     var invalid = false;
 
     for (let index = 0; index < this.buies.length; index++) {
-      if(this.buies[index].invalid){
+      if (this.buies[index].invalid) {
         invalid = true
         break;
       }

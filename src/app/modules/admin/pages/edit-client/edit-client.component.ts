@@ -97,8 +97,8 @@ export class EditClientComponent implements OnInit {
       act_comercial: new FormControl(this.editClient.id_actividad_comercial, [Validators.required]),
       pto_referencia: new FormControl(this.editClient.pto_ref, [Validators.required]),
       localidad: new FormControl(this.editClient.localidad, [Validators.required]),
-      red_social_a: new FormControl(this.editClient.red_social_a, [Validators.required]),
-      red_social_b: new FormControl(this.editClient.red_social_b, [Validators.required]),
+      red_social_a: new FormControl(this.editClient.red_social_a),
+      red_social_b: new FormControl(this.editClient.red_social_b),
 
     });
 

@@ -97,14 +97,7 @@
                                         <i class="fas fa-minus-circle"></i>
                                     </button>
                                 </div>
-                                <!-- <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Marca</mat-label>
-                                    <mat-select disableRipple formControlName="marca"
-                                        (selectionChange)="getMarca($event.value)">
-                                        <mat-option *ngFor="let marca of marcas" value={{marca.id_marca}}>
-                                            {{marca.marca}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field> -->
+
                                 <div class="container_agent">
                                     <mat-form-field appearance="outline" class="container_box_space">
                                         <mat-label>Modelo</mat-label>
@@ -165,7 +158,7 @@
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Tipo de Venta</mat-label>
                                     <mat-select disableRipple formControlName="tipo_venta">
-                                        <mat-option *ngFor="let nombre of fraccion_pagos" value={{nombre.id}}>
+                                        <mat-option *ngFor="let nombre of fraccion_pago" value={{nombre.id}}>
                                             {{nombre.nombre}} </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -178,15 +171,10 @@
                                     </mat-select>
                                 </mat-form-field>
 
-                                <!-- <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Lugar de la entrega</mat-label>
-                                    <input matInput formControlName="lugar_entrega" placeholder="1234" type="text">
-                                </mat-form-field> -->
-
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Banco</mat-label>
-                                    <mat-select disableRipple formControlName="banco">
-                                        <mat-option *ngFor="let nombre of bancos" value={{nombre.codigo}}>
+                                    <mat-select disableRipple formControlName="banco" (selectionChange)="getFraccion(i)">
+                                        <mat-option *ngFor="let nombre of bancos_fraccion" value={{nombre.codigo}}>
                                             {{nombre.nombre}} </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -197,7 +185,7 @@
                                         (keypress)="onlyNumberKey($event)" maxlength="20">
                                 </mat-form-field>
 
-                                <mat-form-field appearance="outline" class="container_box_space">
+                                <!-- <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Código de afiliado</mat-label>
                                     <input matInput formControlName="cod_afiliado" placeholder="1234" type="text"
                                         (keypress)="onlyNumberKey($event)" maxlength="8">
@@ -207,7 +195,7 @@
                                     <mat-label>Terminal</mat-label>
                                     <input matInput formControlName="terminal" placeholder="1234" type="text"
                                         (keypress)="onlyNumberKey($event)" maxlength="2">
-                                </mat-form-field>
+                                </mat-form-field> -->
 
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Precio USD</mat-label>

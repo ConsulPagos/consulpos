@@ -1,0 +1,18 @@
+<section id="prueba">
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">Equipos por Validar</span>
+                    </ng-template>
+
+                    <app-tabla-validar-prueba [id]="id">
+                    </app-tabla-validar-prueba>
+
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>
