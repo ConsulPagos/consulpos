@@ -1,1 +1,52 @@
-<p>validar-prueba-ficha works!</p>
+<div>
+    <div>
+        <mat-form-field appearance="outline" class="container_box_space">
+            <mat-label>Marca</mat-label>
+            <input matInput type="text" value={{item.marca}} disabled>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="container_box_space">
+            <mat-label>Modelo</mat-label>
+            <input matInput type="text" value={{item.modelo}} disabled>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="container_box_space">
+            <mat-label>Serial POS</mat-label>
+            <input matInput type="text" value={{item.equipo}} disabled>
+        </mat-form-field>
+
+        <button mat-button (click)="openDialog(item)">
+            Asignar otro serial
+        </button>
+    </div>
+
+    <div>
+        <mat-form-field appearance="outline" class="container_box_space">
+            <mat-label>Terminal</mat-label>
+            <input matInput type="text" value={{item.afiliado}} disabled>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="container_box_space">
+            <mat-label>Código Afiliado</mat-label>
+            <input matInput type="text" value={{item.terminal}} disabled>
+        </mat-form-field>
+    </div>
+
+    <div *ngFor="let sim of item.sim; let i = index">
+        <mat-form-field appearance="outline" class="container_box_space">
+            <mat-label>Modelo SIM {{i + 1}}</mat-label>
+            <input matInput type="text" value={{sim.modelo}} disabled>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="container_box_space">
+            <mat-label>Serial SIM {{i + 1}}</mat-label>
+            <input matInput type="text" value={{sim.cod_serial}} disabled>
+        </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="container_box_space">
+        <mat-label>Nombre del responsable</mat-label>
+        <input matInput type="text" >
+    </mat-form-field>
+
+</div>

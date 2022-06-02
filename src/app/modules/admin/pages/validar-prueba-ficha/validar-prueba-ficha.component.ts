@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { SaleRequestInterface } from 'src/app/models/sales';
+import { ModalAsignacionPruebaComponent } from '../../components/modal-asignacion-prueba/modal-asignacion-prueba.component';
 
 @Component({
   selector: 'app-validar-prueba-ficha',
@@ -36,5 +36,20 @@ export class ValidarPruebaFichaComponent implements OnInit {
     this.title.setTitle('ConsulPos | Ficha Venta')
   }
 
+  openDialog(item): void {
+    if (this.item.status_desc === "PRUEBAS") {
+      var dialogRef: any = this.dialog.open(ModalAsignacionPruebaComponent, {
+        disableClose: true,
+        height: 'auto',
+        panelClass: 'custom-dialog',
+        data: { item: item },
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+
+        }
+      });
+    }
+  }
 
 }

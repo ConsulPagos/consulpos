@@ -31,7 +31,6 @@ export class TablaValidarPruebaComponent implements OnInit {
     public dialog: MatDialog,
   ) {
 
-
   }
 
   ngOnInit(): void {

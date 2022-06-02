@@ -18,13 +18,13 @@ import { ConfigDecrypter } from 'src/app/models/config_response';
 
 
 @Component({
-  selector: 'app-modal-asignacion',
-  templateUrl: './modal-asignacion.component.html',
-  styleUrls: ['./modal-asignacion.component.scss']
+  selector: 'app-modal-asignacion-prueba',
+  templateUrl: './modal-asignacion-prueba.component.html',
+  styleUrls: ['./modal-asignacion-prueba.component.scss']
 })
-export class ModalAsignacionComponent implements OnInit {
+export class ModalAsignacionPruebaComponent implements OnInit {
 
-  dataVenta: any;
+  item: any;
   default: AsignacionResponse;
   editSale: any = {};
   x = null;
@@ -39,14 +39,14 @@ export class ModalAsignacionComponent implements OnInit {
     private modal: ModalService,
     private pago: PagosService,
 
-    public dialogRef: MatDialogRef<ModalAsignacionComponent>,
+    public dialogRef: MatDialogRef<ModalAsignacionPruebaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
 
-    this.dataVenta = data['venta']
+    this.item = data['item']
 
     this.asignacion = new FormGroup({
       serial: new FormControl(this.x, [Validators.required]),
-      // afiliado: new FormControl(this.dataVenta.afiliado, [Validators.required]),
+      // afiliado: new FormControl(this.item.afiliado, [Validators.required]),
     });
   }
 
@@ -56,35 +56,31 @@ export class ModalAsignacionComponent implements OnInit {
   }
 
   findPos() {
-    const modelos = [];
-    this.dataVenta.modelos.forEach(m => {
-      modelos.push(
-        {
-          modelo: m.caracteristicas[0].modelo,
-          // solicitud_banco: m.caracteristicas[0].solicitud_banco,
-          afiliado:m.caracteristicas[0].solicitud_banco.afiliado,
-          terminal:m.caracteristicas[0].solicitud_banco.terminal,
-          cuenta:m.caracteristicas[0].solicitud_banco.cuenta,
-          solicitud_banco_id:m.caracteristicas[0].solicitud_banco.solicitud_banco_id,
-        }
-      )
-    });
-    console.log(modelos)
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
-      modelos: this.crypto.encryptJson(JSON.stringify(
-        modelos
+      solicitud_id: this.crypto.encryptJson(this.item.solicitud),
+      modelos: this.crypto.encryptJson(JSON.stringify([{
+
+        modelo: this.item.modelo,
+        afiliado: this.item.afiliado,
+        terminal: this.item.terminal,
+        cuenta: this.item.cuenta,
+        solicitud_banco_id: this.item.solicitud_banco_id,
+
+      }]
+
       )),
-      correctivo: this.crypto.encryptJson(this.dataVenta.correctivo),
+      correctivo: this.crypto.encryptJson(this.item.correctivo),
     }))
-        console.log("verify")
+    console.log("verify")
     this.venta.doAutomaticAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.default.items[0].cod_serial);
+
       var x = this.default.items[0].cod_serial
       this.x = x
       console.log(this.x)
@@ -104,13 +100,17 @@ export class ModalAsignacionComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
       accion: this.crypto.encryptJson("ASIGNACION"),
+      solicitud: this.crypto.encryptJson(this.item.solicitud),
+      equipo: this.crypto.encryptJson(this.item.equipo),
+      solicitud_banco_id: this.crypto.encryptJson(this.item.solicitud_banco_id),
+      viejo_serial: this.crypto.encryptJson(this.item.equipo),
+      nuevo_serial: this.crypto.encryptJson(this.x),
     }))
     console.log("verify")
-    this.venta.doEndAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.venta.actualizarPosPorTest(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
-      this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       switch (this.default.R) {
         case constant.R0:
           this.toaster.success(this.default.M)
@@ -125,20 +125,24 @@ export class ModalAsignacionComponent implements OnInit {
     })
   }
   liberarSim() {
-    const inputs = [];
-    this.dataVenta.modelos.forEach(f => {
-      inputs.push(f.value)
-    })
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      items: this.crypto.encryptJson(JSON.stringify(inputs))
+      items: this.crypto.encryptJson(JSON.stringify(
+        [{
+
+          modelo: this.item.modelo,
+          afiliado: this.item.afiliado,
+          terminal: this.item.terminal,
+          cuenta: this.item.cuenta,
+          solicitud_banco_id: this.item.solicitud_banco_id,
+        }]
+      ))
     }))
     this.venta.liberarSim(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.default = new ConfigDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
     })
   }
-
 }
