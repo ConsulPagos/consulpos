@@ -28,7 +28,8 @@ export class ModalAsignacionPruebaComponent implements OnInit {
   default: AsignacionResponse;
   editSale: any = {};
   x = null;
-
+  viejo_serial: any;
+  
   constructor(
     private crypto: CryptoService,
     private storage: StorageService,
@@ -62,28 +63,38 @@ export class ModalAsignacionPruebaComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_id: this.crypto.encryptJson(this.item.solicitud),
       modelos: this.crypto.encryptJson(JSON.stringify([{
-
         modelo: this.item.modelo,
         afiliado: this.item.afiliado,
         terminal: this.item.terminal,
         cuenta: this.item.cuenta,
         solicitud_banco_id: this.item.solicitud_banco_id,
-
       }]
 
       )),
       correctivo: this.crypto.encryptJson(this.item.correctivo),
     }))
     console.log("verify")
+    // this.viejo_serial = this.item.equipo
+
     this.venta.doAutomaticAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default.items[0].cod_serial);
+  
+      console.log(this.viejo_serial)
 
-      var x = this.default.items[0].cod_serial
-      this.x = x
-      console.log(this.x)
+      this.x = (this.item.equipo == this.default.items[0])?this.default.items[1].cod_serial:this.default.items[0].cod_serial
+
+      // if( this.item.equipo != this.viejo_serial){
+      //   var x = this.default.items[0].cod_serial
+      //   this.x = x
+      //   console.log(this.x)
+      // } else {
+      //   this.x = this.item.equipo
+      // }
+
+
     })
   }
 
@@ -106,6 +117,7 @@ export class ModalAsignacionPruebaComponent implements OnInit {
       solicitud_banco_id: this.crypto.encryptJson(this.item.solicitud_banco_id),
       viejo_serial: this.crypto.encryptJson(this.item.equipo),
       nuevo_serial: this.crypto.encryptJson(this.x),
+
     }))
     console.log("verify")
     this.venta.actualizarPosPorTest(`${this.session.getDeviceId()};${data}`).subscribe(res => {

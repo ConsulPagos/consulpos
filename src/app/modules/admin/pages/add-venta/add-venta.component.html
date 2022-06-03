@@ -156,14 +156,6 @@
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Tipo de Venta</mat-label>
-                                    <mat-select disableRipple formControlName="tipo_venta">
-                                        <mat-option *ngFor="let nombre of fraccion_pago" value={{nombre.id}}>
-                                            {{nombre.nombre}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Tipo de Cobro</mat-label>
                                     <mat-select disableRipple formControlName="tipocobro">
                                         <mat-option *ngFor="let t_cobro of tipocobros" value={{t_cobro.id}}>
@@ -173,8 +165,17 @@
 
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Banco</mat-label>
-                                    <mat-select disableRipple formControlName="banco" (selectionChange)="getFraccion(i)">
+                                    <mat-select disableRipple formControlName="banco"
+                                        (selectionChange)="getFraccion(i)">
                                         <mat-option *ngFor="let nombre of bancos_fraccion" value={{nombre.codigo}}>
+                                            {{nombre.nombre}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Tipo de Venta</mat-label>
+                                    <mat-select disableRipple formControlName="tipo_venta">
+                                        <mat-option *ngFor="let nombre of fraccion_pago" value={{nombre.id}}>
                                             {{nombre.nombre}} </mat-option>
                                     </mat-select>
                                 </mat-form-field>
