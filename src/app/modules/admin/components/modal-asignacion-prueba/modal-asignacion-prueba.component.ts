@@ -13,7 +13,7 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { VentasService } from 'src/app/shared/services/ventas.service';
 import { constant } from 'src/app/shared/utils/constant';
-import { AsignacionDecrypter, AsignacionResponse } from 'src/app/models/asignacion_response';
+import { AsignacionManualDecrypter, AsignacionManualResponse } from 'src/app/models/asignacion_manual_response';
 import { ConfigDecrypter } from 'src/app/models/config_response';
 
 
@@ -25,7 +25,7 @@ import { ConfigDecrypter } from 'src/app/models/config_response';
 export class ModalAsignacionPruebaComponent implements OnInit {
 
   item: any;
-  default: AsignacionResponse;
+  default: AsignacionManualResponse;
   editSale: any = {};
   x = null;
   viejo_serial: any;
@@ -79,10 +79,8 @@ export class ModalAsignacionPruebaComponent implements OnInit {
     this.venta.doAutomaticAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       console.log(JSON.parse(this.crypto.decryptString(res)))
-      this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.default = new AsignacionManualDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default.items[0].cod_serial);
-  
-      console.log(this.viejo_serial)
 
       this.x = (this.item.equipo == this.default.items[0])?this.default.items[1].cod_serial:this.default.items[0].cod_serial
 

@@ -15,8 +15,8 @@
             <input matInput type="text" value={{item.equipo}} disabled>
         </mat-form-field>
 
-        <button mat-button (click)="openDialog(item)">
-            Asignar otro serial
+        <button mat-button (click)="findPos()">
+            Asignar otro serial POS
         </button>
     </div>
 
@@ -42,11 +42,15 @@
             <mat-label>Serial SIM {{i + 1}}</mat-label>
             <input matInput type="text" value={{sim.cod_serial}} disabled>
         </mat-form-field>
+
+        <button mat-button (click)="findSim(sim.modelo, sim.cod_serial)">
+            Asignar otro serial SIM
+        </button>
     </div>
 
     <mat-form-field appearance="outline" class="container_box_space">
         <mat-label>Nombre del responsable</mat-label>
-        <input matInput type="text" >
+        <input matInput type="text">
     </mat-form-field>
 
 </div>

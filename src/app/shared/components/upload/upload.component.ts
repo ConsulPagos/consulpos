@@ -1,8 +1,16 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { Output } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ClientesService } from '../../services/clientes.service';
+import { CryptoService } from '../../services/crypto.service';
+import { LoaderService } from '../../services/loader.service';
+import { SesionService } from '../../services/sesion.service';
+import { StorageService } from '../../services/storage.service';
+import { constant } from '../../utils/constant';
+import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
+
 
 @Component({
   selector: 'app-upload',
@@ -17,43 +25,28 @@ export class UploadComponent implements OnInit {
   uploadProgress: Observable<number>;
   uploadURL: Observable<string>;
   loading = false;
+  default: DefaultResponse;
 
-  constructor(private _storage: AngularFireStorage) { }
+  constructor(
+    private crypto: CryptoService,
+    private cliente: ClientesService,
+    private storage: StorageService,
+    private session: SesionService,
+    private loader: LoaderService,
+  ) { }
 
   ngOnInit(): void {
   }
 
-  upload(event) {
-    this.loading = true;
-    // Get input file
-    const file = event.target.files[0];
-
-    // Generate a random ID
-    const randomId = Math.random().toString(36).substring(2);
-    const filepath = `documentos/${randomId}`;
-
-    const fileRef = this._storage.ref(filepath);
-
-    // Upload image
-    const task: AngularFireUploadTask = this._storage.upload(filepath, file);
-
-    // Observe percentage changes
-    this.uploadProgress = task.percentageChanges();
-
-    this.uploadProgress.subscribe(v => {
-      this.progress.emit(v);
+  upload() {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+    }))
+    this.loader.stop()
+    this.cliente.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
     })
-
-    // Get notified when the download URL is available
-    task.snapshotChanges().pipe(
-      finalize(() => {
-        this.uploadURL = fileRef.getDownloadURL()
-        this.uploadURL.subscribe(u => {
-          this.url.emit(u);
-          this.loading = false;
-        })
-      })).subscribe();
   }
-
-  
 }

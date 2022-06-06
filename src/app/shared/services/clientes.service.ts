@@ -100,6 +100,7 @@ export class ClientesService {
     headers.set('Access-Control-Allow-Origin', '*');
     return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'arraybuffer' })
   }
+
   doSummaryPdf(data) {
     var path = `/client/summaryAccount`;
     var headers = new HttpHeaders()
@@ -107,6 +108,15 @@ export class ClientesService {
     headers.set('Accept', 'text/plain');
     headers.set('Access-Control-Allow-Origin', '*');
     return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'arraybuffer' })
+  }
+
+  saveAttached(data) {
+    var path = `/att/saveAttached`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'text' })
   }
 
 }

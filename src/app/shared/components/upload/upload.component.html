@@ -1,13 +1,65 @@
 <div class="w-100 d-flex">
-    <div class="upload-btn-wrapper w-100" *ngIf="!loading; else loadingFile">
-        <button class="btn w-100">
-            <li class="fa fa-upload"></li> <span class="ml-2 text-uppercase small">Seleccionar archivo</span>
-        </button>
-        <input type="file" (change)="upload($event)" accept="image/jpeg,image/png,application/pdf">
+    <div class="upload-btn-wrapper w-100">
+        <input type="file" (change)="upload()" accept="image/jpeg, image/png, image/jpg, application/pdf">
     </div>
 </div>
 
-<ng-template #loadingFile>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <ng-template #loadingFile>
     <div class="d-flex w-100">
         <button class="btn w-100">
             <div *ngIf="uploadProgress | async as progress; else zeroPercent">
@@ -16,6 +68,7 @@
         </button>
     </div>
 </ng-template>
+
 <ng-template #zeroPercent>
     <span class="ml-1  text-white" style="font-size: 20px;"> 0% </span>
-</ng-template>
+</ng-template> -->

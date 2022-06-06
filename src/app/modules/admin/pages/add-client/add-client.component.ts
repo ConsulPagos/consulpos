@@ -69,7 +69,7 @@ export class AddClientComponent implements OnInit {
 
     this.identity = this.fb.group({
       tipo_doc: ['', [Validators.required]],
-      rif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(11), Validators.pattern("^[0-9]*$")]],
+      rif: ['253862510', [Validators.required, Validators.minLength(9), Validators.maxLength(11), Validators.pattern("^[0-9]*$")]],
     },
       {
         validator: CeroValidator("rif")
@@ -82,43 +82,43 @@ export class AddClientComponent implements OnInit {
   }
 
   client_type = new FormGroup({
-    tipo_cliente: new FormControl('', [Validators.required]),
+    tipo_cliente: new FormControl('1', [Validators.required]),
   });
 
   client = new FormGroup({
-    razon_social: new FormControl('', [Validators.required]),
-    nombre_comercial: new FormControl('', [Validators.required]),
-    contribuyente: new FormControl('', [Validators.required]),
-    email: new FormControl('', [
+    razon_social: new FormControl('gergsgsgsgfdf', [Validators.required]),
+    nombre_comercial: new FormControl('srgsdrgsgsrg', [Validators.required]),
+    contribuyente: new FormControl('1', [Validators.required]),
+    email: new FormControl('tha@g.com', [
       Validators.required,
       Validators.email,
       Validators.pattern('^[a-zA-Z0-9.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')
     ]),
-    phone_1: new FormControl('', [Validators.required]),
-    phone_2: new FormControl('', [Validators.required]),
-    estado: new FormControl('', [Validators.required]),
-    municipio: new FormControl('', [Validators.required]),
-    parroquia: new FormControl('', [Validators.required]),
-    ciudad: new FormControl('', [Validators.required]),
-    direccion: new FormControl('', [Validators.required]),
-    contacto: new FormControl('', [Validators.required]),
-    codpostal: new FormControl('', [Validators.required]),
-    act_comercial: new FormControl('', [Validators.required]),
-    pto_referencia: new FormControl('', [Validators.required]),
+    phone_1: new FormControl('04242735855', [Validators.required]),
+    phone_2: new FormControl('04242735855', [Validators.required]),
+    estado: new FormControl('1', [Validators.required]),
+    municipio: new FormControl('1', [Validators.required]),
+    parroquia: new FormControl('1', [Validators.required]),
+    ciudad: new FormControl('1', [Validators.required]),
+    direccion: new FormControl('xfgdhedthdgdgrrsgsagr', [Validators.required]),
+    contacto: new FormControl('1', [Validators.required]),
+    codpostal: new FormControl('1080', [Validators.required]),
+    act_comercial: new FormControl('1', [Validators.required]),
+    pto_referencia: new FormControl('zdfgdsgdgdtsgddfthtdh', [Validators.required]),
     red_social_a: new FormControl(''),
     red_social_b: new FormControl(''),
   });
 
   data_vr = new FormGroup({
-    primer_nombre: new FormControl('', [Validators.required]),
-    segundo_nombre: new FormControl('',),
-    primer_apellido: new FormControl('', [Validators.required]),
-    segundo_apellido: new FormControl('',),
-    c_t_doc_cedula: new FormControl('', [Validators.required]),
-    cedula: new FormControl('', [Validators.required]),
-    genero: new FormControl('', [Validators.required]),
+    primer_nombre: new FormControl('Arturo', [Validators.required]),
+    segundo_nombre: new FormControl('Arturo',),
+    primer_apellido: new FormControl('Arturo', [Validators.required]),
+    segundo_apellido: new FormControl('Arturo',),
+    c_t_doc_cedula: new FormControl('1', [Validators.required]),
+    cedula: new FormControl('25386251', [Validators.required]),
+    genero: new FormControl('1', [Validators.required]),
     fecha_nacimiento: new FormControl('', [Validators.required]),
-    profesion: new FormControl('', [Validators.required]),
+    profesion: new FormControl('1', [Validators.required]),
   });
 
   document = new FormGroup({
@@ -134,15 +134,15 @@ export class AddClientComponent implements OnInit {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   agent = new FormGroup({
-    p_nombre_representante: new FormControl('', [Validators.required]),
-    s_nombre_representante: new FormControl('', [Validators.required]),
-    p_apellido_representante: new FormControl('', [Validators.required]),
-    s_apellido_representante: new FormControl('', [Validators.required]),
-    cedula_representante: new FormControl('', [Validators.required]),
-    telefono_local_repre: new FormControl('', [Validators.required]),
-    telefono_movil_repre: new FormControl('', [Validators.required]),
-    email_repre: new FormControl('', [Validators.required]),
-    tipo_doc_rep: new FormControl('', [Validators.required]),
+    p_nombre_representante: new FormControl('Arturo', [Validators.required]),
+    s_nombre_representante: new FormControl('Jose', [Validators.required]),
+    p_apellido_representante: new FormControl('Linares', [Validators.required]),
+    s_apellido_representante: new FormControl('Viola', [Validators.required]),
+    cedula_representante: new FormControl('25386251', [Validators.required]),
+    telefono_local_repre: new FormControl('4242735855', [Validators.required]),
+    telefono_movil_repre: new FormControl('4242735855', [Validators.required]),
+    email_repre: new FormControl('tha@g.com', [Validators.required]),
+    tipo_doc_rep: new FormControl('1', [Validators.required]),
   });
 
   add_agent() {
@@ -194,7 +194,7 @@ export class AddClientComponent implements OnInit {
 
   verificar_usuario() {
     this.search_client = true;
-    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
+    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
@@ -226,10 +226,10 @@ export class AddClientComponent implements OnInit {
       t_doc_id: this.crypto.encryptJson(this.identity.get('tipo_doc').value),
       rif: this.crypto.encryptJson(rif),
       t_cliente_id: this.crypto.encryptJson(this.client_type.get('tipo_cliente').value),
-      razon_social: this.crypto.encryptJson(this.client.get('razon_social').value),
-      comercio: this.crypto.encryptJson(this.client.get('nombre_comercial').value),
+      razon_social: this.crypto.encryptJson(this.client.get('razon_social').value).trim(),
+      comercio: this.crypto.encryptJson(this.client.get('nombre_comercial').value).trim(),
       contribuyente_id: this.crypto.encryptJson(this.client.get('contribuyente').value),
-      email: this.crypto.encryptJson(this.client.get('email').value),
+      email: this.crypto.encryptJson(this.client.get('email').value).trim(),
       estados: this.crypto.encryptJson(this.client.get('estado').value),
       municipios: this.crypto.encryptJson(this.client.get('municipio').value),
       parroquia_id: this.crypto.encryptJson(this.client.get('parroquia').value),
