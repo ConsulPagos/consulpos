@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AsignacionDecrypter, AsignacionResponse } from 'src/app/models/asignacion_response';
 import { ConfiguracionDecrypter } from 'src/app/models/configuracion_response';
+import { DefaultDecrypter } from 'src/app/models/default_response';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { PagosService } from 'src/app/shared/services/pagos.service';
@@ -22,6 +24,7 @@ import { ModalAsignacionPruebaComponent } from '../../components/modal-asignacio
 export class ValidarPruebaFichaComponent implements OnInit {
 
   default: AsignacionResponse;
+  default_2: DefaultDecrypter;
   item: any = {};
   x = null;
 
@@ -54,6 +57,10 @@ export class ValidarPruebaFichaComponent implements OnInit {
     this.title.setTitle('ConsulPos | Ficha Venta')
   }
 
+  form = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+  });
+
   openDialog(item): void {
     if (this.item.status_desc === "PRUEBAS") {
       var dialogRef: any = this.dialog.open(ModalAsignacionPruebaComponent, {
@@ -84,15 +91,14 @@ export class ValidarPruebaFichaComponent implements OnInit {
       const json = JSON.parse(this.crypto.decryptString(res))
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      var x = this.default.cod_serial
+      this.x = x
+      console.log(this.x)
     })
   }
 
   findSim(modelo:any, cod_serial:any) {
 
-    this.item.sim.forEach(t => {
-      t.modelo
-      t.cod_serial
-    })
 
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
@@ -103,10 +109,26 @@ export class ValidarPruebaFichaComponent implements OnInit {
       viejo_serial: this.crypto.encryptJson(cod_serial),
 
     }))
-    var x;
     this.venta.actualizarSimPorTest(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.default = new ConfiguracionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+    })
+  }
+
+
+  submit() {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      nombre: this.crypto.encryptJson(this.form.get('name').value),
+      cod_serial: this.crypto.encryptJson(this.x),
+    }))
+    console.log("verify")
+    this.venta.confirmacionTestCorrecto(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      const json = JSON.parse(this.crypto.decryptString(res))
+      console.log(JSON.parse(this.crypto.decryptString(res)))
+      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
     })
   }
 

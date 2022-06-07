@@ -48,9 +48,16 @@
         </button>
     </div>
 
+<form [formGroup]="form">
     <mat-form-field appearance="outline" class="container_box_space">
         <mat-label>Nombre del responsable</mat-label>
-        <input matInput type="text">
+        <input matInput type="text" formControlName="name">
     </mat-form-field>
+</form>
+
+
+    <button mat-button (click)="submit()">
+        Guardar
+    </button>
 
 </div>
