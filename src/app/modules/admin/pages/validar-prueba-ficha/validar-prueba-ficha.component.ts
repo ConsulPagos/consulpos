@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { AsignacionDecrypter, AsignacionResponse } from 'src/app/models/asignacion_response';
+import { AsignacionPruebaDecrypter, AsignacionPruebaResponse } from 'src/app/models/asignacion_prueba_response';
 import { ConfiguracionDecrypter } from 'src/app/models/configuracion_response';
 import { DefaultDecrypter } from 'src/app/models/default_response';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
@@ -23,7 +23,7 @@ import { ModalAsignacionPruebaComponent } from '../../components/modal-asignacio
 })
 export class ValidarPruebaFichaComponent implements OnInit {
 
-  default: AsignacionResponse;
+  default: AsignacionPruebaResponse;
   default_2: DefaultDecrypter;
   item: any = {};
   x = null;
@@ -90,7 +90,7 @@ export class ValidarPruebaFichaComponent implements OnInit {
     this.venta.actualizarPosPorTest(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       console.log(JSON.parse(this.crypto.decryptString(res)))
-      this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.default = new AsignacionPruebaDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       var x = this.default.cod_serial
       this.x = x
       console.log(this.x)
