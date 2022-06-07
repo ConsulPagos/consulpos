@@ -10,10 +10,14 @@
             <input matInput type="text" value={{item.modelo}} disabled>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="container_box_space">
-            <mat-label>Serial POS</mat-label>
-            <input matInput type="text" value={{item.equipo}} disabled>
-        </mat-form-field>
+        <form [formGroup]="form">
+            <mat-form-field appearance="outline" class="container_box_space">
+                <mat-label>Serial POS</mat-label>
+                <input matInput type="text" readonly formControlName="serial">
+            </mat-form-field>
+        </form>
+
+
 
         <button mat-button (click)="findPos()">
             Asignar otro serial POS

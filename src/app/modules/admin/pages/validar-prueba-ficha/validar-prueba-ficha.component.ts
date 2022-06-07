@@ -27,6 +27,7 @@ export class ValidarPruebaFichaComponent implements OnInit {
   default_2: DefaultDecrypter;
   item: any = {};
   x = null;
+  form: FormGroup;
 
   constructor(
     private title: Title,
@@ -48,6 +49,11 @@ export class ValidarPruebaFichaComponent implements OnInit {
     ) {
       this.item = this.router.getCurrentNavigation().extras.state.item as any;
       console.log(this.item)
+
+      this.form = new FormGroup({
+        name: new FormControl('', [Validators.required]),
+        serial: new FormControl(this.item.equipo, [Validators.required]),
+      });
     } else {
       this.router.navigateByUrl("/admin/app/(adr:prueba)");
     }
@@ -57,9 +63,7 @@ export class ValidarPruebaFichaComponent implements OnInit {
     this.title.setTitle('ConsulPos | Ficha Venta')
   }
 
-  form = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-  });
+
 
   openDialog(item): void {
     if (this.item.status_desc === "PRUEBAS") {
@@ -94,12 +98,11 @@ export class ValidarPruebaFichaComponent implements OnInit {
       var x = this.default.cod_serial
       this.x = x
       console.log(this.x)
+      this.form.get('serial').setValue(this.default.cod_serial)
     })
   }
 
-  findSim(modelo:any, cod_serial:any) {
-
-
+  findSim(modelo: any, cod_serial: any) {
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
@@ -107,7 +110,6 @@ export class ValidarPruebaFichaComponent implements OnInit {
       solicitud_banco_id: this.crypto.encryptJson(this.item.solicitud_banco_id),
       modelo: this.crypto.encryptJson(modelo),
       viejo_serial: this.crypto.encryptJson(cod_serial),
-
     }))
     this.venta.actualizarSimPorTest(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
@@ -122,7 +124,7 @@ export class ValidarPruebaFichaComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       nombre: this.crypto.encryptJson(this.form.get('name').value),
-      cod_serial: this.crypto.encryptJson(this.x),
+      cod_serial: this.crypto.encryptJson(this.form.get('serial').value),
     }))
     console.log("verify")
     this.venta.confirmacionTestCorrecto(`${this.session.getDeviceId()};${data}`).subscribe(res => {
