@@ -5,7 +5,7 @@ export interface AsignacionResponse {
     M?: string;
     items?: any[];
     session_valid?: string;
-    cod_serial?: string;
+    // cod_serial?: string;
 }
 
 export class AsignacionDecrypter {
@@ -21,7 +21,7 @@ export class AsignacionDecrypter {
             M: this.crypto.decryptJson(value.M),
             session_valid: this.crypto.decryptJson(value.session_valid),
             items: JSON.parse(this.crypto.decryptJson(value.items)),
-            cod_serial: this.crypto.decryptJson(value.cod_serial),
+            // cod_serial: this.crypto.decryptJson(value.cod_serial),
         }
         return data
     }
