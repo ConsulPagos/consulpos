@@ -429,43 +429,60 @@
                         <div *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'">
                             <div>
                                 <h6>RIF</h6>
-                                <app-upload></app-upload>
+                                <form class="delete">
+                                    <div class="form-group">
+                                        <fieldset class="form-group">
+                                            {{imageError}}
+                                            <div class="custom-file fileInputProfileWrap">
+                                                <input type="file" (change)="fileChangeEvent($event)"
+                                                    class="fileInputProfile">
+                                                <div class="img-space">
+
+                                                    <ng-container *ngIf="isImageSaved; else elseTemplate">
+                                                        <img [src]="cardImageBase64" />
+                                                    </ng-container>
+                                                    <ng-template #elseTemplate>
+                                                        <img class="img-responsive" alt="Image"
+                                                            onerror="this.style.display='none'" ;>
+                                                    </ng-template>
+
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <button class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">
+                                        <mat-icon mat-icon-buttom>delete</mat-icon>
+                                    </button>
+                                </form>
                             </div>
 
                             <div>
                                 <h6>Cédula de identidad</h6>
-                                <app-upload></app-upload>
                             </div>
 
                             <div>
                                 <h6>Otro</h6>
-                                <app-upload></app-upload>
                             </div>
                         </div>
                         <div *ngIf="getTipoCliente()=='J'">
                             <div>
                                 <h6>RIF</h6>
-                                <app-upload></app-upload>
                             </div>
 
                             <div>
                                 <h6>Registro Mercantil</h6>
-                                <app-upload></app-upload>
                             </div>
 
                             <div>
                                 <h6>Cedula Representante Legal</h6>
-                                <app-upload></app-upload>
                             </div>
 
                             <div>
                                 <h6>RIF Representante Legal</h6>
-                                <app-upload></app-upload>
                             </div>
 
                             <div>
                                 <h6>Otro</h6>
-                                <app-upload></app-upload>
                             </div>
                         </div>
                     </form>

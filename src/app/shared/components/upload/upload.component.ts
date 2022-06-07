@@ -19,12 +19,6 @@ import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_respon
 })
 export class UploadComponent implements OnInit {
 
-  @Output() progress = new EventEmitter<number>();
-  @Output() url = new EventEmitter<string>();
-
-  uploadProgress: Observable<number>;
-  uploadURL: Observable<string>;
-  loading = false;
   default: DefaultResponse;
 
   constructor(

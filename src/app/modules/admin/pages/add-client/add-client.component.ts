@@ -24,6 +24,8 @@ import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { CeroValidator } from '../../../../shared/validators/cero.validator'
+import { DefaultResponse, DefaultDecrypter } from 'src/app/models/default_response';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-add-client',
@@ -54,6 +56,12 @@ export class AddClientComponent implements OnInit {
   tipo_documentos: TipodocumentoInterface[];
   currentYear = new Date();
   identity;
+
+  /////////////LOAD IMAGE///////////////
+  default: DefaultResponse;
+  imageError: string;
+  isImageSaved: boolean;
+  cardImageBase64: string;
 
   constructor(
     private title: Title,
@@ -255,7 +263,7 @@ export class AddClientComponent implements OnInit {
         }
       ]))
     }
-    
+
     if (this.getTipoCliente() == 'J') {
       data = {
         ...data,
@@ -350,6 +358,80 @@ export class AddClientComponent implements OnInit {
 
   getMunicipio(id: any): void {
     this.parroquias = JSON.parse(this.storage.get(constant.PARROQUIAS)).parroquias.filter(c => c.id_municipio == id)
+  }
+
+  fileChangeEvent(fileInput: any) {
+    this.imageError = null;
+    if (fileInput.target.files && fileInput.target.files[0]) {
+      // Size Filter Bytes
+      const max_size = 20971520;
+      const allowed_types = ['image/png', 'image/jpeg','image/jpg', 'application/pdf','application/msword'];
+      const max_height = 15200;
+      const max_width = 25600;
+      /////////////////////////
+      if (fileInput.target.files[0].size > max_size) {
+        this.imageError =
+          'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+
+        return false;
+      }
+
+      if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
+        this.imageError = 'Only Images are allowed ( JPG | PNG )';
+        return false;
+      }
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const image = new Image();
+        image.src = e.target.result;
+        image.onload = rs => {
+          const img_height = rs.currentTarget['height'];
+          const img_width = rs.currentTarget['width'];
+
+          console.log(img_height, img_width);
+
+
+          if (img_height > max_height && img_width > max_width) {
+            this.imageError =
+              'Maximum dimentions allowed ' +
+              max_height +
+              '*' +
+              max_width +
+              'px';
+            return false;
+          } else {
+            const imgBase64Path = e.target.result;
+            this.cardImageBase64 = imgBase64Path;
+            this.isImageSaved = true;
+            // this.previewImagePath = imgBase64Path;
+            this.upload();
+          }
+
+        };
+      };
+      reader.readAsDataURL(fileInput.target.files[0]);
+
+    }
+
+  }
+
+  removeImage() {
+    this.cardImageBase64 = null;
+    this.isImageSaved = false;
+  }
+
+
+  upload() {
+    const encode = Buffer.from(this.cardImageBase64).toString('base64')
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      imagen: this.crypto.encryptJson(encode),
+    }))
+    this.cliente.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+    })
   }
 
   save() {
