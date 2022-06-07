@@ -125,6 +125,7 @@ export class ValidarPruebaFichaComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       nombre: this.crypto.encryptJson(this.form.get('name').value),
       cod_serial: this.crypto.encryptJson(this.form.get('serial').value),
+      solicitud: this.crypto.encryptJson(this.item.solicitud),
     }))
     console.log("verify")
     this.venta.confirmacionTestCorrecto(`${this.session.getDeviceId()};${data}`).subscribe(res => {
