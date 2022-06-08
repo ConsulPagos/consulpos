@@ -438,7 +438,7 @@ export class AddClientComponent implements OnInit {
       documento:this.crypto.encryptJson("RIF"),
       extension:this.crypto.encryptJson("jpg"),
       t_sol_id: this.crypto.encryptJson(null),
-      solicutud: this.crypto.encryptJson(null),
+      solicitud: this.crypto.encryptJson(null),
       file:this.crypto.encryptJson(encode),
     }))
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
