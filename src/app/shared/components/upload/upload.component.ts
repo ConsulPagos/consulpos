@@ -10,6 +10,7 @@ import { SesionService } from '../../services/sesion.service';
 import { StorageService } from '../../services/storage.service';
 import { constant } from '../../utils/constant';
 import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
+import { ArchiveService } from '../../services/archive.service';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class UploadComponent implements OnInit {
     private storage: StorageService,
     private session: SesionService,
     private loader: LoaderService,
+    private archive: ArchiveService
   ) { }
 
   ngOnInit(): void {
@@ -39,7 +41,7 @@ export class UploadComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
     }))
     this.loader.stop()
-    this.cliente.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.archive.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
     })
   }

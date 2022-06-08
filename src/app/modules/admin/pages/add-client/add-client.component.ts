@@ -1,31 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ContribuyenteInterface } from '../../../../models/contribuyente'
-import { EstadoInterface } from '../../../../models/estado'
-import { CiudadInterface } from '../../../../models/ciudad'
-import { ParroquiaInterface } from '../../../../models/parroquia'
-import { MunicipioInterface } from '../../../../models/municipio'
-import { ContactoInterface } from '../../../../models/contacto'
-import { TipodocumentoInterface } from '../../../../models/tipo_documento'
+import { ContribuyenteInterface } from '../../../../models/contribuyente';
+import { EstadoInterface } from '../../../../models/estado';
+import { CiudadInterface } from '../../../../models/ciudad';
+import { ParroquiaInterface } from '../../../../models/parroquia';
+import { MunicipioInterface } from '../../../../models/municipio';
+import { ContactoInterface } from '../../../../models/contacto';
+import { TipodocumentoInterface } from '../../../../models/tipo_documento';
 import { RepresentanteInterface } from 'src/app/models/user';
 import { ValidacionclienteDecrypter, ValidacionclienteResponse } from 'src/app/models/validacioncliente_response';
 import { AddClientDecrypter, AddClientResponse } from 'src/app/models/add_clients_response';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
-import { ClientesService } from 'src/app/shared/services/clientes.service';
+import { ArchiveService } from 'src/app/shared/services/archive.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { constant } from 'src/app/shared/utils/constant';
-import { ActividadComercialInterface } from '../../../../models/actividad_comercial'
+import { ActividadComercialInterface } from '../../../../models/actividad_comercial';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { GeneroInterface } from '../../../../models/genero';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { Router } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
-import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { CeroValidator } from '../../../../shared/validators/cero.validator'
 import { DefaultResponse, DefaultDecrypter } from 'src/app/models/default_response';
 import * as _ from 'lodash';
+import { ClientesService } from 'src/app/shared/services/clientes.service';
+
 
 @Component({
   selector: 'app-add-client',
@@ -66,18 +67,19 @@ export class AddClientComponent implements OnInit {
   constructor(
     private title: Title,
     private crypto: CryptoService,
-    private cliente: ClientesService,
+    private archivo: ArchiveService,
     private storage: StorageService,
     private session: SesionService,
     private toaster: ToasterService,
     private router: Router,
     private modal: ModalService,
     private fb: FormBuilder,
+    private cliente: ClientesService
   ) {
 
     this.identity = this.fb.group({
       tipo_doc: ['', [Validators.required]],
-      rif: ['253862510', [Validators.required, Validators.minLength(9), Validators.maxLength(11), Validators.pattern("^[0-9]*$")]],
+      rif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(11), Validators.pattern("^[0-9]*$")]]
     },
       {
         validator: CeroValidator("rif")
@@ -90,7 +92,7 @@ export class AddClientComponent implements OnInit {
   }
 
   client_type = new FormGroup({
-    tipo_cliente: new FormControl('1', [Validators.required]),
+    tipo_cliente: new FormControl('1', [Validators.required])
   });
 
   client = new FormGroup({
@@ -404,7 +406,7 @@ export class AddClientComponent implements OnInit {
             this.cardImageBase64 = imgBase64Path;
             this.isImageSaved = true;
             // this.previewImagePath = imgBase64Path;
-            this.upload();
+            this.upload()
           }
 
         };
@@ -422,14 +424,21 @@ export class AddClientComponent implements OnInit {
 
 
   upload() {
-    const encode = Buffer.from(this.cardImageBase64).toString('base64')
+    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
+    const encode = this.cardImageBase64.toString()
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      imagen: this.crypto.encryptJson(encode),
+      att_by: this.crypto.encryptJson("CLIENTE"),
+      rif: this.crypto.encryptJson(rif),
+      documento:this.crypto.encryptJson("RIF"),
+      extension:this.crypto.encryptJson("jpg"),
+      t_sol_id:null,
+      solicutud:null,
+      file:this.crypto.encryptJson(encode),
     }))
-    this.cliente.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
     })
   }
