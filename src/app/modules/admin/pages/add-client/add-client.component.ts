@@ -79,7 +79,7 @@ export class AddClientComponent implements OnInit {
 
     this.identity = this.fb.group({
       tipo_doc: ['', [Validators.required]],
-      rif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(11), Validators.pattern("^[0-9]*$")]]
+      rif: ['253862510', [Validators.required, Validators.minLength(9), Validators.maxLength(11), Validators.pattern("^[0-9]*$")]]
     },
       {
         validator: CeroValidator("rif")
@@ -88,7 +88,10 @@ export class AddClientComponent implements OnInit {
 
   getDoc(): void {
     this.resetStatus()
+    console.log(JSON.parse(this.storage.get(constant.T_DOCS)).t_docs.filter(c => c.t_doc == this.identity.get('tipo_doc').value)[0].clientes_por_documento);
     this.tipos_clientes = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs.filter(c => c.t_doc == this.identity.get('tipo_doc').value)[0].clientes_por_documento
+
+  
   }
 
   client_type = new FormGroup({
@@ -434,8 +437,8 @@ export class AddClientComponent implements OnInit {
       rif: this.crypto.encryptJson(rif),
       documento:this.crypto.encryptJson("RIF"),
       extension:this.crypto.encryptJson("jpg"),
-      t_sol_id:null,
-      solicutud:null,
+      t_sol_id: this.crypto.encryptJson(null),
+      solicutud: this.crypto.encryptJson(null),
       file:this.crypto.encryptJson(encode),
     }))
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
