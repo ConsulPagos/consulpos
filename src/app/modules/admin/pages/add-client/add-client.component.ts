@@ -91,7 +91,7 @@ export class AddClientComponent implements OnInit {
     console.log(JSON.parse(this.storage.get(constant.T_DOCS)).t_docs.filter(c => c.t_doc == this.identity.get('tipo_doc').value)[0].clientes_por_documento);
     this.tipos_clientes = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs.filter(c => c.t_doc == this.identity.get('tipo_doc').value)[0].clientes_por_documento
 
-  
+
   }
 
   client_type = new FormGroup({
@@ -366,11 +366,20 @@ export class AddClientComponent implements OnInit {
   }
 
   fileChangeEvent(fileInput: any) {
+    console.log(fileInput.target.id);
+    for (let index = 0; index < fileInput.target.files.length; index++) {
+      const g = fileInput.target.files[index];
+      console.log(g.name);
+      var ext =  g.name.split('.').pop();
+      console.log(ext);
+    }
+
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
+      console.log(fileInput.target.files);
       // Size Filter Bytes
       const max_size = 20971520;
-      const allowed_types = ['image/png', 'image/jpeg','image/jpg', 'application/pdf','application/msword'];
+      const allowed_types = ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf', 'application/msword'];
       const max_height = 15200;
       const max_width = 25600;
       /////////////////////////
@@ -382,7 +391,7 @@ export class AddClientComponent implements OnInit {
       }
 
       if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
-        this.imageError = 'Only Images are allowed ( JPG | PNG )';
+        this.imageError = 'Solo imagenes ( JPG | PNG )';
         return false;
       }
       const reader = new FileReader();
@@ -405,11 +414,12 @@ export class AddClientComponent implements OnInit {
               'px';
             return false;
           } else {
+
             const imgBase64Path = e.target.result;
             this.cardImageBase64 = imgBase64Path;
             this.isImageSaved = true;
             // this.previewImagePath = imgBase64Path;
-            this.upload()
+            this.upload(ext, fileInput.target.id)
           }
 
         };
@@ -426,7 +436,7 @@ export class AddClientComponent implements OnInit {
   }
 
 
-  upload() {
+  upload(ext, id) {
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
     const encode = this.cardImageBase64.toString()
     const data = this.crypto.encryptString(JSON.stringify({
@@ -435,11 +445,11 @@ export class AddClientComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       att_by: this.crypto.encryptJson("CLIENTE"),
       rif: this.crypto.encryptJson(rif),
-      documento:this.crypto.encryptJson("RIF"),
-      extension:this.crypto.encryptJson("jpg"),
+      documento: this.crypto.encryptJson(id),
+      extension: this.crypto.encryptJson(ext),
       t_sol_id: this.crypto.encryptJson(null),
       solicitud: this.crypto.encryptJson(null),
-      file:this.crypto.encryptJson(encode),
+      file: this.crypto.encryptJson(encode),
     }))
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
@@ -454,4 +464,8 @@ export class AddClientComponent implements OnInit {
     })
   }
 
+
+
+
 }
+

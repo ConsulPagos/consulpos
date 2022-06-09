@@ -435,7 +435,7 @@
                                             {{imageError}}
                                             <div class="custom-file fileInputProfileWrap">
                                                 <input type="file" (change)="fileChangeEvent($event)"
-                                                    class="fileInputProfile">
+                                                    class="fileInputProfile" id="RIF">
                                                 <div class="img-space">
 
                                                     <ng-container *ngIf="isImageSaved; else elseTemplate">
@@ -455,6 +455,8 @@
                                     </button>
                                 </form>
                             </div>
+
+
 
                             <div>
                                 <h6>Cédula de identidad</h6>
