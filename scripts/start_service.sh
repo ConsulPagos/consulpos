@@ -2,7 +2,7 @@
 
 # navigate into current working directory
 
-cd /home/despliegues/front
+cd /home/despliegues/Sistema_administrativo/front
 
 # npm install
 
