@@ -1,0 +1,24 @@
+<form class="delete">
+    <div class="form-group">
+        <fieldset class="form-group">
+            {{imageError}}
+            <div class="custom-file fileInputProfileWrap">
+                <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile">
+                <div class="img-space">
+
+                    <ng-container *ngIf="isImageSaved; else elseTemplate">
+                        <img [src]="cardImageBase64" />
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                        <img class="img-responsive" alt="Image"
+                            onerror="this.style.display='none'">
+                    </ng-template>
+
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <button class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">
+        <mat-icon mat-icon-buttom>delete</mat-icon>
+    </button>
+</form>

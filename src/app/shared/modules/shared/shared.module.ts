@@ -9,7 +9,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
 import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
-import { UploadComponent } from '../../components/upload/upload.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireModule } from '@angular/fire';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -35,6 +34,7 @@ import { ActionBtnComponent } from '../../components/action-btn/action-btn.compo
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FileInputComponent } from '../../components/file-input/file-input.component';
+import { UploaderComponent } from '../../components/uploader/uploader.component';
 
 @NgModule({
   declarations: [
@@ -42,13 +42,13 @@ import { FileInputComponent } from '../../components/file-input/file-input.compo
     CounterComponent,
     ConfirmDialogComponent,
     SnackbarComponent,
-    UploadComponent,
     EditFieldDialogComponent,
     DateAgoPipe,
     BottomFormComponent,
     LoaderComponent,
     ActionBtnComponent,
-    FileInputComponent
+    FileInputComponent,
+    UploaderComponent,
 
   ],
   imports: [
@@ -80,20 +80,18 @@ import { FileInputComponent } from '../../components/file-input/file-input.compo
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule 
-
   ],
   exports: [
     TitleComponent,
     FormsModule,
     CounterComponent,
     ConfirmDialogComponent,
-
+    UploaderComponent,
     SnackbarComponent,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     MatDialogModule,
     MatButtonModule,
-    UploadComponent,
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatSnackBarModule,

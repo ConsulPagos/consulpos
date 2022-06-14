@@ -72,6 +72,8 @@
 
 .container_box_space {
     margin-right: 10px;
+    width: 100%;
+    max-width: 250px;
 }
 
 .container_box_direction {
@@ -119,24 +121,30 @@
     padding: 0.5rem;
 }
 
-.direction {
-    width: 500px;
-    margin: 0px 20px 0px 0px;
+.document{
+    display: flex;
+    flex-wrap: wrap;
 }
+
 
 .direction_form {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
-}
+ }
 
 .btn_tlf{
     margin: 0.5rem;
+    padding-bottom: 1.34375em !important;
+}
+
+.container_phone{
+    margin-right: 10px;
 }
 
 .form_tlf{
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 ::ng-deep .mat-vertical-stepper-header{
@@ -162,17 +170,6 @@
     display: inline-block;
 }
 
-.img-space {
-    // border: dashed 1px #d3d3d3;
-    // border-radius: 20px;
-    // background-color: #f2f2f2;
-    // height: 35px;
-    // max-width: 350px;
-    // width: 100%;
-    // padding: 10px;
-    // min-height: auto;
-}
-
 .img-space img {
     display: block;
     width: 300px;
@@ -186,14 +183,6 @@
     height: auto;
 }
 
-.fileInputProfile {
-    // position: absolute;
-    // height: 100%;
-    // width: 100%;
-    // z-index: 99;
-    // opacity: 0;
-    // cursor: pointer;
-}
 .fileInputProfile[disabled] + .img-space{
     pointer-events: none;
     cursor: not-allowed!important;
@@ -208,3 +197,7 @@
     margin-left: 10px;
     border-radius: 100%;
 }
+
+::ng-deep.iti.separate-dial-code input, .iti.separate-dial-code.iti--allow-dropdown.iti-sdc-2 input, .iti.separate-dial-code.iti--allow-dropdown.iti-sdc-3 input, .iti.separate-dial-code.iti--allow-dropdown.iti-sdc-4 input {
+    height: 53px !important;
+} 

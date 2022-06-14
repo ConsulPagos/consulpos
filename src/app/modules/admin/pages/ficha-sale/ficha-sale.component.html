@@ -1,15 +1,14 @@
 <section id="ficha-user">
-    <div class="title">
-        <div class="d-flex">
-            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-                [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]">
-                <li class="fas fa-arrow-left"></li>
-            </a>
-        </div>
-    </div>
-
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
+            <div class="structur">
+                <div>
+                    <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                        [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]">
+                        <li class="fas fa-arrow-left"></li>
+                    </a>
+                </div>
+            </div>
             <mat-tab-group>
                 <mat-tab label="Venta">
                     <ng-template matTabContent>
@@ -23,69 +22,27 @@
                                     <div class="sub-title">
                                         <div class="text-sub-title">
                                             <h6>
-                                                <strong>Venta Nº: </strong>{{showSale.number}}
+                                                <strong>Venta Nº: </strong>
+                                                {{showSale.number}}
                                             </h6>
                                         </div>
                                         <div class="text-sub-title">
                                             <h6>
-                                                <strong>Estatus: </strong>{{showSale.status_desc}}
+                                                <strong>Estatus: </strong>
+                                                {{showSale.status_desc}}
                                             </h6>
                                         </div>
                                         <div class="text-sub-title">
                                             <h6>
-                                                <strong>Rif: </strong>{{showSale.rif}}
+                                                <strong>Rif: </strong>
+                                                {{showSale.rif}}
                                             </h6>
                                         </div>
                                         <div class="text-sub-title">
                                             <h6>
-                                                <strong>Cliente: </strong>{{showSale.razon_social}}
+                                                <strong>Cliente: </strong>
+                                                {{showSale.razon_social}}
                                             </h6>
-                                        </div>
-                                    </div>
-
-                                    <div *ngFor="let solicitud of showSale.solicitudes_banco">
-                                        <div class="conatiner-text">
-                                            <div class="content-text">
-                                                <h6>
-                                                    <strong>Tipo de Venta: </strong>{{solicitud.fraccion_desc}}
-                                                </h6>
-                                            </div>
-                                            <div class="content-text">
-                                                <h6>
-                                                    <strong>Banco: </strong>{{solicitud.banco}}
-                                                </h6>
-                                            </div>
-                                            <div class="content-text">
-                                                <h6>
-                                                    <strong>Nº Cuenta: </strong>{{solicitud.cuenta}}
-                                                </h6>
-                                            </div>
-                                            <div class="content-text">
-                                                <h6>
-                                                    <strong>Codigo Afiliado: </strong>{{solicitud.afiliado}}
-                                                </h6>
-                                            </div>
-                                            <!-- <div class="content-text">
-                                                <h6>
-                                                    <strong>Terminal: </strong>{{solicitud.terminal}}
-                                                </h6>
-                                            </div> -->
-                                            <div class="content-text">
-                                                <h6>
-                                                    <strong>Plataforma: </strong> {{solicitud.plataforma.plataforma}}
-                                                </h6>
-                                            </div>
-                                            <div class="content-text">
-                                                <h6>
-                                                    <strong>Plan: </strong> {{solicitud.plataforma.plan}}
-                                                </h6>
-                                            </div>
-                                            <div class="content-text">
-                                                <h6>
-                                                    <strong>Tipo de Cobro: </strong>
-                                                    {{solicitud.plataforma.fraccion_desc}}
-                                                </h6>
-                                            </div>
                                         </div>
                                     </div>
 
@@ -95,34 +52,104 @@
                                         </h6>
                                     </div>
 
-                                    <h4>EQUIPO</h4>
+                                    <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+                                        <ng-container matColumnDef="cod_serial">
+                                            <th mat-header-cell *matHeaderCellDef> Serial </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.cod_serial}} </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="marca">
+                                            <th mat-header-cell *matHeaderCellDef> Marca </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.marca}} </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="modelo">
+                                            <th mat-header-cell *matHeaderCellDef> Modelo </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.modelo}} </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="precio">
+                                            <th mat-header-cell *matHeaderCellDef> Precio </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
+                                        </ng-container>
 
-                                    <div *ngFor="let item of showSale.items">
-                                        <div *ngIf="!item.complemento_d">
-                                            <div class="conatiner-text">
-                                                <div class="content-text">
-                                                    <h6>
-                                                        <strong>Marca: </strong>{{item.marca}}
-                                                    </h6>
+                                        <ng-container matColumnDef="expand">
+                                            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <button mat-icon-button aria-label="expand row"
+                                                    (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                                                    <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down
+                                                    </mat-icon>
+                                                    <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up
+                                                    </mat-icon>
+                                                </button>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="expandedDetail">
+                                            <td mat-cell *matCellDef="let element"
+                                                [attr.colspan]="columnsToDisplayWithExpand.length">
+                                                <div class="example-element-detail"
+                                                    [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                                    <div class="example-element-diagram">
+
+                                                        <div style="text-align: center;">
+                                                            <p>Numero de cuenta</p>
+                                                            {{element.solicitud_banco.cuenta}}
+                                                        </div>
+
+
+                                                        <div style="display: flex; text-align: center;">
+                                                            <div style="padding: 0 20px;">
+                                                                <p>Numero de Afiliado</p>
+                                                                {{element.solicitud_banco.afiliado}}
+                                                            </div>
+
+                                                            <div style="padding: 0 20px;">
+                                                                <p>Numero de Terminal</p>
+                                                                {{element.solicitud_banco.terminal}}
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- <div *ngFor="let solicitud of showSale.solicitudes_banco">
+                                                            <strong>Tipo de Venta: </strong>
+                                                            {{solicitud.fraccion_desc}}
+                                                            <strong>Banco: </strong>
+                                                            {{solicitud.banco}}
+                                                            <strong>Plataforma: </strong>
+                                                            {{solicitud.plataforma.plataforma}}
+                                                            <strong>Plan: </strong>
+                                                            {{solicitud.plataforma.plan}}
+                                                            <strong>Tipo de Cobro: </strong>
+                                                            {{solicitud.plataforma.fraccion_desc}}
+                                                        </div> -->
+
+                                                        <div style="display: flex;     justify-content: center;
+                                                        flex-wrap: wrap;">
+                                                            <div *ngFor="let item of element.sim; let i = index"
+                                                                style="padding: 0 20px;">
+                                                                <div>
+                                                                    <p>Modelo SIM {{i+1}}</p>
+                                                                    {{item.modelo}}
+                                                                </div>
+                                                                <div>
+                                                                    <p>Codigo Serial SIM {{i+1}}</p>
+                                                                    {{item.cod_serial}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
-                                                <div class="content-text">
-                                                    <h6>
-                                                        <strong>Modelo: </strong>{{item.modelo}}
-                                                    </h6>
-                                                </div>
-                                                <div class="content-text">
-                                                    <h6>
-                                                        <strong>Serial Nº: </strong>{{item.cod_serial}}
-                                                    </h6>
-                                                </div>
-                                                <div class="content-text">
-                                                    <h6>
-                                                        <strong>Monto: </strong>{{item.precio | currency}}
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            </td>
+                                        </ng-container>
+
+                                        <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+                                        <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+                                            class="example-element-row"
+                                            [class.example-expanded-row]="expandedElement === element"
+                                            (click)="expandedElement = expandedElement === element ? null : element">
+                                        </tr>
+                                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"
+                                            class="example-detail-row"></tr>
+                                    </table>
 
                                     <div *ngIf="showSale.items.length  == 0">
                                         <div *ngFor="let modelos of showSale.modelos">
@@ -148,22 +175,6 @@
                                         </div>
                                     </div>
 
-                                    <h4>SIMS</h4>
-
-                                    <div *ngFor="let item of showSale.items">
-                                        <div *ngFor="let sim of item.sim">
-                                            <div class="content-text">
-                                                <h6>
-                                                    <strong>Modelo: </strong>{{sim.modelo}}
-                                                </h6>
-                                            </div>
-                                            <div class="content-text">
-                                                <h6>
-                                                    <strong>Serial Nº: </strong>{{sim.cod_serial}}
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
