@@ -2,9 +2,9 @@ version: 0.0
 os: linux
 files:
   - source: .
-    destination: /home/despliegues/Sistema_administrativo/front
+    destination: /home/despliegues/Sistema_Administrativo/front
 permissions:
-  - object: /home/despliegues/Sistema_administrativo/front
+  - object: /home/despliegues/Sistema_Administrativo/front
 #    owner: consuladmin
     mode: 777
 hooks:
