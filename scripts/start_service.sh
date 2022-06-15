@@ -4,9 +4,9 @@
 
 cd /home/despliegues/Sistema_Administrativo/front
 
-# npm install
+ npm install
 
-# npm install -g @angular/cli > /dev/null
+ npm install -g @angular/cli > /dev/null
 
 ng build --prod
 
