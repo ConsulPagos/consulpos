@@ -254,7 +254,6 @@ export class AddVentaComponent implements OnInit {
           modelo_id: buy.get("modelo").value,
         })
       })
-
       solicitudes_banco_sell.push({
         id_t_cobro: buy.get('tipocobro').value,
         monto_cuota: "30",
@@ -268,25 +267,21 @@ export class AddVentaComponent implements OnInit {
         items: JSON.stringify(items),
       })
     }
-
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
-
       solicitud: this.crypto.encryptJson(JSON.stringify(
         {
           occ_id: this.solicitud.get('occ').value,
           // t_sol_id: "1",
         }
       )),
-
       solicitudes_banco: this.crypto.encryptJson(JSON.stringify(
         solicitudes_banco_sell
       )),
-
       documentos: this.crypto.encryptJson(JSON.stringify([
         {
           link: this.document.get("referencia").value,
@@ -386,17 +381,13 @@ export class AddVentaComponent implements OnInit {
 
   buiesInvalid() {
     var invalid = false;
-
     for (let index = 0; index < this.buies.length; index++) {
       if (this.buies[index].invalid) {
         invalid = true
         break;
       }
     }
-
     return invalid
-
-
   }
 
 }

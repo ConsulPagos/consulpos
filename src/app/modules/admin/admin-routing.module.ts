@@ -80,6 +80,8 @@ import { AddReactivacionComponent } from './pages/add-reactivacion/add-reactivac
 import { PruebaComponent } from './pages/prueba/prueba.component';
 import { ValidarPruebaComponent } from './pages/validar-prueba/validar-prueba.component';
 import { ValidarPruebaFichaComponent } from './pages/validar-prueba-ficha/validar-prueba-ficha.component';
+import { PlanComponent } from './pages/plan/plan.component';
+import { AddPlanComponent } from './pages/add-plan/add-plan.component';
 
 const routes: Routes = [
   {
@@ -762,6 +764,24 @@ const routes: Routes = [
       },
       {
         path: 'validar-prueba-ficha', component: ValidarPruebaFichaComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-plan', component: AddPlanComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'plan', component: PlanComponent, outlet: 'adr',
         // canActivate: [HasPermisoGuard],
         // data: {
         //   modulo: "Configuracion",

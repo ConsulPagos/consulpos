@@ -287,8 +287,8 @@
 
                         <div class="form_tlf">
                             <ngx-intl-tel-input [preferredCountries]="preferredCountries"
-                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
-                                [searchCountryFlag]="true" [searchCountryField]="[
+                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                [searchCountryField]="[
                                       SearchCountryField.Iso2,
                                       SearchCountryField.Name
                                     ]" [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.Venezuela"
@@ -298,8 +298,8 @@
                             </ngx-intl-tel-input>
 
                             <ngx-intl-tel-input [preferredCountries]="preferredCountries"
-                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
-                                [searchCountryFlag]="true" [searchCountryField]="[
+                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                [searchCountryField]="[
                                         SearchCountryField.Iso2,
                                         SearchCountryField.Name
                                       ]" [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.Venezuela"
@@ -423,103 +423,34 @@
                                 <h6>Cédula de identidad</h6>
                                 <app-uploader (uploaded)="upload($event, 'CI')"></app-uploader>
                             </div>
+
+                            <div *ngIf="getTipoCliente()=='R'">
+                                <h6>Registro de firma personal</h6>
+                                <app-uploader (uploaded)="upload($event, 'RFP')"></app-uploader>
+                            </div>
                         </div>
                         <div *ngIf="getTipoCliente()=='J'">
                             <div>
-                                <h6>RIF</h6>
-                                <app-uploader (uploaded)="upload($event)"></app-uploader>
+                                <h6>RIF Empresa</h6>
+                                <app-uploader (uploaded)="upload($event, 'RIFE')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>Registro Mercantil</h6>
-                                <form class="delete">
-                                    <div class="form-group">
-                                        <fieldset class="form-group">
-                                            {{imageError}}
-                                            <div class="custom-file fileInputProfileWrap">
-                                                <input type="file" (change)="fileChangeEvent($event)"
-                                                    class="fileInputProfile" id="RIF">
-                                                <div class="img-space">
-
-                                                    <ng-container *ngIf="isImageSaved; else elseTemplate">
-                                                        <img [src]="cardImageBase64" />
-                                                    </ng-container>
-                                                    <ng-template #elseTemplate>
-                                                        <img class="img-responsive" alt="Image"
-                                                            onerror="this.style.display='none'">
-                                                    </ng-template>
-
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                    <button class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">
-                                        <mat-icon mat-icon-buttom>delete</mat-icon>
-                                    </button>
-                                </form>
+                                <app-uploader (uploaded)="upload($event, 'RM')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>Cedula Representante Legal</h6>
-                                <form class="delete">
-                                    <div class="form-group">
-                                        <fieldset class="form-group">
-                                            {{imageError}}
-                                            <div class="custom-file fileInputProfileWrap">
-                                                <input type="file" (change)="fileChangeEvent($event)"
-                                                    class="fileInputProfile" id="CIR">
-                                                <div class="img-space">
-
-                                                    <ng-container *ngIf="isImageSaved; else elseTemplate">
-                                                        <img [src]="cardImageBase64" />
-                                                    </ng-container>
-                                                    <ng-template #elseTemplate>
-                                                        <img class="img-responsive" alt="Image"
-                                                            onerror="this.style.display='none'">
-                                                    </ng-template>
-
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                    <button class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">
-                                        <mat-icon mat-icon-buttom>delete</mat-icon>
-                                    </button>
-                                </form>
+                                <app-uploader (uploaded)="upload($event, 'CIR')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>RIF Representante Legal</h6>
-                                <form class="delete">
-                                    <div class="form-group">
-                                        <fieldset class="form-group">
-                                            {{imageError}}
-                                            <div class="custom-file fileInputProfileWrap">
-                                                <input type="file" (change)="fileChangeEvent($event)"
-                                                    class="fileInputProfile" id="RIFR">
-                                                <div class="img-space">
-
-                                                    <ng-container *ngIf="isImageSaved; else elseTemplate">
-                                                        <img [src]="cardImageBase64" />
-                                                    </ng-container>
-                                                    <ng-template #elseTemplate>
-                                                        <img class="img-responsive" alt="Image"
-                                                            onerror="this.style.display='none'">
-                                                    </ng-template>
-
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                    <button class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">
-                                        <mat-icon mat-icon-buttom>delete</mat-icon>
-                                    </button>
-                                </form>
+                                <app-uploader (uploaded)="upload($event, 'RIFR')"></app-uploader>
                             </div>
 
-                            <div>
-                                <h6>Otro</h6>
-                            </div>
+
                         </div>
                     </form>
 

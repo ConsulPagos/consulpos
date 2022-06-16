@@ -3,22 +3,20 @@
         <fieldset class="form-group">
             {{imageError}}
             <div class="custom-file fileInputProfileWrap">
-                <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile">
-                <div class="img-space">
-
-                    <ng-container *ngIf="isImageSaved; else elseTemplate">
-                        <img [src]="cardImageBase64" />
-                    </ng-container>
-                    <ng-template #elseTemplate>
-                        <img class="img-responsive" alt="Image"
-                            onerror="this.style.display='none'">
-                    </ng-template>
-
-                </div>
+                <input *ngIf="!isImageSaved; else elseTemplate" type="file" (change)="fileChangeEvent($event)"
+                    class="custom-file-input">
             </div>
         </fieldset>
     </div>
-    <button class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">
+
+</form>
+
+<ng-template #elseTemplate>
+    <button class="btn" (click)="removeImage()">
         <mat-icon mat-icon-buttom>delete</mat-icon>
     </button>
-</form>
+    <div class="img-space">
+        <img [src]="cardImageBase64" />
+    </div>
+
+</ng-template>

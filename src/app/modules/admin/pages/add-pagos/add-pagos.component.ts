@@ -16,6 +16,7 @@ import { LoaderService } from 'src/app/shared/services/loader.service';
 import { DefaultDecrypter } from 'src/app/models/default_response';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
 import { BancoInterface } from 'src/app/models/banco';
+import { ArchiveService } from 'src/app/shared/services/archive.service';
 
 @Component({
   selector: 'app-add-pagos',
@@ -39,7 +40,7 @@ export class AddPagosComponent implements OnInit {
   tasas: any[];
   totalPago: number = 0;
   bancos: BancoInterface[];
-
+  currentYear = new Date();
   constructor(
     private crypto: CryptoService,
     private storage: StorageService,
@@ -50,6 +51,7 @@ export class AddPagosComponent implements OnInit {
     private pago: PagosService,
     private loader: LoaderService,
     private bancario: BancarioService,
+    private archivo: ArchiveService,
 
   ) {
     if (this.router.getCurrentNavigation() &&
@@ -169,8 +171,6 @@ export class AddPagosComponent implements OnInit {
       this.default = new PagosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default)
       this.t_pagos = JSON.parse(this.default.t_pagos)
-
-
     })
   }
 
@@ -203,22 +203,16 @@ export class AddPagosComponent implements OnInit {
     const inputs = [];
     var pago = [];
     console.log(this.formDinamic);
-    //
     for (let j = 0; j < this.payments.length; j++) {
       const p = this.payments[j];
       const h = this.t_pagos.filter(t => t.t_pago_id == p.get('t_pago').value)[0];
       console.log(p);
-
       let aux = null;
-
       for (let index = 0; index < this.getInput(p.get('t_pago').value).length; index++) {
-
         const c = this.getInput(p.get('t_pago').value)[index];
-
         if (!aux) {
           console.log('index ' + index + j);
           console.log(c.id_caracteristica);
-
           inputs.push({
             input_id: c.id_caracteristica,
             input: this.formDinamic[index + j].get(c.id_caracteristica).value
@@ -227,16 +221,12 @@ export class AddPagosComponent implements OnInit {
         } else {
           console.log('index ' + aux);
           console.log(c.id_caracteristica);
-
           inputs.push({
             input_id: c.id_caracteristica,
             input: this.formDinamic[aux].get(c.id_caracteristica).value
           })
-
         }
-
       }
-
       pago.push({
         solicitud_id: this.addPay.number,
         t_sol_id: this.addPay.t_sol_id,
@@ -275,7 +265,6 @@ export class AddPagosComponent implements OnInit {
           this.toaster.error(this.default.M)
           break;
       }
-
     })
   }
 
@@ -313,6 +302,28 @@ export class AddPagosComponent implements OnInit {
       }
     })
   }
+
+  upload(d: any, id: string) {
+    const encode = d.file.toString()
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      att_by: this.crypto.encryptJson("CLIENTE"),
+      rif: this.crypto.encryptJson(this.addPay.rif),
+      documento: this.crypto.encryptJson(id),
+      extension: this.crypto.encryptJson(d.ext),
+      t_sol_id: this.crypto.encryptJson(null),
+      solicitud: this.crypto.encryptJson(null),
+      file: this.crypto.encryptJson(encode),
+    }))
+    this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.default);
+    })
+  }
+
+
 
 
 

@@ -140,6 +140,9 @@ import { ValidarPruebaComponent } from './pages/validar-prueba/validar-prueba.co
 import { ValidarPruebaFichaComponent } from './pages/validar-prueba-ficha/validar-prueba-ficha.component';
 import { TablaValidarPruebaComponent } from './components/tabla-validar-prueba/tabla-validar-prueba.component';
 import { ModalAsignacionPruebaComponent } from './components/modal-asignacion-prueba/modal-asignacion-prueba.component';
+import { AddPlanComponent } from './pages/add-plan/add-plan.component';
+import { PlanComponent } from './pages/plan/plan.component';
+import { TablaPlanComponent } from './components/tabla-plan/tabla-plan.component';
 
 
 @NgModule({
@@ -269,6 +272,9 @@ import { ModalAsignacionPruebaComponent } from './components/modal-asignacion-pr
     ValidarPruebaFichaComponent,
     TablaValidarPruebaComponent,
     ModalAsignacionPruebaComponent,
+    AddPlanComponent,
+    PlanComponent,
+    TablaPlanComponent,
   ],
 
   imports: [

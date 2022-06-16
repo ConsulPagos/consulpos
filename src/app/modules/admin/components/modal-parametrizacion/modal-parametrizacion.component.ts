@@ -74,6 +74,10 @@ export class ModalParametrizacionComponent implements OnInit {
     }
   }
 
+  onlyNumberKey(event) {
+    return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
+  }
+
   saveConfig(serial, modelo, solicitud_banco_id) {
     console.log(this.formDinamic)
     const items = []
@@ -105,4 +109,22 @@ export class ModalParametrizacionComponent implements OnInit {
 
     })
   }
+
+  invalid() {
+    var invalid = false;
+    for (let index = 0; index < this.formDinamic.length; index++) {
+      if (this.formDinamic[index].invalid) {
+        invalid = true
+        break;
+      }
+    }
+    return invalid
+  }
+
+  // getErrorMessage(z) {
+  //   if (this.formDinamic[z].get('terminal')?.hasError('required')) {
+  //     return 'Ingrese un terminal válido';
+  //   }
+  //   return this.formDinamic[z].get('terminal')?.hasError('terminal') ? 'Terminales del 1 al 299' : '';
+  // }
 }

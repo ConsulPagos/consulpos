@@ -437,8 +437,6 @@ export class AddClientComponent implements OnInit {
 
 
   upload(d: any, id: string) {
-    console.log("ksdhskdchaksjhckadhdskhcd");
-    
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
     const encode = d.file.toString()
     const data = this.crypto.encryptString(JSON.stringify({
