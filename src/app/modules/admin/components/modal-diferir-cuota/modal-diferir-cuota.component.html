@@ -1,16 +1,14 @@
 <h1 mat-dialog-title>
     <li class="fa fa-edit mr-2"></li>
     <span class="field">
-        Entregar venta #{{dataVenta.number}}
+        Diferir solicitud #{{dataDiferir.solicitud}}
     </span>
 </h1>
 <div mat-dialog-content class="mat-dialog-content">
     <div class="pt-2 pb-1 less-padding">
-        <h6>
-            Porfavor cargue el acta de entrega
-        </h6>
-
-        <app-uploader (uploaded)="upload($event, 'AC')"></app-uploader>
+<h5>
+    ¿Esta seguro que desea diferir esta cuota?
+</h5>
     </div>
 </div>
 <div mat-dialog-actions>
@@ -19,7 +17,8 @@
             <li class="fa fa-times text-dark"></li>
         </button>
 
-        <button class="flex-fill confirm action_button" mat-button cdkFocusInitial [mat-dialog-close]="true" (click)="submit()">
+        <button class="flex-fill confirm action_button" mat-button cdkFocusInitial
+            [mat-dialog-close]="true" (click)="saveConfig()">
             <li class="fa fa-check"></li>
         </button>
     </div>

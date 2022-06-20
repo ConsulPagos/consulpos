@@ -143,6 +143,13 @@ import { ModalAsignacionPruebaComponent } from './components/modal-asignacion-pr
 import { AddPlanComponent } from './pages/add-plan/add-plan.component';
 import { PlanComponent } from './pages/plan/plan.component';
 import { TablaPlanComponent } from './components/tabla-plan/tabla-plan.component';
+import { AddPagoManualComponent } from './pages/add-pago-manual/add-pago-manual.component';
+import { PagoPendienteComponent } from './pages/pago-pendiente/pago-pendiente.component';
+import { TablaPagoPendienteComponent } from './components/tabla-pago-pendiente/tabla-pago-pendiente.component';
+import { TablaPagoManualComponent } from './components/tabla-pago-manual/tabla-pago-manual.component';
+import { ModalDiferirCuotaComponent } from './components/modal-diferir-cuota/modal-diferir-cuota.component';
+
+
 
 
 @NgModule({
@@ -275,6 +282,11 @@ import { TablaPlanComponent } from './components/tabla-plan/tabla-plan.component
     AddPlanComponent,
     PlanComponent,
     TablaPlanComponent,
+    AddPagoManualComponent,
+    PagoPendienteComponent,
+    TablaPagoPendienteComponent,
+    TablaPagoManualComponent,
+    ModalDiferirCuotaComponent,
   ],
 
   imports: [

@@ -19,11 +19,12 @@ import { BancoInterface } from 'src/app/models/banco';
 import { ArchiveService } from 'src/app/shared/services/archive.service';
 
 @Component({
-  selector: 'app-add-pagos',
-  templateUrl: './add-pagos.component.html',
-  styleUrls: ['./add-pagos.component.scss']
+  selector: 'app-add-pago-manual',
+  templateUrl: './add-pago-manual.component.html',
+  styleUrls: ['./add-pago-manual.component.scss']
 })
-export class AddPagosComponent implements OnInit {
+export class AddPagoManualComponent implements OnInit {
+
   total_Bs: number;
   total: number;
   total_IGTF: number;
@@ -33,7 +34,7 @@ export class AddPagosComponent implements OnInit {
   default: PagosResponse;
   addPay: any = {};
   loading: boolean;
-  payments = [];
+  payments: any;
   formats_payments: any[] = [];
   formats: any[] = [];
   formDinamic = [];
@@ -60,7 +61,7 @@ export class AddPagosComponent implements OnInit {
       this.router.getCurrentNavigation().extras.state.addPay) {
       this.addPay = this.router.getCurrentNavigation().extras.state.addPay as any;
     } else {
-      this.router.navigateByUrl("/admin/app/(adr:pagos)");
+      this.router.navigateByUrl("/admin/app/(adr:pago-pendiente)");
     }
   }
 
@@ -76,47 +77,8 @@ export class AddPagosComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.getTasas()
     this.tipoPagos()
-    this.add_pay()
     this.bancos = JSON.parse(this.storage.get(constant.BANCOS)).bancos
-  }
-
-  add_pay() {
-    var newFormat: any = {};
-    var pay = new FormGroup({
-      t_pago: new FormControl(null, [Validators.required]),
-      monto: new FormControl(null, [Validators.required]),
-      descripcion: new FormControl(''),
-      moneda: new FormControl(null),
-      fecha: new FormControl(''),
-    });
-    this.payments.push(pay);
-    this.formats_payments.push(newFormat);
-  }
-
-  deletePay(index: number) {
-    this.formats_payments.splice(index, 1);
-    this.payments.splice(index, 1);
-  }
-
-  buildFormGroup(car: any[], i: number) {
-    this.formDinamic[i] = new FormGroup({})
-    car.forEach(c => {
-      this.formDinamic[i].addControl(c.id_caracteristica, new FormControl('', [Validators.required]))
-    })
-    console.log(this.formDinamic);
-  }
-
-  clearForm(i) {
-    this.payments[i].reset();
-  }
-
-  setDivisa(i) {
-    const m = this.payments[i];
-    const p = this.t_pagos.filter(t => t.t_pago_id == m.get('t_pago').value)[0];
-    m.get('moneda').setValue(p.cod_moneda)
-    this.getMonto();
   }
 
   getMonto() {
@@ -126,7 +88,7 @@ export class AddPagosComponent implements OnInit {
       for (let index = 0; index < this.payments.length; index++) {
         const m = this.payments[index];
         if (m.valid) {
-          if (m.get('moneda').value == "VES") {
+          if (m.get('cod_moneda').value == "VES") {
             totalPago += (parseFloat(m.get('monto').value) / tasa)
           } else {
             totalPago += parseFloat((parseFloat(m.get('monto').value)).toFixed(2))
@@ -144,11 +106,12 @@ export class AddPagosComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      solicitud_id: this.crypto.encryptJson(this.addPay.number),
-      t_sol_id: this.crypto.encryptJson(this.addPay.t_sol_id),
+      solicitud: this.crypto.encryptJson(this.addPay.solicitud),
+      cod_serial: this.crypto.encryptJson(this.addPay.cod_serial),
+      id: this.crypto.encryptJson(this.addPay.id),
     }))
     this.loader.loading()
-    this.pago.doPaymentInput(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.pago.paymentConstructorManual(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.loader.stop()
       const json = JSON.parse(this.crypto.decryptString(res))
       console.log(this.crypto.decryptString(res))
@@ -180,26 +143,26 @@ export class AddPagosComponent implements OnInit {
     return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
   }
 
-  isInvalid() {
-    var invalid = false;
+  // isInvalid() {
+  //   var invalid = false;
 
-    for (let index = 0; index < this.payments.length; index++) {
+  //   for (let index = 0; index < this.payments.length; index++) {
 
-      const m = this.payments[index];
-      const d = this.formDinamic[index];
-      if (m.invalid || d.invalid) {
-        console.log(d);
-        console.log(m);
-        invalid = true;
-        break;
-      }
-    }
-    return invalid
-  }
+  //     const m = this.payments[index];
+  //     const d = this.formDinamic[index];
+  //     if (m.invalid || d.invalid) {
+  //       console.log(d);
+  //       console.log(m);
+  //       invalid = true;
+  //       break;
+  //     }
+  //   }
+  //   return invalid
+  // }
 
   submit() {
     const inputs = [];
-    var pago = [];
+    // var pago = [];
     console.log(this.formDinamic);
     for (let j = 0; j < this.payments.length; j++) {
       const p = this.payments[j];
@@ -225,14 +188,7 @@ export class AddPagosComponent implements OnInit {
           })
         }
       }
-      pago.push({
-        solicitud_id: this.addPay.number,
-        t_sol_id: this.addPay.t_sol_id,
-        t_pago_id: p.get('t_pago').value,
-        validar: h.validar,
-        monto: p.get('monto').value,
-        descripcion: p.get('descripcion').value,
-        fecha_pago: p.get('fecha').value,
+      inputs.push({
         caracteristicas: JSON.stringify(inputs),
       })
     }
@@ -242,8 +198,12 @@ export class AddPagosComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      pagos: this.crypto.encryptJson(JSON.stringify(pago)),
-      t_sol_id: this.crypto.encryptJson(this.addPay.t_sol_id),
+      solicitud: this.crypto.encryptJson(this.addPay.solicitud),
+      cod_serial: this.crypto.encryptJson(this.addPay.cod_serial),
+      t_pago_id: this.crypto.encryptJson(this.payments.get('t_pago').value),
+      descripcion: this.crypto.encryptJson(this.payments.get('descripcion').value),
+      monto: this.crypto.encryptJson(this.addPay.saldo),
+      caracteristicas: this.crypto.encryptJson(JSON.stringify(inputs))
     }))
     this.loading = true;
     console.log("verify")
@@ -274,33 +234,6 @@ export class AddPagosComponent implements OnInit {
     })
   }
 
-  getTasas() {
-    var data: {} = {
-      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      tipo: this.crypto.encryptJson("2"), //Tasa de venta 1-Cobranza; 2-Venta; nada todas
-    }
-    const dataString = this.crypto.encryptString(JSON.stringify(data));
-    this.loader.loading();
-    this.bancario.doGetTasas(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
-      this.loader.stop();
-      const json = JSON.parse(this.crypto.decryptString(res));
-      const response = new DefaultDecrypter(this.crypto).deserialize(json);
-      console.log(json)
-      switch (json.R) {
-        case constant.R0:
-          this.tasas = JSON.parse(this.crypto.decryptJson(json.tasas));
-          console.log(this.tasas)
-          break;
-        case constant.R1:
-        default:
-          this.toaster.error(response.M)
-          break;
-      }
-    })
-  }
-
   upload(d: any, id: string) {
     const encode = d.file.toString()
     const data = this.crypto.encryptString(JSON.stringify({
@@ -321,8 +254,16 @@ export class AddPagosComponent implements OnInit {
     })
   }
 
-
-
-
+  buildFormGroup(car: any[], i: number) {
+    this.formDinamic[i] = new FormGroup({})
+    car.forEach(c => {
+      this.formDinamic[i].addControl(c.id_caracteristica, new FormControl('', [Validators.required]))
+    })
+    console.log(this.formDinamic);
+  }
 
 }
+function inputs(inputs: any): string {
+  throw new Error('Function not implemented.');
+}
+

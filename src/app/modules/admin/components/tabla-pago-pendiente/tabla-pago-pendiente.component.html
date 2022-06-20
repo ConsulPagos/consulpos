@@ -2,7 +2,8 @@
     <div>
         <mat-form-field appearance="outline" class="mt-4 mx-4">
             <form [formGroup]="identity">
-                <input matInput (keyup.enter)="_findClient()" placeholder="Buscar" formControlName="rif" #input>
+                <input matInput (keyup.enter)="_findClient()" placeholder="Buscar" formControlName="rif" 
+                    #input>
             </form>
         </mat-form-field>
 
@@ -35,14 +36,9 @@
             <td mat-cell *matCellDef="let venta"> {{venta.razon_social}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="cuota">
-            <th mat-header-cell *matHeaderCellDef> Cuota Nº </th>
-            <td mat-cell *matCellDef="let venta"> {{venta.cuota}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="fecha">
-            <th mat-header-cell *matHeaderCellDef> Fecha de Pago </th>
-            <td mat-cell *matCellDef="let venta"> {{venta.fecha_pago}} </td>
+        <ng-container matColumnDef="serial">
+            <th mat-header-cell *matHeaderCellDef> Serial </th>
+            <td mat-cell *matCellDef="let venta"> {{venta.cod_serial}} </td>
         </ng-container>
 
         <ng-container matColumnDef="tipo">
@@ -55,11 +51,12 @@
             <th mat-header-cell *matHeaderCellDef> Acciones</th>
             <td mat-cell *matCellDef="let venta">
 
-                <button #tooltip="matTooltip" matTooltip="Diferir" matTooltipHideDelay="10" mat-icon-button
-                    (click)="openDialog(venta)" class="container_icon">
-                    <i class="fas fa-edit activate_edit"></i>
-                </button>
-
+                <div>
+                    <button #tooltip="matTooltip" matTooltip="Agregar pago" matTooltipHideDelay="10" mat-icon-button
+                        (click)="_addPay(venta)" class="container_icon">
+                        <i class="fas fa-cash-register activate_edit"></i>
+                    </button>
+                </div>
             </td>
         </ng-container>
 

@@ -9,6 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { PagosManualDecrypter, PagosManualResponse } from 'src/app/models/pagos_manual';
+import { ShowSalesDecrypter, ShowSalesResponse } from 'src/app/models/showsales_response';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
@@ -18,18 +19,17 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { VentasService } from 'src/app/shared/services/ventas.service';
 import { constant } from 'src/app/shared/utils/constant';
-import { ModalDiferirCuotaComponent } from '../modal-diferir-cuota/modal-diferir-cuota.component';
 import { ModalPagoComponent } from '../modal-pago/modal-pago.component';
 
-
 @Component({
-  selector: 'app-tabla-pago-manual',
-  templateUrl: './tabla-pago-manual.component.html',
-  styleUrls: ['./tabla-pago-manual.component.scss']
+  selector: 'app-tabla-pago-pendiente',
+  templateUrl: './tabla-pago-pendiente.component.html',
+  styleUrls: ['./tabla-pago-pendiente.component.scss']
 })
-export class TablaPagoManualComponent implements OnInit {
+export class TablaPagoPendienteComponent implements OnInit {
 
-  displayedColumns: string[] = ['number', 'rif', 'razon_social', 'cuota', 'fecha', 'tipo', 'Acciones'];
+
+  displayedColumns: string[] = ['number', 'rif','razon_social','serial','tipo','Acciones'];
   pagos = [];
 
   isLoadingResults = false;
@@ -61,8 +61,9 @@ export class TablaPagoManualComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private pago: PagosService,
-  ) {
+    private pago: PagosService
+  ) 
+  {
     this.dataSource = new MatTableDataSource(this.pagos);
   }
 
@@ -103,14 +104,14 @@ export class TablaPagoManualComponent implements OnInit {
             limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
             status_desc: this.crypto.encryptJson("EN ESPERA DE PAGO"),
           }))
-          return this.pago.cuotasPendientes(`${this.session.getDeviceId()};${data}`)
+          return this.pago.pagosPendientes(`${this.session.getDeviceId()};${data}`)
         }),
         map(data => {
           this.firstLoading = false;
           console.log("JSON: " + data)
           console.log("string: " + this.crypto.decryptString(data))
           this.ShowSalesResponse = new PagosManualDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-          //this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
+           //this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
           this.resultsLength = parseInt(this.ShowSalesResponse.total_row);
           console.log(this.ShowSalesResponse)
           this.loader.stop()
@@ -130,21 +131,6 @@ export class TablaPagoManualComponent implements OnInit {
       });
   }
 
-  openDialogPay(id_venta: number, items: any): void {
-    console.log(id_venta)
-    var dialogRef = this.dialog.open(ModalPagoComponent, {
-      height: 'auto',
-      panelClass: 'custom-dialog',
-      data: { id_venta: id_venta, items: items },
-    });
-    console.log(items)
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-
-      }
-    });
-  }
-
   _findClient() {
     var filter = this.identity.get('rif').value
     this.statusFilter = true;
@@ -156,10 +142,10 @@ export class TablaPagoManualComponent implements OnInit {
       filter: this.crypto.encryptJson(filter),
     }))
 
-    this.pago.cuotasPendientesPorCliente(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.pago.pagosPendientesPorCliente(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(this.crypto.decryptString(res))
       this.ShowSalesResponse = new PagosManualDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      //this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
+       //this.crypto.setKeys(this.ShowSalesResponse.keyS, this.ShowSalesResponse.ivJ, this.ShowSalesResponse.keyJ, this.ShowSalesResponse.ivS)
       this.pagos = this.ShowSalesResponse.pagos
       this.dataSource = new MatTableDataSource(this.pagos);
     })
@@ -170,22 +156,8 @@ export class TablaPagoManualComponent implements OnInit {
     this.statusFilter = false;
   }
 
-  openDialog(venta): void {
-
-    var dialogRef: any = this.dialog.open(ModalDiferirCuotaComponent, {
-      disableClose: true,
-      height: 'auto',
-      panelClass: 'custom-dialog',
-      data: { venta: venta },
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-
-      }
-    });
-
+  _addPay(pay) {
+    this.addPay.emit(pay)
   }
-
-
 
 }

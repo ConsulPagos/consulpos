@@ -23,14 +23,4 @@ export class PagoManualComponent implements OnInit {
     this.title.setTitle('ConsulPos | Pagos')
   }
 
-  _addPay(pay) {
-    const navigationExtras: NavigationExtras = {
-      state: {
-        addPay: pay
-      }
-    }
-    console.log(pay)
-    this.router.navigateByUrl("/admin/app/(adr:add-pago-manual)", navigationExtras)
-  }
-
 }

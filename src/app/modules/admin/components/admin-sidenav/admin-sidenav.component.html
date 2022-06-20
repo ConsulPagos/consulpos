@@ -160,10 +160,15 @@
                     <li class="fa fa-dollar-sign"></li><span class="text_side">Pagos de Pos</span>
                 </a>
 
-                <!-- <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['pago-manual'] } }]"
+                <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['pago-manual'] } }]"
                     routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-                    <li class="fa fa-dollar-sign"></li><span class="text_side">Pagos de Correctivos</span>
-                </a> -->
+                    <li class="fa fa-dollar-sign"></li><span class="text_side">Pago Manual</span>
+                </a>
+
+                <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['pago-pendiente'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-dollar-sign"></li><span class="text_side">Pago Pendiente</span>
+            </a>
 
                 <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['validar-pago'] } }]"
                     routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">

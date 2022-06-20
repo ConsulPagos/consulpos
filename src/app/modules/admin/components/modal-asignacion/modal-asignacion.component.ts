@@ -124,6 +124,8 @@ export class ModalAsignacionComponent implements OnInit {
 
     })
   }
+
+  
   liberarSim() {
     const inputs = [];
     this.dataVenta.modelos.forEach(f => {

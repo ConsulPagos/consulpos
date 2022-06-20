@@ -216,7 +216,10 @@ export class AddClientComponent implements OnInit {
     }))
     this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.search_client = this.validacionresponse.value_exists === "true" ? true : false;
+      console.log(this.validacionresponse);
+    
+      this.search_client = this.validacionresponse.value_exists === "true" || this.validacionresponse.ACTIVO === "true" ? true : false;
+
       if (this.search_client) {
         this.identity.controls['rif'].setErrors({ 'existe': true });
       } else {

@@ -10,6 +10,7 @@ export interface PagosResponse {
     total_IVA?: string;
     tasa?: string;
     session_valid?: string;
+    cuotas?: string;
 }
 
 export class PagosDecrypter {
@@ -30,6 +31,7 @@ export class PagosDecrypter {
             total_IVA: this.crypto.decryptJson(value.total_IVA),
             tasa: this.crypto.decryptJson(value.tasa),
             session_valid: this.crypto.decryptJson(value.session_valid),
+            cuotas: this.crypto.decryptJson(value.cuotas),
         }
         return data
     }
