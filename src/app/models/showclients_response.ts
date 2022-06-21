@@ -8,7 +8,7 @@ export interface ShowClientsResponse {
     session_valid: string;
     clientes: ClienteRequestInterface[];
     total_row: string;
-    ACTIVO?: string;
+    afiliado?: boolean;
 }
 
 export class ShowClientsDecrypter {
@@ -26,7 +26,7 @@ export class ShowClientsDecrypter {
             session_valid: this.crypto.decryptJson(value.session_valid),
             clientes:JSON.parse(this.crypto.decryptJson(value.clientes)) as ClienteRequestInterface[],
             total_row: this.crypto.decryptJson(value.total_row),
-            ACTIVO: this.crypto.decryptJson(value.ACTIVO),
+            afiliado: value.afiliado,
         }
         
         console.log(verify)

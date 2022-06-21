@@ -81,24 +81,24 @@ export class AddPagoManualComponent implements OnInit {
     this.bancos = JSON.parse(this.storage.get(constant.BANCOS)).bancos
   }
 
-  getMonto() {
-    var totalPago = 0;
-    var tasa = this.tasa;
-    if (this.t_pagos && this.tasa) {
-      for (let index = 0; index < this.payments.length; index++) {
-        const m = this.payments[index];
-        if (m.valid) {
-          if (m.get('cod_moneda').value == "VES") {
-            totalPago += (parseFloat(m.get('monto').value) / tasa)
-          } else {
-            totalPago += parseFloat((parseFloat(m.get('monto').value)).toFixed(2))
-          }
-          console.log(totalPago)
-        }
-      }
-    }
-    this.totalPago = this.total - totalPago
-  }
+  // getMonto() {
+  //   var totalPago = 0;
+  //   var tasa = this.tasa;
+  //   if (this.t_pagos && this.tasa) {
+  //     for (let index = 0; index < this.payments.length; index++) {
+  //       const m = this.payments[index];
+  //       if (m.valid) {
+  //         if (m.get('cod_moneda').value == "VES") {
+  //           totalPago += (parseFloat(m.get('monto').value) / tasa)
+  //         } else {
+  //           totalPago += parseFloat((parseFloat(m.get('monto').value)).toFixed(2))
+  //         }
+  //         console.log(totalPago)
+  //       }
+  //     }
+  //   }
+  //   this.totalPago = this.total - totalPago
+
 
 
   tipoPagos() {

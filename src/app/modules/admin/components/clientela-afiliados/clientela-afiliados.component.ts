@@ -105,23 +105,17 @@ export class ClientelaAfiliadosComponent implements AfterViewInit, OnInit {
             init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
             limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
           }))
-          console.log(data)
-          console.log('init_row')
-          console.log(this.paginator.pageIndex * this.PAGESIZE)
-          console.log('limit_row')
-          console.log((this.paginator.pageIndex + 1) * this.PAGESIZE)
           return this.cliente.doAll(`${this.session.getDeviceId()};${data}`)
         }),
         map(data => {
           this.firstLoading = false;
           this.isLoadingResults = false;
-          // console.log("JSON: " + data)
-          // console.log("string: " + this.crypto.decryptString(data))
           this.showclientResponse = new ShowClientsDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
+          console.log(this.showclientResponse);
           if (parseInt(this.showclientResponse.total_row) > 0) {
             this.resultsLength = parseInt(this.showclientResponse.total_row);
           }
-          // console.log(this.showclientResponse)
+          console.log(this.showclientResponse)
           return this.showclientResponse.clientes;
         }),
         catchError((e) => {

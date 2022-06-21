@@ -218,7 +218,7 @@ export class AddClientComponent implements OnInit {
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionresponse);
     
-      this.search_client = this.validacionresponse.value_exists === "true" || this.validacionresponse.ACTIVO === "true" ? true : false;
+      this.search_client = this.validacionresponse.value_exists === "true" || this.validacionresponse.afiliado === "true" ? true : false;
 
       if (this.search_client) {
         this.identity.controls['rif'].setErrors({ 'existe': true });
