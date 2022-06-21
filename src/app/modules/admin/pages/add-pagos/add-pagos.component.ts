@@ -244,6 +244,7 @@ export class AddPagosComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       pagos: this.crypto.encryptJson(JSON.stringify(pago)),
       t_sol_id: this.crypto.encryptJson(this.addPay.t_sol_id),
+      fraccion_desc: this.crypto.encryptJson(this.addPay.solicitudes_banco[0].fraccion_desc),
     }))
     this.loading = true;
     console.log("verify")

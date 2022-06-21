@@ -10,7 +10,7 @@
             </div>
         </div>
         <div style="background-color: #fff; border-radius: 10px;">
-            <div class="container-fluid rounded bg-white mb-5" *ngFor="let item of addPay.solicitudes_banco">
+            <div class="container-fluid rounded bg-white mb-5" >
                 <h4 class="text-center">
                     Agregar pago
                 </h4>
@@ -34,9 +34,9 @@
                         </h6>
                     </div>
                     <div class="text-sub-title">
-                        <h6>
-                            <strong>Cliente: </strong>
-                            {{item.fraccion_desc}}
+                        <h6 >
+                            <strong>Tipo de pago: </strong>
+                            {{this.addPay.solicitudes_banco[0].fraccion_desc}}
                         </h6>
                     </div>
                 </div>
