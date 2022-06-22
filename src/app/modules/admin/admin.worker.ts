@@ -42,11 +42,11 @@ addEventListener('message', ({ data }) => {
     const ws = wb.Sheets[wsname];
     const json = XLSX.utils.sheet_to_json(ws);
 
-    json.forEach(cuota => {
+    json.forEach(linea => {
       var aux = {};
       for (let index = 0; index < data.plantilla.length; index++) {
         const col = data.plantilla[index];
-        aux[col.columna] = parseValue(col.tipo, cuota[col.nombre], col.decimales);
+        aux[col.columna] = parseValue(col.tipo, linea[col.nombre], col.decimales);
       }
 
       nData.push(aux)

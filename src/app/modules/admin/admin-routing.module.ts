@@ -84,6 +84,7 @@ import { PlanComponent } from './pages/plan/plan.component';
 import { AddPlanComponent } from './pages/add-plan/add-plan.component';
 import { AddPagoManualComponent } from './pages/add-pago-manual/add-pago-manual.component';
 import { PagoPendienteComponent } from './pages/pago-pendiente/pago-pendiente.component';
+import { CargaMasivaComponent } from './pages/carga-masiva/carga-masiva.component';
 
 const routes: Routes = [
   {
@@ -825,6 +826,15 @@ const routes: Routes = [
         //   modulo: "Configuracion",
         //   submodulo: "Tasas",
         //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'carga-masiva', component: CargaMasivaComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Domiciliacion",
+        //   submodulo: "Generar Archivo",
+        //   permiso: "Generar Archivo"
         // }
       },
 

@@ -225,6 +225,13 @@
 
 
         </mat-menu>
+
+         <!-- Carga masiva -->
+         <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['carga-masiva'] } }]"
+         routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+            <li class="fa fa-file-import icon_side"></li>
+            <span class="text_side">Carga masiva</span>
+        </a>
         <!-- ************************************************************************************************** -->
 
         <!-- Solicitud de Reportes -->

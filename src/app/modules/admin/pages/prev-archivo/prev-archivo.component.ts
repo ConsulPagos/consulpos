@@ -76,6 +76,7 @@ export class PrevArchivoComponent implements OnInit {
       if (this.router.getCurrentNavigation().extras.state.plantilla) {
         this.plantilla = this.router.getCurrentNavigation().extras.state.plantilla
       }
+      
 
     } else {
       this.router.navigateByUrl("/admin/app/(adr:dashboard)")
@@ -97,6 +98,9 @@ export class PrevArchivoComponent implements OnInit {
   onFileChange(event: any) {
 
     const columns = []
+
+    console.log(this.plantilla);
+    
 
     this.plantilla.forEach(p => {
       columns.push(p.columna)

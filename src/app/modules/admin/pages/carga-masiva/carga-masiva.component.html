@@ -1,0 +1,27 @@
+<section id="cargar-inventario">
+    <div class="container-fluid">
+        <div>
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['inventario'] } }]">
+                <li class="fas fa-arrow-left"></li>
+            </a>
+        </div>
+        <div class="content">
+            <div class="file-input" *ngIf="!data; else prev">
+                <div class="box-title">
+                    <h6>Selecciona archivo</h6>
+                </div>
+                <div class="file-container">
+                    <file-input (change)="onFileChange($event)" [loading]="loading" [accept]="'.xls, .xlsx'">
+                    </file-input>
+                </div>
+
+            </div>
+            <ng-template #prev>
+                <app-action-btn class="btn-submit" mat-button mat-button text="Procesar"></app-action-btn>
+                <app-previsualizar-archivo [data]="data" [columns]="columns">
+                </app-previsualizar-archivo>
+            </ng-template>
+        </div>
+    </div>
+</section>

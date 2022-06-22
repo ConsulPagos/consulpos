@@ -1,0 +1,39 @@
+.nav-btn{
+    color: #858598;
+    height: 45px;
+    width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 22px;
+    transition: 0.3s;
+    z-index: 99;
+    margin-bottom: 10px;
+}
+
+.nav-btn:hover{
+    color: black;
+}
+
+.content{
+    background-color: #fff; 
+    border-radius: 10px;
+    padding: 20px;
+}
+.file-input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+.file-container{
+    min-width: 450px;
+}
+
+.btn-submit{
+    width: 200px;
+    margin-top: 20px;
+}

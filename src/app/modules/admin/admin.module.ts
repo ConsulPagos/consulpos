@@ -148,6 +148,7 @@ import { PagoPendienteComponent } from './pages/pago-pendiente/pago-pendiente.co
 import { TablaPagoPendienteComponent } from './components/tabla-pago-pendiente/tabla-pago-pendiente.component';
 import { TablaPagoManualComponent } from './components/tabla-pago-manual/tabla-pago-manual.component';
 import { ModalDiferirCuotaComponent } from './components/modal-diferir-cuota/modal-diferir-cuota.component';
+import { CargaMasivaComponent } from './pages/carga-masiva/carga-masiva.component';
 
 
 
@@ -287,6 +288,7 @@ import { ModalDiferirCuotaComponent } from './components/modal-diferir-cuota/mod
     TablaPagoPendienteComponent,
     TablaPagoManualComponent,
     ModalDiferirCuotaComponent,
+    CargaMasivaComponent,
   ],
 
   imports: [
