@@ -42,6 +42,8 @@ import { ValidacionMarcaDecrypter, ValidacionMarcaResponse } from 'src/app/model
 import { InventarioService } from 'src/app/shared/services/inventario.service';
 import { CambioPosResponse, CambioPosDecrypter } from 'src/app/models/cambiopos_response';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ArchiveService } from 'src/app/shared/services/archive.service';
+import { DefaultResponse, DefaultDecrypter } from 'src/app/models/default_response';
 //****************************************************************************************//
 
 @Component({
@@ -74,7 +76,7 @@ export class AddTraspasoComponent implements OnInit {
   buies = [];
   formats: SimInterface[] = [];
   formats_buy: SaleRequestInterface[] = [];
-
+  default: DefaultResponse;
   marcaResponse: ValidacionMarcaResponse;
   marcas: MarcaInterface[];
   validacionPos: CambioPosResponse;
@@ -94,7 +96,8 @@ export class AddTraspasoComponent implements OnInit {
     private modal: ModalService,
     private loader: LoaderService,
     private inventario: InventarioService,
-    private toster: ToasterService
+    private toster: ToasterService,
+    private archivo: ArchiveService,
   ) {
 
   }
@@ -123,7 +126,7 @@ export class AddTraspasoComponent implements OnInit {
     this.title.setTitle('ConsulPos | Agregar Traspaso')
     this.occUser()
     // this.doSimModels()
-
+    this.add_buy()
     this.marca()
     this.categoria()
     this.modelos = JSON.parse(this.storage.get(constant.MODELOS)).modelos
@@ -135,6 +138,27 @@ export class AddTraspasoComponent implements OnInit {
     this.t_pagos = JSON.parse(this.storage.get(constant.T_PAGOS)).t_pagos
     this.marcas = JSON.parse(this.storage.get(constant.MARCAS)).marcas
     console.log(this.marcas)
+  }
+
+  add_buy() {
+    var newFormat: SaleRequestInterface = {};
+    var buy = new FormGroup({
+      modelo: new FormControl('', [Validators.required]),
+      numero_cuenta_pos: new FormControl('', [Validators.required, Validators.minLength(20)]),
+      precio_usd: new FormControl(''),
+      lugar_entrega: new FormControl(''),
+      terminal: new FormControl(''),
+      cod_afiliado: new FormControl(''),
+      plan: new FormControl(''),
+      banco: new FormControl(''),
+      tipocobro: new FormControl(''),
+    });
+    var sim = new FormGroup({
+      operadora: new FormControl('', [Validators.required]),
+    });
+    newFormat.sims = [sim]
+    this.buies.push(buy);
+    this.formats_buy.push(newFormat);
   }
 
 
@@ -231,14 +255,14 @@ export class AddTraspasoComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
-
-      solicitud: this.crypto.encryptJson(JSON.stringify(
-        {
-          occ_id: this.solicitud.get('occ').value,
-          //Revisar mandarlo automatico x verify
-          t_sol_id: "4",
-        }
-      )),
+      cod_serial:this.crypto.encryptJson(this.validacionPos.item.cod_serial),
+        solicitud: this.crypto.encryptJson(JSON.stringify(
+          {
+            occ_id: this.solicitud.get('occ').value,
+            //Revisar mandarlo automatico x verify
+            t_sol_id: "4",
+          }
+        )),
 
       solicitudes_banco: this.crypto.encryptJson(JSON.stringify(
         solicitudes_banco_sell
@@ -315,23 +339,19 @@ export class AddTraspasoComponent implements OnInit {
     })
   }
 
-
-
-
-  buy = new FormGroup({
-    modelo: new FormControl('', [Validators.required]),
-    plataforma: new FormControl('', [Validators.required]),
-    banco: new FormControl('', [Validators.required]),
-    numero_cuenta_pos: new FormControl('', [Validators.required, Validators.minLength(20)]),
-    precio_usd: new FormControl(''),
-    lugar_entrega: new FormControl(''),
-    tipocobro: new FormControl('', [Validators.required]),
-    plan: new FormControl('', [Validators.required]),
-    tipo_venta: new FormControl(''),
-    terminal: new FormControl(''),
-    cod_afiliado: new FormControl(''),
-    monto: new FormControl(''),
-  });
+  // buy = new FormGroup({
+  //   modelo: new FormControl('', [Validators.required]),
+  //   banco: new FormControl('', [Validators.required]),
+  //   numero_cuenta_pos: new FormControl('', [Validators.required, Validators.minLength(20)]),
+  //   precio_usd: new FormControl(''),
+  //   lugar_entrega: new FormControl(''),
+  //   tipocobro: new FormControl('', [Validators.required]),
+  //   plan: new FormControl('', [Validators.required]),
+  //   tipo_venta: new FormControl(''),
+  //   terminal: new FormControl(''),
+  //   cod_afiliado: new FormControl(''),
+  //   monto: new FormControl(''),
+  // });
 
   buscarPos() {
     const data = this.crypto.encryptString(JSON.stringify({
@@ -343,11 +363,14 @@ export class AddTraspasoComponent implements OnInit {
     this.venta.informacionDeEquipo(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.validacionPos = new CambioPosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.validacionPos);
+      
       // console.log(this.validacionPos)
       // console.log(this.validacionPos.item.sim)
       // console.log(this.validacionPos.item.cliente.rif);
 
-      // this.buy.get('modelo').setValue(this.validacionPos.item.modelo_id)
+      this.buies[0].get('modelo').setValue(this.validacionPos.item.modelo_id)
+      // this.buies[0].get('operadora').setValue(this.validacionPos.item.sim.modelo_id)
       // this.buy.get('plataforma').setValue(this.validacionPos.item.id_plataforma)
       // this.buy.get('plan').setValue(this.validacionPos.item.plan_id)
       // this.buy.get('tipocobro').setValue(this.validacionPos.item.id_t_cobro)
@@ -380,6 +403,26 @@ export class AddTraspasoComponent implements OnInit {
     })
   }
 
+  upload(d: any, id: string) {
+    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
+    const encode = d.file.toString()
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      att_by: this.crypto.encryptJson("CLIENTE"),
+      rif: this.crypto.encryptJson(rif),
+      documento: this.crypto.encryptJson(id),
+      extension: this.crypto.encryptJson(d.ext),
+      t_sol_id: this.crypto.encryptJson(null),
+      solicitud: this.crypto.encryptJson(null),
+      file: this.crypto.encryptJson(encode),
+    }))
+    this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.default);
+    })
+  }
 
-  // 9994150093074860024FP
+
 }

@@ -61,7 +61,7 @@
                             <mat-label>Rol</mat-label>
                             <mat-select disableRipple formControlName="rol">
                                 <mat-option *ngFor="let rol of roles" value={{rol.id}}>
-                                    {{rol.rol}}
+                                    {{rol.nombre}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -92,15 +92,6 @@
                                 <mat-label>Punto de referencia</mat-label>
                                 <textarea matInput placeholder="Pasando Proteccion animal"
                                     formControlName="pto_referencia" type="text" maxlength="510" minlength="5">
-                            </textarea>
-                            </mat-form-field>
-                        </div>
-
-                        <div class="direction">
-                            <mat-form-field class="container_box_direction" appearance="outline">
-                                <mat-label>Localidad</mat-label>
-                                <textarea matInput placeholder="Pasando Proteccion animal" formControlName="localidad"
-                                    type="text" maxlength="510" minlength="5">
                             </textarea>
                             </mat-form-field>
                         </div>

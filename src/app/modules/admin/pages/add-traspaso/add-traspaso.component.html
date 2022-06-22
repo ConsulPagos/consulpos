@@ -1,12 +1,10 @@
 <section id="addClient">
     <div class="container-fluid">
         <div class="structur">
-            <div>
-                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-                    [routerLink]="['/admin/app',{ outlets: { adr: ['traspaso'] } }]">
-                    <li class="fas fa-arrow-left"></li>
-                </a>
-            </div>
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                [routerLink]="['/admin/app',{ outlets: { adr: ['traspaso'] } }]">
+                <li class="fas fa-arrow-left"></li>
+            </a>
         </div>
         <div style="background-color: #fff; border-radius: 10px;">
             <p class="title_mother text-uppercase">
@@ -71,7 +69,7 @@
                     </div>
                 </mat-step>
 
-                <mat-step [stepControl]="buy">
+                <mat-step [stepControl]="buies">
                     <form [formGroup]="solicitud">
                         <ng-template matStepLabel>Solicitud</ng-template>
                         <div *ngIf="occs">
@@ -92,27 +90,27 @@
                                 </mat-label>
                                 <input matInput formControlName="serial" placeholder="123456789" type="text">
                             </mat-form-field>
-    
+
                             <button class="stepBtn" mat-raised-button (click)="buscarPos()">
                                 Buscar
                             </button>
                         </div>
                     </form>
 
-                    <form [formGroup]="buy">
+                    <form [formGroup]="buies[i]" #f="ngForm" *ngFor="let format of formats_buy; let i=index">
                         <ng-template matStepLabel>Datos de la Venta</ng-template>
                         <div>
                             <div>
                                 <div class="container_agent">
                                     <mat-form-field appearance="outline" class="container_box_space">
                                         <mat-label>Modelo</mat-label>
-                                        <mat-select disableRipple formControlName="modelo">
+                                        <mat-select disableRipple formControlName="modelo" disabled>
                                             <mat-option *ngFor="let modelo of modelos" value={{modelo.id}}>
                                                 {{modelo.modelo}} </mat-option>
                                         </mat-select>
                                     </mat-form-field>
 
-                                    <!-- <div class="container_agent">
+                                    <div class="container_agent">
                                         <form [formGroup]="formats_buy[i].sims[isim]" class="formulario"
                                             *ngFor="let format of formats_buy[i].sims; let isim=index">
                                             <mat-form-field appearance="outline" class="container_box_space">
@@ -123,9 +121,9 @@
                                                 </mat-select>
                                             </mat-form-field>
                                         </form>
-                                    </div> -->
+                                    </div>
 
-                                    
+<!-- 
                                     <div *ngIf="validacionPos">
                                         <div *ngFor="let sim of validacionPos.item.sim">
                                             <mat-form-field appearance="outline" class="ocultar">
@@ -135,16 +133,16 @@
                                                 <input matInput type="text" disabled value="{{sim.modelo}}">
                                             </mat-form-field>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
 
-                                <mat-form-field appearance="outline" class="container_box_space">
+                                <!-- <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Plataforma de Pago</mat-label>
                                     <mat-select disableRipple formControlName="plataforma">
                                         <mat-option *ngFor="let plataforma of plataformas" value={{plataforma.id}}>
                                             {{plataforma.plataforma}} </mat-option>
                                     </mat-select>
-                                </mat-form-field>
+                                </mat-form-field> -->
 
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Plan</mat-label>
@@ -181,12 +179,11 @@
                                     <input matInput formControlName="cod_afiliado" placeholder="1234" type="text"
                                         (keypress)="onlyNumberKey($event)" maxlength="8">
                                 </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
+                                <!-- <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Terminal</mat-label>
                                     <input matInput formControlName="terminal" placeholder="1234" type="text"
                                         (keypress)="onlyNumberKey($event)" maxlength="3">
-                                </mat-form-field>
+                                </mat-form-field> -->
                             </div>
                         </div>
                     </form>
@@ -204,34 +201,15 @@
                 <mat-step [stepControl]="document">
                     <form [formGroup]="document">
                         <ng-template matStepLabel>Carga de Documentos</ng-template>
-
                         <div>
                             <h6>Referencia Bancaria</h6>
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>
-                                    Referencia Bancaria
-                                </mat-label>
-                                <input matInput formControlName="referencia" placeholder="Referencia Bancaria"
-                                    type="text">
-                            </mat-form-field>
+                            <app-uploader (uploaded)="upload($event, 'RB')"></app-uploader>
 
                             <h6>Autorizacion cargo a cuenta</h6>
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>
-                                    Autorizacion cargo a cuenta
-                                </mat-label>
-                                <input matInput formControlName="referencia" placeholder="Referencia Bancaria"
-                                    type="text">
-                            </mat-form-field>
+                            <app-uploader (uploaded)="upload($event, 'ACC')"></app-uploader>
 
                             <h6>Contrato</h6>
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>
-                                    Contrato
-                                </mat-label>
-                                <input matInput formControlName="referencia" placeholder="Referencia Bancaria"
-                                    type="text">
-                            </mat-form-field>
+                            <app-uploader (uploaded)="upload($event, 'C')"></app-uploader>
                         </div>
                         <!-- <div *ngIf="getTipoCliente()=='N'"> -->
                     </form>

@@ -27,7 +27,7 @@ import { TipoDiferidoInterface } from '../models/tipo_diferido';
 export interface VerifyResponse {
     municipios: MunicipioInterface[];
     contribuyentes: ContribuyenteInterface[];
-    //roles: RolInterface[];
+    roles: RolInterface[];
     //datos: string;
     //has_keys: string;
     bancos_fraccion: any[];
@@ -83,7 +83,7 @@ export class VerifyDecrypter {
             M: this.crypto.decryptJson(value.M),
             municipios: JSON.parse(this.crypto.decryptJson(value.municipios)),
             contribuyentes: JSON.parse(this.crypto.decryptJson(value.contribuyentes)),
-            //roles: JSON.parse(this.crypto.decryptJson(value.roles)),
+            roles: JSON.parse(this.crypto.decryptJson(value.roles)),
             R: value.R,
             //datos: JSON.parse(this.crypto.decryptJson(value.datos)),
             //has_keys: this.crypto.decryptJson(value.has_keys),

@@ -16,5 +16,5 @@ export class SaleRequestInterface {
     sims?: any;
     solicitudes_bancos?:any;
     modelos?:any;
-    
+    solicitud_items?: ItemInterface[];
 }
