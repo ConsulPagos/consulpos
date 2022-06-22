@@ -72,6 +72,8 @@
 
 .container_box_space {
     margin-right: 10px;
+    width: 100%;
+    max-width: 250px;
 }
 
 .container_box_direction {
@@ -119,24 +121,30 @@
     padding: 0.5rem;
 }
 
-.direction {
-    width: 500px;
-    margin: 0px 20px 0px 0px;
+.document{
+    display: flex;
+    flex-wrap: wrap;
 }
+
 
 .direction_form {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
-}
+ }
 
 .btn_tlf{
     margin: 0.5rem;
+    padding-bottom: 1.34375em !important;
+}
+
+.container_phone{
+    margin-right: 10px;
 }
 
 .form_tlf{
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 ::ng-deep .mat-vertical-stepper-header{
@@ -155,3 +163,41 @@
 }
 
 /////////////////////
+
+.image-wrap {
+    padding: 10px;
+    border: solid 1px #e0e0e0;
+    display: inline-block;
+}
+
+.img-space img {
+    display: block;
+    width: 300px;
+    height: auto;
+    margin: auto;
+    cursor: pointer;
+}
+
+.fileInputProfileWrap {
+    width: 100%;
+    height: auto;
+}
+
+.fileInputProfile[disabled] + .img-space{
+    pointer-events: none;
+    cursor: not-allowed!important;
+}
+
+.delete{
+    display: flex;
+    align-items: flex-start;
+}
+
+.btn{
+    margin-left: 10px;
+    border-radius: 100%;
+}
+
+::ng-deep.iti.separate-dial-code input, .iti.separate-dial-code.iti--allow-dropdown.iti-sdc-2 input, .iti.separate-dial-code.iti--allow-dropdown.iti-sdc-3 input, .iti.separate-dial-code.iti--allow-dropdown.iti-sdc-4 input {
+    height: 53px !important;
+} 

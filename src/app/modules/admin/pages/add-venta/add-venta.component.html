@@ -77,13 +77,54 @@
                         <div>
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Surcusal</mat-label>
-                                <mat-select disableRipple formControlName="occ">
+                                <mat-select disableRipple formControlName="occ" disabled>
                                     <mat-option *ngFor="let occ of occs" value={{occ.occ_id}}>
                                         {{occ.occ_name}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
+
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Plataforma de Pago</mat-label>
+                            <mat-select disableRipple formControlName="plataforma">
+                                <mat-option *ngFor="let plataforma of plataformas" value={{plataforma.id}}>
+                                    {{plataforma.plataforma}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Plan</mat-label>
+                            <mat-select disableRipple formControlName="plan">
+                                <mat-option *ngFor="let plan of planes" value={{plan.id}}>
+                                    {{plan.nombre}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Tipo de Cobro</mat-label>
+                            <mat-select disableRipple formControlName="tipocobro">
+                                <mat-option *ngFor="let t_cobro of tipocobros" value={{t_cobro.id}}>
+                                    {{t_cobro.t_cobro}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Banco</mat-label>
+                            <mat-select disableRipple formControlName="banco"
+                                (selectionChange)="getFraccion()">
+                                <mat-option *ngFor="let nombre of bancos_fraccion" value={{nombre.codigo}}>
+                                    {{nombre.nombre}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Tipo de Venta</mat-label>
+                            <mat-select disableRipple formControlName="tipo_venta">
+                                <mat-option *ngFor="let nombre of fraccion_pago" value={{nombre.id}}>
+                                    {{nombre.nombre}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </form>
                     <form [formGroup]="buies[i]" #f="ngForm" *ngFor="let format of formats_buy; let i=index">
                         <ng-template matStepLabel>Datos de la Venta</ng-template>
@@ -97,14 +138,7 @@
                                         <i class="fas fa-minus-circle"></i>
                                     </button>
                                 </div>
-                                <!-- <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Marca</mat-label>
-                                    <mat-select disableRipple formControlName="marca"
-                                        (selectionChange)="getMarca($event.value)">
-                                        <mat-option *ngFor="let marca of marcas" value={{marca.id_marca}}>
-                                            {{marca.marca}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field> -->
+
                                 <div class="container_agent">
                                     <mat-form-field appearance="outline" class="container_box_space">
                                         <mat-label>Modelo</mat-label>
@@ -126,10 +160,7 @@
                                             </mat-form-field>
                                         </form>
                                     </div>
-                                </div>
 
-
-                                <div>
                                     <button class="btn_form_add_agent" mat-icon-button color="primary"
                                         aria-label="Example icon button with a menu icon" (click)="add_sim(i)"
                                         *ngIf="(formats_buy[i].sims.length === 1 || formats_buy[i].sims.length === 0)">
@@ -147,51 +178,6 @@
                                 </div>
 
                                 <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Plataforma de Pago</mat-label>
-                                    <mat-select disableRipple formControlName="plataforma">
-                                        <mat-option *ngFor="let plataforma of plataformas" value={{plataforma.id}}>
-                                            {{plataforma.plataforma}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Plan</mat-label>
-                                    <mat-select disableRipple formControlName="plan">
-                                        <mat-option *ngFor="let plan of planes" value={{plan.id}}>
-                                            {{plan.nombre}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Tipo de Venta</mat-label>
-                                    <mat-select disableRipple formControlName="tipo_venta">
-                                        <mat-option *ngFor="let nombre of fraccion_pagos" value={{nombre.id}}>
-                                            {{nombre.nombre}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Tipo de Cobro</mat-label>
-                                    <mat-select disableRipple formControlName="tipocobro">
-                                        <mat-option *ngFor="let t_cobro of tipocobros" value={{t_cobro.id}}>
-                                            {{t_cobro.t_cobro}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <!-- <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Lugar de la entrega</mat-label>
-                                    <input matInput formControlName="lugar_entrega" placeholder="1234" type="text">
-                                </mat-form-field> -->
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Banco</mat-label>
-                                    <mat-select disableRipple formControlName="banco">
-                                        <mat-option *ngFor="let nombre of bancos" value={{nombre.codigo}}>
-                                            {{nombre.nombre}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Numero de cuenta POS</mat-label>
                                     <input matInput formControlName="numero_cuenta_pos" placeholder="1234" type="text"
                                         (keypress)="onlyNumberKey($event)" maxlength="20">
@@ -203,11 +189,11 @@
                                         (keypress)="onlyNumberKey($event)" maxlength="8">
                                 </mat-form-field>
 
-                                <mat-form-field appearance="outline" class="container_box_space">
+                                <!-- <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Terminal</mat-label>
                                     <input matInput formControlName="terminal" placeholder="1234" type="text"
                                         (keypress)="onlyNumberKey($event)" maxlength="2">
-                                </mat-form-field>
+                                </mat-form-field> -->
 
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Precio USD</mat-label>
@@ -249,31 +235,13 @@
 
                         <div>
                             <h6>Referencia Bancaria</h6>
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>
-                                    Referencia Bancaria
-                                </mat-label>
-                                <input matInput formControlName="referencia" placeholder="Referencia Bancaria"
-                                    type="text">
-                            </mat-form-field>
+                            <app-uploader (uploaded)="upload($event, 'RB')"></app-uploader>
 
                             <h6>Autorizacion cargo a cuenta</h6>
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>
-                                    Autorizacion cargo a cuenta
-                                </mat-label>
-                                <input matInput formControlName="referencia" placeholder="Referencia Bancaria"
-                                    type="text">
-                            </mat-form-field>
+                            <app-uploader (uploaded)="upload($event, 'ACC')"></app-uploader>
 
                             <h6>Contrato</h6>
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>
-                                    Contrato
-                                </mat-label>
-                                <input matInput formControlName="referencia" placeholder="Referencia Bancaria"
-                                    type="text">
-                            </mat-form-field>
+                            <app-uploader (uploaded)="upload($event, 'C')"></app-uploader>
                         </div>
                         <!-- <div *ngIf="getTipoCliente()=='N'"> -->
                     </form>

@@ -46,7 +46,7 @@ export class ModalAsignacionComponent implements OnInit {
 
     this.asignacion = new FormGroup({
       serial: new FormControl(this.x, [Validators.required]),
-      afiliado: new FormControl(this.dataVenta.afiliado, [Validators.required]),
+      // afiliado: new FormControl(this.dataVenta.afiliado, [Validators.required]),
     });
   }
 
@@ -124,6 +124,8 @@ export class ModalAsignacionComponent implements OnInit {
 
     })
   }
+
+  
   liberarSim() {
     const inputs = [];
     this.dataVenta.modelos.forEach(f => {

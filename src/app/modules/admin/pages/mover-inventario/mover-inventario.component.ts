@@ -91,7 +91,6 @@ export class MoverInventarioComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.searchpos.items)
       console.log(this.searchpos)
       this.items = this.searchpos.items
-
     })
   }
 
@@ -112,8 +111,8 @@ export class MoverInventarioComponent implements OnInit {
         this.selection.selected.forEach((i: any) => {
           items.push({
             cod_serial: i.cod_serial,
-            so: (result.so)?"SI":"NO",
-            llave: (result.key)?"SI":"NO"
+            so: (result.so) ? "SI" : "NO",
+            llave: (result.key) ? "SI" : "NO"
           })
         })
         this.submit(items)

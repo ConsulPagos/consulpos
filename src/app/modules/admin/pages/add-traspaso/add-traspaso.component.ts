@@ -40,6 +40,8 @@ import { CategoriaInterface } from 'src/app/models/categoria';
 import { ValidacionCategoriasDecrypter, ValidacionCategoriasResponse } from 'src/app/models/validacioncategoria_response';
 import { ValidacionMarcaDecrypter, ValidacionMarcaResponse } from 'src/app/models/validacionmarca_response';
 import { InventarioService } from 'src/app/shared/services/inventario.service';
+import { CambioPosResponse, CambioPosDecrypter } from 'src/app/models/cambiopos_response';
+import { MatSnackBar } from '@angular/material/snack-bar';
 //****************************************************************************************//
 
 @Component({
@@ -75,10 +77,10 @@ export class AddTraspasoComponent implements OnInit {
 
   marcaResponse: ValidacionMarcaResponse;
   marcas: MarcaInterface[];
-
+  validacionPos: CambioPosResponse;
   categoriaResponse: ValidacionCategoriasResponse;
   categorias: CategoriaInterface[];
-
+  invalid = false;
   //****************************************************************************************//
   constructor(
     private title: Title,
@@ -92,6 +94,7 @@ export class AddTraspasoComponent implements OnInit {
     private modal: ModalService,
     private loader: LoaderService,
     private inventario: InventarioService,
+    private toster: ToasterService
   ) {
 
   }
@@ -104,6 +107,7 @@ export class AddTraspasoComponent implements OnInit {
 
   solicitud = new FormGroup({
     occ: new FormControl('', [Validators.required]),
+    serial: new FormControl('', [Validators.required]),
   });
 
   sim = new FormGroup({
@@ -119,7 +123,7 @@ export class AddTraspasoComponent implements OnInit {
     this.title.setTitle('ConsulPos | Agregar Traspaso')
     this.occUser()
     // this.doSimModels()
-    this.add_buy()
+
     this.marca()
     this.categoria()
     this.modelos = JSON.parse(this.storage.get(constant.MODELOS)).modelos
@@ -133,37 +137,6 @@ export class AddTraspasoComponent implements OnInit {
     console.log(this.marcas)
   }
 
-  add_buy() {
-    var newFormat: SaleRequestInterface = {};
-    var buy = new FormGroup({
-      modelo: new FormControl('', [Validators.required]),
-      plataforma: new FormControl('', [Validators.required]),
-      banco: new FormControl('', [Validators.required]),
-      numero_cuenta_pos: new FormControl('', [Validators.required, Validators.minLength(20)]),
-      lugar_entrega: new FormControl(''),
-      tipocobro: new FormControl('', [Validators.required]),
-      plan: new FormControl('', [Validators.required]),
-      terminal: new FormControl(''),
-      cod_afiliado: new FormControl(''),
-    });
-    var sim = new FormGroup({
-      operadora: new FormControl('', [Validators.required]),
-    });
-    newFormat.sims = [sim]
-    this.buies.push(buy);
-    this.formats_buy.push(newFormat);
-  }
-
-  add_sim(index: number) {
-    var sim = new FormGroup({
-      operadora: new FormControl('', [Validators.required]),
-    });
-    this.formats_buy[index].sims.push(sim)
-  }
-
-  deleteSim(index: number, indexsim: number) {
-    this.formats_buy[index].sims.splice(indexsim, 1);
-  }
 
   verificar_usuario() {
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
@@ -200,6 +173,8 @@ export class AddTraspasoComponent implements OnInit {
     this.venta.doOccUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.validacionoccresponse = new ValidacionOccDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.occs = JSON.parse(this.validacionoccresponse.occ_usuarios)
+      this.solicitud.get("occ").setValue(this.occs[0].occ_id)
+      //this.crypto.setKeys(this.validacionoccresponse.keyS, this.validacionoccresponse.ivJ, this.validacionoccresponse.keyJ, this.validacionoccresponse.ivS)
       this.doSimModels()
     })
   }
@@ -340,14 +315,71 @@ export class AddTraspasoComponent implements OnInit {
     })
   }
 
-  buiesInvalid() {
-    var invalid = false;
-    for (let index = 0; index < this.buies.length; index++) {
-      if (this.buies[index].invalid) {
-        invalid = true
-        break;
+
+
+
+  buy = new FormGroup({
+    modelo: new FormControl('', [Validators.required]),
+    plataforma: new FormControl('', [Validators.required]),
+    banco: new FormControl('', [Validators.required]),
+    numero_cuenta_pos: new FormControl('', [Validators.required, Validators.minLength(20)]),
+    precio_usd: new FormControl(''),
+    lugar_entrega: new FormControl(''),
+    tipocobro: new FormControl('', [Validators.required]),
+    plan: new FormControl('', [Validators.required]),
+    tipo_venta: new FormControl(''),
+    terminal: new FormControl(''),
+    cod_afiliado: new FormControl(''),
+    monto: new FormControl(''),
+  });
+
+  buscarPos() {
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      cod_serial: this.crypto.encryptJson(this.solicitud.get('serial').value),
+    }))
+    this.venta.informacionDeEquipo(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      console.log(JSON.parse(this.crypto.decryptString(res)))
+      this.validacionPos = new CambioPosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      // console.log(this.validacionPos)
+      // console.log(this.validacionPos.item.sim)
+      // console.log(this.validacionPos.item.cliente.rif);
+
+      // this.buy.get('modelo').setValue(this.validacionPos.item.modelo_id)
+      // this.buy.get('plataforma').setValue(this.validacionPos.item.id_plataforma)
+      // this.buy.get('plan').setValue(this.validacionPos.item.plan_id)
+      // this.buy.get('tipocobro').setValue(this.validacionPos.item.id_t_cobro)
+      // this.buy.get('banco').setValue(this.validacionPos.item.codigo)
+      // this.buy.get('numero_cuenta_pos').setValue(this.validacionPos.item.cuenta)
+      // this.buy.get('cod_afiliado').setValue(this.validacionPos.item.afiliado)
+      // this.buy.get('terminal').setValue(this.validacionPos.item.terminal)
+
+      var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
+      console.log(rif);
+      console.log(this.validacionPos.item.cliente.rif);
+      this.invalid = false
+      if (this.validacionPos && this.validacionPos.item && this.validacionPos.item.cliente.rif == rif) {
+        this.invalid = true
+        this.validacionPos = null
+        this.toster.error('Los RIF no deben ser iguales')
+        console.log(this.invalid);
+        console.log(rif);
+        console.log(this.validacionPos.item.cliente.rif);
+        // this.buy.get('modelo').setValue(this.validacionPos.item.modelo_id)
+        // this.buy.get('plataforma').setValue(this.validacionPos.item.id_plataforma)
+        // this.buy.get('plan').setValue(this.validacionPos.item.plan_id)
+        // this.buy.get('tipocobro').setValue(this.validacionPos.item.id_t_cobro)
+        // this.buy.get('banco').setValue(this.validacionPos.item.codigo)
+        // this.buy.get('numero_cuenta_pos').setValue(this.validacionPos.item.cuenta)
+        // this.buy.get('cod_afiliado').setValue(this.validacionPos.item.afiliado)
+        // this.buy.get('terminal').setValue(this.validacionPos.item.terminal)
       }
-    }
-    return invalid
+
+    })
   }
+
+
+  // 9994150093074860024FP
 }

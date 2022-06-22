@@ -1,0 +1,184 @@
+<!-- Vista de Agregar Cliente -->
+<section id="addPago">
+    <div class="container-fluid">
+        <div class="structur">
+            <div>
+                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                    [routerLink]="['/admin/app',{ outlets: { adr: ['pago-pendiente'] } }]">
+                    <li class="fas fa-arrow-left"></li>
+                </a>
+            </div>
+        </div>
+        <div style="background-color: #fff; border-radius: 10px;">
+            <div class="container-fluid rounded bg-white mb-5" *ngFor="let item of addPay.solicitudes_banco">
+                <h4 class="text-center">
+                    Agregar pago
+                </h4>
+                <div class="sub-title">
+                    <div class="text-sub-title">
+                        <h6>
+                            <strong>Venta Nº: </strong>
+                            {{addPay.number}}
+                        </h6>
+                    </div>
+                    <div class="text-sub-title">
+                        <h6>
+                            <strong>Rif: </strong>
+                            {{addPay.rif}}
+                        </h6>
+                    </div>
+                    <div class="text-sub-title">
+                        <h6>
+                            <strong>Razon social: </strong>
+                            {{addPay.razon_social}}
+                        </h6>
+                    </div>
+                    <div class="text-sub-title">
+                        <h6>
+                            <strong>Cliente: </strong>
+                            {{item.fraccion_desc}}
+                        </h6>
+                    </div>
+                </div>
+            </div>
+
+
+            
+
+            
+                <form [formGroup]="pay">
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Forma de Pago</mat-label>
+                        <mat-select disableRipple formControlName="t_pago">
+                            <mat-option *ngFor="let pago of t_pagos" value={{pago.t_pago_id}}>
+                                {{pago.pago}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div *ngIf="pay.get('t_pago').value">
+                        <mat-form-field class="box" appearance="outline">
+                            <mat-label>Monto Pagado</mat-label>
+                            <input matInput type="number" formControlName="monto" (change)="setDivisa(i)">
+
+                        </mat-form-field>
+
+                        <mat-form-field class="box" appearance="outline">
+                            <mat-label>Descripcion</mat-label>
+                            <input matInput type="text" formControlName="descripcion" maxlength="45">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Fecha del Pago</mat-label>
+                            <input matInput [matDatepicker]="dp3" disabled [max]="currentYear" formControlName="fecha">
+                            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                        </mat-form-field>
+
+                        <app-uploader (uploaded)="upload($event, 'PAGO')"></app-uploader>
+                    </div>
+
+                </form>
+                <div *ngFor="let format of formats_payments; let i=index">
+                <form *ngIf="formDinamic[i] != undefined" [formGroup]="formDinamic[i]">
+                    <div *ngIf="pay.get('t_pago').value != null">
+                        <div *ngFor="let caracteristica of getInput(pay.get('t_pago').value)">
+                            <div [ngSwitch]="caracteristica.tipo">
+
+                                <div *ngSwitchCase="'string'">
+                                    <mat-form-field class="box" appearance="outline">
+                                        <mat-label>{{caracteristica.caracteristica}}</mat-label>
+                                        <input matInput type="text"
+                                            [formControlName]="caracteristica.id_caracteristica">
+                                    </mat-form-field>
+                                </div>
+
+                                <div *ngSwitchCase="'select'">
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Banco</mat-label>
+                                        <mat-select disableRipple [formControlName]="caracteristica.id_caracteristica">
+                                            <mat-option *ngFor="let nombre of bancos" value={{nombre.codigo}}>
+                                                {{nombre.nombre}} </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div *ngSwitchCase="'int'">
+                                    <mat-form-field class="box" appearance="outline">
+                                        <mat-label>{{caracteristica.caracteristica}}</mat-label>
+                                        <input matInput type="number" (keypress)="onlyNumberKey($event)"
+                                            [formControlName]="caracteristica.id_caracteristica">
+                                    </mat-form-field>
+                                </div>
+                                <div *ngSwitchCase="'file'">
+                                    <app-upload
+                                        (url)="formDinamic[i].get(caracteristica.id_caracteristica).setValue($event)">
+                                    </app-upload>
+
+                                    <div *ngIf="formDinamic[i].get(caracteristica.id_caracteristica).value"
+                                        class="voucherpay">
+                                        <img src={{formDinamic[i].get(caracteristica.id_caracteristica).value}}
+                                            alt="imgPay">
+                                        <button mat-mini-fab mat-button (click)="deleteimg()">
+                                            <mat-icon>delete_sweep</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div>
+                <table class="table-pay">
+                    <tr>
+                        <th>Total a pagar USD</th>
+                        <th>Total facturado Bs.S</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>{{total}}</p>
+                        </td>
+                        <td>
+                            <p>{{total_Bs}}</p>
+                        </td>
+                    </tr>
+                    <tr class="diferencia">
+                        <th>Diferencia en USD</th>
+                        <th>Diferencia en Bs.S</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>{{totalPago.toFixed(2)}}</p>
+                        </td>
+                        <td>{{totalPago * tasa}}</td>
+                    </tr>
+                </table>
+
+                <table class="table-pay">
+                    <tr>
+                        <th>Tasa</th>
+                        <th>IVA</th>
+                        <th>IGTF</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>{{tasa}}</p>
+                        </td>
+                        <td>
+                            <p>{{total_IVA}}</p>
+                        </td>
+                        <td>
+                            <p>{{total_IGTF}}</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <button mat-raised-button (click)="save()" [disabled]="totalPago != 0">Cargar
+                    Pago</button>
+            </div>
+        </div>
+    </div>
+</section>

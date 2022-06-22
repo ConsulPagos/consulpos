@@ -10,3 +10,16 @@ export interface ClienteDocumentoInterface {
   identificador: string;
   t_cliente: string;
 }
+
+export interface TipoBancoInterface {
+  codigo: string;
+  configuracion: number;
+  id_plataforma: number;
+  fraccion_pago: ClienteDocumentoInterface[];
+  nombre: string;
+}
+
+export interface FraccionBancoInterface {
+  id: number;
+  nombre: string;
+}

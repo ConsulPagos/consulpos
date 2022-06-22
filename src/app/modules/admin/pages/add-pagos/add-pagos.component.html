@@ -1,31 +1,47 @@
 <!-- Vista de Agregar Cliente -->
 <section id="addPago">
-    <!-- Botones del Navbar -->
-    <div class="title">
-        <div class="d-flex">
-            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-                [routerLink]="['/admin/app',{ outlets: { adr: ['pagos'] } }]">
-                <li class="fas fa-arrow-left"></li>
-            </a>
-        </div>
-    </div>
-
     <div class="container-fluid">
+        <div class="structur">
+            <div>
+                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                    [routerLink]="['/admin/app',{ outlets: { adr: ['pagos'] } }]">
+                    <li class="fas fa-arrow-left"></li>
+                </a>
+            </div>
+        </div>
         <div style="background-color: #fff; border-radius: 10px;">
-            <h6 class="title_mother" *ngFor="let item of addPay.solicitudes_banco">Agregar pago a la venta
-                {{addPay.number}} - {{addPay.rif}} -
-                {{addPay.razon_social}} - {{item.fraccion_desc}}</h6>
+            <div class="container-fluid rounded bg-white mb-5" >
+                <h4 class="text-center">
+                    Agregar pago
+                </h4>
+                <div class="sub-title">
+                    <div class="text-sub-title">
+                        <h6>
+                            <strong>Venta Nº: </strong>
+                            {{addPay.number}}
+                        </h6>
+                    </div>
+                    <div class="text-sub-title">
+                        <h6>
+                            <strong>Rif: </strong>
+                            {{addPay.rif}}
+                        </h6>
+                    </div>
+                    <div class="text-sub-title">
+                        <h6>
+                            <strong>Razon social: </strong>
+                            {{addPay.razon_social}}
+                        </h6>
+                    </div>
+                    <div class="text-sub-title">
+                        <h6 >
+                            <strong>Tipo de pago: </strong>
+                            {{this.addPay.solicitudes_banco[0].fraccion_desc}}
+                        </h6>
+                    </div>
+                </div>
+            </div>
 
-            <!-- <form [formGroup]="formtasa">
-                <mat-form-field appearance="outline">
-                    <mat-label>Tasa a aplicar USD</mat-label>
-                    <mat-select disableRipple formControlName="dollar">
-                        <mat-option *ngFor="let tasa of tasas" value={{tasa.monto}}>
-                            {{tasa.monto}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </form> -->
 
             <div *ngFor="let format of formats_payments; let i=index">
                 <div class="d-flex align-items-center ">
@@ -48,8 +64,8 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <div *ngIf="payments[i].get('t_pago').value != null">
 
+                    <div *ngIf="payments[i].get('t_pago').value != null">
                         <mat-form-field class="box" appearance="outline">
                             <mat-label>Monto Pagado</mat-label>
                             <input matInput type="number" formControlName="monto" (change)="setDivisa(i)">
@@ -67,7 +83,10 @@
                             <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                             <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                         </mat-form-field>
+
+                        <app-uploader (uploaded)="upload($event, 'PAGO')"></app-uploader>
                     </div>
+
                 </form>
                 <form *ngIf="formDinamic[i] != undefined" [formGroup]="formDinamic[i]">
                     <div *ngIf="payments[i].get('t_pago').value != null">
@@ -138,7 +157,7 @@
                             <p>{{total_Bs}}</p>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="diferencia">
                         <th>Diferencia en USD</th>
                         <th>Diferencia en Bs.S</th>
                     </tr>

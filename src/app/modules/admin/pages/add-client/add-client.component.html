@@ -21,7 +21,7 @@
                 <mat-step [stepControl]="identity">
                     <form [formGroup]="identity">
                         <ng-template matStepLabel>Ingrese documento fiscal</ng-template>
-                        <div>
+                        <div class="document">
                             <h6></h6>
                             <mat-form-field appearance="outline" class="container_box">
                                 <mat-label>Tipo</mat-label>
@@ -32,12 +32,12 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline">
+                            <mat-form-field appearance="outline" style="margin-right: 10px;">
                                 <mat-label>
                                     Rif
                                 </mat-label>
                                 <input matInput formControlName="rif" placeholder="123456789" type="text"
-                                    (keypress)="onlyNumberKey($event)" maxlength="11">
+                                    (keypress)="onlyNumberKey($event)" maxlength="9">
                             </mat-form-field>
 
                             <div class="container_error_sell"
@@ -49,19 +49,20 @@
                                 </button>
                             </div>
 
+                            <div *ngIf="!search_client">
+                                <form [formGroup]="client_type">
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Tipo de Cliente</mat-label>
+                                        <mat-select disableRipple formControlName="tipo_cliente">
+                                            <mat-option *ngFor="let t_cliente of tipos_clientes" value={{t_cliente.id}}>
+                                                {{t_cliente.t_cliente}} </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </form>
+                            </div>
                         </div>
                     </form>
-                    <div *ngIf="!search_client">
-                        <form [formGroup]="client_type">
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>Tipo de Cliente</mat-label>
-                                <mat-select disableRipple formControlName="tipo_cliente">
-                                    <mat-option *ngFor="let t_cliente of tipos_clientes" value={{t_cliente.id}}>
-                                        {{t_cliente.t_cliente}} </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </form>
-                    </div>
+
                     <div *ngIf="search_client">
                         <button class="stepBtn" mat-raised-button [disabled]="identity.invalid"
                             (click)="verificar_usuario()">
@@ -205,38 +206,6 @@
                         </div>
 
                         <div>
-
-
-                            <div class="form_tlf">
-                                <div class="btn_tlf">
-                                    <ngx-intl-tel-input [preferredCountries]="preferredCountries"
-                                        [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
-                                        [searchCountryFlag]="true" [searchCountryField]="[
-                                      SearchCountryField.Iso2,
-                                      SearchCountryField.Name
-                                    ]" [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.Venezuela"
-                                        [maxLength]="15" [phoneValidation]="true" [separateDialCode]="true"
-                                        [numberFormat]="PhoneNumberFormat.National" formControlName="phone_1">
-                                    </ngx-intl-tel-input>
-                                </div>
-
-                                <div class="btn_tlf">
-                                    <ngx-intl-tel-input [preferredCountries]="preferredCountries"
-                                        [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
-                                        [searchCountryFlag]="true" [searchCountryField]="[
-                                        SearchCountryField.Iso2,
-                                        SearchCountryField.Name
-                                      ]" [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.Venezuela"
-                                        [maxLength]="15" [phoneValidation]="true" [separateDialCode]="true"
-                                        [numberFormat]="PhoneNumberFormat.National" formControlName="phone_2">
-                                    </ngx-intl-tel-input>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div>
-
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Estado</mat-label>
                                 <mat-select disableRipple formControlName="estado"
@@ -279,27 +248,22 @@
                         </div>
 
                         <div class="direction_form">
-                            <div class="direction">
-                                <mat-form-field class="container_box_direction" appearance="outline">
-                                    <mat-label>Dirección</mat-label>
-                                    <textarea matInput placeholder="Av. Ernesto Blohm" formControlName="direccion"
-                                        type="text" maxlength="510" minlength="5">
+                            <mat-form-field class="container_box_direction" appearance="outline">
+                                <mat-label>Dirección</mat-label>
+                                <textarea matInput placeholder="Av. Ernesto Blohm" formControlName="direccion"
+                                    type="text" maxlength="510" minlength="5">
                                 </textarea>
-                                </mat-form-field>
-                            </div>
+                            </mat-form-field>
 
-                            <div class="direction">
-                                <mat-form-field class="container_box_direction" appearance="outline">
-                                    <mat-label>Punto de referencia</mat-label>
-                                    <textarea matInput placeholder="Pasando Proteccion animal"
-                                        formControlName="pto_referencia" type="text" maxlength="510" minlength="5">
+                            <mat-form-field class="container_box_direction" appearance="outline">
+                                <mat-label>Punto de referencia</mat-label>
+                                <textarea matInput placeholder="Pasando Proteccion animal"
+                                    formControlName="pto_referencia" type="text" maxlength="510" minlength="5">
                                 </textarea>
-                                </mat-form-field>
-                            </div>
+                            </mat-form-field>
                         </div>
 
                         <div>
-
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Via</mat-label>
                                 <mat-select disableRipple formControlName="contacto">
@@ -319,7 +283,30 @@
                                 <input matInput formControlName="red_social_b" placeholder="ConsuPagos" type="text"
                                     maxlength="255" minlength="5">
                             </mat-form-field>
+                        </div>
 
+                        <div class="form_tlf">
+                            <ngx-intl-tel-input [preferredCountries]="preferredCountries"
+                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                [searchCountryField]="[
+                                      SearchCountryField.Iso2,
+                                      SearchCountryField.Name
+                                    ]" [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.Venezuela"
+                                [maxLength]="15" [phoneValidation]="true" [separateDialCode]="true"
+                                [numberFormat]="PhoneNumberFormat.National" formControlName="phone_1"
+                                class="container_phone">
+                            </ngx-intl-tel-input>
+
+                            <ngx-intl-tel-input [preferredCountries]="preferredCountries"
+                                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                [searchCountryField]="[
+                                        SearchCountryField.Iso2,
+                                        SearchCountryField.Name
+                                      ]" [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.Venezuela"
+                                [maxLength]="15" [phoneValidation]="true" [separateDialCode]="true"
+                                [numberFormat]="PhoneNumberFormat.National" formControlName="phone_2"
+                                class="container_phone">
+                            </ngx-intl-tel-input>
                         </div>
                     </form>
 
@@ -429,44 +416,41 @@
                         <div *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'">
                             <div>
                                 <h6>RIF</h6>
-                                <app-upload></app-upload>
+                                <app-uploader (uploaded)="upload($event, 'RIF')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>Cédula de identidad</h6>
-                                <app-upload></app-upload>
+                                <app-uploader (uploaded)="upload($event, 'CI')"></app-uploader>
                             </div>
 
-                            <div>
-                                <h6>Otro</h6>
-                                <app-upload></app-upload>
+                            <div *ngIf="getTipoCliente()=='R'">
+                                <h6>Registro de firma personal</h6>
+                                <app-uploader (uploaded)="upload($event, 'RFP')"></app-uploader>
                             </div>
                         </div>
                         <div *ngIf="getTipoCliente()=='J'">
                             <div>
-                                <h6>RIF</h6>
-                                <app-upload></app-upload>
+                                <h6>RIF Empresa</h6>
+                                <app-uploader (uploaded)="upload($event, 'RIFE')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>Registro Mercantil</h6>
-                                <app-upload></app-upload>
+                                <app-uploader (uploaded)="upload($event, 'RM')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>Cedula Representante Legal</h6>
-                                <app-upload></app-upload>
+                                <app-uploader (uploaded)="upload($event, 'CIR')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>RIF Representante Legal</h6>
-                                <app-upload></app-upload>
+                                <app-uploader (uploaded)="upload($event, 'RIFR')"></app-uploader>
                             </div>
 
-                            <div>
-                                <h6>Otro</h6>
-                                <app-upload></app-upload>
-                            </div>
+
                         </div>
                     </form>
 

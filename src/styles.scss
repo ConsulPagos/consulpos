@@ -1,49 +1,59 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import "./theme.scss";    
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "./theme.scss";
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
 
-html{ 
-    height: 100%; 
+html {
+    height: 100%;
     scroll-behavior: smooth;
 }
 
-body { 
-    margin: 0; 
-    font-family: 'Montserrat', 'medium';
+body {
+    margin: 0;
+    font-family: "Montserrat", "medium";
     color: #ffffff !important;
     font-weight: 400;
 }
 
-h2,h3,h4,h5,h6{
-    font-family: 'Montserrat', 'black' !important;
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Montserrat", "black" !important;
     letter-spacing: 1px !important;
 }
 
-h1{
-    font-family: 'Montserrat', 'medium';
+h1 {
+    font-family: "Montserrat", "medium";
     font-weight: 400;
     letter-spacing: 2px;
 }
 
 p {
-    font-family: 'Montserrat', 'medium';
+    font-family: "Montserrat", "medium";
     font-weight: 300;
 }
 
-input{
+input {
     background-color: transparent;
 }
 
-:focus {outline:0 !important;}
-
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+:focus {
+    outline: 0 !important;
 }
 
-input[type=number] { -moz-appearance:textfield; }
- 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.nav-btn {
+    background: white;
+}

@@ -1,29 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ContribuyenteInterface } from '../../../../models/contribuyente'
-import { EstadoInterface } from '../../../../models/estado'
-import { CiudadInterface } from '../../../../models/ciudad'
-import { ParroquiaInterface } from '../../../../models/parroquia'
-import { MunicipioInterface } from '../../../../models/municipio'
-import { ContactoInterface } from '../../../../models/contacto'
-import { TipodocumentoInterface } from '../../../../models/tipo_documento'
+import { ContribuyenteInterface } from '../../../../models/contribuyente';
+import { EstadoInterface } from '../../../../models/estado';
+import { CiudadInterface } from '../../../../models/ciudad';
+import { ParroquiaInterface } from '../../../../models/parroquia';
+import { MunicipioInterface } from '../../../../models/municipio';
+import { ContactoInterface } from '../../../../models/contacto';
+import { TipodocumentoInterface } from '../../../../models/tipo_documento';
 import { RepresentanteInterface } from 'src/app/models/user';
 import { ValidacionclienteDecrypter, ValidacionclienteResponse } from 'src/app/models/validacioncliente_response';
 import { AddClientDecrypter, AddClientResponse } from 'src/app/models/add_clients_response';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
-import { ClientesService } from 'src/app/shared/services/clientes.service';
+import { ArchiveService } from 'src/app/shared/services/archive.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { constant } from 'src/app/shared/utils/constant';
-import { ActividadComercialInterface } from '../../../../models/actividad_comercial'
+import { ActividadComercialInterface } from '../../../../models/actividad_comercial';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { GeneroInterface } from '../../../../models/genero';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { Router } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
-import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { CeroValidator } from '../../../../shared/validators/cero.validator'
+import { DefaultResponse, DefaultDecrypter } from 'src/app/models/default_response';
+import * as _ from 'lodash';
+import { ClientesService } from 'src/app/shared/services/clientes.service';
+
 
 @Component({
   selector: 'app-add-client',
@@ -55,21 +58,28 @@ export class AddClientComponent implements OnInit {
   currentYear = new Date();
   identity;
 
+  /////////////LOAD IMAGE///////////////
+  default: DefaultResponse;
+  imageError: string;
+  isImageSaved: boolean;
+  cardImageBase64: string;
+
   constructor(
     private title: Title,
     private crypto: CryptoService,
-    private cliente: ClientesService,
+    private archivo: ArchiveService,
     private storage: StorageService,
     private session: SesionService,
     private toaster: ToasterService,
     private router: Router,
     private modal: ModalService,
     private fb: FormBuilder,
+    private cliente: ClientesService
   ) {
 
     this.identity = this.fb.group({
       tipo_doc: ['', [Validators.required]],
-      rif: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(11), Validators.pattern("^[0-9]*$")]],
+      rif: ['253862510', [Validators.required, Validators.minLength(9), Validators.maxLength(11), Validators.pattern("^[0-9]*$")]]
     },
       {
         validator: CeroValidator("rif")
@@ -78,47 +88,50 @@ export class AddClientComponent implements OnInit {
 
   getDoc(): void {
     this.resetStatus()
+    console.log(JSON.parse(this.storage.get(constant.T_DOCS)).t_docs.filter(c => c.t_doc == this.identity.get('tipo_doc').value)[0].clientes_por_documento);
     this.tipos_clientes = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs.filter(c => c.t_doc == this.identity.get('tipo_doc').value)[0].clientes_por_documento
+
+
   }
 
   client_type = new FormGroup({
-    tipo_cliente: new FormControl('', [Validators.required]),
+    tipo_cliente: new FormControl('1', [Validators.required])
   });
 
   client = new FormGroup({
-    razon_social: new FormControl('', [Validators.required]),
-    nombre_comercial: new FormControl('', [Validators.required]),
-    contribuyente: new FormControl('', [Validators.required]),
-    email: new FormControl('', [
+    razon_social: new FormControl('gergsgsgsgfdf', [Validators.required]),
+    nombre_comercial: new FormControl('srgsdrgsgsrg', [Validators.required]),
+    contribuyente: new FormControl('1', [Validators.required]),
+    email: new FormControl('tha@g.com', [
       Validators.required,
       Validators.email,
       Validators.pattern('^[a-zA-Z0-9.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')
     ]),
-    phone_1: new FormControl('', [Validators.required]),
-    phone_2: new FormControl('', [Validators.required]),
-    estado: new FormControl('', [Validators.required]),
-    municipio: new FormControl('', [Validators.required]),
-    parroquia: new FormControl('', [Validators.required]),
-    ciudad: new FormControl('', [Validators.required]),
-    direccion: new FormControl('', [Validators.required]),
-    contacto: new FormControl('', [Validators.required]),
-    codpostal: new FormControl('', [Validators.required]),
-    act_comercial: new FormControl('', [Validators.required]),
-    pto_referencia: new FormControl('', [Validators.required]),
+    phone_1: new FormControl('04242735855', [Validators.required]),
+    phone_2: new FormControl('04242735855', [Validators.required]),
+    estado: new FormControl('1', [Validators.required]),
+    municipio: new FormControl('1', [Validators.required]),
+    parroquia: new FormControl('1', [Validators.required]),
+    ciudad: new FormControl('1', [Validators.required]),
+    direccion: new FormControl('xfgdhedthdgdgrrsgsagr', [Validators.required]),
+    contacto: new FormControl('1', [Validators.required]),
+    codpostal: new FormControl('1080', [Validators.required]),
+    act_comercial: new FormControl('1', [Validators.required]),
+    pto_referencia: new FormControl('zdfgdsgdgdtsgddfthtdh', [Validators.required]),
     red_social_a: new FormControl(''),
     red_social_b: new FormControl(''),
   });
 
   data_vr = new FormGroup({
-    primer_nombre: new FormControl('', [Validators.required]),
-    segundo_nombre: new FormControl('',),
-    primer_apellido: new FormControl('', [Validators.required]),
-    segundo_apellido: new FormControl('',),
-    c_t_doc_cedula: new FormControl('', [Validators.required]),
-    cedula: new FormControl('', [Validators.required]),
-    genero: new FormControl('', [Validators.required]),
+    primer_nombre: new FormControl('Arturo', [Validators.required]),
+    segundo_nombre: new FormControl('Arturo',),
+    primer_apellido: new FormControl('Arturo', [Validators.required]),
+    segundo_apellido: new FormControl('Arturo',),
+    c_t_doc_cedula: new FormControl('1', [Validators.required]),
+    cedula: new FormControl('25386251', [Validators.required]),
+    genero: new FormControl('1', [Validators.required]),
     fecha_nacimiento: new FormControl('', [Validators.required]),
-    profesion: new FormControl('', [Validators.required]),
+    profesion: new FormControl('1', [Validators.required]),
   });
 
   document = new FormGroup({
@@ -134,15 +147,15 @@ export class AddClientComponent implements OnInit {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   agent = new FormGroup({
-    p_nombre_representante: new FormControl('', [Validators.required]),
-    s_nombre_representante: new FormControl('', [Validators.required]),
-    p_apellido_representante: new FormControl('', [Validators.required]),
-    s_apellido_representante: new FormControl('', [Validators.required]),
-    cedula_representante: new FormControl('', [Validators.required]),
-    telefono_local_repre: new FormControl('', [Validators.required]),
-    telefono_movil_repre: new FormControl('', [Validators.required]),
-    email_repre: new FormControl('', [Validators.required]),
-    tipo_doc_rep: new FormControl('', [Validators.required]),
+    p_nombre_representante: new FormControl('Arturo', [Validators.required]),
+    s_nombre_representante: new FormControl('Jose', [Validators.required]),
+    p_apellido_representante: new FormControl('Linares', [Validators.required]),
+    s_apellido_representante: new FormControl('Viola', [Validators.required]),
+    cedula_representante: new FormControl('25386251', [Validators.required]),
+    telefono_local_repre: new FormControl('4242735855', [Validators.required]),
+    telefono_movil_repre: new FormControl('4242735855', [Validators.required]),
+    email_repre: new FormControl('tha@g.com', [Validators.required]),
+    tipo_doc_rep: new FormControl('1', [Validators.required]),
   });
 
   add_agent() {
@@ -194,7 +207,7 @@ export class AddClientComponent implements OnInit {
 
   verificar_usuario() {
     this.search_client = true;
-    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
+    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
@@ -203,7 +216,10 @@ export class AddClientComponent implements OnInit {
     }))
     this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.search_client = this.validacionresponse.value_exists === "true" ? true : false;
+      console.log(this.validacionresponse);
+    
+      this.search_client = this.validacionresponse.value_exists === "true" || this.validacionresponse.afiliado === "true" ? true : false;
+
       if (this.search_client) {
         this.identity.controls['rif'].setErrors({ 'existe': true });
       } else {
@@ -226,10 +242,10 @@ export class AddClientComponent implements OnInit {
       t_doc_id: this.crypto.encryptJson(this.identity.get('tipo_doc').value),
       rif: this.crypto.encryptJson(rif),
       t_cliente_id: this.crypto.encryptJson(this.client_type.get('tipo_cliente').value),
-      razon_social: this.crypto.encryptJson(this.client.get('razon_social').value),
-      comercio: this.crypto.encryptJson(this.client.get('nombre_comercial').value),
+      razon_social: this.crypto.encryptJson(this.client.get('razon_social').value).trim(),
+      comercio: this.crypto.encryptJson(this.client.get('nombre_comercial').value).trim(),
       contribuyente_id: this.crypto.encryptJson(this.client.get('contribuyente').value),
-      email: this.crypto.encryptJson(this.client.get('email').value),
+      email: this.crypto.encryptJson(this.client.get('email').value).trim(),
       estados: this.crypto.encryptJson(this.client.get('estado').value),
       municipios: this.crypto.encryptJson(this.client.get('municipio').value),
       parroquia_id: this.crypto.encryptJson(this.client.get('parroquia').value),
@@ -255,7 +271,7 @@ export class AddClientComponent implements OnInit {
         }
       ]))
     }
-    
+
     if (this.getTipoCliente() == 'J') {
       data = {
         ...data,
@@ -352,6 +368,98 @@ export class AddClientComponent implements OnInit {
     this.parroquias = JSON.parse(this.storage.get(constant.PARROQUIAS)).parroquias.filter(c => c.id_municipio == id)
   }
 
+  // fileChangeEvent(fileInput: any) {
+  //   console.log(fileInput.target.id);
+  //   for (let index = 0; index < fileInput.target.files.length; index++) {
+  //     const g = fileInput.target.files[index];
+  //     console.log(g.name);
+  //     var ext =  g.name.split('.').pop();
+  //     console.log(ext);
+  //   }
+
+  //   this.imageError = null;
+  //   if (fileInput.target.files && fileInput.target.files[0]) {
+  //     console.log(fileInput.target.files);
+  //     // Size Filter Bytes
+  //     const max_size = 20971520;
+  //     const allowed_types = ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf', 'application/msword'];
+  //     const max_height = 15200;
+  //     const max_width = 25600;
+  //     /////////////////////////
+  //     if (fileInput.target.files[0].size > max_size) {
+  //       this.imageError =
+  //         'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+
+  //       return false;
+  //     }
+
+  //     if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
+  //       this.imageError = 'Solo imagenes ( JPG | PNG )';
+  //       return false;
+  //     }
+  //     const reader = new FileReader();
+  //     reader.onload = (e: any) => {
+  //       const image = new Image();
+  //       image.src = e.target.result;
+  //       image.onload = rs => {
+  //         const img_height = rs.currentTarget['height'];
+  //         const img_width = rs.currentTarget['width'];
+
+  //         console.log(img_height, img_width);
+
+
+  //         if (img_height > max_height && img_width > max_width) {
+  //           this.imageError =
+  //             'Maximum dimentions allowed ' +
+  //             max_height +
+  //             '*' +
+  //             max_width +
+  //             'px';
+  //           return false;
+  //         } else {
+
+  //           const imgBase64Path = e.target.result;
+  //           this.cardImageBase64 = imgBase64Path;
+  //           this.isImageSaved = true;
+  //           // this.previewImagePath = imgBase64Path;
+  //           this.upload(ext, fileInput.target.id)
+  //         }
+
+  //       };
+  //     };
+  //     reader.readAsDataURL(fileInput.target.files[0]);
+
+  //   }
+
+  // }
+
+  // removeImage() {
+  //   this.cardImageBase64 = null;
+  //   this.isImageSaved = false;
+  // }
+
+
+  upload(d: any, id: string) {
+    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
+    const encode = d.file.toString()
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      att_by: this.crypto.encryptJson("CLIENTE"),
+      rif: this.crypto.encryptJson(rif),
+      documento: this.crypto.encryptJson(id),
+      extension: this.crypto.encryptJson(d.ext),
+      t_sol_id: this.crypto.encryptJson(null),
+      solicitud: this.crypto.encryptJson(null),
+      file: this.crypto.encryptJson(encode),
+    }))
+    this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.default);
+    })
+  }
+
   save() {
     this.modal.confirm("Desea registrar este cliente?").subscribe(result => {
       if (result) {
@@ -360,4 +468,8 @@ export class AddClientComponent implements OnInit {
     })
   }
 
+
+
+
 }
+

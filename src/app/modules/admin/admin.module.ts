@@ -134,6 +134,22 @@ import { AddDesinstalacionComponent } from './pages/add-desinstalacion/add-desin
 import { AddReactivacionComponent } from './pages/add-reactivacion/add-reactivacion.component';
 import { TablaReactivacionComponent } from './components/tabla-reactivacion/tabla-reactivacion.component';
 import { TablaDesinstalacionComponent } from './components/tabla-desinstalacion/tabla-desinstalacion.component';
+import { TablaPruebaComponent } from './components/tabla-prueba/tabla-prueba.component';
+import { PruebaComponent } from './pages/prueba/prueba.component';
+import { ValidarPruebaComponent } from './pages/validar-prueba/validar-prueba.component';
+import { ValidarPruebaFichaComponent } from './pages/validar-prueba-ficha/validar-prueba-ficha.component';
+import { TablaValidarPruebaComponent } from './components/tabla-validar-prueba/tabla-validar-prueba.component';
+import { ModalAsignacionPruebaComponent } from './components/modal-asignacion-prueba/modal-asignacion-prueba.component';
+import { AddPlanComponent } from './pages/add-plan/add-plan.component';
+import { PlanComponent } from './pages/plan/plan.component';
+import { TablaPlanComponent } from './components/tabla-plan/tabla-plan.component';
+import { AddPagoManualComponent } from './pages/add-pago-manual/add-pago-manual.component';
+import { PagoPendienteComponent } from './pages/pago-pendiente/pago-pendiente.component';
+import { TablaPagoPendienteComponent } from './components/tabla-pago-pendiente/tabla-pago-pendiente.component';
+import { TablaPagoManualComponent } from './components/tabla-pago-manual/tabla-pago-manual.component';
+import { ModalDiferirCuotaComponent } from './components/modal-diferir-cuota/modal-diferir-cuota.component';
+
+
 
 
 @NgModule({
@@ -257,6 +273,20 @@ import { TablaDesinstalacionComponent } from './components/tabla-desinstalacion/
     AddReactivacionComponent,
     TablaReactivacionComponent,
     TablaDesinstalacionComponent,
+    TablaPruebaComponent,
+    PruebaComponent,
+    ValidarPruebaComponent,
+    ValidarPruebaFichaComponent,
+    TablaValidarPruebaComponent,
+    ModalAsignacionPruebaComponent,
+    AddPlanComponent,
+    PlanComponent,
+    TablaPlanComponent,
+    AddPagoManualComponent,
+    PagoPendienteComponent,
+    TablaPagoPendienteComponent,
+    TablaPagoManualComponent,
+    ModalDiferirCuotaComponent,
   ],
 
   imports: [

@@ -1,0 +1,19 @@
+<section id="pago-pendiente">
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">Listado de Pagos Pendientes</span>
+                    </ng-template>
+                    <app-tabla-pago-pendiente 
+                    (addPay)="_addPay($event)" 
+                    (count)='countNuevos = $event' 
+                    class="w-100">
+                    </app-tabla-pago-pendiente>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>

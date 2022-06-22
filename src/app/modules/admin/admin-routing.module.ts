@@ -77,6 +77,13 @@ import { ReactivacionComponent } from './pages/reactivacion/reactivacion.compone
 import { DesinstalacionComponent } from './pages/desinstalacion/desinstalacion.component';
 import { AddDesinstalacionComponent } from './pages/add-desinstalacion/add-desinstalacion.component';
 import { AddReactivacionComponent } from './pages/add-reactivacion/add-reactivacion.component';
+import { PruebaComponent } from './pages/prueba/prueba.component';
+import { ValidarPruebaComponent } from './pages/validar-prueba/validar-prueba.component';
+import { ValidarPruebaFichaComponent } from './pages/validar-prueba-ficha/validar-prueba-ficha.component';
+import { PlanComponent } from './pages/plan/plan.component';
+import { AddPlanComponent } from './pages/add-plan/add-plan.component';
+import { AddPagoManualComponent } from './pages/add-pago-manual/add-pago-manual.component';
+import { PagoPendienteComponent } from './pages/pago-pendiente/pago-pendiente.component';
 
 const routes: Routes = [
   {
@@ -732,6 +739,87 @@ const routes: Routes = [
       },
       {
         path: 'add-reactivacion', component: AddReactivacionComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'prueba', component: PruebaComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'validar-prueba/:id', component: ValidarPruebaComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'validar-prueba-ficha', component: ValidarPruebaFichaComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-plan', component: AddPlanComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'plan', component: PlanComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'pago-manual', component: PagoManualComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-pago-manual', component: AddPagoManualComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'add-pago-manual', component: AddPagoManualComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Configuracion",
+        //   submodulo: "Tasas",
+        //   permiso: "Crear"
+        // }
+      },
+      {
+        path: 'pago-pendiente', component: PagoPendienteComponent, outlet: 'adr',
         // canActivate: [HasPermisoGuard],
         // data: {
         //   modulo: "Configuracion",

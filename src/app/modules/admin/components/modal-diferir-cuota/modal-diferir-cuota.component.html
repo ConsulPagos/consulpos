@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>
+    <li class="fa fa-edit mr-2"></li>
+    <span class="field">
+        Diferir solicitud #{{dataDiferir.solicitud}}
+    </span>
+</h1>
+<div mat-dialog-content class="mat-dialog-content">
+    <div class="pt-2 pb-1 less-padding">
+<h5>
+    ¿Esta seguro que desea diferir esta cuota?
+</h5>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <div class="d-flex w-100">
+        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null">
+            <li class="fa fa-times text-dark"></li>
+        </button>
+
+        <button class="flex-fill confirm action_button" mat-button cdkFocusInitial
+            [mat-dialog-close]="true" (click)="saveConfig()">
+            <li class="fa fa-check"></li>
+        </button>
+    </div>
+</div>

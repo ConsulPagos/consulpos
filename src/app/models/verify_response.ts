@@ -30,6 +30,7 @@ export interface VerifyResponse {
     //roles: RolInterface[];
     //datos: string;
     //has_keys: string;
+    bancos_fraccion: any[];
     bancos: BancoInterface[];
     ciudades: Ciudades[];
     operadoras: OperadoraInterface[];
@@ -115,6 +116,7 @@ export class VerifyDecrypter {
             almacenes: JSON.parse(this.crypto.decryptJson(value.almacenes)),
             proveedores: JSON.parse(this.crypto.decryptJson(value.proveedores)),
             t_solicitudes: JSON.parse(this.crypto.decryptJson(value.t_solicitudes)),
+            bancos_fraccion: JSON.parse(this.crypto.decryptJson(value.bancos_fraccion)),
         }
         console.log(verify)
         return verify

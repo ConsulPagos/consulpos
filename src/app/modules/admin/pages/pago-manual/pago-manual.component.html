@@ -7,12 +7,10 @@
                         <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
                             matBadgePosition="before">Listado de Pagos</span>
                     </ng-template>
-                    <app-tabla-pagos 
-                    (addPay)="_addPay($event)" 
+                    <app-tabla-pago-manual 
                     (count)='countNuevos = $event' 
-                    class="w-100" 
-                    [access_level]="0">
-                    </app-tabla-pagos>
+                    class="w-100" >
+                    </app-tabla-pago-manual>
                 </mat-tab>
             </mat-tab-group>
         </div>

@@ -12,6 +12,7 @@ export const environment = {
   puerto_clientes: 9005,
   puerto_bancario: 9006,
   puerto_inventario: 9007,
+  puerto_archive: 9008,
   divider: ":",
 
   J_KEY: 'vsPlT8h1qZhMh3gxT0vi4htLMuLvrRRQ',

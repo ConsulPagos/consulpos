@@ -458,4 +458,49 @@ export class InventarioService {
     headers.set('Access-Control-Allow-Origin', '*');
     return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
   }
+
+  saveConfPrecio(data) {
+    var path = `/stock/saveConfPrecio`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  deleteConfPrecio(data) {
+    var path = `/stock/deleteConfPrecio`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  detailConfPrecio(data) {
+    var path = `/stock/detailConfPrecio`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  findConfPrecio(data) {
+    var path = `/stock/findConfPrecio`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
+
+  allConfPrecio (data) {
+    var path = `/stock/allConfPrecio `;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
 }

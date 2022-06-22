@@ -100,6 +100,7 @@ export class ClientesService {
     headers.set('Access-Control-Allow-Origin', '*');
     return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'arraybuffer' })
   }
+
   doSummaryPdf(data) {
     var path = `/client/summaryAccount`;
     var headers = new HttpHeaders()
@@ -108,5 +109,6 @@ export class ClientesService {
     headers.set('Access-Control-Allow-Origin', '*');
     return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_clientes}` + path, data, { headers: headers, responseType: 'arraybuffer' })
   }
+
 
 }

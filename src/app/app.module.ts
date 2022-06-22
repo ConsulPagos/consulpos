@@ -27,12 +27,14 @@ import { ChangePasswordDialogComponent } from './shared/components/change-passwo
 import { EditphoneComponent } from './shared/components/editphone/editphone.component';
 import { AngularFireModule } from '@angular/fire';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ChangePasswordDialogComponent,
-    EditphoneComponent,  ],
+    EditphoneComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
