@@ -77,13 +77,54 @@
                         <div>
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Surcusal</mat-label>
-                                <mat-select disableRipple formControlName="occ">
+                                <mat-select disableRipple formControlName="occ" disabled>
                                     <mat-option *ngFor="let occ of occs" value={{occ.occ_id}}>
                                         {{occ.occ_name}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
+
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Plataforma de Pago</mat-label>
+                            <mat-select disableRipple formControlName="plataforma">
+                                <mat-option *ngFor="let plataforma of plataformas" value={{plataforma.id}}>
+                                    {{plataforma.plataforma}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Plan</mat-label>
+                            <mat-select disableRipple formControlName="plan">
+                                <mat-option *ngFor="let plan of planes" value={{plan.id}}>
+                                    {{plan.nombre}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Tipo de Cobro</mat-label>
+                            <mat-select disableRipple formControlName="tipocobro">
+                                <mat-option *ngFor="let t_cobro of tipocobros" value={{t_cobro.id}}>
+                                    {{t_cobro.t_cobro}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Banco</mat-label>
+                            <mat-select disableRipple formControlName="banco"
+                                (selectionChange)="getFraccion()">
+                                <mat-option *ngFor="let nombre of bancos_fraccion" value={{nombre.codigo}}>
+                                    {{nombre.nombre}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Tipo de Venta</mat-label>
+                            <mat-select disableRipple formControlName="tipo_venta">
+                                <mat-option *ngFor="let nombre of fraccion_pago" value={{nombre.id}}>
+                                    {{nombre.nombre}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </form>
                     <form [formGroup]="buies[i]" #f="ngForm" *ngFor="let format of formats_buy; let i=index">
                         <ng-template matStepLabel>Datos de la Venta</ng-template>
@@ -119,10 +160,7 @@
                                             </mat-form-field>
                                         </form>
                                     </div>
-                                </div>
 
-
-                                <div>
                                     <button class="btn_form_add_agent" mat-icon-button color="primary"
                                         aria-label="Example icon button with a menu icon" (click)="add_sim(i)"
                                         *ngIf="(formats_buy[i].sims.length === 1 || formats_buy[i].sims.length === 0)">
@@ -138,47 +176,6 @@
                                         Eliminar una Sim
                                     </button>
                                 </div>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Plataforma de Pago</mat-label>
-                                    <mat-select disableRipple formControlName="plataforma">
-                                        <mat-option *ngFor="let plataforma of plataformas" value={{plataforma.id}}>
-                                            {{plataforma.plataforma}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Plan</mat-label>
-                                    <mat-select disableRipple formControlName="plan">
-                                        <mat-option *ngFor="let plan of planes" value={{plan.id}}>
-                                            {{plan.nombre}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Tipo de Cobro</mat-label>
-                                    <mat-select disableRipple formControlName="tipocobro">
-                                        <mat-option *ngFor="let t_cobro of tipocobros" value={{t_cobro.id}}>
-                                            {{t_cobro.t_cobro}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Banco</mat-label>
-                                    <mat-select disableRipple formControlName="banco"
-                                        (selectionChange)="getFraccion(i)">
-                                        <mat-option *ngFor="let nombre of bancos_fraccion" value={{nombre.codigo}}>
-                                            {{nombre.nombre}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Tipo de Venta</mat-label>
-                                    <mat-select disableRipple formControlName="tipo_venta">
-                                        <mat-option *ngFor="let nombre of fraccion_pago" value={{nombre.id}}>
-                                            {{nombre.nombre}} </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
 
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Numero de cuenta POS</mat-label>
@@ -238,31 +235,13 @@
 
                         <div>
                             <h6>Referencia Bancaria</h6>
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>
-                                    Referencia Bancaria
-                                </mat-label>
-                                <input matInput formControlName="referencia" placeholder="Referencia Bancaria"
-                                    type="text">
-                            </mat-form-field>
+                            <app-uploader (uploaded)="upload($event, 'RB')"></app-uploader>
 
                             <h6>Autorizacion cargo a cuenta</h6>
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>
-                                    Autorizacion cargo a cuenta
-                                </mat-label>
-                                <input matInput formControlName="referencia" placeholder="Referencia Bancaria"
-                                    type="text">
-                            </mat-form-field>
+                            <app-uploader (uploaded)="upload($event, 'ACC')"></app-uploader>
 
                             <h6>Contrato</h6>
-                            <mat-form-field appearance="outline" class="container_box_space">
-                                <mat-label>
-                                    Contrato
-                                </mat-label>
-                                <input matInput formControlName="referencia" placeholder="Referencia Bancaria"
-                                    type="text">
-                            </mat-form-field>
+                            <app-uploader (uploaded)="upload($event, 'C')"></app-uploader>
                         </div>
                         <!-- <div *ngIf="getTipoCliente()=='N'"> -->
                     </form>

@@ -126,12 +126,25 @@ export class ValidarPruebaFichaComponent implements OnInit {
       nombre: this.crypto.encryptJson(this.form.get('name').value),
       cod_serial: this.crypto.encryptJson(this.form.get('serial').value),
       solicitud: this.crypto.encryptJson(this.item.solicitud),
+      solicitud_banco_id: this.crypto.encryptJson(this.item.solicitud_banco_id),
     }))
     console.log("verify")
     this.venta.confirmacionTestCorrecto(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      switch (this.default.R) {
+        case constant.R0:
+          this.router.navigateByUrl('/admin/app/(adr:prueba)')
+          this.toaster.success(this.default.M)
+          break;
+        case constant.R1:
+          this.toaster.error(this.default.M)
+          break;
+        default:
+          this.toaster.default_error()
+          break;
+      }
     })
   }
 

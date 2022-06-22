@@ -40,6 +40,8 @@ import { CategoriaInterface } from 'src/app/models/categoria';
 import { ValidacionCategoriasDecrypter, ValidacionCategoriasResponse } from 'src/app/models/validacioncategoria_response';
 import { ValidacionMarcaDecrypter, ValidacionMarcaResponse } from 'src/app/models/validacionmarca_response';
 import { InventarioService } from 'src/app/shared/services/inventario.service';
+import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
+import { ArchiveService } from 'src/app/shared/services/archive.service';
 //****************************************************************************************//
 
 @Component({
@@ -65,7 +67,7 @@ export class AddVentaComponent implements OnInit {
 
   bancos_fraccion: TipoBancoInterface[];
   fraccion_pago: any[];
-
+  default: DefaultResponse;
   comunicaciones: ComunicacionInterface[];
   operadoras: OperadoraInterface[];
   tipocobros: TipoCobroInterface[];
@@ -98,6 +100,7 @@ export class AddVentaComponent implements OnInit {
     private modal: ModalService,
     private loader: LoaderService,
     private inventario: InventarioService,
+    private archivo: ArchiveService,
   ) {
 
   }
@@ -110,6 +113,11 @@ export class AddVentaComponent implements OnInit {
 
   solicitud = new FormGroup({
     occ: new FormControl('', [Validators.required]),
+    plataforma: new FormControl('', [Validators.required]),
+    plan: new FormControl('', [Validators.required]),
+    tipocobro: new FormControl('', [Validators.required]),
+    banco: new FormControl('', [Validators.required]),
+    tipo_venta: new FormControl('', [Validators.required]),
   });
 
   sim = new FormGroup({
@@ -146,14 +154,9 @@ export class AddVentaComponent implements OnInit {
     var newFormat: SaleRequestInterface = {};
     var buy = new FormGroup({
       modelo: new FormControl('', [Validators.required]),
-      plataforma: new FormControl('', [Validators.required]),
-      banco: new FormControl('', [Validators.required]),
       numero_cuenta_pos: new FormControl('', [Validators.required, Validators.minLength(20)]),
       precio_usd: new FormControl(''),
       lugar_entrega: new FormControl(''),
-      tipocobro: new FormControl('', [Validators.required]),
-      plan: new FormControl('', [Validators.required]),
-      tipo_venta: new FormControl('', [Validators.required]),
       terminal: new FormControl(''),
       cod_afiliado: new FormControl(''),
     });
@@ -218,6 +221,7 @@ export class AddVentaComponent implements OnInit {
     this.venta.doOccUser(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.validacionoccresponse = new ValidacionOccDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.occs = JSON.parse(this.validacionoccresponse.occ_usuarios)
+      this.solicitud.get("occ").setValue(this.occs[0].occ_id)
       //this.crypto.setKeys(this.validacionoccresponse.keyS, this.validacionoccresponse.ivJ, this.validacionoccresponse.keyJ, this.validacionoccresponse.ivS)
       this.doSimModels()
     })
@@ -255,15 +259,15 @@ export class AddVentaComponent implements OnInit {
         })
       })
       solicitudes_banco_sell.push({
-        id_t_cobro: buy.get('tipocobro').value,
+        id_t_cobro: this.solicitud.get('tipocobro').value,
         monto_cuota: "30",
-        fraccion_pago_id: buy.get('tipo_venta').value,
-        plan_id: buy.get('plan').value,
+        fraccion_pago_id: this.solicitud.get('tipo_venta').value,
+        plan_id: this.solicitud.get('plan').value,
         modelo_id: buy.get('modelo').value,
         terminal: buy.get('terminal').value,
         afiliado: buy.get('cod_afiliado').value,
         cuenta: buy.get('numero_cuenta_pos').value,
-        banco_id: buy.get('banco').value,
+        banco_id: this.solicitud.get('banco').value,
         items: JSON.stringify(items),
       })
     }
@@ -341,10 +345,10 @@ export class AddVentaComponent implements OnInit {
     return total
   }
 
-  getFraccion(i:number): void {
-    console.log("ajaa", this.bancos_fraccion.filter(c => c.codigo == this.buies[i].get('banco').value)[0]);
+  getFraccion(): void {
+    console.log("ajaa", this.bancos_fraccion.filter(c => c.codigo == this.solicitud.get('banco').value)[0]);
     
-    this.fraccion_pago = this.bancos_fraccion.filter(c => c.codigo == this.buies[i].get('banco').value)[0].fraccion_pago
+    this.fraccion_pago = this.bancos_fraccion.filter(c => c.codigo == this.solicitud.get('banco').value)[0].fraccion_pago
   }
 
   marca() {
@@ -388,6 +392,27 @@ export class AddVentaComponent implements OnInit {
       }
     }
     return invalid
+  }
+
+  upload(d: any, id: string) {
+    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
+    const encode = d.file.toString()
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      att_by: this.crypto.encryptJson("CLIENTE"),
+      rif: this.crypto.encryptJson(rif),
+      documento: this.crypto.encryptJson(id),
+      extension: this.crypto.encryptJson(d.ext),
+      t_sol_id: this.crypto.encryptJson(null),
+      solicitud: this.crypto.encryptJson(null),
+      file: this.crypto.encryptJson(encode),
+    }))
+    this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.default);
+    })
   }
 
 }

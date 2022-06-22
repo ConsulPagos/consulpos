@@ -1,67 +1,101 @@
-<div>
-    <div>
-        <mat-form-field appearance="outline" class="container_box_space">
-            <mat-label>Marca</mat-label>
-            <input matInput type="text" value={{item.marca}} disabled>
-        </mat-form-field>
+<section id="prueba-ficha">
+    <div class="container-fluid">
 
-        <mat-form-field appearance="outline" class="container_box_space">
-            <mat-label>Modelo</mat-label>
-            <input matInput type="text" value={{item.modelo}} disabled>
-        </mat-form-field>
+        <div style="background-color: #fff; border-radius: 10px;">
+            <div>
+                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                    [routerLink]="['/admin/app',{ outlets: { adr: ['prueba'] } }]">
+                    <li class="fas fa-arrow-left"></li>
+                </a>
+            </div>
+            <mat-tab-group>
+                <mat-tab label="Venta">
+                    <ng-template matTabContent>
+                        <div class="container-fluid rounded bg-white mb-5">
+                            <h4 class="text-center">
+                                Prueba del equipo: {{item.equipo}}
+                            </h4>
 
-        <form [formGroup]="form">
-            <mat-form-field appearance="outline" class="container_box_space">
-                <mat-label>Serial POS</mat-label>
-                <input matInput type="text" readonly formControlName="serial">
-            </mat-form-field>
-        </form>
+                            <div class="sub-title">
+                                <div class="text-sub-title">
+                                    <h6>
+                                        <strong>Solicitud Nº: </strong>
+                                        {{item.solicitud}}
+                                    </h6>
+                                </div>
+                                <div class="text-sub-title">
+                                    <h6>
+                                        <strong>Marca: </strong>
+                                        {{item.marca}}
+                                    </h6>
+                                </div>
+                                <div class="text-sub-title">
+                                    <h6>
+                                        <strong>Modelo: </strong>
+                                        {{item.modelo}}
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="container" style="padding-bottom: 2rem; text-align: center;">
+                            <form [formGroup]="form">
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Serial POS</mat-label>
+                                    <input matInput type="text" readonly formControlName="serial">
+                                </mat-form-field>
+                            </form>
+                    
+                            <button mat-raised-button (click)="findPos()">
+                                Asignar otro serial POS
+                            </button>
+                        </div>
 
-
-
-        <button mat-button (click)="findPos()">
-            Asignar otro serial POS
-        </button>
+                        <div class="container" style="padding-bottom: 2rem; text-align: center;">
+                            <div>
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Terminal</mat-label>
+                                    <input matInput type="text" value={{item.afiliado}} disabled>
+                                </mat-form-field>
+                        
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Código Afiliado</mat-label>
+                                    <input matInput type="text" value={{item.terminal}} disabled>
+                                </mat-form-field>
+                            </div>
+                        
+                            <div *ngFor="let sim of item.sim; let i = index">
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Modelo SIM {{i + 1}}</mat-label>
+                                    <input matInput type="text" value={{sim.modelo}} disabled>
+                                </mat-form-field>
+                        
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Serial SIM {{i + 1}}</mat-label>
+                                    <input matInput type="text" value={{sim.cod_serial}} disabled>
+                                </mat-form-field>
+                        
+                                <button mat-raised-button (click)="findSim(sim.modelo, sim.cod_serial)">
+                                    Asignar otro serial SIM
+                                </button>
+                            </div>
+                        
+                            <form [formGroup]="form">
+                                <mat-form-field appearance="outline" class="container_box_space">
+                                    <mat-label>Nombre del responsable</mat-label>
+                                    <input matInput type="text" formControlName="name">
+                                </mat-form-field>
+                            </form>
+                        
+                        
+                            <button mat-raised-button (click)="submit()">
+                                Guardar
+                            </button>
+                        
+                        </div>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
     </div>
-
-    <div>
-        <mat-form-field appearance="outline" class="container_box_space">
-            <mat-label>Terminal</mat-label>
-            <input matInput type="text" value={{item.afiliado}} disabled>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="container_box_space">
-            <mat-label>Código Afiliado</mat-label>
-            <input matInput type="text" value={{item.terminal}} disabled>
-        </mat-form-field>
-    </div>
-
-    <div *ngFor="let sim of item.sim; let i = index">
-        <mat-form-field appearance="outline" class="container_box_space">
-            <mat-label>Modelo SIM {{i + 1}}</mat-label>
-            <input matInput type="text" value={{sim.modelo}} disabled>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="container_box_space">
-            <mat-label>Serial SIM {{i + 1}}</mat-label>
-            <input matInput type="text" value={{sim.cod_serial}} disabled>
-        </mat-form-field>
-
-        <button mat-button (click)="findSim(sim.modelo, sim.cod_serial)">
-            Asignar otro serial SIM
-        </button>
-    </div>
-
-<form [formGroup]="form">
-    <mat-form-field appearance="outline" class="container_box_space">
-        <mat-label>Nombre del responsable</mat-label>
-        <input matInput type="text" formControlName="name">
-    </mat-form-field>
-</form>
-
-
-    <button mat-button (click)="submit()">
-        Guardar
-    </button>
-
-</div>
+</section>
