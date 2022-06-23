@@ -8,7 +8,9 @@ addEventListener('message', ({ data }) => {
     var data: any = value;
     switch (type) {
       case "string":
-        data = value.toString();
+        if(value && value.length > 0){
+          data = value.toString();
+        }
         break;
       case "int":
         data = parseInt(value);
@@ -46,6 +48,8 @@ addEventListener('message', ({ data }) => {
       var aux = {};
       for (let index = 0; index < data.plantilla.length; index++) {
         const col = data.plantilla[index];
+        console.log(col.nombre);
+        
         aux[col.columna] = parseValue(col.tipo, linea[col.nombre], col.decimales);
       }
 

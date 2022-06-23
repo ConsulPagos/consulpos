@@ -1,12 +1,42 @@
-table{
-    width: 100%;
-}
-
-th{
+th {
     font-weight: 600;
     color: black;
 }
 
 tr.mat-footer-row {
     font-weight: bold;
-  }
+}
+
+.text-uppercase {
+    font-size: 10px;
+}
+
+.mat-table {
+    max-height: 100%;
+    overflow-x: auto;
+}
+
+.mat-cell,
+.mat-header-cell {
+    word-wrap: initial;
+    display: table-cell;
+    padding: 0px 10px;
+    line-break: unset;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+}
+.mat-row,
+.mat-header-row {
+    display: table-row;
+}
+
+.container-table{
+    width: 100%;
+    overflow-x: auto;
+}
+mat-paginator{
+   position: sticky;
+   left: 0;
+}
