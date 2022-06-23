@@ -46,7 +46,7 @@ export class FichaSaleComponent implements OnInit {
       this.router.navigateByUrl("/admin/app/(adr:ventas)");
     }
 
-    this.dataSource = new MatTableDataSource(this.showSale.items);
+    this.dataSource = new MatTableDataSource(this.showSale.solicitud_items);
 
   }
 

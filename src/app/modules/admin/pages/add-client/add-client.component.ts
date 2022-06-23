@@ -257,7 +257,7 @@ export class AddClientComponent implements OnInit {
       pto_ref: this.crypto.encryptJson(this.client.get('pto_referencia').value),
       red_social_a: this.crypto.encryptJson(this.client.get('red_social_a').value),
       red_social_b: this.crypto.encryptJson(this.client.get('red_social_b').value),
-      localidad: this.crypto.encryptJson("Undefined"),
+      localidad: this.crypto.encryptJson(null),
       telefonos: this.crypto.encryptJson(JSON.stringify([
         {
           number: this.client.get("phone_1").value.number,

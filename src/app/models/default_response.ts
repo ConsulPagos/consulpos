@@ -3,7 +3,6 @@ import { CryptoService } from "../shared/services/crypto.service"
 export interface DefaultResponse {
     R?: string;
     M?: string;
- 
 }
 
 export class DefaultDecrypter {
@@ -17,7 +16,6 @@ export class DefaultDecrypter {
         const data: DefaultResponse = {
             R: value.R,
             M: this.crypto.decryptJson(value.M),
-            
         }
         return data
     }

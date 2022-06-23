@@ -92,7 +92,7 @@ export class AdminComponent implements OnInit {
       this.storage.store(constant.T_SOLICITUDES, JSON.stringify(verifyResponse.t_solicitudes))
       this.storage.store(constant.OCCS, JSON.stringify(verifyResponse.occs))
       this.storage.store(constant.T_PAGOS, JSON.stringify(verifyResponse.t_pagos))
-      //this.storage.store(constant.ROLES, JSON.stringify(verifyResponse.roles))
+      this.storage.store(constant.ROLES, JSON.stringify(verifyResponse.roles))
 
       this.storage.store(constant.BANCOS_FRACCION, JSON.stringify(verifyResponse.bancos_fraccion))
       this.storage.store(constant.ALMACENES, JSON.stringify(verifyResponse.almacenes))
