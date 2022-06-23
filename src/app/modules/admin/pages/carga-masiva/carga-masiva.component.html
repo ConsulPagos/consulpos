@@ -16,7 +16,7 @@
             <ng-template #prev>
                 <div>
                     <div class="btn-submit">
-                        <app-action-btn text="Procesar"></app-action-btn>
+                        <app-action-btn text="Procesar" (onClick)="submit()" [isDisabled]="loading"  [loading]="loading"></app-action-btn>
                     </div>
                     <app-previsualizar-archivo [data]="data" [columns]="columns">
                     </app-previsualizar-archivo>

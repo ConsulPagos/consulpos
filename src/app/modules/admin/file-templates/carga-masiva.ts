@@ -1,15 +1,15 @@
 const template = [
     {
-        "columna": "RIF",
+        "columna": "RIF_CLIENTE",
         "posicion": 1,
-        "longitud": 11,
+        "longitud": 0,
         "tipo": "string",
         "decimales": 0,
         "inicia": 0,
-        "nombre": "RIF"
+        "nombre": "RIF_CLIENTE"
     },
     {
-        "columna": "TIPO CLIENTE",
+        "columna": "TIPO_CLIENTE",
         "posicion": 2,
         "longitud": 0,
         "tipo": "string",
@@ -18,13 +18,22 @@ const template = [
         "nombre": "TIPO_CLIENTE"
     },
     {
-        "columna": "TIPO DOCUMENTO",
+        "columna": "TIPO_DOCUMENTO",
         "posicion": 3,
         "longitud": 0,
         "tipo": "string",
         "decimales": 0,
         "inicia": 0,
         "nombre": "TIPO_DOCUMENTO"
+    },
+    {
+        "columna": "EMAIL",
+        "posicion": 4,
+        "longitud": 0,
+        "tipo": "string",
+        "decimales": 0,
+        "inicia": 0,
+        "nombre": "EMAIL"
     },
     {
         "columna": "COMERCIO",
@@ -45,7 +54,25 @@ const template = [
         "nombre": "DIRECCION"
     },
     {
-        "columna": "RAZON SOCIAL",
+        "columna": "PARROQUIA",
+        "posicion": 5,
+        "longitud": 0,
+        "tipo": "string",
+        "decimales": 0,
+        "inicia": 0,
+        "nombre": "PARROQUIA"
+    },
+    {
+        "columna": "CIUDAD",
+        "posicion": 5,
+        "longitud": 0,
+        "tipo": "string",
+        "decimales": 0,
+        "inicia": 0,
+        "nombre": "CIUDAD"
+    },
+    {
+        "columna": "RAZON_SOCIAL",
         "posicion": 5,
         "longitud": 0,
         "tipo": "string",
@@ -54,7 +81,7 @@ const template = [
         "nombre": "RAZON_SOCIAL"
     },
     {
-        "columna": "CODIGO POSTAL",
+        "columna": "CODIGO_POSTAL",
         "posicion": 6,
         "longitud": 0,
         "tipo": "string",
@@ -63,7 +90,7 @@ const template = [
         "nombre": "CODIGO_POSTAL"
     },
     {
-        "columna": "CONTRIBUYENTE",
+        "columna": "TIPO_CONTRIBUYENTE",
         "posicion": 7,
         "longitud": 0,
         "tipo": "string",
@@ -72,7 +99,7 @@ const template = [
         "nombre": "TIPO_CONTRIBUYENTE"
     },
     {
-        "columna": "SERIAL POS",
+        "columna": "SERIAL_POS",
         "posicion": 8,
         "longitud": 0,
         "tipo": "string",
@@ -81,7 +108,7 @@ const template = [
         "nombre": "SERIAL_POS"
     },
     {
-        "columna": "SERIAL SIM 1",
+        "columna": "SERIAL_SIM_1",
         "posicion": 9,
         "longitud": 0,
         "tipo": "string",
@@ -90,7 +117,7 @@ const template = [
         "nombre": "SERIAL_SIM_1"
     },
     {
-        "columna": "MODELO POS",
+        "columna": "MODELO_POS",
         "posicion": 10,
         "longitud": 0,
         "tipo": "string",
@@ -99,7 +126,7 @@ const template = [
         "nombre": "MODELO_POS"
     },
     {
-        "columna": "MODELO SIM 1",
+        "columna": "MODELO_SIM_1",
         "posicion": 11,
         "longitud": 0,
         "tipo": "string",
@@ -108,7 +135,7 @@ const template = [
         "nombre": "MODELO_SIM_1"
     },
     {
-        "columna": "MODELO SIM 2",
+        "columna": "MODELO_SIM_2",
         "posicion": 12,
         "longitud": 0,
         "tipo": "string",
@@ -117,7 +144,7 @@ const template = [
         "nombre": "MODELO_SIM_2"
     },
     {
-        "columna": "BANCO",
+        "columna": "CODIGO_BANCO",
         "posicion": 13,
         "longitud": 0,
         "tipo": "string",
@@ -126,7 +153,7 @@ const template = [
         "nombre": "CODIGO_BANCO"
     },
     {
-        "columna": "CUENTA",
+        "columna": "NUMERO_CUENTA",
         "posicion": 14,
         "longitud": 0,
         "tipo": "string",
@@ -135,7 +162,7 @@ const template = [
         "nombre": "NUMERO_CUENTA"
     },
     {
-        "columna": "AFILIADO",
+        "columna": "CODIGO_AFILIADO",
         "posicion": 15,
         "longitud": 0,
         "tipo": "string",
