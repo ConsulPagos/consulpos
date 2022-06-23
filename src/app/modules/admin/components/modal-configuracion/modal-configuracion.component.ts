@@ -30,7 +30,6 @@ export class ModalConfiguracionComponent implements OnInit {
   modelo: any;
   serial: any;
   sim: any;
-
   formDinamic = [];
 
   constructor(
@@ -42,11 +41,9 @@ export class ModalConfiguracionComponent implements OnInit {
     private venta: VentasService,
     private modal: ModalService,
     private pago: PagosService,
-
     public dialogRef: MatDialogRef<ModalConfiguracionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.dataVenta = data['venta']
-
     this.configuracion = new FormGroup({
       serial_sim: new FormControl(this.x, [Validators.required]),
     });

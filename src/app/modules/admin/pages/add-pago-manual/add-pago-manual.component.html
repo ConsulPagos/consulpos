@@ -4,13 +4,13 @@
         <div class="structur">
             <div>
                 <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-                    [routerLink]="['/admin/app',{ outlets: { adr: ['pago-pendiente'] } }]">
+                    [routerLink]="['/admin/app',{ outlets: { adr: ['pagos'] } }]">
                     <li class="fas fa-arrow-left"></li>
                 </a>
             </div>
         </div>
         <div style="background-color: #fff; border-radius: 10px;">
-            <div class="container-fluid rounded bg-white mb-5" *ngFor="let item of addPay.solicitudes_banco">
+            <div class="container-fluid rounded bg-white mb-5" >
                 <h4 class="text-center">
                     Agregar pago
                 </h4>
@@ -18,7 +18,7 @@
                     <div class="text-sub-title">
                         <h6>
                             <strong>Venta Nº: </strong>
-                            {{addPay.number}}
+                            {{addPay.solicitud}}
                         </h6>
                     </div>
                     <div class="text-sub-title">
@@ -33,30 +33,33 @@
                             {{addPay.razon_social}}
                         </h6>
                     </div>
-                    <div class="text-sub-title">
-                        <h6>
-                            <strong>Cliente: </strong>
-                            {{item.fraccion_desc}}
-                        </h6>
-                    </div>
                 </div>
             </div>
 
 
-            
+            <div *ngFor="let format of formats_payments; let i=index">
+                <div class="d-flex align-items-center ">
+                    <h6>Pago {{i + 1}}</h6>
+                    <button mat-icon-button class="ml-4" color="primary"
+                        aria-label="Example icon button with a menu icon" (click)="deletePay(i)"
+                        *ngIf="(formats_payments.length > 1 && i >  0)">
+                        <i class="fas fa-minus-circle"></i>
+                    </button>
+                </div>
 
-            
-                <form [formGroup]="pay">
+                <form [formGroup]="payments[i]">
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Forma de Pago</mat-label>
-                        <mat-select disableRipple formControlName="t_pago">
+                        <mat-select disableRipple formControlName="t_pago"
+                            (selectionChange)="buildFormGroup(getInput(payments[i].get('t_pago').value), i)"
+                            (click)="clearForm(i)">
                             <mat-option *ngFor="let pago of t_pagos" value={{pago.t_pago_id}}>
                                 {{pago.pago}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
 
-                    <div *ngIf="pay.get('t_pago').value">
+                    <div *ngIf="payments[i].get('t_pago').value != null">
                         <mat-form-field class="box" appearance="outline">
                             <mat-label>Monto Pagado</mat-label>
                             <input matInput type="number" formControlName="monto" (change)="setDivisa(i)">
@@ -79,10 +82,9 @@
                     </div>
 
                 </form>
-                <div *ngFor="let format of formats_payments; let i=index">
                 <form *ngIf="formDinamic[i] != undefined" [formGroup]="formDinamic[i]">
-                    <div *ngIf="pay.get('t_pago').value != null">
-                        <div *ngFor="let caracteristica of getInput(pay.get('t_pago').value)">
+                    <div *ngIf="payments[i].get('t_pago').value != null">
+                        <div *ngFor="let caracteristica of getInput(payments[i].get('t_pago').value)">
                             <div [ngSwitch]="caracteristica.tipo">
 
                                 <div *ngSwitchCase="'string'">
@@ -129,7 +131,6 @@
                     </div>
                 </form>
             </div>
-
             <div>
                 <table class="table-pay">
                     <tr>
@@ -143,16 +144,6 @@
                         <td>
                             <p>{{total_Bs}}</p>
                         </td>
-                    </tr>
-                    <tr class="diferencia">
-                        <th>Diferencia en USD</th>
-                        <th>Diferencia en Bs.S</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>{{totalPago.toFixed(2)}}</p>
-                        </td>
-                        <td>{{totalPago * tasa}}</td>
                     </tr>
                 </table>
 
@@ -176,7 +167,7 @@
                 </table>
             </div>
             <div>
-                <button mat-raised-button (click)="save()" [disabled]="totalPago != 0">Cargar
+                <button mat-raised-button (click)="save()" [disabled]="isInvalid() || totalPago != 0">Cargar
                     Pago</button>
             </div>
         </div>

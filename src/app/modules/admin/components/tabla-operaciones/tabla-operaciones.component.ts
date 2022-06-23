@@ -145,8 +145,6 @@ export class TablaOperacionesComponent implements OnInit {
         break;
 
       case 'configuracion':
-
-
         if (venta.solicitud === "TRASPASO") {
           dialogRef = this.dialog.open(ModalConfiguracionManualComponent, {
             disableClose: true,
