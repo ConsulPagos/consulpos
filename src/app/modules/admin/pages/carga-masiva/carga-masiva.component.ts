@@ -105,5 +105,6 @@ export class CargaMasivaComponent implements OnInit {
     this.columns = false;
     this.data = false;
   }
+  
 
 }
