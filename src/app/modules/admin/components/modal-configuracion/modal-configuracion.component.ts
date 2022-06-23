@@ -136,33 +136,6 @@ export class ModalConfiguracionComponent implements OnInit {
       const json = JSON.parse(this.crypto.decryptString(res))
       this.default = new ConfigDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
     })
-    this.end()
-  }
-
-
-
-  end() {
-    console.log()
-    const data = this.crypto.encryptString(JSON.stringify({
-      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
-      accion: this.crypto.encryptJson("CONFIGURACION"),
-    }))
-    this.venta.doEndAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      console.log(this.crypto.decryptString(res))
-      const json = JSON.parse(this.crypto.decryptString(res))
-      this.default = new ConfigDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      // switch (this.default.R) {
-      //   case constant.R0:
-      //     this.toaster.success(this.default.M)
-      //     break;
-      //   case constant.R1:
-      //     this.toaster.error(this.default.M)
-      //     break;
-      // }
-    })
   }
 
 }
