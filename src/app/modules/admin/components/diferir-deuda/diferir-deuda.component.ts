@@ -20,13 +20,13 @@ export class DiferirDeudaComponent implements OnInit {
 
   form = new FormGroup({
     id_diferido: new FormControl('', [Validators.required]),
+    saldo_diferido: new FormControl('', [Validators.required]),
     cuotas: new FormControl(this.data.selected, [Validators.required]),
   });
 
   constructor(public dialogRef: MatDialogRef<DiferirDeudaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {selected: ItemEstadoCuentaInterface[]},
     private storage:StorageService) { 
-      // console.log(this.data)
     }
 
   ngOnInit(): void {

@@ -12,16 +12,18 @@
                     <file-input (change)="onFileChange($event)" [loading]="loading" [accept]="'.xls, .xlsx'">
                     </file-input>
                 </div>
-                <a class="mt-2" download="Plantilla Carga Masiva" target="_blank" href="../../../../../assets/templates/Plantilla Carga Masiva.xlsx">
+                <a class="mt-2" download="Plantilla Carga Masiva" target="_blank"
+                    href="../../../../../assets/templates/Plantilla Carga Masiva.xlsx">
                     Descargar plantilla
-                  </a>
+                </a>
             </div>
             <ng-template #prev>
                 <div>
                     <div class="btn-options">
                         <button mat-raised-button class="btn-cancel" (click)="cancel()">Cancelar</button>
                         <div class="btn-submit">
-                            <app-action-btn text="Procesar" (onClick)="submit()" [isDisabled]="loading"  [loading]="loading"></app-action-btn>
+                            <app-action-btn text="Procesar" (onClick)="submit()" [isDisabled]="loading"
+                                [loading]="loading"></app-action-btn>
                         </div>
                     </div>
                     <app-previsualizar-archivo [data]="data" [columns]="columns">

@@ -95,7 +95,7 @@ export class EstadoCuentaComponent implements OnInit {
 
 
 
-  doDiferir(id_diferido: string, cuotas) {
+  doDiferir(id_diferido: string, cuotas, saldo_diferido: number) {
 
 
     const data = this.crypto.encryptString(JSON.stringify({
@@ -104,6 +104,7 @@ export class EstadoCuentaComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       id_diferido: this.crypto.encryptJson(id_diferido),
       cuotas: this.crypto.encryptJson(JSON.stringify(cuotas)),
+      saldo_diferido: this.crypto.encryptJson(saldo_diferido.toString())
     }))
 
     this.loading = true;
@@ -151,7 +152,7 @@ export class EstadoCuentaComponent implements OnInit {
           return aux
         })
         console.log(cuotas)
-        this.doDiferir(result.id_diferido, cuotas)
+        this.doDiferir(result.id_diferido, cuotas, result.saldo_diferido)
       }
     });
   }
