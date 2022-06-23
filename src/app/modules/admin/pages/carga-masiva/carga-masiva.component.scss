@@ -33,9 +33,20 @@
     min-width: 450px;
 }
 
-.btn-submit{
-    width: 100px;
+.btn-options{
+    display: flex;
+    justify-content: right;
+    margin-left: auto;
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-left: auto;
+}
+
+.btn-submit, .btn-cancel{
+    width: 100px;
+    margin-right: 10px;
+    color: white;
+}
+
+.btn-cancel{
+    background-color: red;
 }

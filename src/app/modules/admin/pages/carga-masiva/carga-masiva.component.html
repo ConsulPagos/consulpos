@@ -15,8 +15,11 @@
             </div>
             <ng-template #prev>
                 <div>
-                    <div class="btn-submit">
-                        <app-action-btn text="Procesar" (onClick)="submit()" [isDisabled]="loading"  [loading]="loading"></app-action-btn>
+                    <div class="btn-options">
+                        <button mat-raised-button class="btn-cancel" (click)="cancel()">Cancelar</button>
+                        <div class="btn-submit">
+                            <app-action-btn text="Procesar" (onClick)="submit()" [isDisabled]="loading"  [loading]="loading"></app-action-btn>
+                        </div>
                     </div>
                     <app-previsualizar-archivo [data]="data" [columns]="columns">
                     </app-previsualizar-archivo>
