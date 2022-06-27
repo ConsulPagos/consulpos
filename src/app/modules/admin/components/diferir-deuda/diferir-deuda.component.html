@@ -4,7 +4,7 @@
     </span>
 </h1>
 <div mat-dialog-content class="mat-dialog-content">
-    <p class="bold">Monto cuota:</p>
+    <p class="bold">Monto de la cuota:</p>
     <p>{{montoADiferir() | currency}}</p>
 
     <p class="bold">Seleccionar concepto:</p>
@@ -21,6 +21,7 @@
         <mat-form-field appearance="outline" class="container_box">
             <mat-label>Monto a diferir</mat-label>
             <input matInput placeholder="ex: 10" type="number" formControlName="saldo_diferido">
+            <mat-hint align="end">Mín: {{1 | currency}}, Máx: {{saldo | currency}}</mat-hint>
         </mat-form-field>
     </form>
 </div>

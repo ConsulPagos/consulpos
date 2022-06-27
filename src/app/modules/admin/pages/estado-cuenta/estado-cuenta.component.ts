@@ -29,7 +29,7 @@ import { DiferirDeudaComponent } from '../../components/diferir-deuda/diferir-de
 })
 export class EstadoCuentaComponent implements OnInit {
 
-  displayedColumns: string[] = ["select", 'serial', "concepto", 'fecha', "deuda", "abono"];
+  displayedColumns: string[] = ["select", 'serial', "concepto", 'fecha', "deuda", "saldo_diferido", "abono"];
   dataSource: MatTableDataSource<any>;
   countNuevos = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -95,7 +95,8 @@ export class EstadoCuentaComponent implements OnInit {
 
 
 
-  doDiferir(id_diferido: string, cuotas, saldo_diferido: number) {
+  doDiferir(id_diferido: string, cuota: number, saldo_diferido: number) {
+    console.log(cuota);
 
 
     const data = this.crypto.encryptString(JSON.stringify({
@@ -103,9 +104,12 @@ export class EstadoCuentaComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       id_diferido: this.crypto.encryptJson(id_diferido),
-      cuotas: this.crypto.encryptJson(JSON.stringify(cuotas)),
+      cuota: this.crypto.encryptJson(cuota.toString()),
       saldo_diferido: this.crypto.encryptJson(saldo_diferido.toString())
     }))
+
+    console.log(data);
+
 
     this.loading = true;
     this.loader.loading()
@@ -116,15 +120,19 @@ export class EstadoCuentaComponent implements OnInit {
       this.loading = false
       console.log(response)
 
-
-
-      if (response.R === "0") {
-        this.selection.clear()
-        this.doStatusAccount()
-      } else {
-        this.toaster.success(response.M)
+      switch (response.R) {
+        case constant.R0:
+          this.selection.clear()
+          this.doStatusAccount()
+          this.toaster.success(response.M)
+          break;
+        case constant.R1:
+          this.toaster.error(response.M)
+          break;
+        default:
+          this.toaster.default_error()
+          break;
       }
-
 
     })
   }
@@ -152,7 +160,7 @@ export class EstadoCuentaComponent implements OnInit {
           return aux
         })
         console.log(cuotas)
-        this.doDiferir(result.id_diferido, cuotas, result.saldo_diferido)
+        this.doDiferir(result.id_diferido, cuotas[0].id, result.saldo_diferido)
       }
     });
   }
@@ -177,18 +185,22 @@ export class EstadoCuentaComponent implements OnInit {
 
   canDiferir() {
     var valid = true
-    for (let index = 0; index < this.selection.selected.length; index++) {
-      const s = this.selection.selected[index];
-      if (s.t_cobro != "DEBITO") {
-        valid = false;
-        break;
-      } else {
-        if (s.id_diferido) {
+    if (this.selection.selected.length == 1) {
+      for (let index = 0; index < this.selection.selected.length; index++) {
+        const s = this.selection.selected[index];
+        if (s.t_cobro != "DEBITO") {
           valid = false;
           break;
+        } else {
+          if (s.id_diferido) {
+            valid = false;
+            break;
+          }
         }
-      }
 
+      }
+    } else {
+      valid = false;
     }
     return valid
   }

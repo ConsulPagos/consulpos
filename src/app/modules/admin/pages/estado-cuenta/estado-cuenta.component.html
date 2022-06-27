@@ -61,11 +61,22 @@
 
                                 <ng-container matColumnDef="deuda">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                        DEBITO
+                                        DEBITO DOMICILIADO
                                     </th>
                                     <td mat-cell *matCellDef="let row">
-                                        <span [class.diferido]="row.id_diferido" *ngIf="row.t_cobro == 'DEBITO'">
+                                        <span *ngIf="row.t_cobro == 'DEBITO'">
                                             {{row.saldo | currency}}
+                                        </span>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="saldo_diferido">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        DEBITO DIFERIDO
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <span [class.diferido]="row.id_diferido">
+                                            {{row.saldo_diferido | currency}}
                                         </span>
                                     </td>
                                 </ng-container>

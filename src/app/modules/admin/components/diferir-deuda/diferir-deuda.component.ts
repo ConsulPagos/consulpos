@@ -18,11 +18,8 @@ export class DiferirDeudaComponent implements OnInit {
 
   tipos!:TipoDiferidoInterface[];
 
-  form = new FormGroup({
-    id_diferido: new FormControl('', [Validators.required]),
-    saldo_diferido: new FormControl('', [Validators.required]),
-    cuotas: new FormControl(this.data.selected, [Validators.required]),
-  });
+  form: FormGroup;
+  saldo;
 
   constructor(public dialogRef: MatDialogRef<DiferirDeudaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {selected: ItemEstadoCuentaInterface[]},
@@ -30,6 +27,13 @@ export class DiferirDeudaComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.saldo = this.montoADiferir();
+
+    this.form = new FormGroup({
+      id_diferido: new FormControl('', [Validators.required]),
+      saldo_diferido: new FormControl('', [Validators.required,Validators.min(1), Validators.max(this.saldo)]),
+      cuotas: new FormControl(this.data.selected, [Validators.required]),
+    })
     this.tipos = JSON.parse(this.storage.get(constant.TIPOS_DIFERIDO)).tipos_diferido
     // console.log(this.tipos)
   }
