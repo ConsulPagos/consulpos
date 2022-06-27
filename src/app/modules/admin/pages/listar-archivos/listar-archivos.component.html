@@ -87,7 +87,7 @@
                                 <mat-icon>file_download</mat-icon>
                                 Descargar
                             </button>
-                            <button mat-menu-item (click)="cancel(archivo)">
+                            <button *ngIf="archivo.cancelado == null" mat-menu-item (click)="cancel(archivo)">
                                 <mat-icon>cancel</mat-icon>
                                 Cancelar
                             </button>
