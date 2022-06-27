@@ -1,0 +1,191 @@
+<section id="ficha-user">
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <div class="structur">
+                <div>
+                    <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                        [routerLink]="['/admin/app',{ outlets: { adr: ['cambio-pos'] } }]">
+                        <li class="fas fa-arrow-left"></li>
+                    </a>
+                </div>
+            </div>
+            <mat-tab-group>
+                <mat-tab label="Venta">
+                    <ng-template matTabContent>
+                        <div class="container-fluid rounded bg-white mb-5">
+
+                            <h4 class="text-center">
+                                Información cambio equipo
+                            </h4>
+
+                            <div class="sub-title">
+                                <div class="text-sub-title">
+                                    <h6>
+                                        <strong>Venta Nº: </strong>
+                                        {{changePos.number}}
+                                    </h6>
+                                </div>
+                                <div class="text-sub-title">
+                                    <h6>
+                                        <strong>Estatus: </strong>
+                                        {{changePos.status_desc}}
+                                    </h6>
+                                </div>
+                                <div class="text-sub-title">
+                                    <h6>
+                                        <strong>Rif: </strong>
+                                        {{changePos.rif}}
+                                    </h6>
+                                </div>
+                                <div class="text-sub-title">
+                                    <h6>
+                                        <strong>Cliente: </strong>
+                                        {{changePos.razon_social}}
+                                    </h6>
+                                </div>
+                            </div>
+
+                            <div class="date-sale">
+                                <h6>
+                                    <strong>Fecha del Cambio POS: </strong>{{changePos.fecha}}
+                                </h6>
+                            </div>
+
+                            <div *ngIf="changePos.solicitud_items.length > 0">
+                                <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+                                    <ng-container matColumnDef="cod_serial">
+                                        <th mat-header-cell *matHeaderCellDef> Serial </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.cod_serial}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="marca">
+                                        <th mat-header-cell *matHeaderCellDef> Marca </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.marca}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="modelo">
+                                        <th mat-header-cell *matHeaderCellDef> Modelo </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.modelo}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="precio">
+                                        <th mat-header-cell *matHeaderCellDef> Precio </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="expand">
+                                        <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                                        <td mat-cell *matCellDef="let element">
+                                            <button mat-icon-button aria-label="expand row"
+                                                (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                                                <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down
+                                                </mat-icon>
+                                                <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up
+                                                </mat-icon>
+                                            </button>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="expandedDetail">
+                                        <td mat-cell *matCellDef="let element"
+                                            [attr.colspan]="columnsToDisplayWithExpand.length">
+                                            <div class="example-element-detail"
+                                                [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                                <div class="example-element-diagram">
+
+                                                    <div style="text-align: center;">
+                                                        <p>Numero de cuenta</p>
+                                                        {{element.solicitud_banco.cuenta}}
+                                                    </div>
+
+
+                                                    <div style="display: flex; text-align: center;">
+                                                        <div style="padding: 0 20px;">
+                                                            <p>Numero de Afiliado</p>
+                                                            {{element.solicitud_banco.afiliado}}
+                                                        </div>
+
+                                                        <div style="padding: 0 20px;">
+                                                            <p>Numero de Terminal</p>
+                                                            {{element.solicitud_banco.terminal}}
+                                                        </div>
+                                                    </div>
+
+                                                    <div *ngFor="let solicitud of changePos.solicitudes_banco">
+                                                        <div style="text-align: center;">
+                                                            <p>Tipo de Venta: </p>
+                                                            {{solicitud.fraccion_desc}}
+                                                        </div>
+                                                        <div style="text-align: center;">
+                                                            <p>Banco:</p>
+                                                            {{solicitud.banco}}
+                                                        </div>
+                                                        <div style="text-align: center;">
+                                                            <p>Plataforma: </p>
+                                                            {{solicitud.plataforma.plataforma}}
+                                                        </div>
+                                                        <div style="text-align: center;">
+                                                            <p>Plan:</p>
+                                                            {{solicitud.plataforma.plan}}
+
+                                                        </div>
+                                                        <div style="text-align: center;">
+                                                            <p>Tipo de Cobro:</p>
+                                                            {{solicitud.plataforma.fraccion_desc}}
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div style="display: flex;     justify-content: center;
+                                                        flex-wrap: wrap;">
+                                                        <div *ngFor="let item of element.sim; let i = index"
+                                                            style="padding: 0 20px;">
+                                                            <div>
+                                                                <p>Modelo SIM {{i+1}}</p>
+                                                                {{item.modelo}}
+                                                            </div>
+                                                            <div>
+                                                                <p>Codigo Serial SIM {{i+1}}</p>
+                                                                {{item.cod_serial}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+                                    <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+                                        class="example-element-row"
+                                        [class.example-expanded-row]="expandedElement === element"
+                                        (click)="expandedElement = expandedElement === element ? null : element">
+                                    </tr>
+                                    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"
+                                        class="example-detail-row"></tr>
+                                </table>
+                            </div>
+
+                            <div *ngIf="changePos.solicitud_items.length  == 0">
+                                <div *ngFor="let modelos of changePos.modelos">
+                                    <div *ngFor="let equipo of modelos.caracteristicas">
+                                        <div class="conatiner-text">
+                                            <div class="content-text">
+                                                <h6>
+                                                    <strong>Marca: </strong>{{equipo.marca}}
+                                                </h6>
+                                            </div>
+                                            <div class="content-text">
+                                                <h6>
+                                                    <strong>Modelo: </strong>{{equipo.modelo}}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>

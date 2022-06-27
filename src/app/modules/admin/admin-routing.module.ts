@@ -85,6 +85,8 @@ import { AddPlanComponent } from './pages/add-plan/add-plan.component';
 import { AddPagoManualComponent } from './pages/add-pago-manual/add-pago-manual.component';
 import { PagoPendienteComponent } from './pages/pago-pendiente/pago-pendiente.component';
 import { CargaMasivaComponent } from './pages/carga-masiva/carga-masiva.component';
+import { FichaTraspasoComponent } from './pages/ficha-traspaso/ficha-traspaso.component';
+import { FichaCambioEquipoComponent } from './pages/ficha-cambio-equipo/ficha-cambio-equipo.component';
 
 const routes: Routes = [
   {
@@ -830,6 +832,24 @@ const routes: Routes = [
       },
       {
         path: 'carga-masiva', component: CargaMasivaComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Domiciliacion",
+        //   submodulo: "Generar Archivo",
+        //   permiso: "Generar Archivo"
+        // }
+      },
+      {
+        path: 'ficha-traspaso', component: FichaTraspasoComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Domiciliacion",
+        //   submodulo: "Generar Archivo",
+        //   permiso: "Generar Archivo"
+        // }
+      },
+      {
+        path: 'ficha-cambio-equipo', component: FichaCambioEquipoComponent, outlet: 'adr',
         // canActivate: [HasPermisoGuard],
         // data: {
         //   modulo: "Domiciliacion",

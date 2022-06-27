@@ -28,7 +28,7 @@ export class CambioPosComponent implements OnInit {
         changePos: change
       }
     }
-    this.router.navigateByUrl("/admin/app/(adr:add-cambio-pos)", navigationExtras)
+    this.router.navigateByUrl("/admin/app/(adr:ficha-cambio-equipo)", navigationExtras)
   }
 
 }

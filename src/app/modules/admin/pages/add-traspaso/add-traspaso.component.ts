@@ -249,14 +249,14 @@ export class AddTraspasoComponent implements OnInit {
       })
     }
 
-    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
+    // var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
       cod_serial:this.crypto.encryptJson(this.validacionPos.item.cod_serial),
-      items:this.crypto.encryptJson(this.validacionPos.item),
+      item:this.crypto.encryptJson(JSON.stringify(this.validacionPos.item)),
         solicitud: this.crypto.encryptJson(JSON.stringify(
           {
             occ_id: this.solicitud.get('occ').value,
