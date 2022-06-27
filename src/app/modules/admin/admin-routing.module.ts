@@ -85,6 +85,7 @@ import { AddPlanComponent } from './pages/add-plan/add-plan.component';
 import { AddPagoManualComponent } from './pages/add-pago-manual/add-pago-manual.component';
 import { PagoPendienteComponent } from './pages/pago-pendiente/pago-pendiente.component';
 import { CargaMasivaComponent } from './pages/carga-masiva/carga-masiva.component';
+import { ListarArchivosComponent } from './pages/listar-archivos/listar-archivos.component';
 
 const routes: Routes = [
   {
@@ -836,7 +837,15 @@ const routes: Routes = [
         //   submodulo: "Generar Archivo",
         //   permiso: "Generar Archivo"
         // }
-      },
+      }, {
+        path: 'listar-archivos', component: ListarArchivosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        // data: {
+        //   modulo: "Domiciliacion",
+        //   submodulo: "Generar Archivo",
+        //   permiso: "Generar Archivo"
+        // }
+      }
 
 
     ],
