@@ -87,6 +87,7 @@ import { PagoPendienteComponent } from './pages/pago-pendiente/pago-pendiente.co
 import { CargaMasivaComponent } from './pages/carga-masiva/carga-masiva.component';
 import { FichaTraspasoComponent } from './pages/ficha-traspaso/ficha-traspaso.component';
 import { FichaCambioEquipoComponent } from './pages/ficha-cambio-equipo/ficha-cambio-equipo.component';
+import { ListarArchivosComponent } from './pages/listar-archivos/listar-archivos.component';
 
 const routes: Routes = [
   {
@@ -841,6 +842,9 @@ const routes: Routes = [
       },
       {
         path: 'ficha-traspaso', component: FichaTraspasoComponent, outlet: 'adr',
+      }, 
+      {
+        path: 'listar-archivos', component: ListarArchivosComponent, outlet: 'adr',
         // canActivate: [HasPermisoGuard],
         // data: {
         //   modulo: "Domiciliacion",
@@ -857,6 +861,7 @@ const routes: Routes = [
         //   permiso: "Generar Archivo"
         // }
       },
+      
 
 
     ],

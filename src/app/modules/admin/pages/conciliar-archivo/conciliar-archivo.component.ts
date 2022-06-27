@@ -80,6 +80,8 @@ export class ConciliarArchivoComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       codigo: this.crypto.encryptJson(this.form.get('banco').value),
       oper: this.crypto.encryptJson(this.form.get('oper').value),
+      pag: this.crypto.encryptJson("0"),
+      offset: this.crypto.encryptJson("50"),
     }))
 
     this.loader.loading()

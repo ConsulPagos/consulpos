@@ -36,6 +36,13 @@
                 <li class="fa fa-file-alt icon_side"></li>
                 <span class="text_side">Correctivos</span>
             </a>
+
+            <!-- Carga masiva -->
+            <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['carga-masiva'] } }]"
+                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                <li class="fa fa-file-import icon_side"></li>
+                <span class="text_side">Carga masiva</span>
+            </a>
         </mat-menu>
 
         <mat-menu #venta="matMenu">
@@ -150,7 +157,7 @@
             <!-- Pagos -->
 
             <a class="menu_side" mat-menu-item [matMenuTriggerFor]="pago">
-                <li class="fa fa-file-alt icon_side"></li>
+                <li class="fa fa-credit-card icon_side"></li>
                 <span class="text_side">Pagos</span>
             </a>
 
@@ -166,9 +173,9 @@
                 </a>
 
                 <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['pago-pendiente'] } }]"
-                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-dollar-sign"></li><span class="text_side">Pago Pendiente</span>
-            </a>
+                    routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                    <li class="fa fa-dollar-sign"></li><span class="text_side">Pago Pendiente</span>
+                </a>
 
                 <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['validar-pago'] } }]"
                     routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
@@ -191,6 +198,10 @@
                 <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['actualizar-archivo'] } }]"
                     routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                     <li class="fa fa-file-upload"></li> <span class="text_side">Cargar Respuesta</span>
+                </a>
+                <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['listar-archivos'] } }]"
+                    routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                    <li class="fa fa-file-alt"></li> <span class="text_side">Listar Archivos</span>
                 </a>
             </mat-menu>
 
@@ -226,12 +237,7 @@
 
         </mat-menu>
 
-         <!-- Carga masiva -->
-         <a class="menu_side" mat-button [routerLink]="['/admin/app',{ outlets: { adr: ['carga-masiva'] } }]"
-         routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-            <li class="fa fa-file-import icon_side"></li>
-            <span class="text_side">Carga masiva</span>
-        </a>
+
         <!-- ************************************************************************************************** -->
 
         <!-- Solicitud de Reportes -->

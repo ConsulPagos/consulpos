@@ -151,6 +151,7 @@ import { ModalDiferirCuotaComponent } from './components/modal-diferir-cuota/mod
 import { CargaMasivaComponent } from './pages/carga-masiva/carga-masiva.component';
 import { FichaTraspasoComponent } from './pages/ficha-traspaso/ficha-traspaso.component';
 import { FichaCambioEquipoComponent } from './pages/ficha-cambio-equipo/ficha-cambio-equipo.component';
+import { ListarArchivosComponent } from './pages/listar-archivos/listar-archivos.component';
 
 
 
@@ -293,6 +294,8 @@ import { FichaCambioEquipoComponent } from './pages/ficha-cambio-equipo/ficha-ca
     CargaMasivaComponent,
     FichaTraspasoComponent,
     FichaCambioEquipoComponent,
+    ListarArchivosComponent,
+    
   ],
 
   imports: [
