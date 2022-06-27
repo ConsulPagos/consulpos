@@ -100,8 +100,8 @@ export class ListarArchivosComponent implements OnInit {
 
           this.data = JSON.parse(this.crypto.decryptJson(json.archivos))
           console.log(this.data)
-          //this.resultsLength = parseInt(this.crypto.decryptJson(json.total));
-          this.resultsLength = 100;
+          this.resultsLength = parseInt(this.crypto.decryptJson(json.total));
+          //this.resultsLength = 100;
           return this.data;
 
         }),

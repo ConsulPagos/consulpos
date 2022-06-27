@@ -74,6 +74,8 @@ export class ActualizarArchivoComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       codigo: this.crypto.encryptJson(this.form.get('banco').value),
       oper: this.crypto.encryptJson("/actualizar"),
+      pag: this.crypto.encryptJson("0"),
+      offset: this.crypto.encryptJson("50"),
     }))
 
     this.loading = true;
