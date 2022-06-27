@@ -51,7 +51,7 @@
                                 </h6>
                             </div>
 
-                            <div *ngIf="showSale.items.length > 0">
+                            <div *ngIf="showSale.solicitud_items.length > 0">
                                 <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
                                     <ng-container matColumnDef="cod_serial">
                                         <th mat-header-cell *matHeaderCellDef> Serial </th>
@@ -164,7 +164,7 @@
                                 </table>
                             </div>
 
-                            <div *ngIf="showSale.items.length  == 0">
+                            <div *ngIf="showSale.solicitud_items.length  == 0">
                                 <div *ngFor="let modelos of showSale.modelos">
                                     <div *ngFor="let equipo of modelos.caracteristicas">
                                         <div class="conatiner-text">
