@@ -1,15 +1,14 @@
 <section id="inventario-detalle">
-    <div class="title">
-        <div class="d-flex">
+
+
+
+
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
             <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['inventario'] } }]">
                 <li class="fas fa-arrow-left"></li>
             </a>
-        </div>
-    </div>
-
-    <div class="container-fluid">
-        <div style="background-color: #fff; border-radius: 10px;">
             <mat-tab-group>
                 <mat-tab label="Información">
                     <ng-template matTabContent>

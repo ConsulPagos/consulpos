@@ -8,27 +8,10 @@
         </div>
         <div style="background-color: #fff; border-radius: 10px;">
             <div class="box-title d-flex justify-content-center">
-                <h5 class="bold uppercase mt-3">Cargar Inevntario POS</h5>
+                <h5 class="bold uppercase mt-3">Cargar Inventario POS</h5>
             </div>
             <form [formGroup]="form">
                 <div class="container">
-                    <!-- <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Categoria</mat-label>
-                        <mat-select disableRipple formControlName="categoria">
-                            <mat-option *ngFor="let categoria of categorias" value={{categoria.id}}>
-                                {{categoria.categoria}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field> -->
-
-                    <!-- <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Marca</mat-label>
-                        <mat-select disableRipple formControlName="marca">
-                            <mat-option *ngFor="let marca of marcas" value={{marca.id}}>
-                                {{marca.marca}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field> -->
 
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Modelo</mat-label>
@@ -37,20 +20,6 @@
                                 {{modelo.modelo}} </mat-option>
                         </mat-select>
                     </mat-form-field>
-
-                    <!-- <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Almacen</mat-label>
-                        <mat-select disableRipple formControlName="almacen">
-                            <mat-option *ngFor="let almacen of almacenes" value={{almacen.almacen_id}}>
-                                {{almacen.nombre}} </mat-option>
-                        </mat-select>
-                    </mat-form-field> -->
-
-                    <!-- <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Número de Factura</mat-label>
-                        <input matInput formControlName="factura" placeholder="Número" type="text" maxlength="255"
-                            minlength="3" (keypress)="onlyCaracteres($event)">
-                    </mat-form-field> -->
 
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Proveedor</mat-label>
@@ -70,13 +39,14 @@
                 </div>
             </form>
 
-            <div *ngIf="!form.invalid">
-                <form [formGroup]="serialForm">
-                                    <mat-form-field appearance="outline" class="container_box_space">
-                    <mat-label>Serial</mat-label>
-                    <input matInput placeholder="serial" type="text" maxlength="255" minlength="3"
-                        (change)="cargarSerial($event.target.value)" formControlName="serial" (keypress)="onlyCaracteres($event)">
-                </mat-form-field>
+            <div *ngIf="!form.invalid" >
+                <form [formGroup]="serialForm" class="container">
+                    <mat-form-field appearance="outline" class="container_box_space">
+                        <mat-label>Serial</mat-label>
+                        <input matInput placeholder="serial" type="text" maxlength="255" minlength="3"
+                            (change)="cargarSerial($event.target.value)" formControlName="serial"
+                            (keypress)="onlyCaracteres($event)">
+                    </mat-form-field>
                 </form>
 
                 <!-- <button mat-button>
@@ -86,7 +56,7 @@
 
             <div *ngFor="let serial of seriales">
                 <p>
-                    {{serial}} 
+                    {{serial}}
                     <button mat-icon-button (click)="deleteSerial(serial)">
                         X
                     </button>

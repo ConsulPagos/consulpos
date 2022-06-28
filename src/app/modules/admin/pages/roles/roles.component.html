@@ -1,14 +1,14 @@
 <section id="rol">
-    <div class="title">
-        <div class="d-flex">
+
+
+
+    <div class="container-fluid">
+        
+        <div style="background-color: #fff; border-radius: 10px;">
             <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Rol"  
             [routerLink]="['/admin/app',{ outlets: { adr: ['add-rol'] } }]" >
                 <li class="fas fa-user-lock"></li>
             </a>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div style="background-color: #fff; border-radius: 10px;">
             <mat-tab-group>
                 <mat-tab>
                     <ng-template mat-tab-label>

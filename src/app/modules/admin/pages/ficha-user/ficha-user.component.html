@@ -1,15 +1,14 @@
 <section id="ficha-user">
-    <div class="title">
-        <div class="d-flex">
-            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-                [routerLink]="['/admin/app',{ outlets: { adr: ['super-admin-panel'] } }]">
-                <li class="fas fa-arrow-left"></li>
-            </a>
-        </div>
-    </div>
+
+
+
 
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
+            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+            [routerLink]="['/admin/app',{ outlets: { adr: ['super-admin-panel'] } }]">
+            <li class="fas fa-arrow-left"></li>
+        </a>
             <mat-tab-group>
                 <mat-tab label="Información">
                     <ng-template matTabContent>

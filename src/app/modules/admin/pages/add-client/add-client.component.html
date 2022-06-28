@@ -1,13 +1,9 @@
 <section id="addClient">
     <div class="container-fluid">
-        <div class="structur">
-            <div>
-                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-                    [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]">
-                    <li class="fas fa-arrow-left"></li>
-                </a>
-            </div>
-        </div>
+        <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+            [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]">
+            <li class="fas fa-arrow-left"></li>
+        </a>
         <div style="background-color: #fff; border-radius: 10px;">
             <p class="title_mother text-uppercase">
                 Agregar Cliente
@@ -460,7 +456,8 @@
                         <div>
                             <div>
                                 <button class="stepBtn" *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'"
-                                    mat-raised-button matStepperNext [disabled]="client.invalid || document.invalid" (click)="save()">
+                                    mat-raised-button matStepperNext [disabled]="client.invalid || document.invalid"
+                                    (click)="save()">
                                     Finalizar
                                 </button>
                             </div>

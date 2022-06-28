@@ -13,9 +13,9 @@
 
         <div *ngFor="let item of dataVenta.modelos; let p = index">
             <div *ngFor="let caracteristica of item.caracteristicas; let c = index">
-                {{p}}
+                <!-- {{p}}
                 {{c}}
-                {{p+c}}
+                {{p+c}} -->
                 <form [formGroup]="formDinamic[p + c]">
                     SIM: {{caracteristica.sim}}
                     <mat-form-field class="box" appearance="outline">
@@ -24,24 +24,25 @@
                     </mat-form-field>
                 </form>
                 <div *ngIf="!formDinamic[p + c].valid">
-                    <button (click)="findSim(caracteristica.sim, formDinamic[p + c])">
-                        Search
-                    </button>
+                    <div style="text-align: center;">
+                        <button (click)="findSim(caracteristica.sim, formDinamic[p + c])" mat-raised-button>
+                            Search
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div *ngFor="let i of formDinamic">
+<!-- <div *ngFor="let i of formDinamic">
     {{i.value | json}}
-</div>
-
+</div> -->
 
 <div mat-dialog-actions>
     <div class="d-flex w-100">
-        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null"
-            (click)="liberarSim()">
+        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null" (click)="liberarSim()">
             <li class="fa fa-times text-dark"></li>
         </button>
         <button class="flex-fill confirm action_button" [disabled]="false" mat-button cdkFocusInitial
