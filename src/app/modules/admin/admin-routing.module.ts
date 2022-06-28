@@ -86,6 +86,7 @@ import { AddPagoManualComponent } from './pages/add-pago-manual/add-pago-manual.
 import { PagoPendienteComponent } from './pages/pago-pendiente/pago-pendiente.component';
 import { CargaMasivaComponent } from './pages/carga-masiva/carga-masiva.component';
 import { ListarArchivosComponent } from './pages/listar-archivos/listar-archivos.component';
+import { HasPermisoGuard } from '../admin/guards/has-permiso.guard';
 
 const routes: Routes = [
   {
@@ -95,7 +96,7 @@ const routes: Routes = [
       {
         path: 'dashboard', component: DashboardComponent,
         outlet: 'adr',
-        /*   canActivate: [HasPermisoGuard],
+          /* canActivate: [HasPermisoGuard],
           data: {
             modulo: "Cobranza",
             submodulo: "Cobro Centralizado",
@@ -114,12 +115,12 @@ const routes: Routes = [
       // Modulo de Clientes
       {
         path: 'clientela', component: ClientelaComponent, outlet: 'adr',
-        // canActivate: [HasPermisoGuard],
-        // data: {
-        //   modulo: "Clientes",
-        //   submodulo: "Listado",
-        //   permiso: "Leer"
-        // }
+        canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Clientes",
+          submodulo: "Listado",
+          permiso: "Leer"
+        }
       },
       {
         path: 'edit-client', component: EditClientComponent, outlet: 'adr',
