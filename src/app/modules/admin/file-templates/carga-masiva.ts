@@ -197,6 +197,26 @@ const template = [
         "decimales": 0,
         "inicia": 0,
         "nombre": "SALDO"
+    }, 
+    
+    {
+        "columna": "NUMERO_TELEFONO_1",
+        "posicion": 19,
+        "longitud": 0,
+        "tipo": "string",
+        "decimales": 0,
+        "inicia": 0,
+        "nombre": "NUMERO_TELEFONO_1"
+    },
+    
+    {
+        "columna": "NUMERO_TELEFONO_2",
+        "posicion": 20,
+        "longitud": 0,
+        "tipo": "string",
+        "decimales": 0,
+        "inicia": 0,
+        "nombre": "NUMERO_TELEFONO_2"
     }
 ];
 
