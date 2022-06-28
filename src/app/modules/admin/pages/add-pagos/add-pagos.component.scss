@@ -101,3 +101,23 @@
 .text-sub-title {
     padding: 0.5rem;
 }
+
+
+.formulario_1 {
+    display: flex;
+}
+
+.mat-form-field {
+    width: 100%;
+}
+
+.pay-btn {
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .formulario_1 {
+        flex-wrap: wrap;
+    }
+}

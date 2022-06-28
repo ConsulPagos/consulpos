@@ -1,17 +1,10 @@
-<!-- Vista de Agregar Usuario -->
 <section id="editadmin">
-    <!-- Botones del Navbar -->
-    <div class="title">
-        <div class="d-flex">
+    <div class="container-fluid">
+        <div class="row pl-3 pr-3">
             <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['super-admin-panel'] } }]">
                 <li class="fa fa-arrow-left"></li>
             </a>
-        </div>
-    </div>
-    <!-- Container de los Componentes -->
-    <div class="container-fluid">
-        <div class="row pl-3 pr-3">
             <div class="col-12 bg-white text-justify p-3">
                 <p class="title_mother text-uppercase">
                     Editar Usuario
@@ -27,38 +20,42 @@
                     </p>
                 </div>
 
-                <form [formGroup]="adminForm">
-
+                <form [formGroup]="adminForm" class="container">
                     <h6>Datos del Usuario</h6>
+                    <div>
 
-                    <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Primer Nombre</mat-label>
-                        <input matInput placeholder="123456789" formControlName="primer_nombre" type="text">
-                    </mat-form-field>
 
-                    <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Segundo Nombre</mat-label>
-                        <input matInput placeholder="123456789" formControlName="segundo_nombre" type="text">
-                    </mat-form-field>
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Primer Nombre</mat-label>
+                            <input matInput placeholder="123456789" formControlName="primer_nombre" type="text">
+                        </mat-form-field>
 
-                    <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Primer Apellido</mat-label>
-                        <input matInput placeholder="123456789" formControlName="primer_apellido" type="text">
-                    </mat-form-field>
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Segundo Nombre</mat-label>
+                            <input matInput placeholder="123456789" formControlName="segundo_nombre" type="text">
+                        </mat-form-field>
 
-                    <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Segundo Apellido</mat-label>
-                        <input matInput placeholder="123456789" formControlName="segundo_apellido" type="text">
-                    </mat-form-field>
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Primer Apellido</mat-label>
+                            <input matInput placeholder="123456789" formControlName="primer_apellido" type="text">
+                        </mat-form-field>
 
-                    <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Rol</mat-label>
-                        <mat-select disableRipple formControlName="rol_id">
-                            <mat-option *ngFor="let rol of roles" value={{rol.id}}>
-                                {{rol.rol}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Segundo Apellido</mat-label>
+                            <input matInput placeholder="123456789" formControlName="segundo_apellido" type="text">
+                        </mat-form-field>
+
+
+
+                        <mat-form-field appearance="outline" class="container_box_space">
+                            <mat-label>Rol</mat-label>
+                            <mat-select disableRipple formControlName="rol_id">
+                                <mat-option *ngFor="let rol of roles" value={{rol.id}}>
+                                    {{rol.nombre}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
 
                     <h6>Información de contacto</h6>
 
@@ -82,15 +79,6 @@
                                 <mat-label>Punto de referencia</mat-label>
                                 <textarea matInput placeholder="Pasando Proteccion animal"
                                     formControlName="pto_referencia" type="text" maxlength="510" minlength="5">
-                            </textarea>
-                            </mat-form-field>
-                        </div>
-
-                        <div class="direction">
-                            <mat-form-field class="container_box_direction" appearance="outline">
-                                <mat-label>Localidad</mat-label>
-                                <textarea matInput placeholder="Pasando Proteccion animal" formControlName="localidad"
-                                    type="text" maxlength="510" minlength="5">
                             </textarea>
                             </mat-form-field>
                         </div>
@@ -128,10 +116,6 @@
 
                     </div>
                 </form>
-                <div>
-                    <strong>Form value:</strong>
-                    <pre>{{ adminForm.value | json }}</pre>
-                </div>
             </div>
         </div>
     </div>

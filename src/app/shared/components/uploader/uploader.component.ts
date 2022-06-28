@@ -1,6 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DefaultResponse } from 'src/app/models/default_response';
 import * as _ from 'lodash';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-uploader',
@@ -15,10 +16,13 @@ export class UploaderComponent implements OnInit {
   cardImageBase64: string;
 
   @Output() uploaded: EventEmitter<any> = new EventEmitter();
+  @Input() id: string;
+
 
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
   fileChangeEvent(fileInput: any) {
@@ -74,7 +78,8 @@ export class UploaderComponent implements OnInit {
             // this.previewImagePath = imgBase64Path;
             this.uploaded.next({
               ext: ext,
-              file: this.cardImageBase64
+              file: this.cardImageBase64,
+              id: this.id
             })
             console.log("Yo soy tu padre");
           }
@@ -88,6 +93,16 @@ export class UploaderComponent implements OnInit {
   removeImage() {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
+  }
+
+  getUniqueId(parts: number): string {
+    const stringArr = [];
+    for (let i = 0; i < parts; i++) {
+      // tslint:disable-next-line:no-bitwise
+      const S4 = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+      stringArr.push(S4);
+    }
+    return stringArr.join('-');
   }
 
 

@@ -1,10 +1,11 @@
+{{id}}
 <form class="delete">
     <div class="form-group">
         <fieldset class="form-group">
             {{imageError}}
             <div class="custom-file fileInputProfileWrap">
                 <input *ngIf="!isImageSaved; else elseTemplate" type="file" (change)="fileChangeEvent($event)"
-                    class="custom-file-input">
+                    class="custom-file-input" >
             </div>
         </fieldset>
     </div>

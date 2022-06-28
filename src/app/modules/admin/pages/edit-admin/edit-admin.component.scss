@@ -57,3 +57,14 @@
     padding-top: 0.25rem;
     text-align: center;
 }
+
+.mat-form-field {
+    width: 100%;
+}
+
+
+@media screen and (max-width: 768px) {
+    .container {
+        flex-wrap: wrap;
+    }
+}

@@ -66,8 +66,8 @@
                             <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                         </mat-form-field>
                     </div>
-
                 </form>
+
                 <form *ngIf="formDinamic[i] != undefined" [formGroup]="formDinamic[i]">
                     <div *ngIf="payments[i].get('t_pago').value != null">
                         <div *ngFor="let caracteristica of getInput(payments[i].get('t_pago').value)">
@@ -131,7 +131,7 @@
                             <p>{{total}}</p>
                         </td>
                         <td>
-                            <p>{{total_Bs}}</p>
+                            <p>{{total_Bs.toFixed(2)}}</p>
                         </td>
                     </tr>
                 </table>

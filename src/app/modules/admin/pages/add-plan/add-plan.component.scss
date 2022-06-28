@@ -56,7 +56,6 @@
 .container{
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
 }
 
 .btn {
@@ -67,4 +66,19 @@
     display: flex;
     justify-content: center;
     width: 100%;
+}
+
+.mat-form-field {
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        flex-wrap: wrap;
+    }
+}
+
+.btn_agent{
+    text-align: center;
+    padding: 2rem 0;
 }

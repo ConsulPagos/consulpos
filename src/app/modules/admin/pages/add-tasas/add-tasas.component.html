@@ -1,14 +1,10 @@
 <section id="add-tasas">
-    <div class="title">
-        <div class="d-flex">
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
             <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
                 [routerLink]="['/admin/app',{ outlets: { adr: ['tasas'] } }]">
                 <li class="fas fa-arrow-left"></li>
             </a>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div style="background-color: #fff; border-radius: 10px;">
             <div class="box-title d-flex justify-content-center">
                 <h5 class="bold uppercase mt-3">Agregar Tasa</h5>
             </div>
@@ -32,21 +28,19 @@
 
                     <mat-form-field class="container_input container_box_space" appearance="outline">
                         <mat-label>Tasa</mat-label>
-                        <input matInput type="number" 
-
-                        formControlName="tasa">
+                        <input matInput type="number" formControlName="tasa">
                     </mat-form-field>
                 </div>
             </form>
 
             <div class="btn_form">
-                <button (click)="clear()" class="btn btn-danger bg-danger text-white w-25 mt-3 mb-3 text-uppercase" mat-button>
+                <button (click)="clear()" class="btn btn-danger bg-danger text-white w-25 mt-3 mb-3 text-uppercase"
+                    mat-button>
                     Limpiar
                 </button>
 
-                <button (click)="save()" class="btn btn-success bg-success text-white w-25 mt-3 mb-3 text-uppercase" 
-                mat-button 
-                [disabled]="form.invalid">
+                <button (click)="save()" class="btn btn-success bg-success text-white w-25 mt-3 mb-3 text-uppercase"
+                    mat-button [disabled]="form.invalid">
                     Guardar
                 </button>
             </div>

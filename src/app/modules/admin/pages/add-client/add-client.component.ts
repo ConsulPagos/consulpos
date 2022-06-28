@@ -217,7 +217,7 @@ export class AddClientComponent implements OnInit {
     this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionresponse);
-    
+
       this.search_client = this.validacionresponse.value_exists === "true" || this.validacionresponse.afiliado === "true" ? true : false;
 
       if (this.search_client) {
@@ -228,6 +228,7 @@ export class AddClientComponent implements OnInit {
       }
       this.loading = false
     })
+    this.add_controlers(this.getTipoCliente())
   }
 
   submit() {
@@ -368,78 +369,28 @@ export class AddClientComponent implements OnInit {
     this.parroquias = JSON.parse(this.storage.get(constant.PARROQUIAS)).parroquias.filter(c => c.id_municipio == id)
   }
 
-  // fileChangeEvent(fileInput: any) {
-  //   console.log(fileInput.target.id);
-  //   for (let index = 0; index < fileInput.target.files.length; index++) {
-  //     const g = fileInput.target.files[index];
-  //     console.log(g.name);
-  //     var ext =  g.name.split('.').pop();
-  //     console.log(ext);
-  //   }
+  add_controlers(type:string) {
+    if(type == 'N'){
+      this.document.addControl('RIF', new FormControl('', [Validators.required]))
+      this.document.addControl('CI', new FormControl('', [Validators.required]))
+    }
+    else if(type == 'R'){
+      this.document.addControl('RIF', new FormControl('', [Validators.required]))
+      this.document.addControl('CI', new FormControl('', [Validators.required]))
+      this.document.addControl('RFP', new FormControl('', [Validators.required]))
+    }
+    else if(type == 'J'){
+      this.document.addControl('RIFE', new FormControl('', [Validators.required]))
+      this.document.addControl('RM', new FormControl('', [Validators.required]))
+      this.document.addControl('CIR', new FormControl('', [Validators.required]))
+      this.document.addControl('RIFR', new FormControl('', [Validators.required]))
+    }
 
-  //   this.imageError = null;
-  //   if (fileInput.target.files && fileInput.target.files[0]) {
-  //     console.log(fileInput.target.files);
-  //     // Size Filter Bytes
-  //     const max_size = 20971520;
-  //     const allowed_types = ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf', 'application/msword'];
-  //     const max_height = 15200;
-  //     const max_width = 25600;
-  //     /////////////////////////
-  //     if (fileInput.target.files[0].size > max_size) {
-  //       this.imageError =
-  //         'Maximum size allowed is ' + max_size / 1000 + 'Mb';
-
-  //       return false;
-  //     }
-
-  //     if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
-  //       this.imageError = 'Solo imagenes ( JPG | PNG )';
-  //       return false;
-  //     }
-  //     const reader = new FileReader();
-  //     reader.onload = (e: any) => {
-  //       const image = new Image();
-  //       image.src = e.target.result;
-  //       image.onload = rs => {
-  //         const img_height = rs.currentTarget['height'];
-  //         const img_width = rs.currentTarget['width'];
-
-  //         console.log(img_height, img_width);
-
-
-  //         if (img_height > max_height && img_width > max_width) {
-  //           this.imageError =
-  //             'Maximum dimentions allowed ' +
-  //             max_height +
-  //             '*' +
-  //             max_width +
-  //             'px';
-  //           return false;
-  //         } else {
-
-  //           const imgBase64Path = e.target.result;
-  //           this.cardImageBase64 = imgBase64Path;
-  //           this.isImageSaved = true;
-  //           // this.previewImagePath = imgBase64Path;
-  //           this.upload(ext, fileInput.target.id)
-  //         }
-
-  //       };
-  //     };
-  //     reader.readAsDataURL(fileInput.target.files[0]);
-
-  //   }
-
-  // }
-
-  // removeImage() {
-  //   this.cardImageBase64 = null;
-  //   this.isImageSaved = false;
-  // }
+  }
 
 
   upload(d: any, id: string) {
+
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
     const encode = d.file.toString()
     const data = this.crypto.encryptString(JSON.stringify({
@@ -455,6 +406,7 @@ export class AddClientComponent implements OnInit {
       file: this.crypto.encryptJson(encode),
     }))
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.document.get(id).setValue(true)
       this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.default);
     })
