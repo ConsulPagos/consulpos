@@ -368,78 +368,8 @@ export class AddClientComponent implements OnInit {
     this.parroquias = JSON.parse(this.storage.get(constant.PARROQUIAS)).parroquias.filter(c => c.id_municipio == id)
   }
 
-  // fileChangeEvent(fileInput: any) {
-  //   console.log(fileInput.target.id);
-  //   for (let index = 0; index < fileInput.target.files.length; index++) {
-  //     const g = fileInput.target.files[index];
-  //     console.log(g.name);
-  //     var ext =  g.name.split('.').pop();
-  //     console.log(ext);
-  //   }
 
-  //   this.imageError = null;
-  //   if (fileInput.target.files && fileInput.target.files[0]) {
-  //     console.log(fileInput.target.files);
-  //     // Size Filter Bytes
-  //     const max_size = 20971520;
-  //     const allowed_types = ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf', 'application/msword'];
-  //     const max_height = 15200;
-  //     const max_width = 25600;
-  //     /////////////////////////
-  //     if (fileInput.target.files[0].size > max_size) {
-  //       this.imageError =
-  //         'Maximum size allowed is ' + max_size / 1000 + 'Mb';
-
-  //       return false;
-  //     }
-
-  //     if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
-  //       this.imageError = 'Solo imagenes ( JPG | PNG )';
-  //       return false;
-  //     }
-  //     const reader = new FileReader();
-  //     reader.onload = (e: any) => {
-  //       const image = new Image();
-  //       image.src = e.target.result;
-  //       image.onload = rs => {
-  //         const img_height = rs.currentTarget['height'];
-  //         const img_width = rs.currentTarget['width'];
-
-  //         console.log(img_height, img_width);
-
-
-  //         if (img_height > max_height && img_width > max_width) {
-  //           this.imageError =
-  //             'Maximum dimentions allowed ' +
-  //             max_height +
-  //             '*' +
-  //             max_width +
-  //             'px';
-  //           return false;
-  //         } else {
-
-  //           const imgBase64Path = e.target.result;
-  //           this.cardImageBase64 = imgBase64Path;
-  //           this.isImageSaved = true;
-  //           // this.previewImagePath = imgBase64Path;
-  //           this.upload(ext, fileInput.target.id)
-  //         }
-
-  //       };
-  //     };
-  //     reader.readAsDataURL(fileInput.target.files[0]);
-
-  //   }
-
-  // }
-
-  // removeImage() {
-  //   this.cardImageBase64 = null;
-  //   this.isImageSaved = false;
-  // }
-
-
-  upload(d: any, id: string) {
+  upload(d: any) {
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
     const encode = d.file.toString()
     const data = this.crypto.encryptString(JSON.stringify({
@@ -448,7 +378,7 @@ export class AddClientComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       att_by: this.crypto.encryptJson("CLIENTE"),
       rif: this.crypto.encryptJson(rif),
-      documento: this.crypto.encryptJson(id),
+      documento: this.crypto.encryptJson(d.id),
       extension: this.crypto.encryptJson(d.ext),
       t_sol_id: this.crypto.encryptJson(null),
       solicitud: this.crypto.encryptJson(null),
@@ -456,8 +386,14 @@ export class AddClientComponent implements OnInit {
     }))
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.document.get(d.id).setValue(true)
       console.log(this.default);
     })
+  }
+
+  add_control(id: string){
+    this.document.addControl(id, new FormControl('', [Validators.required]))
+    return id
   }
 
   save() {
@@ -467,8 +403,6 @@ export class AddClientComponent implements OnInit {
       }
     })
   }
-
-
 
 
 }

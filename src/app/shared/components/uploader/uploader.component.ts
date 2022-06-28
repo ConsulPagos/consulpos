@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DefaultResponse } from 'src/app/models/default_response';
 import * as _ from 'lodash';
 
@@ -15,6 +15,7 @@ export class UploaderComponent implements OnInit {
   cardImageBase64: string;
 
   @Output() uploaded: EventEmitter<any> = new EventEmitter();
+  @Input() id: string;
 
   constructor() { }
 
@@ -74,7 +75,8 @@ export class UploaderComponent implements OnInit {
             // this.previewImagePath = imgBase64Path;
             this.uploaded.next({
               ext: ext,
-              file: this.cardImageBase64
+              file: this.cardImageBase64,
+              id: this.id
             })
             console.log("Yo soy tu padre");
           }
