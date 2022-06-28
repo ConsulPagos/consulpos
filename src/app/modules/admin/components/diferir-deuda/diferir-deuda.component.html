@@ -20,7 +20,8 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="container_box">
             <mat-label>Monto a diferir</mat-label>
-            <input matInput placeholder="ex: 10" type="number" formControlName="saldo_diferido" onkeyup="/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':this.value=''">
+            <input matInput placeholder="ex: 10" type="number" formControlName="saldo_diferido"
+                onkeyup="/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':this.value=''">
             <mat-hint align="end">Mín: {{1 | currency}}, Máx: {{saldo | currency}}</mat-hint>
         </mat-form-field>
     </form>
