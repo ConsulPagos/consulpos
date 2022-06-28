@@ -113,7 +113,6 @@ export class AddVentaComponent implements OnInit {
 
   solicitud = new FormGroup({
     occ: new FormControl('', [Validators.required]),
-    plataforma: new FormControl('', [Validators.required]),
     plan: new FormControl('', [Validators.required]),
     tipocobro: new FormControl('', [Validators.required]),
     banco: new FormControl('', [Validators.required]),

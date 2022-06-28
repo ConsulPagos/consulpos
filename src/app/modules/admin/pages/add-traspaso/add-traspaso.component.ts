@@ -237,7 +237,7 @@ export class AddTraspasoComponent implements OnInit {
 
       solicitudes_banco_sell.push({
         id_t_cobro: buy.get('tipocobro').value,
-        monto_cuota: "30",
+        monto_cuota: "0",
         plan_id: buy.get('plan').value,
         fraccion_pago_id: "1",
         modelo_id: buy.get('modelo').value,
@@ -249,17 +249,17 @@ export class AddTraspasoComponent implements OnInit {
       })
     }
 
-    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
+    // var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
       cod_serial:this.crypto.encryptJson(this.validacionPos.item.cod_serial),
+      item:this.crypto.encryptJson(JSON.stringify(this.validacionPos.item)),
         solicitud: this.crypto.encryptJson(JSON.stringify(
           {
             occ_id: this.solicitud.get('occ').value,
-            //Revisar mandarlo automatico x verify
             t_sol_id: "4",
           }
         )),

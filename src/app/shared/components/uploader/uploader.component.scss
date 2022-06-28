@@ -25,6 +25,7 @@
 .delete {
     display: flex;
     align-items: flex-start;
+    justify-content: center;
 }
 
 .btn {
@@ -36,12 +37,13 @@
 .custom-file-input {
     color: transparent;
     opacity: 1;
+    display: flex;
 }
 .custom-file-input::-webkit-file-upload-button {
     visibility: hidden;
 }
 .custom-file-input::before {
-    content: "Select some files";
+    content: "Seleccione un archivo";
     color: black;
     display: inline-block;
     background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
@@ -55,7 +57,7 @@
     text-shadow: 1px 1px #fff;
     font-weight: 700;
     font-size: 10pt;
-
+    text-align: center;
 }
 .custom-file-input:hover::before {
     border-color: black;

@@ -37,7 +37,7 @@ export class TraspasoComponent implements OnInit {
         showSale: sale
       }
     }
-    this.router.navigateByUrl("/admin/app/(adr:ficha-sale)", navigationExtras)
+    this.router.navigateByUrl("/admin/app/(adr:ficha-traspaso)", navigationExtras)
   }
 
 }

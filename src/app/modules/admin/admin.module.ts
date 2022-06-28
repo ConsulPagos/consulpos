@@ -149,6 +149,8 @@ import { TablaPagoPendienteComponent } from './components/tabla-pago-pendiente/t
 import { TablaPagoManualComponent } from './components/tabla-pago-manual/tabla-pago-manual.component';
 import { ModalDiferirCuotaComponent } from './components/modal-diferir-cuota/modal-diferir-cuota.component';
 import { CargaMasivaComponent } from './pages/carga-masiva/carga-masiva.component';
+import { FichaTraspasoComponent } from './pages/ficha-traspaso/ficha-traspaso.component';
+import { FichaCambioEquipoComponent } from './pages/ficha-cambio-equipo/ficha-cambio-equipo.component';
 import { ListarArchivosComponent } from './pages/listar-archivos/listar-archivos.component';
 
 
@@ -290,6 +292,8 @@ import { ListarArchivosComponent } from './pages/listar-archivos/listar-archivos
     TablaPagoManualComponent,
     ModalDiferirCuotaComponent,
     CargaMasivaComponent,
+    FichaTraspasoComponent,
+    FichaCambioEquipoComponent,
     ListarArchivosComponent,
     
   ],

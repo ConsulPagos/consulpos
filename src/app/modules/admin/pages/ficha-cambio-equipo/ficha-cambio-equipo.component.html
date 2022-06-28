@@ -4,7 +4,7 @@
             <div class="structur">
                 <div>
                     <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-                        [routerLink]="['/admin/app',{ outlets: { adr: ['ventas'] } }]">
+                        [routerLink]="['/admin/app',{ outlets: { adr: ['cambio-pos'] } }]">
                         <li class="fas fa-arrow-left"></li>
                     </a>
                 </div>
@@ -15,43 +15,43 @@
                         <div class="container-fluid rounded bg-white mb-5">
 
                             <h4 class="text-center">
-                                Información de la venta
+                                Información cambio equipo
                             </h4>
 
                             <div class="sub-title">
                                 <div class="text-sub-title">
                                     <h6>
                                         <strong>Venta Nº: </strong>
-                                        {{showSale.number}}
+                                        {{changePos.number}}
                                     </h6>
                                 </div>
                                 <div class="text-sub-title">
                                     <h6>
                                         <strong>Estatus: </strong>
-                                        {{showSale.status_desc}}
+                                        {{changePos.status_desc}}
                                     </h6>
                                 </div>
                                 <div class="text-sub-title">
                                     <h6>
                                         <strong>Rif: </strong>
-                                        {{showSale.rif}}
+                                        {{changePos.rif}}
                                     </h6>
                                 </div>
                                 <div class="text-sub-title">
                                     <h6>
                                         <strong>Cliente: </strong>
-                                        {{showSale.razon_social}}
+                                        {{changePos.razon_social}}
                                     </h6>
                                 </div>
                             </div>
 
                             <div class="date-sale">
                                 <h6>
-                                    <strong>Fecha de venta: </strong>{{showSale.fecha}}
+                                    <strong>Fecha del Cambio POS: </strong>{{changePos.fecha}}
                                 </h6>
                             </div>
 
-                            <div *ngIf="showSale.solicitud_items.length > 0">
+                            <div *ngIf="changePos.solicitud_items.length > 0">
                                 <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
                                     <ng-container matColumnDef="cod_serial">
                                         <th mat-header-cell *matHeaderCellDef> Serial </th>
@@ -108,7 +108,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div *ngFor="let solicitud of showSale.solicitudes_banco">
+                                                    <div *ngFor="let solicitud of changePos.solicitudes_banco">
                                                         <div style="text-align: center;">
                                                             <p>Tipo de Venta: </p>
                                                             {{solicitud.fraccion_desc}}
@@ -164,8 +164,8 @@
                                 </table>
                             </div>
 
-                            <div *ngIf="showSale.solicitud_items.length  == 0">
-                                <div *ngFor="let modelos of showSale.modelos">
+                            <div *ngIf="changePos.solicitud_items.length  == 0">
+                                <div *ngFor="let modelos of changePos.modelos">
                                     <div *ngFor="let equipo of modelos.caracteristicas">
                                         <div class="conatiner-text">
                                             <div class="content-text">
