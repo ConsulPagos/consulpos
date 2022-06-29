@@ -217,7 +217,7 @@ export class AddClientComponent implements OnInit {
     this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionresponse);
-
+    
       this.search_client = this.validacionresponse.value_exists === "true" || this.validacionresponse.afiliado === "true" ? true : false;
 
       if (this.search_client) {
@@ -228,7 +228,6 @@ export class AddClientComponent implements OnInit {
       }
       this.loading = false
     })
-    this.add_controlers(this.getTipoCliente())
   }
 
   submit() {
@@ -386,7 +385,6 @@ export class AddClientComponent implements OnInit {
       file: this.crypto.encryptJson(encode),
     }))
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.document.get(id).setValue(true)
       this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.document.get(d.id).setValue(true)
       console.log(this.default);
