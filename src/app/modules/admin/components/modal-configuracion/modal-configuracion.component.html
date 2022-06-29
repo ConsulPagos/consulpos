@@ -23,10 +23,13 @@
                         <input matInput type="text" formControlName="sim_serial" readonly>
                     </mat-form-field>
                 </form>
-                <div *ngIf="!formDinamic[p + c].valid" style="text-align: center;">
-                    <button mat-raised-button (click)="findSim(caracteristica.sim, formDinamic[p + c])">
-                        Search
-                    </button>
+                <div *ngIf="!formDinamic[p + c].valid">
+                    <div style="text-align: center;">
+                        <button (click)="findSim(caracteristica.sim, formDinamic[p + c])" mat-raised-button>
+                            Search
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -37,11 +40,9 @@
     {{i.value | json}}
 </div> -->
 
-
 <div mat-dialog-actions>
     <div class="d-flex w-100">
-        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null"
-            (click)="liberarSim()">
+        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null" (click)="liberarSim()">
             <li class="fa fa-times text-dark"></li>
         </button>
         <button class="flex-fill confirm action_button" [disabled]="false" mat-button cdkFocusInitial

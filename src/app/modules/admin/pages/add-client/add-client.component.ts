@@ -369,28 +369,8 @@ export class AddClientComponent implements OnInit {
     this.parroquias = JSON.parse(this.storage.get(constant.PARROQUIAS)).parroquias.filter(c => c.id_municipio == id)
   }
 
-  add_controlers(type:string) {
-    if(type == 'N'){
-      this.document.addControl('RIF', new FormControl('', [Validators.required]))
-      this.document.addControl('CI', new FormControl('', [Validators.required]))
-    }
-    else if(type == 'R'){
-      this.document.addControl('RIF', new FormControl('', [Validators.required]))
-      this.document.addControl('CI', new FormControl('', [Validators.required]))
-      this.document.addControl('RFP', new FormControl('', [Validators.required]))
-    }
-    else if(type == 'J'){
-      this.document.addControl('RIFE', new FormControl('', [Validators.required]))
-      this.document.addControl('RM', new FormControl('', [Validators.required]))
-      this.document.addControl('CIR', new FormControl('', [Validators.required]))
-      this.document.addControl('RIFR', new FormControl('', [Validators.required]))
-    }
 
-  }
-
-
-  upload(d: any, id: string) {
-
+  upload(d: any) {
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
     const encode = d.file.toString()
     const data = this.crypto.encryptString(JSON.stringify({
@@ -399,7 +379,7 @@ export class AddClientComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       att_by: this.crypto.encryptJson("CLIENTE"),
       rif: this.crypto.encryptJson(rif),
-      documento: this.crypto.encryptJson(id),
+      documento: this.crypto.encryptJson(d.id),
       extension: this.crypto.encryptJson(d.ext),
       t_sol_id: this.crypto.encryptJson(null),
       solicitud: this.crypto.encryptJson(null),
@@ -408,8 +388,14 @@ export class AddClientComponent implements OnInit {
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.document.get(id).setValue(true)
       this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.document.get(d.id).setValue(true)
       console.log(this.default);
     })
+  }
+
+  add_control(id: string){
+    this.document.addControl(id, new FormControl('', [Validators.required]))
+    return id
   }
 
   save() {
@@ -419,8 +405,6 @@ export class AddClientComponent implements OnInit {
       }
     })
   }
-
-
 
 
 }

@@ -1,13 +1,13 @@
 <section id="edit-rol">
 
 
- 
+
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
             <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-            [routerLink]="['/admin/app',{ outlets: { adr: ['roles'] } }]">
-            <li class="fas fa-arrow-left"></li>
-        </a>
+                [routerLink]="['/admin/app',{ outlets: { adr: ['roles'] } }]">
+                <li class="fas fa-arrow-left"></li>
+            </a>
             <div class="box-title d-flex justify-content-center">
                 <h5 class="bold uppercase mt-3">Agregar Rol</h5>
                 <form [formGroup]="rolname">
@@ -65,10 +65,7 @@
         </form>
 
         <div class="btn_margin">
-            <app-action-btn 
-            (onClick)="save()" 
-            [text]="'Actualizar'" 
-            [isDisabled]="rolname.invalid">
+            <app-action-btn (onClick)="save()" [text]="'Actualizar'" [isDisabled]="rolname.invalid">
             </app-action-btn>
         </div>
 

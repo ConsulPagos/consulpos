@@ -18,7 +18,6 @@ export class UploaderComponent implements OnInit {
   @Output() uploaded: EventEmitter<any> = new EventEmitter();
   @Input() id: string;
 
-
   constructor() { }
 
   ngOnInit(): void {

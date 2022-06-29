@@ -8,7 +8,7 @@
         </div>
         <div style="background-color: #fff; border-radius: 10px;">
             <div class="box-title d-flex justify-content-center">
-                <h5 class="bold uppercase mt-3">Cargar Inevntario POS</h5>
+                <h5 class="bold uppercase mt-3">Cargar Inventario POS</h5>
             </div>
             <form [formGroup]="form">
                 <div class="container">
@@ -39,7 +39,7 @@
                 </div>
             </form>
 
-            <div *ngIf="!form.invalid">
+            <div *ngIf="!form.invalid" >
                 <form [formGroup]="serialForm" class="container">
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Serial</mat-label>

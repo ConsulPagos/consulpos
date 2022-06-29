@@ -69,10 +69,16 @@
     width: 100%;
 }
 
+//////////////////////
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
 .mat-form-field {
     width: 100%;
 }
-
 
 @media screen and (max-width: 768px) {
     .container {
