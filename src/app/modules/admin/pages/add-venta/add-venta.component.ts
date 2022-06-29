@@ -411,14 +411,14 @@ export class AddVentaComponent implements OnInit {
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.document.get(d.id).setValue(true)
       this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.document.get(d.id).setValue(true)
       console.log(this.default);
     })
   }
 
-  add_control(id:string) {
-      this.document.addControl(id, new FormControl('', [Validators.required]))
-      return id
+  add_control(id: string){
+    this.document.addControl(id, new FormControl('', [Validators.required]))
+    return id
   }
-
 
 }
