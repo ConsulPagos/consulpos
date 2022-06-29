@@ -409,7 +409,6 @@ export class AddVentaComponent implements OnInit {
       file: this.crypto.encryptJson(encode),
     }))
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.document.get(d.id).setValue(true)
       this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.document.get(d.id).setValue(true)
       console.log(this.default);
