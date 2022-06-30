@@ -124,7 +124,7 @@ export class AddVentaComponent implements OnInit {
   });
 
   document = new FormGroup({
-    referencia: new FormControl('', [Validators.required]),
+    id: new FormControl(''),
   });
 
   //****************************************************************************************//
@@ -287,7 +287,6 @@ export class AddVentaComponent implements OnInit {
       )),
       documentos: this.crypto.encryptJson(JSON.stringify([
         {
-          link: this.document.get("referencia").value,
           id_doc: "1"
         },
       ]))
