@@ -1,19 +1,18 @@
 <section id="clientela">
-    <div class="structur">
-        <div>
-            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-                [routerLink]="['/admin/app',{ outlets: { adr: ['config'] } }]">
-                <li class="fas fa-arrow-left"></li>
-            </a>
 
-            <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Tasa"
-                [routerLink]="['/admin/app',{ outlets: { adr: ['add-tasas'] } }]">
-                <li class="fas fa-file-invoice-dollar"></li>
-            </a>
-        </div>
-    </div>
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
+            <div style="display: flex;">
+                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+                    [routerLink]="['/admin/app',{ outlets: { adr: ['config'] } }]">
+                    <li class="fas fa-arrow-left"></li>
+                </a>
+    
+                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Agregar Tasa"
+                    [routerLink]="['/admin/app',{ outlets: { adr: ['add-tasas'] } }]">
+                    <li class="fas fa-file-invoice-dollar"></li>
+                </a>
+            </div>
             <mat-tab-group>
                 <mat-tab>
                     <ng-template mat-tab-label>

@@ -98,16 +98,16 @@ const routes: Routes = [
       {
         path: 'dashboard', component: DashboardComponent,
         outlet: 'adr',
-          /* canActivate: [HasPermisoGuard],
-          data: {
-            modulo: "Cobranza",
-            submodulo: "Cobro Centralizado",
-            permiso: "Leer"
-          } */
+        // canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Cobranza",
+          submodulo: "Cobro Centralizado",
+          permiso: "Leer"
+        }
       },
       {
         path: 'config', component: ConfigComponent, outlet: 'adr',
-        //  canActivate: [HasPermisoGuard],
+        // canActivate: [HasPermisoGuard],
         //  data: {
         //    modulo: "Cobranza",
         //    submodulo: "Cobro Centralizado",
@@ -116,7 +116,7 @@ const routes: Routes = [
       },
       {
         path: 'clientela', component: ClientelaComponent, outlet: 'adr',
-        canActivate: [HasPermisoGuard],
+        // canActivate: [HasPermisoGuard],
         data: {
           modulo: "Clientes",
           submodulo: "Listado",
@@ -125,185 +125,185 @@ const routes: Routes = [
       },
       {
         path: 'edit-client', component: EditClientComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Clientes",
-           submodulo: "Listado",
-           permiso: "Editar"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Clientes",
+          submodulo: "Listado",
+          permiso: "Editar"
+        }
       },
       {
         path: 'add-client', component: AddClientComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Clientes",
-           submodulo: "Listado",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Clientes",
+          submodulo: "Listado",
+          permiso: "Crear"
+        }
       },
       {
         path: 'ficha-cliente', component: FichaClienteComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Clientes",
-           submodulo: "Ficha",
-           permiso: "Leer"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Clientes",
+          submodulo: "Ficha",
+          permiso: "Leer"
+        }
       },
       {
         path: 'super-admin-panel', component: SuperAdminComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Usuarios",
-           permiso: "Leer"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Usuarios",
+          permiso: "Leer"
+        }
       },
       {
         path: 'ficha-user', component: FichaUserComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Usuarios",
-           permiso: "Leer"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Usuarios",
+          permiso: "Leer"
+        }
       },
       {
         path: 'edit-admin', component: EditAdminComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Usuarios",
-           permiso: "Editar"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Usuarios",
+          permiso: "Editar"
+        }
       },
       {
         path: 'cambiar-contraseña', component: AdminChangePwdComponent, outlet: 'adr'
       },
       {
         path: 'nuevo-admin', component: NuevoAdminComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Usuarios",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Usuarios",
+          permiso: "Crear"
+        }
       },
       {
         path: 'generar-archivo', component: GenerarArchivoComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Domiciliacion",
-           submodulo: "Generar Archivo",
-           permiso: "Generar Archivo"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Domiciliacion",
+          submodulo: "Generar Archivo",
+          permiso: "Generar Archivo"
+        }
       },
       {
         path: 'actualizar-archivo', component: ActualizarArchivoComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Domiciliacion",
-           submodulo: "Cargar Respuesta",
-           permiso: "Cargar Archivo"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Domiciliacion",
+          submodulo: "Cargar Respuesta",
+          permiso: "Cargar Archivo"
+        }
       },
       {
         path: 'conciliar-archivo', component: ConciliarArchivoComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Conciliacion",
-           submodulo: "Conciliar Archivo",
-           permiso: "Conciliar Archivo"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Conciliacion",
+          submodulo: "Conciliar Archivo",
+          permiso: "Conciliar Archivo"
+        }
       },
       {
         path: 'historico-conciliacion', component: HistoricoConciliacionComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Conciliacion",
-           submodulo: "Historico",
-           permiso: "Leer"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Conciliacion",
+          submodulo: "Historico",
+          permiso: "Leer"
+        }
       },
       {
         path: 'cobro-centralizado', component: CobroCentralizadoComponent,
         outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Cobro Centralizado",
-           submodulo: "Cobro Centralizado",
-           permiso: "Generar Archivo"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Cobro Centralizado",
+          submodulo: "Cobro Centralizado",
+          permiso: "Generar Archivo"
+        }
       },
       {
         path: 'previsualizar-archivo/:id', component: PrevArchivoComponent, outlet: 'adr'
       },
       {
         path: 'seleccion-centralizado', component: SeleccionCentralizadoComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Cobro Centralizado",
-           submodulo: "Cobro Centralizado",
-           permiso: "Cargar Archivo"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Cobro Centralizado",
+          submodulo: "Cobro Centralizado",
+          permiso: "Cargar Archivo"
+        }
       },
       {
         path: 'roles', component: RolesComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Roles",
-           permiso: "Leer"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Roles",
+          permiso: "Leer"
+        }
       },
       {
         path: 'add-rol', component: AddRolComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Roles",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Roles",
+          permiso: "Crear"
+        }
       },
       {
         path: 'edit-rol', component: EditRolComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Roles",
-           permiso: "Editar"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Roles",
+          permiso: "Editar"
+        }
       },
-      
+
       {
         path: 'ventas', component: VentasComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Ventas",
-           submodulo: "Listado",
-           permiso: "Leer"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Ventas",
+          submodulo: "Listado",
+          permiso: "Leer"
+        }
       },
       {
         path: 'ficha-sale', component: FichaSaleComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Ventas",
-           submodulo: "Ficha",
-           permiso: "Leer"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Ventas",
+          submodulo: "Ficha",
+          permiso: "Leer"
+        }
       },
       {
         path: 'validador-venta/:id', component: ValidadorVentaComponent, outlet: 'adr'
       },
       {
         path: 'add-venta', component: AddVentaComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Ventas",
-           submodulo: "Listado",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Ventas",
+          submodulo: "Listado",
+          permiso: "Crear"
+        }
       },
       {
         path: 'venta-consulpos', component: VentaConsulposComponent, outlet: 'adr'
@@ -313,550 +313,550 @@ const routes: Routes = [
       },
       {
         path: 'pagos', component: PagosComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Pagos",
-           submodulo: "Listado",
-           permiso: "Leer"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Pagos",
+          submodulo: "Listado",
+          permiso: "Leer"
+        }
       },
       {
         path: 'add-pagos', component: AddPagosComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Pagos",
-           submodulo: "Listado",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Pagos",
+          submodulo: "Listado",
+          permiso: "Crear"
+        }
       },
       {
         path: 'validar-pago', component: ValidarPagoComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Pagos",
-           submodulo: "Validar Pago",
-           permiso: "Leer"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Pagos",
+          submodulo: "Validar Pago",
+          permiso: "Leer"
+        }
       },
       {
         path: 'tasas', component: TasasComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Leer"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Leer"
+        }
       },
       {
         path: 'add-tasas', component: AddTasasComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-almacenes', component: AddAlmacenesComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-marcas', component: AddMarcasComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-modelos', component: AddModelosComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-plataformas', component: AddPlataformasComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
-       {
-         path: 'add-productos', component: AddProductosComponent, outlet: 'adr',
-          canActivate: [HasPermisoGuard],
-          data: {
-            modulo: "Configuracion",
-            submodulo: "Tasas",
-            permiso: "Crear"
-          }
-       },
+      {
+        path: 'add-productos', component: AddProductosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
+      },
       {
         path: 'add-provedores', component: AddProvedoresComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-sucursales', component: AddSucursalesComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'almacenes', component: AlmacenesComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'edit-almacenes', component: EditAlmacenesComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'edit-marcas', component: EditMarcasComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'edit-modelos', component: EditModelosComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'edit-plataformas', component: EditPlataformasComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
-       {
-         path: 'edit-productos', component: EditProductosComponent, outlet: 'adr',
-          canActivate: [HasPermisoGuard],
-          data: {
-            modulo: "Configuracion",
-            submodulo: "Tasas",
-            permiso: "Crear"
-          }
-       },
+      {
+        path: 'edit-productos', component: EditProductosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
+      },
       {
         path: 'edit-provedores', component: EditProvedoresComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'edit-sucursales', component: EditSucursalesComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'marcas', component: MarcasComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'modelos', component: ModelosComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'plataformas', component: PlataformasComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
-       {
-         path: 'productos', component: ProductosComponent, outlet: 'adr',
-          canActivate: [HasPermisoGuard],
-          data: {
-            modulo: "Configuracion",
-            submodulo: "Tasas",
-            permiso: "Crear"
-          }
-       },
+      {
+        path: 'productos', component: ProductosComponent, outlet: 'adr',
+        // canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
+      },
       {
         path: 'provedores', component: ProvedoresComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'sucursales', component: SucursalesComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
 
       {
         path: 'inventario', component: InventarioComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
 
       {
         path: 'mover-inventario', component: MoverInventarioComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'cargar-inventario', component: CargarInventarioComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'inventario/detalle/:id', component: InventarioDetalleComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'pedidos', component: PedidosComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-pedidos', component: AddPedidosComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'edit-pedidos', component: EditPedidosComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'cargar-inventario-sim', component: CargarInventarioSimComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'mover-inventario', component: MoverInventarioComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'pago-manual', component: PagoManualComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'traspaso', component: TraspasoComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'cambio-banco', component: CambioBancoComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-traspaso', component: AddTraspasoComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-cambio-banco', component: AddCambioBancoComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-cambio-pos', component: AddCambioPosComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-cambio-sim', component: AddCambioSimComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'cambio-pos', component: CambioPosComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'cambio-sim', component: CambioSimComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'reactivacion', component: ReactivacionComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'desinstalacion', component: DesinstalacionComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-desinstalacion', component: AddDesinstalacionComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-reactivacion', component: AddReactivacionComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'prueba', component: PruebaComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'validar-prueba/:id', component: ValidarPruebaComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'validar-prueba-ficha', component: ValidarPruebaFichaComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-plan', component: AddPlanComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'plan', component: PlanComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'pago-manual', component: PagoManualComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-pago-manual', component: AddPagoManualComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'add-pago-manual', component: AddPagoManualComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'pago-pendiente', component: PagoPendienteComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Configuracion",
-           submodulo: "Tasas",
-           permiso: "Crear"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Configuracion",
+          submodulo: "Tasas",
+          permiso: "Crear"
+        }
       },
       {
         path: 'carga-masiva', component: CargaMasivaComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Domiciliacion",
-           submodulo: "Generar Archivo",
-           permiso: "Generar Archivo"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Domiciliacion",
+          submodulo: "Generar Archivo",
+          permiso: "Generar Archivo"
+        }
       },
       {
         path: 'ficha-traspaso', component: FichaTraspasoComponent, outlet: 'adr',
-      }, 
+      },
       {
         path: 'listar-archivos', component: ListarArchivosComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Domiciliacion",
-           submodulo: "Generar Archivo",
-           permiso: "Generar Archivo"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Domiciliacion",
+          submodulo: "Generar Archivo",
+          permiso: "Generar Archivo"
+        }
       },
       {
         path: 'ficha-cambio-equipo', component: FichaCambioEquipoComponent, outlet: 'adr',
-         canActivate: [HasPermisoGuard],
-         data: {
-           modulo: "Domiciliacion",
-           submodulo: "Generar Archivo",
-           permiso: "Generar Archivo"
-         }
+        //  canActivate: [HasPermisoGuard],
+        data: {
+          modulo: "Domiciliacion",
+          submodulo: "Generar Archivo",
+          permiso: "Generar Archivo"
+        }
       },
-      
+
 
 
     ],

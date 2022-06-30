@@ -1,13 +1,9 @@
 <section id="addClient">
     <div class="container-fluid">
-        <div class="structur">
-            <div>
-                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-                    [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]">
-                    <li class="fas fa-arrow-left"></li>
-                </a>
-            </div>
-        </div>
+        <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+            [routerLink]="['/admin/app',{ outlets: { adr: ['clientela'] } }]">
+            <li class="fas fa-arrow-left"></li>
+        </a>
         <div style="background-color: #fff; border-radius: 10px;">
             <p class="title_mother text-uppercase">
                 Agregar Cliente
@@ -416,38 +412,38 @@
                         <div *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'">
                             <div>
                                 <h6>RIF</h6>
-                                <app-uploader (uploaded)="upload($event, 'RIF')"></app-uploader>
+                                <app-uploader (uploaded)="upload($event)" [id]="add_control('RIF')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>Cédula de identidad</h6>
-                                <app-uploader (uploaded)="upload($event, 'CI')"></app-uploader>
+                                <app-uploader (uploaded)="upload($event)" [id]="add_control('CI')"></app-uploader>
                             </div>
 
                             <div *ngIf="getTipoCliente()=='R'">
                                 <h6>Registro de firma personal</h6>
-                                <app-uploader (uploaded)="upload($event, 'RFP')"></app-uploader>
+                                <app-uploader (uploaded)="upload($event)" [id]="add_control('RFP')"></app-uploader>
                             </div>
                         </div>
                         <div *ngIf="getTipoCliente()=='J'">
                             <div>
                                 <h6>RIF Empresa</h6>
-                                <app-uploader (uploaded)="upload($event, 'RIFE')"></app-uploader>
+                                <app-uploader (uploaded)="upload($event)" [id]="add_control('RIFE')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>Registro Mercantil</h6>
-                                <app-uploader (uploaded)="upload($event, 'RM')"></app-uploader>
+                                <app-uploader (uploaded)="upload($event)" [id]="add_control('RM')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>Cedula Representante Legal</h6>
-                                <app-uploader (uploaded)="upload($event, 'CIR')"></app-uploader>
+                                <app-uploader (uploaded)="upload($event)" [id]="add_control('CIR')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>RIF Representante Legal</h6>
-                                <app-uploader (uploaded)="upload($event, 'RIFR')"></app-uploader>
+                                <app-uploader (uploaded)="upload($event)" [id]="add_control('RIFR')"></app-uploader>
                             </div>
 
 
@@ -460,14 +456,15 @@
                         <div>
                             <div>
                                 <button class="stepBtn" *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'"
-                                    mat-raised-button matStepperNext [disabled]="client.invalid" (click)="save()">
+                                    mat-raised-button matStepperNext [disabled]="client.invalid || document.invalid"
+                                    (click)="save()">
                                     Finalizar
                                 </button>
                             </div>
 
                             <div>
                                 <button class="stepBtn" *ngIf="getTipoCliente()=='J'" mat-raised-button matStepperNext
-                                    [disabled]="client.invalid" (click)="save()">
+                                    [disabled]="client.invalid || document.invalid" (click)="save()">
                                     Finalizar
                                 </button>
                             </div>

@@ -235,13 +235,13 @@
 
                         <div>
                             <h6>Referencia Bancaria</h6>
-                            <app-uploader (uploaded)="upload($event, 'RB')"></app-uploader>
+                            <app-uploader (uploaded)="upload($event)" [id]="add_control('RB')"></app-uploader>
 
                             <h6>Autorizacion cargo a cuenta</h6>
-                            <app-uploader (uploaded)="upload($event, 'ACC')"></app-uploader>
+                            <app-uploader (uploaded)="upload($event)" [id]="add_control('ACC')"></app-uploader>
 
                             <h6>Contrato</h6>
-                            <app-uploader (uploaded)="upload($event, 'C')"></app-uploader>
+                            <app-uploader (uploaded)="upload($event)" [id]="add_control('C')"></app-uploader>
                         </div>
                         <!-- <div *ngIf="getTipoCliente()=='N'"> -->
                     </form>
@@ -251,7 +251,7 @@
                             Anterior
                         </button>
 
-                        <button class="stepBtn" mat-raised-button (click)="save()">
+                        <button class="stepBtn" mat-raised-button (click)="save()" [disabled]="document.invalid">
                             Finalizar
                         </button>
                     </div>

@@ -393,7 +393,7 @@ export class AddVentaComponent implements OnInit {
     return invalid
   }
 
-  upload(d: any, id: string) {
+  upload(d: any) {
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
     const encode = d.file.toString()
     const data = this.crypto.encryptString(JSON.stringify({
@@ -402,7 +402,7 @@ export class AddVentaComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       att_by: this.crypto.encryptJson("CLIENTE"),
       rif: this.crypto.encryptJson(rif),
-      documento: this.crypto.encryptJson(id),
+      documento: this.crypto.encryptJson(d.id),
       extension: this.crypto.encryptJson(d.ext),
       t_sol_id: this.crypto.encryptJson(null),
       solicitud: this.crypto.encryptJson(null),
@@ -410,8 +410,14 @@ export class AddVentaComponent implements OnInit {
     }))
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.document.get(d.id).setValue(true)
       console.log(this.default);
     })
+  }
+
+  add_control(id: string){
+    this.document.addControl(id, new FormControl('', [Validators.required]))
+    return id
   }
 
 }
