@@ -287,6 +287,7 @@ export class AddVentaComponent implements OnInit {
       )),
       documentos: this.crypto.encryptJson(JSON.stringify([
         {
+          link: "a",
           id_doc: "1"
         },
       ]))
@@ -420,3 +421,5 @@ export class AddVentaComponent implements OnInit {
   }
 
 }
+
+
