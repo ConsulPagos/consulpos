@@ -251,7 +251,7 @@
                             Anterior
                         </button>
 
-                        <button class="stepBtn" mat-raised-button (click)="save()">
+                        <button class="stepBtn" mat-raised-button (click)="save()" [disabled]="document.invalid">
                             Finalizar
                         </button>
                     </div>
