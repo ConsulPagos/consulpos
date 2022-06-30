@@ -81,6 +81,7 @@ export class ModalConfiguracionComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       modelo: this.crypto.encryptJson(sim),
+      solicitud_id:this.crypto.encryptJson(this.dataVenta.number),
     }))
     var x;
     this.venta.doFindSim(`${this.session.getDeviceId()};${data}`).subscribe(res => {

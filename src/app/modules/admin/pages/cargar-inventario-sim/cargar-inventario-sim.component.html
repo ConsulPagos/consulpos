@@ -8,7 +8,7 @@
         </div>
         <div style="background-color: #fff; border-radius: 10px;">
             <div class="box-title d-flex justify-content-center">
-                <h5 class="bold uppercase mt-3">Cargar Inventario POS</h5>
+                <h5 class="bold uppercase mt-3">Cargar Inventario SIM</h5>
             </div>
             <form [formGroup]="form">
                 <div class="container">
@@ -44,8 +44,7 @@
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Serial</mat-label>
                         <input matInput placeholder="serial" type="text" maxlength="255" minlength="3"
-                            (change)="cargarSerial($event.target.value)" formControlName="serial"
-                            (keypress)="onlyCaracteres($event)">
+                            (change)="cargarSerial($event.target.value)" formControlName="serial">
                     </mat-form-field>
                 </form>
 
