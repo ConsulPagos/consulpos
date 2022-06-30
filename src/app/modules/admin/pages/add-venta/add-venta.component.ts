@@ -287,7 +287,6 @@ export class AddVentaComponent implements OnInit {
       )),
       documentos: this.crypto.encryptJson(JSON.stringify([
         {
-          link: this.document.get("referencia").value,
           id_doc: "1"
         },
       ]))
