@@ -114,7 +114,7 @@ export class AddVentaComponent implements OnInit {
   solicitud = new FormGroup({
     occ: new FormControl('', [Validators.required]),
     plan: new FormControl('', [Validators.required]),
-    tipocobro: new FormControl('', [Validators.required]),
+    tipocobro: new FormControl('1', [Validators.required]),
     banco: new FormControl('', [Validators.required]),
     tipo_venta: new FormControl('', [Validators.required]),
   });
@@ -157,7 +157,7 @@ export class AddVentaComponent implements OnInit {
       precio_usd: new FormControl(''),
       lugar_entrega: new FormControl(''),
       terminal: new FormControl(''),
-      cod_afiliado: new FormControl(''),
+      cod_afiliado: new FormControl('', [Validators.required]),
     });
     var sim = new FormGroup({
       operadora: new FormControl('', [Validators.required]),

@@ -58,11 +58,9 @@ export class EditSucursalesComponent implements OnInit {
       name: new FormControl(this.editsucursales.occ, [Validators.required]),
       cod_postal: new FormControl(this.editsucursales.cod_postal, [Validators.required]),
       direccion: new FormControl(this.editsucursales.direccion, [Validators.required]),
-      localidad: new FormControl(this.editsucursales.localidad, [Validators.required]),
       email: new FormControl(this.editsucursales.email, [Validators.required]),
       parroquia: new FormControl(this.editsucursales.parroquia_id, [Validators.required]),
       ciudad: new FormControl(this.editsucursales.ciudad_id, [Validators.required]),
-      pto_ref: new FormControl(this.editsucursales.pto_ref, [Validators.required]),
       estado: new FormControl(this.editsucursales.id_estado, [Validators.required]),
     });
   }
@@ -103,8 +101,8 @@ export class EditSucursalesComponent implements OnInit {
       occ: this.crypto.encryptJson(this.form.get('name').value),
       cod_postal: this.crypto.encryptJson(this.form.get('cod_postal').value),
       direccion: this.crypto.encryptJson(this.form.get('direccion').value),
-      localidad: this.crypto.encryptJson(this.form.get('localidad').value),
-      pto_ref: this.crypto.encryptJson(this.form.get('pto_ref').value),
+      localidad: this.crypto.encryptJson(null),
+      pto_ref: this.crypto.encryptJson(null),
       email: this.crypto.encryptJson(this.form.get('email').value),
       parroquia_id: this.crypto.encryptJson(this.form.get('parroquia').value),
       ciudad_id: this.crypto.encryptJson(this.form.get('ciudad').value),

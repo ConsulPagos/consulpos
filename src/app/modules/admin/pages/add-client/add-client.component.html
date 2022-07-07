@@ -60,7 +60,7 @@
                     </form>
 
                     <div *ngIf="search_client">
-                        <button class="stepBtn" mat-raised-button [disabled]="identity.invalid"
+                        <button class="stepBtn" mat-raised-button [disabled]="identity.invalid "
                             (click)="verificar_usuario()">
                             Validar
                         </button>
@@ -162,7 +162,6 @@
                     <form [formGroup]="client" #l="ngForm">
                         <ng-template matStepLabel>Ingresar los datos del cliente</ng-template>
                         <div>
-
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>Razón Social</mat-label>
                                 <input matInput formControlName="razon_social" placeholder="ConsuPagos" type="text"
@@ -197,7 +196,6 @@
                                 <mat-label>Correo electrónico</mat-label>
                                 <input matInput formControlName="email" placeholder="ConsuPagos@gmail.com" type="text"
                                     maxlength="255">
-
                             </mat-form-field>
                         </div>
 
@@ -250,13 +248,6 @@
                                     type="text" maxlength="510" minlength="5">
                                 </textarea>
                             </mat-form-field>
-
-                            <mat-form-field class="container_box_direction" appearance="outline">
-                                <mat-label>Punto de referencia</mat-label>
-                                <textarea matInput placeholder="Pasando Proteccion animal"
-                                    formControlName="pto_referencia" type="text" maxlength="510" minlength="5">
-                                </textarea>
-                            </mat-form-field>
                         </div>
 
                         <div>
@@ -270,7 +261,7 @@
 
                             <mat-form-field appearance="outline" class="container_box_space">
                                 <mat-label>RRSS</mat-label>
-                                <input matInput formControlName="red_social_a" placeholder="@consulpagos" type="text"
+                                <input matInput formControlName="red_social_a" placeholder="consulpagos" type="text"
                                     maxlength="255" minlength="5">
                             </mat-form-field>
 
@@ -315,7 +306,6 @@
                             Siguiente
                         </button>
                     </div>
-
                 </mat-step>
 
                 <div *ngIf="getTipoCliente()=='J'">
@@ -367,30 +357,40 @@
                                             <input matInput formControlName="cedula_representante"
                                                 placeholder="123456789" type="text" maxlength="9" minlength="7">
                                         </mat-form-field>
+
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Correo Electrónico</mat-label>
+                                            <input matInput formControlName="email_repre"
+                                                placeholder="ejemplo@consulpagos.com" type="email"
+                                                (keypress)="onlyCaracteres($event)">
+                                        </mat-form-field>
                                     </div>
 
-                                    <mat-form-field appearance="outline" class="container_box_space">
-                                        <mat-label>Teléfono Local</mat-label>
-                                        <input matInput formControlName="telefono_local_repre" placeholder="04241234567"
-                                            type="text">
-                                    </mat-form-field>
+                                    <div class="form_tlf">
+                                        <ngx-intl-tel-input [preferredCountries]="preferredCountries"
+                                            [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
+                                            [searchCountryFlag]="true" [searchCountryField]="[
+                                          SearchCountryField.Iso2,
+                                          SearchCountryField.Name
+                                        ]" [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.Venezuela"
+                                            [maxLength]="15" [phoneValidation]="true" [separateDialCode]="true"
+                                            [numberFormat]="PhoneNumberFormat.National"
+                                            formControlName="telefono_local_repre" class="container_phone">
+                                        </ngx-intl-tel-input>
 
-                                    <mat-form-field appearance="outline" class="container_box_space">
-                                        <mat-label>Teléfono Móvil</mat-label>
-                                        <input matInput formControlName="telefono_movil_repre" placeholder="04241234567"
-                                            type="text">
-                                    </mat-form-field>
-
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>Correo Electrónico</mat-label>
-                                        <input matInput formControlName="email_repre"
-                                            placeholder="ejemplo@consulpagos.com" type="email"
-                                            (keypress)="onlyCaracteres($event)">
-                                    </mat-form-field>
+                                        <ngx-intl-tel-input [preferredCountries]="preferredCountries"
+                                            [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
+                                            [searchCountryFlag]="true" [searchCountryField]="[
+                                            SearchCountryField.Iso2,
+                                            SearchCountryField.Name
+                                          ]" [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.Venezuela"
+                                            [maxLength]="15" [phoneValidation]="true" [separateDialCode]="true"
+                                            [numberFormat]="PhoneNumberFormat.National"
+                                            formControlName="telefono_movil_repre" class="container_phone">
+                                        </ngx-intl-tel-input>
+                                    </div>
                                 </form>
                             </div>
-
-
 
                             <div class="btn-next">
                                 <button class="stepBtn" mat-raised-button matStepperPrevious>

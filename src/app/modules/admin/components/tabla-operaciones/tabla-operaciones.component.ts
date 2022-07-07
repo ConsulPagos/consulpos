@@ -15,6 +15,7 @@ import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { VentasService } from 'src/app/shared/services/ventas.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { ShowSalesDecrypter, ShowSalesResponse } from 'src/app/models/showsales_response';
+import { ConfigresponseDecrypter, ConfigResponseResponse } from 'src/app/models/configresponse';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalAsignacionComponent } from '../modal-asignacion/modal-asignacion.component';
@@ -32,7 +33,8 @@ import { ModalConfiguracionManualComponent } from '../modal-configuracion-manual
 })
 export class TablaOperacionesComponent implements OnInit {
 
-  displayedColumns: string[] = ['number', 'rif', 'razon_social', 'fecha', 'status_desc', 'solicitud', 'Acciones'];
+  displayedColumns: string[] = ['number','solicitud_id', 'cod_serial','rif','razon_social', 'fecha', 'status_desc', 'solicitud','occ', 'Acciones'];
+
   ventas = [];
 
   isLoadingResults = false;
@@ -53,6 +55,7 @@ export class TablaOperacionesComponent implements OnInit {
   @Output() editSale = new EventEmitter<any>();
   @Output() showSale = new EventEmitter<any>();
   ShowSalesResponse: ShowSalesResponse;
+  ShowSalesResponse2: ConfigResponseResponse;
 
   @Input() cambioOperacion: Observable<string>;
   tipo_operacion: string;
@@ -202,7 +205,9 @@ export class TablaOperacionesComponent implements OnInit {
   }
 
   load() {
-    merge(this.paginator.page)
+
+    if( this.tipo_operacion == "asignacion" ){
+      merge(this.paginator.page)
       .pipe(
         startWith({}),
         switchMap(() => {
@@ -241,6 +246,51 @@ export class TablaOperacionesComponent implements OnInit {
         this.identity.reset();
         this.statusFilter = false;
       });
+
+    } else {
+
+      merge(this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.error = false;
+          this.loader.loading()
+          const data = this.crypto.encryptString(JSON.stringify({
+            u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+            correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+            scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+            init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
+            limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
+            status_desc: this.crypto.encryptJson(this.tipo_operacion.toUpperCase()),
+          }))
+          return this.venta.itemsPendientePorEntregar(`${this.session.getDeviceId()};${data}`)
+        }),
+        map(data => {
+          this.firstLoading = false;
+          console.log("JSON: " + data)
+          console.log("string: " + this.crypto.decryptString(data))
+          this.ShowSalesResponse2 = new ConfigresponseDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
+          this.resultsLength = parseInt(this.ShowSalesResponse2.total_row);
+          console.log(this.ShowSalesResponse2)
+          this.loader.stop()
+          return this.ShowSalesResponse2.equipos;
+        }),
+        catchError((e) => {
+          this.firstLoading = false;
+          this.loading = false;
+          this.error = true;
+          console.log(e)
+          return observableOf([]);
+        })
+      ).subscribe(data => {
+        this.ventas = data
+        this.dataSource = new MatTableDataSource(this.ventas);
+        this.identity.reset();
+        this.statusFilter = false;
+      });
+
+    }
+
   }
 
   statusColor(status) {

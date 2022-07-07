@@ -59,7 +59,6 @@ export class AddSucursalesComponent implements OnInit {
     email: new FormControl('', [Validators.required]),
     parroquia: new FormControl('', [Validators.required]),
     ciudad: new FormControl('', [Validators.required]),
-    pto_ref: new FormControl('', [Validators.required]),
     estado: new FormControl('', [Validators.required]),
   });
 
@@ -90,8 +89,8 @@ export class AddSucursalesComponent implements OnInit {
       occ: this.crypto.encryptJson(this.form.get('name').value),
       cod_postal: this.crypto.encryptJson(this.form.get('cod_postal').value),
       direccion: this.crypto.encryptJson(this.form.get('direccion').value),
-      localidad: this.crypto.encryptJson(this.form.get('localidad').value),
-      pto_ref: this.crypto.encryptJson(this.form.get('pto_ref').value),
+      localidad: this.crypto.encryptJson(null),
+      pto_ref: this.crypto.encryptJson(null),
       email: this.crypto.encryptJson(this.form.get('email').value),
       parroquia_id: this.crypto.encryptJson(this.form.get('parroquia').value),
       ciudad_id: this.crypto.encryptJson(this.form.get('ciudad').value),

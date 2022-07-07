@@ -11,6 +11,7 @@ export interface PagosResponse {
     tasa?: string;
     session_valid?: string;
     cuotas?: string;
+    tipo_tasa?: string;
 }
 
 export class PagosDecrypter {
@@ -32,6 +33,7 @@ export class PagosDecrypter {
             tasa: this.crypto.decryptJson(value.tasa),
             session_valid: this.crypto.decryptJson(value.session_valid),
             cuotas: this.crypto.decryptJson(value.cuotas),
+            tipo_tasa: this.crypto.decryptJson(value.tipo_tasa),
         }
         return data
     }

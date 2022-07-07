@@ -95,7 +95,7 @@ export class AddClientComponent implements OnInit {
   }
 
   client_type = new FormGroup({
-    tipo_cliente: new FormControl('1', [Validators.required])
+    tipo_cliente: new FormControl('', [Validators.required])
   });
 
   client = new FormGroup({
@@ -117,16 +117,15 @@ export class AddClientComponent implements OnInit {
     contacto: new FormControl('1', [Validators.required]),
     codpostal: new FormControl('1080', [Validators.required]),
     act_comercial: new FormControl('1', [Validators.required]),
-    pto_referencia: new FormControl('zdfgdsgdgdtsgddfthtdh', [Validators.required]),
     red_social_a: new FormControl(''),
     red_social_b: new FormControl(''),
   });
 
   data_vr = new FormGroup({
     primer_nombre: new FormControl('Arturo', [Validators.required]),
-    segundo_nombre: new FormControl('Arturo',),
+    segundo_nombre: new FormControl('Arturo'),
     primer_apellido: new FormControl('Arturo', [Validators.required]),
-    segundo_apellido: new FormControl('Arturo',),
+    segundo_apellido: new FormControl('Arturo'),
     c_t_doc_cedula: new FormControl('1', [Validators.required]),
     cedula: new FormControl('25386251', [Validators.required]),
     genero: new FormControl('1', [Validators.required]),
@@ -148,9 +147,9 @@ export class AddClientComponent implements OnInit {
 
   agent = new FormGroup({
     p_nombre_representante: new FormControl('Arturo', [Validators.required]),
-    s_nombre_representante: new FormControl('Jose', [Validators.required]),
+    s_nombre_representante: new FormControl('Jose'),
     p_apellido_representante: new FormControl('Linares', [Validators.required]),
-    s_apellido_representante: new FormControl('Viola', [Validators.required]),
+    s_apellido_representante: new FormControl('Viola'),
     cedula_representante: new FormControl('25386251', [Validators.required]),
     telefono_local_repre: new FormControl('4242735855', [Validators.required]),
     telefono_movil_repre: new FormControl('4242735855', [Validators.required]),
@@ -254,7 +253,7 @@ export class AddClientComponent implements OnInit {
       direccion: this.crypto.encryptJson(this.client.get('direccion').value),
       m_contacto_id: this.crypto.encryptJson(this.client.get('contacto').value),
       id_actividad_comercial: this.crypto.encryptJson(this.client.get('act_comercial').value),
-      pto_ref: this.crypto.encryptJson(this.client.get('pto_referencia').value),
+      pto_ref: this.crypto.encryptJson(null),
       red_social_a: this.crypto.encryptJson(this.client.get('red_social_a').value),
       red_social_b: this.crypto.encryptJson(this.client.get('red_social_b').value),
       localidad: this.crypto.encryptJson(null),

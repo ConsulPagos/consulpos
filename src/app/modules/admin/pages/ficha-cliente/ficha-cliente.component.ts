@@ -27,12 +27,17 @@ import { StatusAccountDecrypter, StatusAccountResponse } from '../../../../model
 })
 export class FichaClienteComponent implements OnInit {
 
-  showClient: ClienteRequestInterface = {};
+  displayedColumns: string[] = ['venta', 'afiliado', 'banco', 'cuenta'];
+
+  showClient: ClienteRequestInterface = {
+    solicitudes_banco: undefined
+  };
   loading: boolean;
   showItemClient: ShowItemResponse;
   validacionCliente: ValidacionclienteResponse;
   showStatusAccount: StatusAccountResponse;
   telefonos: TelefonoInterface;
+  a: any;
 
   constructor(
     private title: Title,
@@ -55,6 +60,8 @@ export class FichaClienteComponent implements OnInit {
     ) {
       this.showClient = this.router.getCurrentNavigation().extras.state.showClient as ClienteRequestInterface;
       //console.log(this.showClient)
+      this.a = this.showClient.solicitudes_banco
+      console.log(this.a)
     } else {
       this.router.navigateByUrl("/admin/app/(adr:clientela)");
     }
@@ -83,7 +90,7 @@ export class FichaClienteComponent implements OnInit {
 
     })
   }
-  
+
   openDialog(phone): void {
 
     const dialogRef = this.dialog.open(EditphoneComponent, {

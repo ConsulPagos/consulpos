@@ -124,15 +124,6 @@
                                                 </span>
                                             </div>
 
-                                            <!-- <div class="col-md-12 container_module">
-                                                <label class="labels title_data">
-                                                    Localidad:
-                                                </label>
-                                                <span class="">
-                                                    {{showClient.localidad}}
-                                                </span>
-                                            </div> -->
-
                                             <div class="col-md-12 container_module">
                                                 <label class="labels title_data">
                                                     Direccion:
@@ -150,14 +141,6 @@
                                                     {{showClient.cod_postal}}
                                                 </span>
                                             </div>
-                                            <div class="col-md-12 container_module">
-                                                <label class="labels title_data">
-                                                    Punto de referencia:
-                                                </label>
-                                                <span class="">
-                                                    {{showClient.pto_ref}}
-                                                </span>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -170,13 +153,15 @@
                                             <label class="labels title_data">
                                                 Nombre y Apellido:
                                             </label>
-                                            <div *ngIf="showClient.t_doc =='V' || showClient.t_doc =='P' || showClient.t_doc =='E'">
+                                            <div
+                                                *ngIf="showClient.t_doc =='V' || showClient.t_doc =='P' || showClient.t_doc =='E'">
                                                 <span class="">
                                                     {{showClient.c_natural.c_p_nombre}}
                                                     {{showClient.c_natural.c_p_apellido}}
                                                 </span>
                                             </div>
-                                            <div *ngIf="showClient.t_doc =='J' || showClient.t_doc =='G' || showClient.t_doc =='C'">
+                                            <div
+                                                *ngIf="showClient.t_doc =='J' || showClient.t_doc =='G' || showClient.t_doc =='C'">
                                                 <span class="">
                                                     {{showClient.legal.l_p_nombre}}
                                                     {{showClient.legal.l_p_apellido}}
@@ -235,24 +220,33 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div *ngFor="let solicitud of showClient.solicitudes_banco; let data = index"
-                                    class="text-capitalize">
-                                    <div>
-                                        <h5 class="labels title_data">Datos Bancarios {{data + 1}}:</h5>
-                                        <div>
-                                            <span>Venta Nº:</span> {{solicitud.solicitud}}
-                                        </div>
-                                        <div>
-                                            <span>Número afiliado:</span> {{solicitud.afiliado}}
-                                        </div>
-                                        <div>
-                                            <span>Banco:</span> {{solicitud.banco}}
-                                        </div>
-                                        <div>
-                                            <span>Número Cuenta:</span> {{solicitud.cuenta}}
-                                        </div>
-                                    </div>
-                                </div>
+
+                                <table mat-table [dataSource]="a">
+
+                                    <ng-container matColumnDef="venta">
+                                        <th mat-header-cell *matHeaderCellDef> Venta </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.solicitud}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="afiliado">
+                                        <th mat-header-cell *matHeaderCellDef> Afiliado </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.afiliado}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="banco">
+                                        <th mat-header-cell *matHeaderCellDef> Banco </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.banco}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="cuenta">
+                                        <th mat-header-cell *matHeaderCellDef> Cuenta </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.cuenta}} </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+
                             </div>
                         </div>
                     </ng-template>

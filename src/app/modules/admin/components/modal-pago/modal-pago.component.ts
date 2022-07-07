@@ -68,7 +68,7 @@ export class ModalPagoComponent implements OnInit {
       solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
     }))
     console.log("verify")
-    this.pagos.doConfirmPayment(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.pagos.confirmPayment(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.solicitud = JSON.parse(this.crypto.decryptJson(json.solicitud))

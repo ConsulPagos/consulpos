@@ -79,7 +79,7 @@ import { UploaderComponent } from '../../components/uploader/uploader.component'
     NgxIntlTelInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatInputModule 
+    MatInputModule,
   ],
   exports: [
     TitleComponent,
@@ -118,7 +118,8 @@ import { UploaderComponent } from '../../components/uploader/uploader.component'
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule ,
-    FileInputComponent
+    FileInputComponent,
+
 
 
   ]
