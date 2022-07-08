@@ -88,7 +88,7 @@ export class ValidarPruebaFichaComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_banco_id: this.crypto.encryptJson(this.equipos.solicitud_banco_id),
       modelo: this.crypto.encryptJson(this.equipos.items[0].modelo),
-      viejo_serial: this.crypto.encryptJson(this.equipos.cod_serial),
+      viejo_serial: this.crypto.encryptJson(this.crypto.encryptJson(this.form.get('serial').value)),
       solicitud_id: this.crypto.encryptJson(this.equipos.solicitud_id),
     }))
     console.log("verify")
