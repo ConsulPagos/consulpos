@@ -89,7 +89,7 @@ export class ValidarPruebaFichaComponent implements OnInit {
       solicitud_banco_id: this.crypto.encryptJson(this.equipos.solicitud_banco_id),
       modelo: this.crypto.encryptJson(this.equipos.items[0].modelo),
       viejo_serial: this.crypto.encryptJson(this.equipos.cod_serial),
-      solicitud_id: this.crypto.encryptJson(this.equipos.solicitud),
+      solicitud_id: this.crypto.encryptJson(this.equipos.solicitud_id),
     }))
     console.log("verify")
     this.venta.actualizarPosPorTest(`${this.session.getDeviceId()};${data}`).subscribe(res => {
