@@ -81,7 +81,7 @@ export class ModalConfiguracionComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       modelo: this.crypto.encryptJson(sim),
-      solicitud_id:this.crypto.encryptJson(this.dataVenta.number),
+      solicitud_id:this.crypto.encryptJson(this.dataVenta.solicitud_id),
     }))
     var x;
     this.venta.doFindSim(`${this.session.getDeviceId()};${data}`).subscribe(res => {
@@ -122,13 +122,14 @@ export class ModalConfiguracionComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      solicitud_id: this.crypto.encryptJson(this.dataVenta.number),
+      solicitud_id: this.crypto.encryptJson(this.dataVenta.solicitud_id),
       solicitud_banco_id: this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
       accion: this.crypto.encryptJson("CONFIGURACION"),
       Operaciones: this.crypto.encryptJson(JSON.stringify(
         inputs
       )),
       correctivo: this.crypto.encryptJson(this.dataVenta.correctivo),
+      cod_serial: this.crypto.encryptJson(this.dataVenta.cod_serial),
     }))
     this.venta.doSaveConfig(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))

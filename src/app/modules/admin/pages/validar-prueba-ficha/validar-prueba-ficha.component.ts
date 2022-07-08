@@ -25,7 +25,7 @@ export class ValidarPruebaFichaComponent implements OnInit {
 
   default: AsignacionPruebaResponse;
   default_2: DefaultDecrypter;
-  item: any = {};
+  equipos: any = {};
   x = null;
   form: FormGroup;
 
@@ -45,14 +45,14 @@ export class ValidarPruebaFichaComponent implements OnInit {
       this.router.getCurrentNavigation() &&
       this.router.getCurrentNavigation().extras &&
       this.router.getCurrentNavigation().extras.state &&
-      this.router.getCurrentNavigation().extras.state.item
+      this.router.getCurrentNavigation().extras.state.equipos
     ) {
-      this.item = this.router.getCurrentNavigation().extras.state.item as any;
-      console.log(this.item)
+      this.equipos = this.router.getCurrentNavigation().extras.state.equipos as any;
+      console.log(this.equipos)
 
       this.form = new FormGroup({
         name: new FormControl('', [Validators.required]),
-        serial: new FormControl(this.item.equipo, [Validators.required]),
+        serial: new FormControl(this.equipos.cod_serial, [Validators.required]),
       });
     } else {
       this.router.navigateByUrl("/admin/app/(adr:prueba)");
@@ -66,7 +66,7 @@ export class ValidarPruebaFichaComponent implements OnInit {
 
 
   openDialog(item): void {
-    if (this.item.status_desc === "PRUEBAS") {
+    if (this.equipos.status_desc === "PRUEBAS") {
       var dialogRef: any = this.dialog.open(ModalAsignacionPruebaComponent, {
         disableClose: true,
         height: 'auto',
@@ -86,9 +86,9 @@ export class ValidarPruebaFichaComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      solicitud_banco_id: this.crypto.encryptJson(this.item.solicitud_banco_id),
-      modelo: this.crypto.encryptJson(this.item.modelo),
-      viejo_serial: this.crypto.encryptJson(this.item.equipo),
+      solicitud_banco_id: this.crypto.encryptJson(this.equipos.solicitud_banco_id),
+      modelo: this.crypto.encryptJson(this.equipos.modelo),
+      viejo_serial: this.crypto.encryptJson(this.equipos.equipo),
     }))
     console.log("verify")
     this.venta.actualizarPosPorTest(`${this.session.getDeviceId()};${data}`).subscribe(res => {
@@ -107,7 +107,7 @@ export class ValidarPruebaFichaComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      solicitud_banco_id: this.crypto.encryptJson(this.item.solicitud_banco_id),
+      solicitud_banco_id: this.crypto.encryptJson(this.equipos.solicitud_banco_id),
       modelo: this.crypto.encryptJson(modelo),
       viejo_serial: this.crypto.encryptJson(cod_serial),
     }))
@@ -125,8 +125,8 @@ export class ValidarPruebaFichaComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       nombre: this.crypto.encryptJson(this.form.get('name').value),
       cod_serial: this.crypto.encryptJson(this.form.get('serial').value),
-      solicitud: this.crypto.encryptJson(this.item.solicitud),
-      solicitud_banco_id: this.crypto.encryptJson(this.item.solicitud_banco_id),
+      solicitud: this.crypto.encryptJson(this.equipos.solicitud),
+      solicitud_banco_id: this.crypto.encryptJson(this.equipos.solicitud_banco_id),
     }))
     console.log("verify")
     this.venta.confirmacionTestCorrecto(`${this.session.getDeviceId()};${data}`).subscribe(res => {

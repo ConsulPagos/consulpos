@@ -755,7 +755,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'validar-prueba/:id', component: ValidarPruebaComponent, outlet: 'adr',
+        path: 'validar-prueba', component: ValidarPruebaComponent, outlet: 'adr',
         //  canActivate: [HasPermisoGuard],
         data: {
           modulo: "Configuracion",
@@ -764,7 +764,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'validar-prueba-ficha', component: ValidarPruebaFichaComponent, outlet: 'adr',
+        path: 'validar-prueba-ficha/:id', component: ValidarPruebaFichaComponent, outlet: 'adr',
         //  canActivate: [HasPermisoGuard],
         data: {
           modulo: "Configuracion",

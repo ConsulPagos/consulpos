@@ -1,18 +1,3 @@
-.container {
-    padding: 0;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-::ng-deep .mat-tab-label {
-    color: black;
-    background-color: transparent;
-    font-weight: 500;
-    text-transform: uppercase;
-    font-family: "Montserrat", "black" !important;
-    font-size: 14px;
-}
-
 .title {
     font-family: "Montserrat", "black" !important;
     font-weight: 600;
@@ -23,18 +8,7 @@
     position: absolute;
     top: 8px;
     left: 20px;
-}
-
-.edit-btn {
-    border-radius: 10px;
-    height: 40px;
-    width: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    background-color: white;
-    color: black;
+    z-index: 99;
 }
 
 .nav-btn {
@@ -48,11 +22,119 @@
     text-decoration: none;
     font-size: 22px;
     transition: 0.3s;
-    z-index: 99;
 }
 
 .nav-btn:hover {
-    background-color: whitesmoke;
+    background-color: rgb(255, 255, 255);
 }
 
-///////////////////////////
+::ng-deep .mat-tab-label {
+    color: black;
+    background-color: transparent;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-family: "Montserrat", "black" !important;
+    font-size: 14px;
+}
+
+.text-center {
+    margin: 2rem;
+    font-weight: bold;
+}
+
+
+
+label {
+    display: inline-block;
+    margin-bottom: 0 !important;
+    font-weight: bold;
+}
+
+.container_module {
+    margin: 0.55rem;
+}
+
+////////////////////////////////////////
+.sub-title {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.text-sub-title {
+    padding: 0.5rem;
+}
+
+.date-sale {
+    display: flex;
+    justify-content: flex-start;
+    color: #8b8b8b;
+}
+
+.date-sale > h6 {
+    font-size: small;
+}
+
+////////////////////
+
+.dispositivos {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dispositivos .dispositivo {
+    margin-right: 20px;
+}
+
+/////////////////////////
+
+table {
+    width: 100%;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    // display: flex;
+}
+
+.example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+}
+
+.example-element-description {
+    padding: 16px;
+}
+
+.example-element-description-attribution {
+    opacity: 0.5;
+}
+
+.example-element-diagram{
+    display: flex;
+}
+
+.example-element-diagram div p {
+    margin: 0;
+}
+
+tr.mat-row, tr.mat-footer-row {
+    cursor: pointer;
+}
