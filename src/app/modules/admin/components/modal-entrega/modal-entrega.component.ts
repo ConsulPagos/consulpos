@@ -76,6 +76,7 @@ export class ModalEntregaComponent implements OnInit {
       base64: this.crypto.encryptJson(this.default.base64),
       c_t_doc_id: this.crypto.encryptJson("1"),
       solicitud_id:this.crypto.encryptJson(this.dataVenta.solicitud_id),
+      cod_serial:this.crypto.encryptJson(this.dataVenta.cod_serial),
     }))
     console.log("verify")
     this.venta.entregarVenta(`${this.session.getDeviceId()};${data}`).subscribe(res => {
