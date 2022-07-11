@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AsignacionPruebaDecrypter, AsignacionPruebaResponse } from 'src/app/models/asignacion_prueba_response';
-import { ConfiguracionDecrypter } from 'src/app/models/configuracion_response';
+import { PruebaSimDecrypter, PruebaSimResponse } from 'src/app/models/prueba_sim';
 import { DefaultDecrypter } from 'src/app/models/default_response';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
@@ -24,10 +24,12 @@ import { ModalAsignacionPruebaComponent } from '../../components/modal-asignacio
 export class ValidarPruebaFichaComponent implements OnInit {
 
   default: AsignacionPruebaResponse;
-  default_2: DefaultDecrypter;
+  default_2: PruebaSimResponse;
   equipos: any = {};
   x = null;
+  a = null;
   form: FormGroup;
+  sim: FormGroup;
 
   constructor(
     private title: Title,
@@ -50,10 +52,15 @@ export class ValidarPruebaFichaComponent implements OnInit {
       this.equipos = this.router.getCurrentNavigation().extras.state.equipos as any;
       console.log(this.equipos)
 
+      this.sim = new FormGroup({
+        sim: new FormControl(this.equipos.sim[0].cod_serial, [Validators.required])
+      });
+
       this.form = new FormGroup({
         name: new FormControl('', [Validators.required]),
         serial: new FormControl(this.equipos.cod_serial, [Validators.required]),
       });
+
     } else {
       this.router.navigateByUrl("/admin/app/(adr:prueba)");
     }
@@ -88,13 +95,14 @@ export class ValidarPruebaFichaComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_banco_id: this.crypto.encryptJson(this.equipos.solicitud_banco_id),
       modelo: this.crypto.encryptJson(this.equipos.items[0].modelo),
-      viejo_serial: this.crypto.encryptJson(this.crypto.encryptJson(this.form.get('serial').value)),
+      viejo_serial: this.crypto.encryptJson(this.form.get('serial').value),
       solicitud_id: this.crypto.encryptJson(this.equipos.solicitud_id),
     }))
     console.log("verify")
     this.venta.actualizarPosPorTest(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      console.log(res);
+
       const json = JSON.parse(this.crypto.decryptString(res))
-      console.log(JSON.parse(this.crypto.decryptString(res)))
       this.default = new AsignacionPruebaDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       var x = this.default.cod_serial
       this.x = x
@@ -111,10 +119,15 @@ export class ValidarPruebaFichaComponent implements OnInit {
       solicitud_banco_id: this.crypto.encryptJson(this.equipos.solicitud_banco_id),
       modelo: this.crypto.encryptJson(modelo),
       viejo_serial: this.crypto.encryptJson(cod_serial),
+      solicitud_id: this.crypto.encryptJson(this.equipos.solicitud_id),
     }))
     this.venta.actualizarSimPorTest(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
-      this.default = new ConfiguracionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.default_2 = new PruebaSimDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      var a = this.default_2.cod_serial
+      this.a = a
+      console.log(this.a)
+      this.sim.get('sim').setValue(this.default_2.cod_serial)
     })
   }
 

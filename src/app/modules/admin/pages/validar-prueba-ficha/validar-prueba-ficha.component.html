@@ -65,23 +65,23 @@
                                     <input matInput type="text" value={{equipos.terminal}} disabled>
                                 </mat-form-field>
                             </div>
+                            <form [formGroup]="sim">
+                                <div *ngFor="let s of equipos.sim; let i = index">
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Modelo SIM {{i + 1}}</mat-label>
+                                        <input matInput type="text" value={{s.modelo}} disabled>
+                                    </mat-form-field>
 
-                            <!-- <div *ngFor="let sim of item.sim; let i = index">
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Modelo SIM {{i + 1}}</mat-label>
-                                    <input matInput type="text" value={{sim.modelo}} disabled>
-                                </mat-form-field>
+                                    <mat-form-field appearance="outline" class="container_box_space">
+                                        <mat-label>Serial SIM {{i + 1}}</mat-label>
+                                        <input matInput type="text" value={{s.cod_serial}} formControlName="sim">
+                                    </mat-form-field>
 
-                                <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Serial SIM {{i + 1}}</mat-label>
-                                    <input matInput type="text" value={{sim.cod_serial}} disabled>
-                                </mat-form-field>
-
-                                <button mat-raised-button (click)="findSim(sim.modelo, sim.cod_serial)">
-                                    Asignar otro serial SIM
-                                </button>
-                            </div> -->
-
+                                    <button mat-raised-button (click)="findSim(s.modelo, s.cod_serial)">
+                                        Asignar otro serial SIM
+                                    </button>
+                                </div>
+                            </form>
                             <form [formGroup]="form">
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Nombre del responsable</mat-label>
