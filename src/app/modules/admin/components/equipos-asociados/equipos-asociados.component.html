@@ -11,60 +11,119 @@
             <div class="col-md-12 container_module w-100" *ngIf="showItemClient">
                 <div class="text-capitalize">
                     <div class="w-100">
-                        <table class="w-100" mat-table [dataSource]="dataSource" matSort>
+                        <div *ngIf="showItemClient.items.length > 0">
+                            <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+                                <ng-container matColumnDef="categoria">
+                                    <th mat-header-cell *matHeaderCellDef> Categoria </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="marca">
+                                    <th mat-header-cell *matHeaderCellDef> Marca </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.marca}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="modelo">
+                                    <th mat-header-cell *matHeaderCellDef> Modelo </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.modelo}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="precio">
+                                    <th mat-header-cell *matHeaderCellDef> Precio </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="cod_serial">
+                                    <th mat-header-cell *matHeaderCellDef> Serial </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.cod_serial}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="status_desc">
+                                    <th mat-header-cell *matHeaderCellDef> Estatus </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.status_desc}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="acciones">
+                                    <th mat-header-cell *matHeaderCellDef> Acciones</th>
+                                    <td mat-cell *matCellDef="let item">
+                                        <button *ngIf="item.categoria == 'POS'" #tooltip="matTooltip"
+                                            matTooltip="Aplicar correctivo" matTooltipHideDelay="10" mat-icon-button
+                                            (click)="openDialog(item)" class="container_icon">
+                                            <i class="fas fa-id-card activate_show"></i>
+                                        </button>
+                                        <button *ngIf="item.categoria == 'POS'" #tooltip="matTooltip"
+                                            matTooltip="Descargar estado de cuenta" matTooltipHideDelay="10"
+                                            mat-icon-button (click)="downloadSA(item)" class="container_icon">
+                                            <i class="fas fa-download activate_show"></i>
+                                        </button>
+                                    </td>
+                                </ng-container>
 
-                            <ng-container matColumnDef="categoria">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Categoria </th>
-                                <td mat-cell *matCellDef="let row"> {{row.categoria}} </td>
-                            </ng-container>
+                                <ng-container matColumnDef="expand">
+                                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <button mat-icon-button aria-label="expand row"
+                                            (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                                            <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down
+                                            </mat-icon>
+                                            <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up
+                                            </mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
 
-                            <ng-container matColumnDef="marca">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Marca </th>
-                                <td mat-cell *matCellDef="let row"> {{row.marca}} </td>
-                            </ng-container>
+                                <ng-container matColumnDef="expandedDetail">
+                                    <td mat-cell *matCellDef="let element"
+                                        [attr.colspan]="columnsToDisplayWithExpand.length">
+                                        <div class="example-element-detail"
+                                            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                            <div class="example-element-diagram">
+                                                <div style="text-align: center;">
+                                                    <p>fecha_ultima_actualizacion</p>
+                                                    {{element.fecha_ultima_actualizacion}}
+                                                </div>
 
-                            <ng-container matColumnDef="modelo">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Modelo</th>
-                                <td mat-cell *matCellDef="let row"> {{row.modelo}} </td>
-                            </ng-container>
+                                                <div style="display: flex; text-align: center;">
+                                                    <div style="padding: 0 20px;">
+                                                        <p>tipo_solicitud</p>
+                                                        {{element.tipo_solicitud}}
+                                                    </div>
+                                                    <div style="padding: 0 20px;">
+                                                        <p>solicitud</p>
+                                                        {{element.solicitud}}
+                                                    </div>
 
-                            <ng-container matColumnDef="cod_serial">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial </th>
-                                <td mat-cell *matCellDef="let row"> {{row.cod_serial}} </td>
-                            </ng-container>
+                                                    <div style="padding: 0 20px;">
+                                                        <p>Nombre</p>
+                                                        {{element.occ.p_nombre}}
+                                                    </div>
+                                                </div>
 
-                            <ng-container matColumnDef="precio">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
-                                <td mat-cell *matCellDef="let row"> {{row.precio}} </td>
-                            </ng-container>
 
-                            <ng-container matColumnDef="complemento_d">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Complemento del POS </th>
-                                <td mat-cell *matCellDef="let row"> {{row.complemento_d}} </td>
-                            </ng-container>
+                                                <div style="display: flex; justify-content: center; flex-wrap: wrap;">
+                                                    <div *ngFor="let item of element.sim; let i = index"
+                                                        style="padding: 0 20px;">
+                                                        <div>
+                                                            <p>Modelo SIM {{i+1}}</p>
+                                                            {{item.modelo}}
+                                                        </div>
+                                                        <div>
+                                                            <p>Codigo Serial SIM {{i+1}}</p>
+                                                            {{item.cod_serial}}
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-                            <ng-container matColumnDef="status_desc">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
-                                <td mat-cell *matCellDef="let row"> {{row.status_desc}} </td>
-                            </ng-container>
 
-                            <ng-container matColumnDef="acciones">
-                                <th mat-header-cell *matHeaderCellDef> Acciones</th>
-                                <td mat-cell *matCellDef="let item">
-                                    <button *ngIf="item.categoria == 'POS'" #tooltip="matTooltip" matTooltip="Aplicar correctivo" matTooltipHideDelay="10"
-                                        mat-icon-button (click)="openDialog(item)" class="container_icon">
-                                        <i class="fas fa-id-card activate_show"></i>
-                                    </button>
-                                    <button *ngIf="item.categoria == 'POS'" #tooltip="matTooltip" matTooltip="Descargar estado de cuenta" matTooltipHideDelay="10"
-                                    mat-icon-button (click)="downloadSA(item)" class="container_icon">
-                                    <i class="fas fa-download activate_show"></i>
-                                </button>
-                                </td>
-                            </ng-container>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </ng-container>
 
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let item; columns: displayedColumns;">
-                        </table>
+                                <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+                                <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+                                    class="example-element-row"
+                                    [class.example-expanded-row]="expandedElement === element"
+                                    (click)="expandedElement = expandedElement === element ? null : element">
+                                </tr>
+                                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"
+                                    class="example-detail-row"></tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

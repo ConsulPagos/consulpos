@@ -66,10 +66,7 @@ export class TablaOperacionesComponent implements OnInit {
       private crypto: CryptoService,
       private storage: StorageService,
       private venta: VentasService,
-      private modal: ModalService,
-      private toaster: ToasterService,
       private loader: LoaderService,
-      private router: Router,
       private route: ActivatedRoute,
       public dialog: MatDialog,
   ) {
@@ -114,10 +111,12 @@ export class TablaOperacionesComponent implements OnInit {
           });
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
-
+              this.load()
             }
           });
         } else if (venta.solicitud === "VENTA POS" || venta.solicitud === "CAMBIO DE EQUIPO") {
+          console.log('holaaaaa');
+          
           var dialogRef: any = this.dialog.open(ModalAsignacionComponent, {
             disableClose: true,
             height: 'auto',
@@ -126,6 +125,8 @@ export class TablaOperacionesComponent implements OnInit {
           });
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
+              console.log('dialog se refresco');
+              
               this.load()
             }
           });
@@ -142,7 +143,7 @@ export class TablaOperacionesComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-            // window.location.reload()
+            this.load()
           }
         });
         break;
@@ -158,7 +159,7 @@ export class TablaOperacionesComponent implements OnInit {
 
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
-              // window.location.reload()
+              this.load()
             }
           });
         } else if (venta.solicitud === "VENTA POS" || venta.solicitud === "CAMBIO DE SIM" || venta.solicitud === "CAMBIO DE EQUIPO") {
@@ -171,7 +172,7 @@ export class TablaOperacionesComponent implements OnInit {
 
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
-              // window.location.reload()
+              this.load()
             }
           });
         }
@@ -187,6 +188,7 @@ export class TablaOperacionesComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
+            this.load()
           }
         });
         break;

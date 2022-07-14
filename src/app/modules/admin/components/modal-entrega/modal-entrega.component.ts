@@ -85,6 +85,4 @@ export class ModalEntregaComponent implements OnInit {
       console.log(this.default)
     })
   }
-
-
 }

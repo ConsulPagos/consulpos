@@ -9,24 +9,19 @@
         <p>
             Se asignaran Seriales a los siguientes modelos:
         </p>
-        <div *ngFor="let modelo of dataVenta.modelos">
-            <p>{{modelo.caracteristicas[0].modelo}} - <span>{{this.x}}</span></p>
+        <div *ngFor="let modelo of default.items">
+            <p>{{modelo.modelo}} - <span>{{modelo.cod_serial}}</span></p>
         </div>
-
-        <button mat-raised-button (click)="findPos()">
-            asignar
-        </button>
 
     </div>
 </div>
 <div mat-dialog-actions>
     <div class="d-flex w-100">
-        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null"
-        (click)="liberarSim()">
+        <button class="flex-fill cancel action_button" mat-button [mat-dialog-close]="null" (click)="liberarSim()">
             <li class="fa fa-times text-dark"></li>
         </button>
-        <button class="flex-fill confirm action_button" (click)="save()" [disabled]="false" mat-button cdkFocusInitial
-            [mat-dialog-close]="true">
+        <button class="flex-fill confirm action_button" (click)="saveAsignacion()" [disabled]="false" mat-button
+            cdkFocusInitial [mat-dialog-close]="true">
             <li class="fa fa-check"></li>
         </button>
     </div>

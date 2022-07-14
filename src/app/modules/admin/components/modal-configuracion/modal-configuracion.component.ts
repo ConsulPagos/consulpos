@@ -51,12 +51,7 @@ export class ModalConfiguracionComponent implements OnInit {
 
   configuracion: FormGroup;
 
-  simFormGroup(sim: any[], i: number) {
-    this.formDinamic[i] = new FormGroup({})
-    sim.forEach(sim => {
-      this.formDinamic[i].addControl(sim.sim_serial, new FormControl('', [Validators.required]))
-    })
-  }
+
 
   ngOnInit(): void {
     for (let index = 0; index < this.dataVenta.modelos.length; index++) {
@@ -65,14 +60,44 @@ export class ModalConfiguracionComponent implements OnInit {
       for (let z = 0; z < item.caracteristicas.length; z++) {
         const c = item.caracteristicas[z];
         const d = this.dataVenta.items.filter(i => i.solicitud_banco.solicitud_banco_id == c.solicitud_banco.solicitud_banco_id)[0];
-        this.formDinamic.push(new FormGroup({
-          sim_serial: new FormControl(null, [Validators.required]),
-          solicitud_banco_id: new FormControl(c.solicitud_banco.solicitud_banco_id),
-          cod_serial: new FormControl(d.cod_serial),
+
+
+        const data = this.crypto.encryptString(JSON.stringify({
+          u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+          correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+          scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+          modelo: this.crypto.encryptJson(c.sim),
+          solicitud_id: this.crypto.encryptJson(this.dataVenta.solicitud_id),
         }))
+
+        this.venta.doFindSim(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+          const json = JSON.parse(this.crypto.decryptString(res))
+          this.default = new ConfiguracionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+
+
+
+          this.formDinamic.push(new FormGroup({
+            sim_serial: new FormControl(this.default.item.cod_serial, [Validators.required]),
+            solicitud_banco_id: new FormControl(c.solicitud_banco.solicitud_banco_id),
+            cod_serial: new FormControl(d.cod_serial),
+          }))
+
+        })
+
+
+
       }
     }
+
   }
+
+  simFormGroup(sim: any[], i: number) {
+    this.formDinamic[i] = new FormGroup({})
+    sim.forEach(sim => {
+      this.formDinamic[i].addControl(sim.sim_serial, new FormControl('', [Validators.required]))
+    })
+  }
+
 
   findSim(sim: string, form: FormGroup) {
     console.log(sim)
@@ -81,7 +106,7 @@ export class ModalConfiguracionComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       modelo: this.crypto.encryptJson(sim),
-      solicitud_id:this.crypto.encryptJson(this.dataVenta.solicitud_id),
+      solicitud_id: this.crypto.encryptJson(this.dataVenta.solicitud_id),
     }))
     var x;
     this.venta.doFindSim(`${this.session.getDeviceId()};${data}`).subscribe(res => {
