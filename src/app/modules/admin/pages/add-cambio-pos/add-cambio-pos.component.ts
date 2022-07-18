@@ -36,6 +36,8 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { VentasService } from 'src/app/shared/services/ventas.service';
 import { constant } from 'src/app/shared/utils/constant';
+import { ImageResponse, ImageDecrypter } from 'src/app/models/image_response';
+import { ArchiveService } from 'src/app/shared/services/archive.service';
 
 @Component({
   selector: 'app-add-cambio-pos',
@@ -74,6 +76,13 @@ export class AddCambioPosComponent implements OnInit {
   categoriaResponse: ValidacionCategoriasResponse;
   categorias: CategoriaInterface[];
 
+    /////////////LOAD IMAGE///////////////
+    default: ImageResponse;
+    imageError: string;
+    isImageSaved: boolean;
+    cardImageBase64: string;
+  
+
   //****************************************************************************************//
   constructor(
     private title: Title,
@@ -87,6 +96,7 @@ export class AddCambioPosComponent implements OnInit {
     private modal: ModalService,
     private loader: LoaderService,
     private inventario: InventarioService,
+    private archivo: ArchiveService,
   ) {
 
   }
@@ -107,7 +117,7 @@ export class AddCambioPosComponent implements OnInit {
   });
 
   document = new FormGroup({
-    referencia: new FormControl('', [Validators.required]),
+    id: new FormControl(''),
   });
 
   buy = new FormGroup({
@@ -256,10 +266,14 @@ export class AddCambioPosComponent implements OnInit {
       )),
 
       documentos: this.crypto.encryptJson(JSON.stringify([
-        {
-          link: this.document.get("referencia").value,
-          id_doc: "1"
-        },
+
+        this.document.get('RIF').value,
+        this.document.get('CI').value,
+        this.document.get('RM').value,
+        this.document.get('RB').value,
+        this.document.get('PP').value,
+        this.document.get('RIFL').value,
+
       ]))
     }))
     console.log("verify")
@@ -357,6 +371,40 @@ export class AddCambioPosComponent implements OnInit {
       this.buy.get('cod_afiliado').setValue(this.validacionPos.item.afiliado)
       this.buy.get('terminal').setValue(this.validacionPos.item.terminal)
     })
+  }
+
+  upload(d: any, id: any) {
+    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
+    const encode = d.file.toString()
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      att_by: this.crypto.encryptJson("CLIENTE"),
+      rif: this.crypto.encryptJson(rif),
+      documento: this.crypto.encryptJson(d.id),
+      extension: this.crypto.encryptJson(d.ext),
+      t_sol_id: this.crypto.encryptJson(null),
+      solicitud: this.crypto.encryptJson(null),
+      file: this.crypto.encryptJson(encode),
+    }))
+    this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.default = new ImageDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.document.get(d.id).setValue(JSON.stringify(
+        {
+          link: this.default.path,
+          id_doc: id,
+          nombre: this.default.nombre,
+          base64: this.default.base64
+        }
+      ))
+      console.log(this.default);
+    })
+  }
+
+  add_control(id: string) {
+    this.document.addControl(id, new FormControl('', [Validators.required]))
+    return id
   }
 
 }

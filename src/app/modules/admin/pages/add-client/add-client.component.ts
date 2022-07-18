@@ -26,6 +26,7 @@ import { CeroValidator } from '../../../../shared/validators/cero.validator'
 import { DefaultResponse, DefaultDecrypter } from 'src/app/models/default_response';
 import * as _ from 'lodash';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
+import { ImageDecrypter, ImageResponse } from 'src/app/models/image_response';
 
 
 @Component({
@@ -59,7 +60,7 @@ export class AddClientComponent implements OnInit {
   identity;
 
   /////////////LOAD IMAGE///////////////
-  default: DefaultResponse;
+  default: ImageResponse;
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
@@ -216,7 +217,7 @@ export class AddClientComponent implements OnInit {
     this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionresponse);
-    
+
       this.search_client = this.validacionresponse.value_exists === "true" || this.validacionresponse.afiliado === "true" ? true : false;
 
       if (this.search_client) {
@@ -268,6 +269,16 @@ export class AddClientComponent implements OnInit {
           cod_area: this.client.get("phone_2").value.dialCode,
           iso: this.client.get("phone_2").value.countryCode
         }
+      ])),
+      documentos: this.crypto.encryptJson(JSON.stringify([
+
+        this.document.get('RIF').value,
+        this.document.get('CI').value,
+        this.document.get('RM').value,
+        this.document.get('RB').value,
+        this.document.get('PP').value,
+        this.document.get('RIFL').value,
+
       ]))
     }
 
@@ -368,7 +379,7 @@ export class AddClientComponent implements OnInit {
   }
 
 
-  upload(d: any) {
+  upload(d: any, id: any) {
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
     const encode = d.file.toString()
     const data = this.crypto.encryptString(JSON.stringify({
@@ -384,13 +395,20 @@ export class AddClientComponent implements OnInit {
       file: this.crypto.encryptJson(encode),
     }))
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.document.get(d.id).setValue(true)
+      this.default = new ImageDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.document.get(d.id).setValue(JSON.stringify(
+        {
+          link: this.default.path,
+          id_doc: id,
+          nombre: this.default.nombre,
+          base64: this.default.base64
+        }
+      ))
       console.log(this.default);
     })
   }
 
-  add_control(id: string){
+  add_control(id: string) {
     this.document.addControl(id, new FormControl('', [Validators.required]))
     return id
   }

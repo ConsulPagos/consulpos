@@ -40,7 +40,7 @@ import { CategoriaInterface } from 'src/app/models/categoria';
 import { ValidacionCategoriasDecrypter, ValidacionCategoriasResponse } from 'src/app/models/validacioncategoria_response';
 import { ValidacionMarcaDecrypter, ValidacionMarcaResponse } from 'src/app/models/validacionmarca_response';
 import { InventarioService } from 'src/app/shared/services/inventario.service';
-import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
+import { ImageDecrypter, ImageResponse } from 'src/app/models/image_response';
 import { ArchiveService } from 'src/app/shared/services/archive.service';
 //****************************************************************************************//
 
@@ -67,7 +67,7 @@ export class AddVentaComponent implements OnInit {
 
   bancos_fraccion: TipoBancoInterface[];
   fraccion_pago: any[];
-  default: DefaultResponse;
+  default: ImageResponse;
   comunicaciones: ComunicacionInterface[];
   operadoras: OperadoraInterface[];
   tipocobros: TipoCobroInterface[];
@@ -409,7 +409,7 @@ export class AddVentaComponent implements OnInit {
       file: this.crypto.encryptJson(encode),
     }))
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.default = new ImageDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.document.get(d.id).setValue(true)
       console.log(this.default);
     })

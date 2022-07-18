@@ -209,6 +209,27 @@
                             Anterior
                         </button>
 
+                        <button class="stepBtn" mat-raised-button matStepperNext>
+                            Siguiente
+                        </button>
+                    </div>
+                </mat-step>
+
+                <mat-step [stepControl]="document">
+                    <form [formGroup]="document">
+                        <ng-template matStepLabel>Carga de Documentos</ng-template>
+                        <div>
+                            <h6>Referencia Bancaria</h6>
+                            <app-uploader (uploaded)="upload($event, '1')" [id]="add_control('CD')"></app-uploader>
+                        </div>
+                        <!-- <div *ngIf="getTipoCliente()=='N'"> -->
+                    </form>
+                    <!-- Bootn de siguiente strepper -->
+                    <div class="btn-next">
+                        <button class="stepBtn" mat-raised-button matStepperPrevious>
+                            Anterior
+                        </button>
+
                         <button class="stepBtn" mat-raised-button (click)="save()">
                             Finalizar
                         </button>

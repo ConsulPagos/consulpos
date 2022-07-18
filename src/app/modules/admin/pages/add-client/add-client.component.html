@@ -412,44 +412,54 @@
                         <div *ngIf="getTipoCliente()=='N' || getTipoCliente()=='R'">
                             <div>
                                 <h6>RIF</h6>
-                                <app-uploader (uploaded)="upload($event)" [id]="add_control('RIF')"></app-uploader>
+                                <app-uploader (uploaded)="upload($event, '1')" [id]="add_control('RIF')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>Cédula de identidad</h6>
-                                <app-uploader (uploaded)="upload($event)" [id]="add_control('CI')"></app-uploader>
+                                <app-uploader (uploaded)="upload($event, '2')" [id]="add_control('CI')"></app-uploader>
                             </div>
 
                             <div *ngIf="getTipoCliente()=='R'">
                                 <h6>Registro de firma personal</h6>
-                                <app-uploader (uploaded)="upload($event)" [id]="add_control('RFP')"></app-uploader>
+                                <app-uploader (uploaded)="upload($event, '6')" [id]="add_control('RFP')"></app-uploader>
                             </div>
                         </div>
                         <div *ngIf="getTipoCliente()=='J'">
                             <div>
                                 <h6>RIF Empresa</h6>
-                                <app-uploader (uploaded)="upload($event)" [id]="add_control('RIFE')"></app-uploader>
+                                <app-uploader (uploaded)="upload($event, '1')" [id]="add_control('RIF')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>Registro Mercantil</h6>
-                                <app-uploader (uploaded)="upload($event)" [id]="add_control('RM')"></app-uploader>
+                                <app-uploader (uploaded)="upload($event, '3')" [id]="add_control('RM')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>Cedula Representante Legal</h6>
-                                <app-uploader (uploaded)="upload($event)" [id]="add_control('CIR')"></app-uploader>
+                                <app-uploader (uploaded)="upload($event, '2')" [id]="add_control('CI')"></app-uploader>
+                            </div>
+
+                            <div>
+                                <h6>Referencia Bancaria</h6>
+                                <app-uploader (uploaded)="upload($event, '5')" [id]="add_control('RB')"></app-uploader>
                             </div>
 
                             <div>
                                 <h6>RIF Representante Legal</h6>
-                                <app-uploader (uploaded)="upload($event)" [id]="add_control('RIFR')"></app-uploader>
+                                <app-uploader (uploaded)="upload($event, '1')" [id]="add_control('RIFL')"></app-uploader>
+                            </div>
+
+                            <div>
+                                <h6>Planilla Solicitud POS</h6>
+                                <app-uploader (uploaded)="upload($event, '4')" [id]="add_control('PP')"></app-uploader>
                             </div>
 
 
                         </div>
                     </form>
-
+{{document.value | json}}
 
                     <div class="btn-next">
                         <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>

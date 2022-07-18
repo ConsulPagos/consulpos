@@ -153,7 +153,7 @@
                                     <mat-label>Plataforma de Pago</mat-label>
                                     <mat-select disableRipple formControlName="plataforma" disabled>
                                         <mat-option *ngFor="let plataforma of plataformas" value={{plataforma.id}}>
-                                            {{plataforma.plataforma}}  </mat-option>
+                                            {{plataforma.plataforma}} </mat-option>
                                     </mat-select>
                                 </mat-form-field>
 
@@ -213,9 +213,29 @@
                             Anterior
                         </button>
 
-                        <button class="stepBtn" mat-raised-button (click)="save()">
-                            Finalizar
+                        <button class="stepBtn" mat-raised-button matStepperNext [disabled]="buy.invalid">
+                            Siguiente
                         </button>
+                    </div>
+                </mat-step>
+
+                <mat-step [stepControl]="document">
+                    <form [formGroup]="document">
+                        <ng-template matStepLabel>Carga de documentos</ng-template>
+                        <div>
+                            <h6>Contrato</h6>
+                            <app-uploader (uploaded)="upload($event, '4')" [id]="add_control('C')"></app-uploader>
+                        </div>
+                    </form>
+                    <div class="btn-next">
+                        <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
+                        <div>
+                            <div>
+                                <button class="stepBtn" mat-raised-button [disabled]="document.invalid" (click)="save()">
+                                    Finalizar
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </mat-step>
             </mat-vertical-stepper>

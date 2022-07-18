@@ -152,6 +152,9 @@ import { CargaMasivaComponent } from './pages/carga-masiva/carga-masiva.componen
 import { FichaTraspasoComponent } from './pages/ficha-traspaso/ficha-traspaso.component';
 import { FichaCambioEquipoComponent } from './pages/ficha-cambio-equipo/ficha-cambio-equipo.component';
 import { ListarArchivosComponent } from './pages/listar-archivos/listar-archivos.component';
+import { AddPlanesComponent } from './pages/add-planes/add-planes.component';
+import { PlanesComponent } from './pages/planes/planes.component';
+import { TablaPlanesComponent } from './components/tabla-planes/tabla-planes.component';
 
 
 
@@ -295,6 +298,9 @@ import { ListarArchivosComponent } from './pages/listar-archivos/listar-archivos
     FichaTraspasoComponent,
     FichaCambioEquipoComponent,
     ListarArchivosComponent,
+    AddPlanesComponent,
+    PlanesComponent,
+    TablaPlanesComponent,
     
   ],
 
