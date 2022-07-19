@@ -8,7 +8,7 @@ addEventListener('message', ({ data }) => {
     var data: any = value;
     switch (type) {
       case "string":
-        if(value && value.length > 0){
+        if(value != null){
           data = value.toString();
         }
         break;

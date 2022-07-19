@@ -196,7 +196,7 @@ const template = [
         "tipo": "string",
         "decimales": 0,
         "inicia": 0,
-        "nombre": "SALDO"
+        "nombre": "SALDO_ACUMULADO"
     }, 
     
     {
