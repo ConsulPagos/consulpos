@@ -116,7 +116,7 @@ export class AddReactivacionComponent implements OnInit {
  });
 
  document = new FormGroup({
-   id: new FormControl('', [Validators.required]),
+   id: new FormControl(''),
  });
 
  buy = new FormGroup({

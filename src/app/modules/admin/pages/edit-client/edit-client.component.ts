@@ -153,7 +153,7 @@ export class EditClientComponent implements OnInit {
 
   //FORM DEL CUARTO STEP\\
   document = new FormGroup({
-    id: new FormControl('', [Validators.required]),
+    id: new FormControl(''),
   });
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

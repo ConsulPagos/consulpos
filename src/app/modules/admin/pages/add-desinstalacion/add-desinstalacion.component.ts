@@ -112,27 +112,27 @@ export class AddDesinstalacionComponent implements OnInit {
  });
 
  sim = new FormGroup({
-   operadora: new FormControl('', [Validators.required]),
+   operadora: new FormControl(''),
  });
 
  document = new FormGroup({
-   id: new FormControl('', [Validators.required]),
+   id: new FormControl(''),
  });
 
  buy = new FormGroup({
-   modelo: new FormControl('', [Validators.required]),
-   modelo2: new FormControl('', [Validators.required]),
-   plataforma: new FormControl('', [Validators.required]),
-   banco: new FormControl('', [Validators.required]),
-   numero_cuenta_pos: new FormControl('', [Validators.required, Validators.minLength(20)]),
+   modelo: new FormControl(''),
+   modelo2: new FormControl(''),
+   plataforma: new FormControl(''),
+   banco: new FormControl(''),
+   numero_cuenta_pos: new FormControl(''),
    precio_usd: new FormControl(''),
    lugar_entrega: new FormControl(''),
-   tipocobro: new FormControl('', [Validators.required]),
-   plan: new FormControl('', [Validators.required]),
-   tipo_venta: new FormControl('', [Validators.required]),
-   terminal: new FormControl('', [Validators.required]),
-   cod_afiliado: new FormControl('', [Validators.required]),
-   monto: new FormControl('', [Validators.required]),
+   tipocobro: new FormControl(''),
+   plan: new FormControl(''),
+   tipo_venta: new FormControl(''),
+   terminal: new FormControl(''),
+   cod_afiliado: new FormControl(''),
+   monto: new FormControl(''),
  });
 
  //****************************************************************************************//
