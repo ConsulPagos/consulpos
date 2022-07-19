@@ -44,7 +44,7 @@
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Serial</mat-label>
                         <input matInput placeholder="serial" type="text" maxlength="255" minlength="3"
-                            (change)="cargarSerial($event.target.value)" formControlName="serial"
+                            (keyup)="cargarSerial($event.target.value)" formControlName="serial"
                             (keypress)="onlyCaracteres($event)">
                     </mat-form-field>
                 </form>
