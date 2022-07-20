@@ -151,6 +151,7 @@ export class AddVentaComponent implements OnInit {
 
   add_buy() {
     var newFormat: SaleRequestInterface = {};
+
     var buy = new FormGroup({
       modelo: new FormControl('', [Validators.required]),
       numero_cuenta_pos: new FormControl('', [Validators.required, Validators.minLength(20)]),
@@ -346,7 +347,7 @@ export class AddVentaComponent implements OnInit {
 
   getFraccion(): void {
     console.log("ajaa", this.bancos_fraccion.filter(c => c.codigo == this.solicitud.get('banco').value)[0]);
-    
+
     this.fraccion_pago = this.bancos_fraccion.filter(c => c.codigo == this.solicitud.get('banco').value)[0].fraccion_pago
   }
 
@@ -382,16 +383,7 @@ export class AddVentaComponent implements OnInit {
     })
   }
 
-  buiesInvalid() {
-    var invalid = false;
-    for (let index = 0; index < this.buies.length; index++) {
-      if (this.buies[index].invalid) {
-        invalid = true
-        break;
-      }
-    }
-    return invalid
-  }
+
 
   upload(d: any) {
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
@@ -415,11 +407,26 @@ export class AddVentaComponent implements OnInit {
     })
   }
 
-  add_control(id: string){
+  add_control(id: string) {
     this.document.addControl(id, new FormControl('', [Validators.required]))
     return id
   }
 
+  buiesInvalid() {
+    var invalid = false;
+    for (let index = 0; index < this.buies.length; index++) {
+      const codigo = this.solicitud.get('banco').value
+      console.log(codigo);
+      const val: FormGroup = this.buies[index];
+      const cuenta: string = val.get('numero_cuenta_pos').value
+      if (this.buies[index].invalid || !cuenta.startsWith(codigo)) {
+        val.get('numero_cuenta_pos').setErrors({ 'incorrect': true })
+        invalid = true
+        break;
+      }
+    }
+    return invalid
+  }
 }
 
 

@@ -358,29 +358,49 @@ export class TablaOperacionesComponent implements OnInit {
       limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
       status_desc: this.crypto.encryptJson(this.tipo_operacion.toUpperCase()),
     }))
-
     this.venta.itemsPendientePorEntregar(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
-
-
       this.loader.stop()
       console.log(JSON.parse(this.crypto.decryptString(res)))
       switch (json.R) {
         case constant.R0:
+          const datos = []
           var equipos = JSON.parse(this.crypto.decryptJson(json.equipos)) as any[]
+          var contador = 0
           console.log(equipos);
-          equipos = equipos.map(e => {
-            return {
-              cod_serial: e.cod_serial,
-              cuenta: e.cuenta,
-              afiliado: e.afiliado,
-              rif: e.rif,
+          var gestion = 'INSTALACION';
+          for (let i = 0; i < equipos.length; i++) {
+            const e = equipos[i];
+            for (let j = 0; j < equipos[i].items.length; j++) {
+              if (e.solicitud != 'VENTA POS') {
+                gestion = 'CORRECTIVO'
+              }
+              const item = equipos[i].items[j];
+              datos.push({
+                numero: contador + 1,
+                banco: 'banco',
+                modelo: item.modelo,
+                tipoComunicación: '****',
+                operadora: e.modelos[0].caracteristicas[0].sim,
+                serialSaliente: e.serialSaliente,
+                cod_serial: e.cod_serial,
+                razon_social: e.razon_social,
+                afiliado: e.afiliado,
+                terminal: e.terminal,
+                rif: e.rif,
+                versionAplicativo: '****',
+                TipoGestión: gestion,
+              })
             }
-          })
+          }
 
           var result = [
-            { cod_serial: "Serial POS", cuenta: "Cuenta", afiliado: "Afiliado", rif: "Rif" },
-            ...equipos]
+            {
+              numero: "#", banco: "Banco", modelo: "Modelo", tipoComunicación: "Tipo de Comunicación",
+              operadora: "Operadora", serialSaliente: "Serial Saliente", cod_serial: "Serial Entrante", razon_social: "Nombre Comercial",
+              afiliado: "Afiliado", terminal: "Terminal", rif: "Rif", versionAplicativo: "Version Aplicativo", TipoGestión: "Tipo de Gestión"
+            },
+            ...datos]
           console.log(result)
           this.exportService.exportExcel(result, 'archivo CrediCard Parametrizacion');
           break
