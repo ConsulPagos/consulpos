@@ -267,12 +267,8 @@ export class AddCambioPosComponent implements OnInit {
 
       documentos: this.crypto.encryptJson(JSON.stringify([
 
-        this.document.get('RIF').value,
-        this.document.get('CI').value,
-        this.document.get('RM').value,
-        this.document.get('RB').value,
-        this.document.get('PP').value,
-        this.document.get('RIFL').value,
+        this.document.get('C').value,
+
 
       ]))
     }))
