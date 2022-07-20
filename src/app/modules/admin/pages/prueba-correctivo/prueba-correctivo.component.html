@@ -1,17 +1,14 @@
-<section id="planes">
+<section id="prueba">
     <div class="container-fluid">
         <div style="background-color: #fff; border-radius: 10px;">
             <mat-tab-group>
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
-                            matBadgePosition="before">
-                            Listado de planes
-                        </span>
+                            matBadgePosition="before">Listado de pruebas</span>
                     </ng-template>
-                    <app-tabla-planes (deletePlan)="deletePlanes($event)" (count)='countNuevos = $event'
-                        class="w-100">
-                    </app-tabla-planes>
+                    <app-tabla-prueba-correctivo (count)='countNuevos = $event' class="w-100">
+                    </app-tabla-prueba-correctivo>
                 </mat-tab>
             </mat-tab-group>
         </div>

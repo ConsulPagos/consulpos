@@ -40,6 +40,8 @@
                             </div>
                         </div>
 
+
+
                         <div class="container" style="padding-bottom: 2rem; text-align: center;">
                             <form [formGroup]="form">
                                 <mat-form-field appearance="outline" class="container_box_space">
@@ -47,10 +49,12 @@
                                     <input matInput type="text" readonly formControlName="serial">
                                 </mat-form-field>
                             </form>
-
-                            <button mat-raised-button (click)="findPos()">
-                                Asignar otro serial POS
-                            </button>
+                            <div>
+                                <button mat-raised-button (click)="findPos()"
+                                    *ngIf="this.check.get('check').value == '1'">
+                                    Asignar otro serial POS
+                                </button>
+                            </div>
                         </div>
 
                         <div class="container" style="padding-bottom: 2rem; text-align: center;">
@@ -73,17 +77,28 @@
                                     </mat-form-field>
 
                                     <p>ARREGLAR QUE SE DUPLICA LA SIM HACER FORM DINAMICO</p>
-                                    
+
                                     <mat-form-field appearance="outline" class="container_box_space">
                                         <mat-label>Serial SIM {{i + 1}}</mat-label>
                                         <input matInput type="text" value={{s.cod_serial}} formControlName="sim">
                                     </mat-form-field>
 
-                                    <button mat-raised-button (click)="findSim(s.modelo, s.cod_serial)">
+                                    <button mat-raised-button (click)="findSim(s.modelo, s.cod_serial)"
+                                        *ngIf="this.check.get('check').value == '2'">
                                         Asignar otro serial SIM
                                     </button>
                                 </div>
                             </form>
+
+                            <form [formGroup]="check">
+                                <mat-radio-group aria-label="Select an option" formControlName="check">
+                                    <mat-radio-button value="3">TODO OK</mat-radio-button>
+                                    <mat-radio-button value="1">POS dañado</mat-radio-button>
+                                    <mat-radio-button value="2">SIM dañada</mat-radio-button>
+                                </mat-radio-group>
+                            </form>
+
+                            
                             <form [formGroup]="form">
                                 <mat-form-field appearance="outline" class="container_box_space">
                                     <mat-label>Nombre del responsable</mat-label>
@@ -92,8 +107,13 @@
                             </form>
 
 
-                            <button mat-raised-button (click)="submit()">
-                                Guardar
+                            <button mat-raised-button (click)="submit()"
+                                *ngIf="this.check.get('check').value == '2' || this.check.get('check').value == '3'">
+                                Guardar POS BUENO
+                            </button>
+
+                            <button mat-raised-button (click)="submit()" *ngIf="this.check.get('check').value == '1'">
+                                Prueba POS MALO
                             </button>
 
                         </div>

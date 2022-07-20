@@ -30,6 +30,7 @@ export class ValidarPruebaFichaComponent implements OnInit {
   a = null;
   form: FormGroup;
   sim: FormGroup;
+  check: FormGroup;
 
   constructor(
     private title: Title,
@@ -54,6 +55,10 @@ export class ValidarPruebaFichaComponent implements OnInit {
 
       this.sim = new FormGroup({
         sim: new FormControl(this.equipos.sim[0].cod_serial, [Validators.required])
+      });
+
+      this.check = new FormGroup({
+        check: new FormControl('', [Validators.required])
       });
 
       this.form = new FormGroup({

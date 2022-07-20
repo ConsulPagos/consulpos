@@ -155,6 +155,8 @@ import { ListarArchivosComponent } from './pages/listar-archivos/listar-archivos
 import { AddPlanesComponent } from './pages/add-planes/add-planes.component';
 import { PlanesComponent } from './pages/planes/planes.component';
 import { TablaPlanesComponent } from './components/tabla-planes/tabla-planes.component';
+import { PruebaCorrectivoComponent } from './pages/prueba-correctivo/prueba-correctivo.component';
+import { TablaPruebaCorrectivoComponent } from './components/tabla-prueba-correctivo/tabla-prueba-correctivo.component';
 
 
 
@@ -301,6 +303,8 @@ import { TablaPlanesComponent } from './components/tabla-planes/tabla-planes.com
     AddPlanesComponent,
     PlanesComponent,
     TablaPlanesComponent,
+    PruebaCorrectivoComponent,
+    TablaPruebaCorrectivoComponent,
     
   ],
 

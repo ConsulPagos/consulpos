@@ -2,21 +2,25 @@
     <div>
         <mat-form-field appearance="outline" class="mt-4 mx-4">
             <form [formGroup]="identity">
-                <input matInput (keyup.enter)="_findClient()" placeholder="Buscar" formControlName="rif" 
-                    #input>
+                <input matInput (keyup.enter)="_findClient()" placeholder="Buscar" formControlName="rif" #input>
             </form>
         </mat-form-field>
 
-        <button mat-raised-button (click)="filtro()" *ngIf="!statusFilter"> 
+        <button mat-raised-button (click)="filtro()" *ngIf="!statusFilter">
             <i class="fas fa-search"></i>
             Buscar
-          </button>
+        </button>
 
         <button (click)="load()" mat-raised-button *ngIf="statusFilter">
             <i class="fas fa-broom broom"></i>
             Limpiar filtro
         </button>
     </div>
+
+    <button mat-raised-button (click)="download()">
+        <i class="fas fa-download"></i>
+        Descargar excel de parametrizar
+    </button>
 
     <mat-divider></mat-divider>
 

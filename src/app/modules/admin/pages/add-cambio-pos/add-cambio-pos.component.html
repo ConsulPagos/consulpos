@@ -98,6 +98,9 @@
                             </div>
                         </div>
                     </form>
+                    <div>
+                        {{validacionPos | json}}
+                    </div>
 
                     <form [formGroup]="buy">
                         <ng-template matStepLabel>Datos de la Venta</ng-template>
@@ -130,24 +133,7 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
-
                                 </div>
-
-                                <!-- <div>
-                                    <button class="btn_form_add_agent" mat-icon-button color="primary"
-                                        aria-label="Example icon button with a menu icon" (click)="add_sim(i)"
-                                        *ngIf="(formats_buy[i].sims.length === 1 ||  formats_buy[i].sims.length === 0)">
-                                        <i class="fas fa-user-plus icon_sell"></i>
-                                        Agregar Sim
-                                    </button>
-
-                                    <button mat-icon-button class="btn_form_add_agent" color="primary"
-                                        aria-label="Example icon button with a menu icon" (click)="deleteSim(i, isim)"
-                                        *ngIf="(formats_buy[i].sims.length === 2)">
-                                        <i class="fas fa-user-minus icon_sell"></i>
-                                        Eliminar una Sim
-                                    </button>
-                                </div> -->
 
                                 <mat-form-field appearance="outline" class="ocultar">
                                     <mat-label>Plataforma de Pago</mat-label>

@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { merge, of as observableOf } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { DefaultResponse, DefaultDecrypter } from 'src/app/models/default_response';
-import { ShowPlanResponse, ShowPlanDecrypter } from 'src/app/models/showplan_response';
+import { ShowFraccionResponse, ShowFraccionDecrypter } from 'src/app/models/showfraccion_response';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { InventarioService } from 'src/app/shared/services/inventario.service';
@@ -42,7 +42,7 @@ export class TablaPlanComponent implements OnInit {
   firstLoading = false;
   dataSource = new MatTableDataSource<any>();
   selection = new SelectionModel<any>(true, []);
-  showAlmacenesResponse: ShowPlanResponse;
+  showAlmacenesResponse: ShowFraccionResponse;
   statusFilter = false;
   PAGESIZE = 25
 
@@ -103,7 +103,7 @@ export class TablaPlanComponent implements OnInit {
           this.isLoadingResults = false;
           console.log("JSON: " + data)
           console.log("string: " + this.crypto.decryptString(data))
-          this.showAlmacenesResponse = new ShowPlanDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
+          this.showAlmacenesResponse = new ShowFraccionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
           // //this.crypto.setKeys(this.showAlmacenesResponse.keyS, this.showAlmacenesResponse.ivJ, this.showAlmacenesResponse.keyJ, this.showAlmacenesResponse.ivS)
           this.resultsLength = parseInt(this.showAlmacenesResponse.total_row);
           console.log(this.showAlmacenesResponse)
@@ -199,7 +199,7 @@ export class TablaPlanComponent implements OnInit {
     this.isLoadingResults = true;
     this.inventario.findConfPrecio(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       // console.log(this.crypto.decryptString(res))
-      this.showAlmacenesResponse = new ShowPlanDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.showAlmacenesResponse = new ShowFraccionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
       this.planes = this.showAlmacenesResponse.configuracion
       this.dataSource = new MatTableDataSource(this.planes);

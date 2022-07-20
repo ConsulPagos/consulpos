@@ -42,7 +42,7 @@ export class HistoricoConciliacionComponent implements OnInit {
     banco: new FormControl("", [Validators.required]),
     oper: new FormControl("", [Validators.required]),
   });
-
+// 
   constructor(
     private title: Title,
     private storage: StorageService,

@@ -1,0 +1,92 @@
+<div>
+    <div class="structur">
+        <div>
+            <mat-form-field appearance="outline" class="mt-4 mx-4">
+                <form [formGroup]="identity">
+                    <input matInput (keyup.enter)="_findSale()" placeholder="Buscar" formControlName="rif" #input>
+                </form>
+            </mat-form-field>
+
+            <button mat-raised-button (click)="filtro()" *ngIf="!statusFilter">
+                <i class="fas fa-search"></i>
+                Buscar
+            </button>
+
+            <button (click)="load()" mat-raised-button *ngIf="statusFilter">
+                <i class="fas fa-broom broom"></i>
+                Limpiar filtro
+            </button>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+
+        <ng-container matColumnDef="number">
+            <th mat-header-cell *matHeaderCellDef> Venta Nº </th>
+            <td mat-cell *matCellDef="let venta"> {{venta.number}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rif">
+            <th mat-header-cell *matHeaderCellDef> Rif </th>
+            <td mat-cell *matCellDef="let venta"> {{venta.rif}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="razon_social">
+            <th mat-header-cell *matHeaderCellDef> Razón Social </th>
+            <td mat-cell *matCellDef="let venta"> {{venta.razon_social}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef> Fecha de Venta </th>
+            <td mat-cell *matCellDef="let venta"> {{venta.fecha}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status_desc">
+            <th mat-header-cell *matHeaderCellDef> estatus </th>
+            <td mat-cell *matCellDef="let venta">
+                <div class={{statusColor(venta.status_desc)}}>
+                    {{venta.status_desc}}
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones</th>
+            <td mat-cell *matCellDef="let venta">
+
+                <button #tooltip="matTooltip" matTooltip="Ver Venta" matTooltipHideDelay="10" mat-icon-button
+                    (click)="_showSale(venta)" class="container_icon">
+                    <i class="fas fa-id-card activate_show"></i>
+                </button>
+
+                <!-- <button #tooltip="matTooltip" matTooltip="Editar Venta" matTooltipHideDelay="10" mat-icon-button
+                    (click)="_editSale(venta)" class="container_icon">
+                    <i class="fas fa-edit activate_edit"></i>
+                </button> -->
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let venta; columns: displayedColumns;">
+        </tr>
+    </table>
+</div>
+
+<mat-paginator [length]="resultsLength" [pageSize]="25" showFirstLastButtons></mat-paginator>
+
+<ng-template #loadingTable>
+    <div class="loading d-flex justify-content-center align-items-center p-4">
+        <button class="loading-btn" mat-raised-button *ngIf="loading">
+            <mat-spinner [diameter]="20"></mat-spinner>
+        </button>
+        <button class="loading-btn" *ngIf="error" (click)="load()" mat-raised-button>
+            <li class="fas fa-redo-alt"></li>
+        </button>
+    </div>
+</ng-template>

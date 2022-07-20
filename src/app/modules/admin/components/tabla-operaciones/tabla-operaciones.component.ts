@@ -25,6 +25,8 @@ import { ModalAsignacionManualComponent } from '../modal-asignacion-manual/modal
 import { ModalEntregaComponent } from '../modal-entrega/modal-entrega.component';
 import { DialogData } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { ModalConfiguracionManualComponent } from '../modal-configuracion-manual/modal-configuracion-manual.component';
+import { DefaultDecrypter } from 'src/app/models/default_response';
+import { ExportService } from '../../services/export.service';
 
 @Component({
   selector: 'app-tabla-operaciones',
@@ -33,7 +35,7 @@ import { ModalConfiguracionManualComponent } from '../modal-configuracion-manual
 })
 export class TablaOperacionesComponent implements OnInit {
 
-  displayedColumns: string[] = ['number','solicitud_id', 'cod_serial','rif','razon_social', 'fecha', 'status_desc', 'solicitud','occ', 'Acciones'];
+  displayedColumns: string[] = ['number', 'solicitud_id', 'cod_serial', 'rif', 'razon_social', 'fecha', 'status_desc', 'solicitud', 'occ', 'Acciones'];
 
   ventas = [];
 
@@ -69,6 +71,7 @@ export class TablaOperacionesComponent implements OnInit {
       private loader: LoaderService,
       private route: ActivatedRoute,
       public dialog: MatDialog,
+      private exportService: ExportService,
   ) {
 
     this.route.paramMap.subscribe(paramMap => {
@@ -116,7 +119,7 @@ export class TablaOperacionesComponent implements OnInit {
           });
         } else if (venta.solicitud === "VENTA POS" || venta.solicitud === "CAMBIO DE EQUIPO") {
           console.log('holaaaaa');
-          
+
           var dialogRef: any = this.dialog.open(ModalAsignacionComponent, {
             disableClose: true,
             height: 'auto',
@@ -126,7 +129,7 @@ export class TablaOperacionesComponent implements OnInit {
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
               console.log('dialog se refresco');
-              
+
               this.load()
             }
           });
@@ -208,88 +211,88 @@ export class TablaOperacionesComponent implements OnInit {
 
   load() {
 
-    if( this.tipo_operacion == "asignacion" ){
+    if (this.tipo_operacion == "asignacion") {
       merge(this.paginator.page)
-      .pipe(
-        startWith({}),
-        switchMap(() => {
-          this.error = false;
-          this.loader.loading()
-          const data = this.crypto.encryptString(JSON.stringify({
-            u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-            correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-            scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-            init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
-            limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
-            status_desc: this.crypto.encryptJson(this.tipo_operacion.toUpperCase()),
-          }))
-          return this.venta.doFindSalesByStatus(`${this.session.getDeviceId()};${data}`)
-        }),
-        map(data => {
-          this.firstLoading = false;
-          console.log("JSON: " + data)
-          console.log("string: " + this.crypto.decryptString(data))
-          this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-          this.resultsLength = parseInt(this.ShowSalesResponse.total_row);
-          console.log(this.ShowSalesResponse)
-          this.loader.stop()
-          return this.ShowSalesResponse.ventas;
-        }),
-        catchError((e) => {
-          this.firstLoading = false;
-          this.loading = false;
-          this.error = true;
-          console.log(e)
-          return observableOf([]);
-        })
-      ).subscribe(data => {
-        this.ventas = data
-        this.dataSource = new MatTableDataSource(this.ventas);
-        this.identity.reset();
-        this.statusFilter = false;
-      });
+        .pipe(
+          startWith({}),
+          switchMap(() => {
+            this.error = false;
+            this.loader.loading()
+            const data = this.crypto.encryptString(JSON.stringify({
+              u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+              correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+              scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+              init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
+              limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
+              status_desc: this.crypto.encryptJson(this.tipo_operacion.toUpperCase()),
+            }))
+            return this.venta.doFindSalesByStatus(`${this.session.getDeviceId()};${data}`)
+          }),
+          map(data => {
+            this.firstLoading = false;
+            console.log("JSON: " + data)
+            console.log("string: " + this.crypto.decryptString(data))
+            this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
+            this.resultsLength = parseInt(this.ShowSalesResponse.total_row);
+            console.log(this.ShowSalesResponse)
+            this.loader.stop()
+            return this.ShowSalesResponse.ventas;
+          }),
+          catchError((e) => {
+            this.firstLoading = false;
+            this.loading = false;
+            this.error = true;
+            console.log(e)
+            return observableOf([]);
+          })
+        ).subscribe(data => {
+          this.ventas = data
+          this.dataSource = new MatTableDataSource(this.ventas);
+          this.identity.reset();
+          this.statusFilter = false;
+        });
 
     } else {
 
       merge(this.paginator.page)
-      .pipe(
-        startWith({}),
-        switchMap(() => {
-          this.error = false;
-          this.loader.loading()
-          const data = this.crypto.encryptString(JSON.stringify({
-            u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-            correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-            scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-            init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
-            limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
-            status_desc: this.crypto.encryptJson(this.tipo_operacion.toUpperCase()),
-          }))
-          return this.venta.itemsPendientePorEntregar(`${this.session.getDeviceId()};${data}`)
-        }),
-        map(data => {
-          this.firstLoading = false;
-          console.log("JSON: " + data)
-          console.log("string: " + this.crypto.decryptString(data))
-          this.ShowSalesResponse2 = new ConfigresponseDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-          this.resultsLength = parseInt(this.ShowSalesResponse2.total_row);
-          console.log(this.ShowSalesResponse2)
-          this.loader.stop()
-          return this.ShowSalesResponse2.equipos;
-        }),
-        catchError((e) => {
-          this.firstLoading = false;
-          this.loading = false;
-          this.error = true;
-          console.log(e)
-          return observableOf([]);
-        })
-      ).subscribe(data => {
-        this.ventas = data
-        this.dataSource = new MatTableDataSource(this.ventas);
-        this.identity.reset();
-        this.statusFilter = false;
-      });
+        .pipe(
+          startWith({}),
+          switchMap(() => {
+            this.error = false;
+            this.loader.loading()
+            const data = this.crypto.encryptString(JSON.stringify({
+              u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+              correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+              scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+              init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
+              limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
+              status_desc: this.crypto.encryptJson(this.tipo_operacion.toUpperCase()),
+            }))
+            return this.venta.itemsPendientePorEntregar(`${this.session.getDeviceId()};${data}`)
+          }),
+          map(data => {
+            this.firstLoading = false;
+            console.log("JSON: " + data)
+            console.log("string: " + this.crypto.decryptString(data))
+            this.ShowSalesResponse2 = new ConfigresponseDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
+            this.resultsLength = parseInt(this.ShowSalesResponse2.total_row);
+            console.log(this.ShowSalesResponse2)
+            this.loader.stop()
+            return this.ShowSalesResponse2.equipos;
+          }),
+          catchError((e) => {
+            this.firstLoading = false;
+            this.loading = false;
+            this.error = true;
+            console.log(e)
+            return observableOf([]);
+          })
+        ).subscribe(data => {
+          this.ventas = data
+          this.dataSource = new MatTableDataSource(this.ventas);
+          this.identity.reset();
+          this.statusFilter = false;
+        });
 
     }
 
@@ -341,5 +344,52 @@ export class TablaOperacionesComponent implements OnInit {
 
   _showSale(ventas) {
     this.showSale.emit(ventas)
+  }
+
+
+
+  download() {
+    this.loader.loading()
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      init_row: this.crypto.encryptJson('0'),
+      limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
+      status_desc: this.crypto.encryptJson(this.tipo_operacion.toUpperCase()),
+    }))
+
+    this.venta.itemsPendientePorEntregar(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      const json = JSON.parse(this.crypto.decryptString(res))
+
+
+      this.loader.stop()
+      console.log(JSON.parse(this.crypto.decryptString(res)))
+      switch (json.R) {
+        case constant.R0:
+          var equipos = JSON.parse(this.crypto.decryptJson(json.equipos)) as any[]
+          console.log(equipos);
+          equipos = equipos.map(e => {
+            return {
+              cod_serial: e.cod_serial,
+              cuenta: e.cuenta,
+              afiliado: e.afiliado,
+              rif: e.rif,
+            }
+          })
+
+          var result = [
+            { cod_serial: "Serial POS", cuenta: "Cuenta", afiliado: "Afiliado", rif: "Rif" },
+            ...equipos]
+          console.log(result)
+          this.exportService.exportExcel(result, 'archivo CrediCard Parametrizacion');
+          break
+        case constant.R1:
+        default:
+          const response = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+          // this.toaster.error(response.M)
+          break;
+      }
+    })
   }
 }

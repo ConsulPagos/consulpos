@@ -32,7 +32,7 @@ export class TablaPlanesComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  displayedColumns: string[] = ['nombre', 'precio', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'precio','date','descripcion','status','acciones'];
   planes = [];
   isLoadingResults = false;
   defaultResponse: DefaultResponse;
@@ -42,7 +42,7 @@ export class TablaPlanesComponent implements OnInit {
   firstLoading = false;
   dataSource = new MatTableDataSource<any>();
   selection = new SelectionModel<any>(true, []);
-  showAlmacenesResponse: ShowPlanResponse;
+  ShowPlanResponse: ShowPlanResponse;
   statusFilter = false;
   PAGESIZE = 25
 
@@ -50,17 +50,15 @@ export class TablaPlanesComponent implements OnInit {
     private session: SesionService,
     private crypto: CryptoService,
     private storage: StorageService,
-    private cliente: ClientesService,
     private modal: ModalService,
     private toaster: ToasterService,
-    private router: Router,
     private inventario: InventarioService
   ) {
     this.dataSource = new MatTableDataSource(this.planes);
   }
 
   identifier = new FormGroup({
-    almacen: new FormControl(''),
+    rif: new FormControl(''),
   });
 
   ngAfterViewInit() {
@@ -96,18 +94,16 @@ export class TablaPlanesComponent implements OnInit {
             init_row: this.crypto.encryptJson(((this.paginator.pageIndex * this.PAGESIZE)).toString()),
             limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
           }))
-          return this.inventario.allConfPrecio(`${this.session.getDeviceId()};${data}`)
+          return this.inventario.allPlan(`${this.session.getDeviceId()};${data}`)
         }),
         map(data => {
           this.firstLoading = false;
           this.isLoadingResults = false;
-          console.log("JSON: " + data)
-          console.log("string: " + this.crypto.decryptString(data))
-          this.showAlmacenesResponse = new ShowPlanDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-          // //this.crypto.setKeys(this.showAlmacenesResponse.keyS, this.showAlmacenesResponse.ivJ, this.showAlmacenesResponse.keyJ, this.showAlmacenesResponse.ivS)
-          this.resultsLength = parseInt(this.showAlmacenesResponse.total_row);
-          console.log(this.showAlmacenesResponse)
-          return this.showAlmacenesResponse.configuracion;
+          console.log(JSON.parse(this.crypto.decryptString(data)));
+          this.ShowPlanResponse = new ShowPlanDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
+          console.log(this.ShowPlanResponse)
+          this.resultsLength = parseInt(this.ShowPlanResponse.total_row);
+          return this.ShowPlanResponse.planes;
         }),
         catchError((e) => {
           this.firstLoading = false;
@@ -161,12 +157,10 @@ export class TablaPlanesComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      modelo_id: this.crypto.encryptJson(configuracion.modelo_id),
-      fraccion_pago_id: this.crypto.encryptJson(configuracion.fraccion_pago_id),
-      banco: this.crypto.encryptJson(configuracion.banco),
+      id: this.crypto.encryptJson(configuracion.id),
     }))
     this.loading = true;
-    this.inventario.deleteConfPrecio(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.inventario.activarInactivarPlan(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.defaultResponse);
       
@@ -187,7 +181,7 @@ export class TablaPlanesComponent implements OnInit {
   }
 
   _findClient() {
-    var filter = this.identifier.get('banco').value
+    var filter = this.identifier.get('rif').value
     this.statusFilter = true;
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
@@ -197,11 +191,11 @@ export class TablaPlanesComponent implements OnInit {
       filter: this.crypto.encryptJson(filter),
     }))
     this.isLoadingResults = true;
-    this.inventario.findConfPrecio(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.inventario.findPlan(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       // console.log(this.crypto.decryptString(res))
-      this.showAlmacenesResponse = new ShowPlanDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.ShowPlanResponse = new ShowPlanDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;
-      this.planes = this.showAlmacenesResponse.configuracion
+      this.planes = this.ShowPlanResponse.planes
       this.dataSource = new MatTableDataSource(this.planes);
     })
   }

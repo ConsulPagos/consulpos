@@ -1,27 +1,27 @@
 import {AlmacenesRequestInterface} from './almacenes_request';
 import { CryptoService } from "../shared/services/crypto.service";
 
-export interface ShowPlanResponse {
+export interface ShowFraccionResponse {
     R?: string;
     M?: string;
     session_valid: string;
-    planes: any[];
+    configuracion: any[];
     total_row: string;
 }
 
-export class ShowPlanDecrypter {
+export class ShowFraccionDecrypter {
 
     constructor(private crypto: CryptoService) {
 
     }
 
-    deserialize(value: any): ShowPlanResponse {
+    deserialize(value: any): ShowFraccionResponse {
 
-        const verify: ShowPlanResponse = {
+        const verify: ShowFraccionResponse = {
             R: value.R,
             M: this.crypto.decryptJson(value.M),
             session_valid: this.crypto.decryptJson(value.session_valid),
-            planes:JSON.parse(this.crypto.decryptJson(value.planes)) as any[],
+            configuracion:JSON.parse(this.crypto.decryptJson(value.configuracion)) as any[],
             total_row: this.crypto.decryptJson(value.total_row),
         }
         

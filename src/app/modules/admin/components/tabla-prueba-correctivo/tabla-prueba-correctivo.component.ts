@@ -19,11 +19,11 @@ import { ShowSalesDecrypter, ShowSalesResponse } from 'src/app/models/showsales_
 import { ConfigresponseDecrypter, ConfigResponseResponse } from 'src/app/models/configresponse';
 
 @Component({
-  selector: 'app-tabla-prueba',
-  templateUrl: './tabla-prueba.component.html',
-  styleUrls: ['./tabla-prueba.component.scss']
+  selector: 'app-tabla-prueba-correctivo',
+  templateUrl: './tabla-prueba-correctivo.component.html',
+  styleUrls: ['./tabla-prueba-correctivo.component.scss']
 })
-export class TablaPruebaComponent implements OnInit {
+export class TablaPruebaCorrectivoComponent implements OnInit {
 
   displayedColumns: string[] = ['number', 'rif', 'razon_social', 'fecha', 'status_desc', 'Acciones'];
   ventas = [];
