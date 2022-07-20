@@ -165,7 +165,7 @@ const template = [
         "columna": "CODIGO_AFILIADO",
         "posicion": 15,
         "longitud": 0,
-        "tipo": "string",
+        "tipo": "int",
         "decimales": 0,
         "inicia": 0,
         "nombre": "CODIGO_AFILIADO"
@@ -196,7 +196,7 @@ const template = [
         "tipo": "string",
         "decimales": 0,
         "inicia": 0,
-        "nombre": "SALDO"
+        "nombre": "SALDO_ACUMULADO"
     }, 
     
     {
