@@ -26,6 +26,7 @@ import { CeroValidator } from '../../../../shared/validators/cero.validator'
 import { DefaultResponse, DefaultDecrypter } from 'src/app/models/default_response';
 import * as _ from 'lodash';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
+import { ImageDecrypter, ImageResponse } from 'src/app/models/image_response';
 
 
 @Component({
@@ -59,7 +60,7 @@ export class AddClientComponent implements OnInit {
   identity;
 
   /////////////LOAD IMAGE///////////////
-  default: DefaultResponse;
+  default: ImageResponse;
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
@@ -95,7 +96,7 @@ export class AddClientComponent implements OnInit {
   }
 
   client_type = new FormGroup({
-    tipo_cliente: new FormControl('1', [Validators.required])
+    tipo_cliente: new FormControl('', [Validators.required])
   });
 
   client = new FormGroup({
@@ -117,16 +118,15 @@ export class AddClientComponent implements OnInit {
     contacto: new FormControl('1', [Validators.required]),
     codpostal: new FormControl('1080', [Validators.required]),
     act_comercial: new FormControl('1', [Validators.required]),
-    pto_referencia: new FormControl('zdfgdsgdgdtsgddfthtdh', [Validators.required]),
     red_social_a: new FormControl(''),
     red_social_b: new FormControl(''),
   });
 
   data_vr = new FormGroup({
     primer_nombre: new FormControl('Arturo', [Validators.required]),
-    segundo_nombre: new FormControl('Arturo',),
+    segundo_nombre: new FormControl('Arturo'),
     primer_apellido: new FormControl('Arturo', [Validators.required]),
-    segundo_apellido: new FormControl('Arturo',),
+    segundo_apellido: new FormControl('Arturo'),
     c_t_doc_cedula: new FormControl('1', [Validators.required]),
     cedula: new FormControl('25386251', [Validators.required]),
     genero: new FormControl('1', [Validators.required]),
@@ -148,9 +148,9 @@ export class AddClientComponent implements OnInit {
 
   agent = new FormGroup({
     p_nombre_representante: new FormControl('Arturo', [Validators.required]),
-    s_nombre_representante: new FormControl('Jose', [Validators.required]),
+    s_nombre_representante: new FormControl('Jose'),
     p_apellido_representante: new FormControl('Linares', [Validators.required]),
-    s_apellido_representante: new FormControl('Viola', [Validators.required]),
+    s_apellido_representante: new FormControl('Viola'),
     cedula_representante: new FormControl('25386251', [Validators.required]),
     telefono_local_repre: new FormControl('4242735855', [Validators.required]),
     telefono_movil_repre: new FormControl('4242735855', [Validators.required]),
@@ -217,7 +217,7 @@ export class AddClientComponent implements OnInit {
     this.cliente.doVerificaicon(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       this.validacionresponse = new ValidacionclienteDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.validacionresponse);
-    
+
       this.search_client = this.validacionresponse.value_exists === "true" || this.validacionresponse.afiliado === "true" ? true : false;
 
       if (this.search_client) {
@@ -254,7 +254,7 @@ export class AddClientComponent implements OnInit {
       direccion: this.crypto.encryptJson(this.client.get('direccion').value),
       m_contacto_id: this.crypto.encryptJson(this.client.get('contacto').value),
       id_actividad_comercial: this.crypto.encryptJson(this.client.get('act_comercial').value),
-      pto_ref: this.crypto.encryptJson(this.client.get('pto_referencia').value),
+      pto_ref: this.crypto.encryptJson(null),
       red_social_a: this.crypto.encryptJson(this.client.get('red_social_a').value),
       red_social_b: this.crypto.encryptJson(this.client.get('red_social_b').value),
       localidad: this.crypto.encryptJson(null),
@@ -269,6 +269,16 @@ export class AddClientComponent implements OnInit {
           cod_area: this.client.get("phone_2").value.dialCode,
           iso: this.client.get("phone_2").value.countryCode
         }
+      ])),
+      documentos: this.crypto.encryptJson(JSON.stringify([
+
+        this.document.get('RIF').value,
+        this.document.get('CI').value,
+        this.document.get('RM').value,
+        this.document.get('RB').value,
+        this.document.get('PP').value,
+        this.document.get('RIFL').value,
+
       ]))
     }
 
@@ -369,7 +379,7 @@ export class AddClientComponent implements OnInit {
   }
 
 
-  upload(d: any) {
+  upload(d: any, id: any) {
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
     const encode = d.file.toString()
     const data = this.crypto.encryptString(JSON.stringify({
@@ -385,13 +395,20 @@ export class AddClientComponent implements OnInit {
       file: this.crypto.encryptJson(encode),
     }))
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.document.get(d.id).setValue(true)
+      this.default = new ImageDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.document.get(d.id).setValue(JSON.stringify(
+        {
+          link: this.default.path,
+          id_doc: id,
+          nombre: this.default.nombre,
+          base64: this.default.base64
+        }
+      ))
       console.log(this.default);
     })
   }
 
-  add_control(id: string){
+  add_control(id: string) {
     this.document.addControl(id, new FormControl('', [Validators.required]))
     return id
   }

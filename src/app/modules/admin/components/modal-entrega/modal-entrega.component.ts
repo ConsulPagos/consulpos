@@ -71,9 +71,12 @@ export class ModalEntregaComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       nombre: this.crypto.encryptJson(this.default.nombre),
       path: this.crypto.encryptJson(this.default.path),
-      solicitud: this.crypto.encryptJson(this.dataVenta.number),
+      solicitud_banco: this.crypto.encryptJson(this.dataVenta.solicitud_banco_id),
+      solicitud: this.crypto.encryptJson(this.dataVenta.solicitud),
       base64: this.crypto.encryptJson(this.default.base64),
       c_t_doc_id: this.crypto.encryptJson("1"),
+      solicitud_id:this.crypto.encryptJson(this.dataVenta.solicitud_id),
+      cod_serial:this.crypto.encryptJson(this.dataVenta.cod_serial),
     }))
     console.log("verify")
     this.venta.entregarVenta(`${this.session.getDeviceId()};${data}`).subscribe(res => {
@@ -82,6 +85,4 @@ export class ModalEntregaComponent implements OnInit {
       console.log(this.default)
     })
   }
-
-
 }

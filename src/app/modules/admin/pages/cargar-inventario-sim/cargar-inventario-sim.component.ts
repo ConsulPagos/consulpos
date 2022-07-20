@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { CargaInventarioDecrypter } from 'src/app/models/cargainventario_response';
 import { CategoriaInterface } from 'src/app/models/categoria';
 import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
 import { MarcaInterface } from 'src/app/models/marca';
@@ -61,7 +62,6 @@ export class CargarInventarioSimComponent implements OnInit {
 
   form = new FormGroup({
     modelo: new FormControl('', [Validators.required]),
-    // factura: new FormControl('', [Validators.required]),
     proveedor: new FormControl('', [Validators.required]),
     pedido: new FormControl('', [Validators.required]),
   });
@@ -124,7 +124,6 @@ export class CargarInventarioSimComponent implements OnInit {
   cargarSerial(serial: string) {
     console.log(serial)
     if (this.seriales.indexOf(serial) == -1 && serial.trim().length > 0) {
-
       const data = this.crypto.encryptString(JSON.stringify({
         u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
         correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
@@ -133,7 +132,6 @@ export class CargarInventarioSimComponent implements OnInit {
       }))
       this.inventario.doCoprobarSerialItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
         this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-
         switch (this.defaultResponse.R) {
           case constant.R0:
             this.seriales.push(serial)
@@ -152,6 +150,12 @@ export class CargarInventarioSimComponent implements OnInit {
       this.serialForm.reset()
       this.toaster.error('Serial ya registrado o nulo')
     }
+  }
+
+  clearinputs() {
+    this.form.get('proveedor').reset();
+    this.form.get('pedido').reset();
+    this.seriales = [];
   }
 
 
@@ -180,21 +184,19 @@ export class CargarInventarioSimComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       items: this.crypto.encryptJson(this.form.get('proveedor').value),
       pedido_id: this.crypto.encryptJson(this.form.get('descipcion').value),
-      // pedido_id: this.crypto.encryptJson(this.form.get('descipcion').value),
     }))
-
     this.loading = true;
     console.log("verify")
     this.inventario.doCargarInventarioDePos(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(data)
       console.log(res)
       console.log(this.crypto.decryptString(res))
-      this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.defaultResponse = new CargaInventarioDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.defaultResponse)
       switch (this.defaultResponse.R) {
         case constant.R0:
           this.toaster.success(this.defaultResponse.M)
-          this.router.navigateByUrl('/admin/app/(adr:provedores)')
+          this.router.navigateByUrl('/admin/app/(adr:inventario)')
           break;
         case constant.R1:
           this.toaster.error(this.defaultResponse.M)

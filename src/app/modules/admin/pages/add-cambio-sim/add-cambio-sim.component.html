@@ -99,6 +99,10 @@
                         </div>
                     </form>
 
+                    <div>
+                        {{validacionPos | json}}
+                    </div>
+
                     <form [formGroup]="buy">
                         <ng-template matStepLabel>Datos de la Venta</ng-template>
                         <div>
@@ -184,7 +188,7 @@
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" class="ocultar">
-                                    <mat-label>Numero de cuenta POS</mat-label>
+                                    <mat-label>Número de cuenta bancario</mat-label>
                                     <input matInput formControlName="numero_cuenta_pos" placeholder="1234" type="text"
                                         (keypress)="onlyNumberKey($event)" maxlength="20">
                                 </mat-form-field>
@@ -215,9 +219,29 @@
                             Anterior
                         </button>
 
-                        <button class="stepBtn" mat-raised-button (click)="save()">
-                            Finalizar
+                        <button class="stepBtn" mat-raised-button matStepperNext [disabled]="buy.invalid">
+                            Siguiente
                         </button>
+                    </div>
+                </mat-step>
+
+                <mat-step [stepControl]="document">
+                    <form [formGroup]="document">
+                        <ng-template matStepLabel>Carga de documentos</ng-template>
+                        <div>
+                            <h6>Planilla de solicitud</h6>
+                            <app-uploader (uploaded)="upload($event, '5')" [id]="add_control('PS')"></app-uploader>
+                        </div>
+                    </form>
+                    <div class="btn-next">
+                        <button class="stepBtn" mat-raised-button matStepperPrevious>Anterior</button>
+                        <div>
+                            <div>
+                                <button class="stepBtn" mat-raised-button [disabled]="document.invalid" (click)="save()">
+                                    Finalizar
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </mat-step>
             </mat-vertical-stepper>

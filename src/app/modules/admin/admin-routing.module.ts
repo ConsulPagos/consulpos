@@ -89,6 +89,8 @@ import { FichaTraspasoComponent } from './pages/ficha-traspaso/ficha-traspaso.co
 import { FichaCambioEquipoComponent } from './pages/ficha-cambio-equipo/ficha-cambio-equipo.component';
 import { ListarArchivosComponent } from './pages/listar-archivos/listar-archivos.component';
 import { HasPermisoGuard } from '../admin/guards/has-permiso.guard';
+import { AddPlanesComponent } from './pages/add-planes/add-planes.component';
+import { PlanesComponent } from './pages/planes/planes.component';
 
 const routes: Routes = [
   {
@@ -755,7 +757,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'validar-prueba/:id', component: ValidarPruebaComponent, outlet: 'adr',
+        path: 'validar-prueba', component: ValidarPruebaComponent, outlet: 'adr',
         //  canActivate: [HasPermisoGuard],
         data: {
           modulo: "Configuracion",
@@ -764,7 +766,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'validar-prueba-ficha', component: ValidarPruebaFichaComponent, outlet: 'adr',
+        path: 'validar-prueba-ficha/:id', component: ValidarPruebaFichaComponent, outlet: 'adr',
         //  canActivate: [HasPermisoGuard],
         data: {
           modulo: "Configuracion",
@@ -855,6 +857,14 @@ const routes: Routes = [
           submodulo: "Generar Archivo",
           permiso: "Generar Archivo"
         }
+      },
+      {
+        path: 'add-planes', component: AddPlanesComponent, outlet: 'adr',
+        //  canActivate: [HasPermisoGuard],
+      },
+      {
+        path: 'planes', component: PlanesComponent, outlet: 'adr',
+        //  canActivate: [HasPermisoGuard],
       },
 
 

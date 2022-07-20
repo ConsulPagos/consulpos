@@ -3,6 +3,7 @@ import {ClienteNaturalInterface} from './cliente_natural';
 import {ClienteLegalInterface} from './cliente_legal';
 
 export interface ClienteRequestInterface {
+solicitudes_banco?: any;
 a_c_des?:string; 
 ciudad?:string; 
 ciudad_id?:string; 

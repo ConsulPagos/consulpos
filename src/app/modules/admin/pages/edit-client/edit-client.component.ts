@@ -95,7 +95,6 @@ export class EditClientComponent implements OnInit {
       contacto: new FormControl(this.editClient.m_contacto_id, [Validators.required]),
       codpostal: new FormControl(this.editClient.cod_postal, [Validators.required]),
       act_comercial: new FormControl(this.editClient.id_actividad_comercial, [Validators.required]),
-      pto_referencia: new FormControl(this.editClient.pto_ref, [Validators.required]),
       localidad: new FormControl(this.editClient.localidad),
       red_social_a: new FormControl(this.editClient.red_social_a),
       red_social_b: new FormControl(this.editClient.red_social_b),
@@ -154,7 +153,7 @@ export class EditClientComponent implements OnInit {
 
   //FORM DEL CUARTO STEP\\
   document = new FormGroup({
-    id: new FormControl('', [Validators.required]),
+    id: new FormControl(''),
   });
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -214,8 +213,8 @@ export class EditClientComponent implements OnInit {
       direccion: this.crypto.encryptJson(this.client.get('direccion').value),
       m_contacto_id: this.crypto.encryptJson(this.client.get('contacto').value),
       id_actividad_comercial: this.crypto.encryptJson(this.client.get('act_comercial').value),
-      pto_ref: this.crypto.encryptJson(this.client.get('pto_referencia').value),
-      localidad: this.crypto.encryptJson(this.client.get('localidad').value),
+      pto_ref: this.crypto.encryptJson(null),
+      localidad: this.crypto.encryptJson(null),
       red_social_a: this.crypto.encryptJson(this.client.get('red_social_a').value),
       red_social_b: this.crypto.encryptJson(this.client.get('red_social_b').value),
     }

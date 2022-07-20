@@ -52,7 +52,6 @@ export class NuevoAdminComponent implements OnInit {
     cedula: new FormControl('', [Validators.required]),
     rol: new FormControl('', [Validators.required]),
     direccion: new FormControl('', [Validators.required]),
-    pto_referencia: new FormControl('', [Validators.required]),
     occ: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
     codpostal: new FormControl('', [Validators.required]),
@@ -130,12 +129,12 @@ export class NuevoAdminComponent implements OnInit {
         }
       )),
       direccion: this.crypto.encryptJson(this.adminForm.get('direccion').value),
-      pto_ref: this.crypto.encryptJson(this.adminForm.get('pto_referencia').value),
+      pto_ref: this.crypto.encryptJson(null),
       cod_postal: this.crypto.encryptJson(this.adminForm.get('codpostal').value),
       occ_id: this.crypto.encryptJson(this.adminForm.get('occ').value),
       psw: this.crypto.encryptJson(this.crypto.hash(this.adminForm.get('password').value)),
       comisionable: this.crypto.encryptJson(this.adminForm.get('comisionable').value),
-      localidad: this.crypto.encryptJson("Undefined"),
+      localidad: this.crypto.encryptJson(null),
       apps: this.crypto.encryptJson(JSON.stringify([
         {
           app_id: "1",

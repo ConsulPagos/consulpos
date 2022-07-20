@@ -6,6 +6,7 @@ import { BancoInterface } from 'src/app/models/banco';
 import { CambioPosResponse, CambioPosDecrypter } from 'src/app/models/cambiopos_response';
 import { CategoriaInterface } from 'src/app/models/categoria';
 import { FraccionPagoInterface } from 'src/app/models/fraccion_pago';
+import { ImageResponse, ImageDecrypter } from 'src/app/models/image_response';
 import { MarcaInterface } from 'src/app/models/marca';
 import { ModeloInterface } from 'src/app/models/modelos';
 import { OccInterface } from 'src/app/models/occ';
@@ -26,6 +27,7 @@ import { ValidacionMarcaResponse, ValidacionMarcaDecrypter } from 'src/app/model
 import { ValidacionOccResponse, ValidacionOccDecrypter } from 'src/app/models/validacionocc_response';
 import { ValidacionSimResponse, ValidacionSimDecrypter } from 'src/app/models/validacionsim_response';
 import { ValidacionventaRese, ValidacionventadosDecrypter } from 'src/app/models/validacionventa_res';
+import { ArchiveService } from 'src/app/shared/services/archive.service';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { InventarioService } from 'src/app/shared/services/inventario.service';
@@ -74,6 +76,12 @@ export class AddCambioSimComponent implements OnInit {
   categoriaResponse: ValidacionCategoriasResponse;
   categorias: CategoriaInterface[];
 
+      /////////////LOAD IMAGE///////////////
+      default: ImageResponse;
+      imageError: string;
+      isImageSaved: boolean;
+      cardImageBase64: string;
+
   //****************************************************************************************//
   constructor(
     private title: Title,
@@ -87,6 +95,7 @@ export class AddCambioSimComponent implements OnInit {
     private modal: ModalService,
     private loader: LoaderService,
     private inventario: InventarioService,
+    private archivo: ArchiveService,
   ) {
 
   }
@@ -94,37 +103,37 @@ export class AddCambioSimComponent implements OnInit {
 
   identity = new FormGroup({
     rif: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(11), Validators.pattern("^[0-9]*$")]),
-    tipo_doc: new FormControl('', [Validators.required]),
+    tipo_doc: new FormControl('', ),
   });
 
   solicitud = new FormGroup({
-    occ: new FormControl('', [Validators.required]),
-    serial: new FormControl('', [Validators.required]),
+    occ: new FormControl('', ),
+    serial: new FormControl('', ),
   });
 
   sim = new FormGroup({
-    operadora: new FormControl('', [Validators.required]),
+    operadora: new FormControl('', ),
   });
 
   document = new FormGroup({
-    referencia: new FormControl('', [Validators.required]),
+    id: new FormControl(''),
   });
 
   buy = new FormGroup({
-    modelo: new FormControl('', [Validators.required]),
-    modelo2: new FormControl('', [Validators.required]),
-    plataforma: new FormControl('', [Validators.required]),
-    banco: new FormControl('', [Validators.required]),
+    modelo: new FormControl('', ),
+    modelo2: new FormControl('', ),
+    plataforma: new FormControl('', ),
+    banco: new FormControl('', ),
     numero_cuenta_pos: new FormControl('', [Validators.required, Validators.minLength(20)]),
     precio_usd: new FormControl(''),
     lugar_entrega: new FormControl(''),
-    tipocobro: new FormControl('', [Validators.required]),
-    plan: new FormControl('', [Validators.required]),
-    tipo_venta: new FormControl('', [Validators.required]),
-    terminal: new FormControl('', [Validators.required]),
-    cod_afiliado: new FormControl('', [Validators.required]),
-    monto: new FormControl('', [Validators.required]),
-    operadora: new FormControl('', [Validators.required]),
+    tipocobro: new FormControl('', ),
+    plan: new FormControl('', ),
+    tipo_venta: new FormControl('', ),
+    terminal: new FormControl('', ),
+    cod_afiliado: new FormControl('', ),
+    monto: new FormControl('', ),
+    operadora: new FormControl('', ),
 
   });
 
@@ -251,12 +260,8 @@ export class AddCambioSimComponent implements OnInit {
       solicitudes_banco: this.crypto.encryptJson(JSON.stringify(
         solicitudes_banco_sell
       )),
-
       documentos: this.crypto.encryptJson(JSON.stringify([
-        {
-          link: this.document.get("referencia").value,
-          id_doc: "1"
-        },
+        this.document.get('PS').value,
       ]))
     }))
     console.log("verify")
@@ -354,6 +359,40 @@ export class AddCambioSimComponent implements OnInit {
       this.buy.get('cod_afiliado').setValue(this.validacionPos.item.afiliado)
       this.buy.get('terminal').setValue(this.validacionPos.item.terminal)
     })
+  }
+
+  upload(d: any, id: any) {
+    var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
+    const encode = d.file.toString()
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      att_by: this.crypto.encryptJson("CLIENTE"),
+      rif: this.crypto.encryptJson(rif),
+      documento: this.crypto.encryptJson(d.id),
+      extension: this.crypto.encryptJson(d.ext),
+      t_sol_id: this.crypto.encryptJson(null),
+      solicitud: this.crypto.encryptJson(null),
+      file: this.crypto.encryptJson(encode),
+    }))
+    this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      this.default = new ImageDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.document.get(d.id).setValue(JSON.stringify(
+        {
+          link: this.default.path,
+          id_doc: id,
+          nombre: this.default.nombre,
+          base64: this.default.base64
+        }
+      ))
+      console.log(this.default);
+    })
+  }
+
+  add_control(id: string) {
+    this.document.addControl(id, new FormControl('', ))
+    return id
   }
 
 }

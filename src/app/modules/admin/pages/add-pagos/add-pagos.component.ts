@@ -17,17 +17,20 @@ import { DefaultDecrypter } from 'src/app/models/default_response';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
 import { BancoInterface } from 'src/app/models/banco';
 import { ArchiveService } from 'src/app/shared/services/archive.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-pagos',
   templateUrl: './add-pagos.component.html',
-  styleUrls: ['./add-pagos.component.scss']
+  styleUrls: ['./add-pagos.component.scss'],
 })
+
 export class AddPagosComponent implements OnInit {
   total_Bs: number;
   total: number;
   total_IGTF: number;
   total_IVA: number;
+  tipo_tasa: string;
   tasa: number;
   t_pagos: any[];
   default: PagosResponse;
@@ -72,12 +75,16 @@ export class AddPagosComponent implements OnInit {
     t_pago: new FormControl(null, [Validators.required]),
     monto: new FormControl('', [Validators.required]),
     descripcion: new FormControl(''),
-    fecha: new FormControl(''),
   });
+
+  date = new FormGroup({
+    fecha: new FormControl('', [Validators.required]),
+  });
+
 
   ngOnInit(): void {
     this.getTasas()
-    this.tipoPagos()
+
     this.add_pay()
     this.bancos = JSON.parse(this.storage.get(constant.BANCOS)).bancos
   }
@@ -140,34 +147,36 @@ export class AddPagosComponent implements OnInit {
 
 
   tipoPagos() {
+    var datePipe = new DatePipe("en-US")
+    const fecha = datePipe.transform(this.date.get('fecha').value, "dd-MM-yyyy")
+    console.log(fecha);
+
+
     const data = this.crypto.encryptString(JSON.stringify({
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       solicitud_id: this.crypto.encryptJson(this.addPay.number),
       t_sol_id: this.crypto.encryptJson(this.addPay.t_sol_id),
+      fecha: this.crypto.encryptJson(fecha),
     }))
     this.loader.loading()
     this.pago.doPaymentInput(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      console.log(res)
+      console.log(this.crypto.decryptString(res))
       this.loader.stop()
       const json = JSON.parse(this.crypto.decryptString(res))
-      console.log(this.crypto.decryptString(res))
-      console.log(res)
-      console.log(this.crypto.decryptJson(json.t_pagos))
+
       this.t_pagos = JSON.parse(this.crypto.decryptJson(json.t_pagos))
       console.log(this.t_pagos)
       this.total = JSON.parse(this.crypto.decryptJson(json.total_dolar))
-      console.log(this.total)
       this.total_Bs = JSON.parse(this.crypto.decryptJson(json.total_Bs))
-      console.log(this.total_Bs)
       this.total_IGTF = JSON.parse(this.crypto.decryptJson(json.total_IGTF))
-      console.log(this.total_IGTF)
       this.total_IVA = JSON.parse(this.crypto.decryptJson(json.total_IVA))
-      console.log(this.total_IVA)
       this.tasa = JSON.parse(this.crypto.decryptJson(json.tasa))
-      console.log(this.tasa)
+      this.tipo_tasa = JSON.parse(this.crypto.decryptJson(json.tipo_tasa))
+      
       this.default = new PagosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      console.log(this.default)
       this.t_pagos = JSON.parse(this.default.t_pagos)
     })
   }

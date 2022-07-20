@@ -254,10 +254,10 @@
                             </mat-card>
 
                             <mat-card class="config-card">
-                                <mat-card-title class="title-card"><i class="fas fa-user-lock"></i> Planes
+                                <mat-card-title class="title-card"><i class="fas fa-user-lock"></i> Fraccionados
                                 </mat-card-title>
                                 <mat-card-content class="title-card">
-                                    <p>Configuracion para los planes.</p>
+                                    <p>Configuracion de fraccionados.</p>
                                 </mat-card-content>
                                 <mat-card-actions>
                                     <div class="menu_card">
@@ -271,6 +271,32 @@
                                         <p class="card__apply">
                                             <a class="card__link"
                                                 [routerLink]="['/admin/app',{ outlets: { adr: ['plan'] } }]">
+                                                <i class="fas fa-unlock"></i>
+                                                Listar
+                                            </a>
+                                        </p>
+                                    </div>
+                                </mat-card-actions>
+                            </mat-card>
+
+                            <mat-card class="config-card">
+                                <mat-card-title class="title-card"><i class="fas fa-user-lock"></i> Planes
+                                </mat-card-title>
+                                <mat-card-content class="title-card">
+                                    <p>Configuracion de planes.</p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <div class="menu_card">
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['add-planes'] } }]">
+                                                <i class="fas fa-key"></i>
+                                                Agregar
+                                            </a>
+                                        </p>
+                                        <p class="card__apply">
+                                            <a class="card__link"
+                                                [routerLink]="['/admin/app',{ outlets: { adr: ['planes'] } }]">
                                                 <i class="fas fa-unlock"></i>
                                                 Listar
                                             </a>

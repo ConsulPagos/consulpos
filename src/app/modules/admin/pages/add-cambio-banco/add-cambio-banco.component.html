@@ -1,10 +1,10 @@
 <section id="addCambioPos">
     <div class="container-fluid">
 
-                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-                    [routerLink]="['/admin/app',{ outlets: { adr: ['cambio-pos'] } }]">
-                    <li class="fas fa-arrow-left"></li>
-                </a>
+        <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+            [routerLink]="['/admin/app',{ outlets: { adr: ['cambio-pos'] } }]">
+            <li class="fas fa-arrow-left"></li>
+        </a>
 
         <div style="background-color: #fff; border-radius: 10px;">
             <p class="title_mother text-uppercase">
@@ -97,6 +97,10 @@
                         </div>
                     </form>
 
+                    <div>
+                        {{validacionPos | json}}
+                    </div>
+
                     <form [formGroup]="buy">
                         <ng-template matStepLabel>Datos de la Venta</ng-template>
                         <div>
@@ -128,24 +132,7 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
-
                                 </div>
-
-                                <!-- <div>
-                                    <button class="btn_form_add_agent" mat-icon-button color="primary"
-                                        aria-label="Example icon button with a menu icon" (click)="add_sim(i)"
-                                        *ngIf="(formats_buy[i].sims.length === 1 ||  formats_buy[i].sims.length === 0)">
-                                        <i class="fas fa-user-plus icon_sell"></i>
-                                        Agregar Sim
-                                    </button>
-
-                                    <button mat-icon-button class="btn_form_add_agent" color="primary"
-                                        aria-label="Example icon button with a menu icon" (click)="deleteSim(i, isim)"
-                                        *ngIf="(formats_buy[i].sims.length === 2)">
-                                        <i class="fas fa-user-minus icon_sell"></i>
-                                        Eliminar una Sim
-                                    </button>
-                                </div> -->
 
                                 <mat-form-field appearance="outline" class="ocultar">
                                     <mat-label>Plataforma de Pago</mat-label>
@@ -180,7 +167,7 @@
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" class="container_box_space">
-                                    <mat-label>Numero de cuenta POS</mat-label>
+                                    <mat-label>Número de cuenta bancario</mat-label>
                                     <input matInput formControlName="numero_cuenta_pos" placeholder="1234" type="text"
                                         (keypress)="onlyNumberKey($event)" maxlength="20">
                                 </mat-form-field>
@@ -191,7 +178,7 @@
                                         (keypress)="onlyNumberKey($event)" maxlength="8">
                                 </mat-form-field>
 
-                                <mat-form-field appearance="outline" class="container_box_space">
+                                <mat-form-field appearance="outline" class="container_box_space ocultar">
                                     <mat-label>Terminal</mat-label>
                                     <input matInput formControlName="terminal" placeholder="1234" type="text"
                                         (keypress)="onlyNumberKey($event)" maxlength="3">
@@ -211,10 +198,36 @@
                             Anterior
                         </button>
 
+                        <button class="stepBtn" mat-raised-button matStepperNext [disabled]="buy.invalid">
+                            Siguiente
+                        </button>
+                    </div>
+                </mat-step>
+
+                <mat-step [stepControl]="document">
+                    <form [formGroup]="document">
+                        <ng-template matStepLabel>Carga de documentos</ng-template>
+                        <div>
+                            <h6>Autorizacion cargo en cuenta</h6>
+                            <app-uploader (uploaded)="upload($event, '3')" [id]="add_control('ACC')"></app-uploader>
+                        </div>
+
+                        <div>
+                            <h6>Referencia bancaria</h6>
+                            <app-uploader (uploaded)="upload($event, '2')" [id]="add_control('RB')"></app-uploader>
+                        </div>
+                    </form>
+
+                    <div class="btn-next">
+                        <button class="stepBtn" mat-raised-button matStepperPrevious>
+                            Anterior
+                        </button>
+
                         <button class="stepBtn" mat-raised-button (click)="save()">
                             Finalizar
                         </button>
                     </div>
+
                 </mat-step>
             </mat-vertical-stepper>
         </div>

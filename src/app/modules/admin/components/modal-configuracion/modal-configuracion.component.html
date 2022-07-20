@@ -16,29 +16,25 @@
                 <!-- {{p}}
                 {{c}}
                 {{p+c}} -->
-                <form [formGroup]="formDinamic[p + c]">
+                <form *ngIf="formDinamic[p + c]" [formGroup]="formDinamic[p + c]">
                     SIM: {{caracteristica.sim}}
                     <mat-form-field class="box" appearance="outline">
                         <mat-label>Serial SIM</mat-label>
                         <input matInput type="text" formControlName="sim_serial" readonly>
                     </mat-form-field>
                 </form>
-                <div *ngIf="!formDinamic[p + c].valid">
+                <!-- <div *ngIf="!formDinamic[p + c].valid">
                     <div style="text-align: center;">
                         <button (click)="findSim(caracteristica.sim, formDinamic[p + c])" mat-raised-button>
                             Search
                         </button>
                     </div>
 
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
 </div>
-
-<!-- <div *ngFor="let i of formDinamic">
-    {{i.value | json}}
-</div> -->
 
 <div mat-dialog-actions>
     <div class="d-flex w-100">

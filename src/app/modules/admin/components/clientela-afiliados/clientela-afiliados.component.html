@@ -9,6 +9,11 @@
         </form>
       </mat-form-field>
 
+      <button mat-raised-button (click)="filtro()" *ngIf="!statusFilter"> 
+        <i class="fas fa-search"></i>
+        Buscar
+      </button>
+
       <button (click)="load()" mat-raised-button *ngIf="statusFilter">
         <i class="fas fa-broom broom"></i>
         Limpiar filtro

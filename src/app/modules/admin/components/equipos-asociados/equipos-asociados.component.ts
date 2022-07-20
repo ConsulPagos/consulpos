@@ -1,3 +1,4 @@
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -6,18 +7,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { ClienteRequestInterface } from 'src/app/models/cliente_request';
 import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
 import { ItemInterface } from 'src/app/models/item';
 import { ItemEstadoCuentaInterface } from 'src/app/models/itemestadocuenta';
-import { ShowClientsDecrypter } from 'src/app/models/showclients_response';
 import { ShowItemResponse } from 'src/app/models/showitem';
-import { BancarioService } from 'src/app/shared/services/bancario.service';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
-import { LoaderService } from 'src/app/shared/services/loader.service';
-import { ModalService } from 'src/app/shared/services/modal.service';
 import { SesionService } from 'src/app/shared/services/sesion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
@@ -29,18 +25,32 @@ import { ModalDescargarEcComponent } from '../modal-descargar-ec/modal-descargar
 @Component({
   selector: 'app-equipos-asociados',
   templateUrl: './equipos-asociados.component.html',
-  styleUrls: ['./equipos-asociados.component.scss']
+  styleUrls: ['./equipos-asociados.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class EquiposAsociadosComponent implements OnInit {
-  displayedColumns: string[] = ["categoria", "marca", 'modelo', "cod_serial", 'precio', 'complemento_d', 'status_desc', 'acciones'];
-  dataSource: MatTableDataSource<any>;
+
+  dataSource = new MatTableDataSource<any>();
+  displayedColumns: string[] = ['categoria', 'marca', 'modelo', 'cod_serial', 'precio', 'status_desc', 'acciones'];
+  // displayedColumns: string[] = ['marca', 'modelo', 'cod_serial', 'precio', 'acciones'];
+  columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+  expandedElement: any | null;
+  showSale: any = {};
+
+
   countNuevos = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   showClient: ClienteRequestInterface = {};
   showItem: ItemInterface = {};
   loading: boolean;
-  showItemClient: ShowItemResponse;
+  showItemClient: any = {};
   @Input() rif;
   selection = new SelectionModel<ItemEstadoCuentaInterface>(true, []);
   defaultResponse: DefaultResponse;
@@ -49,15 +59,13 @@ export class EquiposAsociadosComponent implements OnInit {
     private title: Title,
     private crypto: CryptoService,
     private cliente: ClientesService,
-    private bancario: BancarioService,
     private storage: StorageService,
-    private router: Router,
     private session: SesionService,
     private dialog: MatDialog,
-    private loader: LoaderService,
     private toaster: ToasterService,
-    private modal: ModalService,
   ) {
+
+    this.dataSource = new MatTableDataSource(this.showClient.solicitudes_banco);
 
   }
 
@@ -77,11 +85,11 @@ export class EquiposAsociadosComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       rif: this.crypto.encryptJson(this.rif),
     }))
-    console.log(this.rif)
     this.loading = true;
     this.cliente.doItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      console.log(JSON.parse(this.crypto.decryptString(res)))
       this.showItemClient = new ShowItemDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      console.log(this.showItemClient);
+      
       this.dataSource = new MatTableDataSource(this.showItemClient.items)
     })
   }
@@ -134,11 +142,10 @@ export class EquiposAsociadosComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalDesafiliacionComponent, {
       height: 'auto',
       panelClass: 'custom-dialog',
-      data: { serial:item.cod_serial },
+      data: { serial: item.cod_serial },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result)
       }
     });
   }
@@ -147,15 +154,14 @@ export class EquiposAsociadosComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalDescargarEcComponent, {
       height: 'auto',
       panelClass: 'custom-dialog',
-      data: { rif: this.rif, serial:item.cod_serial },
+      data: { rif: this.rif, serial: item.cod_serial },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result)
       }
     });
   }
 
-  
+
 
 }

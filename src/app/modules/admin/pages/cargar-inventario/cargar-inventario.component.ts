@@ -133,13 +133,9 @@ export class CargarInventarioComponent implements OnInit {
       }))
       this.inventario.doCoprobarSerialItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
         this.defaultResponse = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-
         switch (this.defaultResponse.R) {
           case constant.R0:
-            this.seriales.push({
-              cod_serial:serial,
-              modelo_id:this.form.get('modelo').value
-            })
+            this.seriales.push(serial)
             this.serialForm.reset()
             this.toaster.success(this.defaultResponse.M)
             break;

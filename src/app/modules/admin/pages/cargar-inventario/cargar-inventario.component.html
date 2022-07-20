@@ -44,8 +44,7 @@
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Serial</mat-label>
                         <input matInput placeholder="serial" type="text" maxlength="255" minlength="3"
-                            (change)="cargarSerial($event.target.value)" formControlName="serial"
-                            (keypress)="onlyCaracteres($event)">
+                            (change)="cargarSerial($event.target.value)" formControlName="serial">
                     </mat-form-field>
                 </form>
 
@@ -56,7 +55,7 @@
 
             <div *ngFor="let serial of seriales">
                 <p>
-                    {{serial.cod_serial}}
+                    {{serial}}
                     <button mat-icon-button (click)="deleteSerial(serial)">
                         X
                     </button>

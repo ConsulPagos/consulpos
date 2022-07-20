@@ -99,6 +99,10 @@
                         </div>
                     </form>
 
+                    <div>
+                        {{validacionPos | json}}
+                    </div>
+
                     <form [formGroup]="buy">
                         <ng-template matStepLabel>Datos de la Venta</ng-template>
                         <div>
@@ -182,7 +186,7 @@
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" class="ocultar">
-                                    <mat-label>Numero de cuenta POS</mat-label>
+                                    <mat-label>Número de cuenta bancario</mat-label>
                                     <input matInput formControlName="numero_cuenta_pos" placeholder="1234" type="text"
                                         (keypress)="onlyNumberKey($event)" maxlength="20" >
                                 </mat-form-field>
@@ -208,6 +212,37 @@
                         </div>
                     </form>
 
+                    <div class="btn-next">
+                        <button class="stepBtn" mat-raised-button matStepperPrevious>
+                            Anterior
+                        </button>
+
+                        <button class="stepBtn" mat-raised-button matStepperNext>
+                            Siguiente
+                        </button>
+                    </div>
+                </mat-step>
+
+                <mat-step [stepControl]="document">
+                    <form [formGroup]="document">
+                        <ng-template matStepLabel>Carga de Documentos</ng-template>
+                        <div>
+                            <h6>Referencia Bancaria</h6>
+                            <app-uploader (uploaded)="upload($event, '1')" [id]="add_control('RB')"></app-uploader>
+                        </div>
+
+                        <div>
+                            <h6>Autorizacion cargo a cuenta</h6>
+                            <app-uploader (uploaded)="upload($event, '2')" [id]="add_control('ACC')"></app-uploader>
+                        </div>
+
+                        <div >
+                            <h6>Contrato</h6>
+                            <app-uploader (uploaded)="upload($event, '6')" [id]="add_control('C')"></app-uploader>
+                        </div>
+                        <!-- <div *ngIf="getTipoCliente()=='N'"> -->
+                    </form>
+                    <!-- Bootn de siguiente strepper -->
                     <div class="btn-next">
                         <button class="stepBtn" mat-raised-button matStepperPrevious>
                             Anterior

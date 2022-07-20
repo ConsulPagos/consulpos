@@ -16,6 +16,8 @@ import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { VentasService } from 'src/app/shared/services/ventas.service';
 import { constant } from 'src/app/shared/utils/constant';
 import { ShowSalesDecrypter, ShowSalesResponse } from 'src/app/models/showsales_response';
+import { ConfigresponseDecrypter, ConfigResponseResponse } from 'src/app/models/configresponse';
+
 @Component({
   selector: 'app-tabla-prueba',
   templateUrl: './tabla-prueba.component.html',
@@ -45,6 +47,7 @@ export class TablaPruebaComponent implements OnInit {
   @Output() editSale = new EventEmitter<any>();
   @Output() showSale = new EventEmitter<any>();
   ShowSalesResponse: ShowSalesResponse;
+  ShowSalesResponse2: ConfigResponseResponse;
 
   constructor
     (
@@ -97,17 +100,17 @@ export class TablaPruebaComponent implements OnInit {
             limit_row: this.crypto.encryptJson((this.PAGESIZE).toString()),
             status_desc: this.crypto.encryptJson("PRUEBAS"),
           }))
-          return this.venta.doFindSalesByStatus(`${this.session.getDeviceId()};${data}`)
+          return this.venta.itemsPendientePorEntregar(`${this.session.getDeviceId()};${data}`)
         }),
         map(data => {
           this.firstLoading = false;
           this.isLoadingResults = false;
           console.log("JSON: " + data)
           console.log("string: " + this.crypto.decryptString(data))
-          this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
-          this.resultsLength = parseInt(this.ShowSalesResponse.total_row);
-          console.log(this.ShowSalesResponse)
-          return this.ShowSalesResponse.ventas;
+          this.ShowSalesResponse2 = new ConfigresponseDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(data)))
+          this.resultsLength = parseInt(this.ShowSalesResponse2.total_row);
+          console.log(this.ShowSalesResponse2)
+          return this.ShowSalesResponse2.equipos;
         }),
         catchError((e) => {
           this.firstLoading = false;

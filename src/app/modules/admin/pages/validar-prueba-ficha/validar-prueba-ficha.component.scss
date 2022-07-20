@@ -138,3 +138,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 tr.mat-row, tr.mat-footer-row {
     cursor: pointer;
 }
+
+.mat-form-field {
+    width: 100%;
+}

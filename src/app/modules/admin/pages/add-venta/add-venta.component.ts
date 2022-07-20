@@ -40,7 +40,7 @@ import { CategoriaInterface } from 'src/app/models/categoria';
 import { ValidacionCategoriasDecrypter, ValidacionCategoriasResponse } from 'src/app/models/validacioncategoria_response';
 import { ValidacionMarcaDecrypter, ValidacionMarcaResponse } from 'src/app/models/validacionmarca_response';
 import { InventarioService } from 'src/app/shared/services/inventario.service';
-import { DefaultDecrypter, DefaultResponse } from 'src/app/models/default_response';
+import { ImageDecrypter, ImageResponse } from 'src/app/models/image_response';
 import { ArchiveService } from 'src/app/shared/services/archive.service';
 //****************************************************************************************//
 
@@ -67,7 +67,7 @@ export class AddVentaComponent implements OnInit {
 
   bancos_fraccion: TipoBancoInterface[];
   fraccion_pago: any[];
-  default: DefaultResponse;
+  default: ImageResponse;
   comunicaciones: ComunicacionInterface[];
   operadoras: OperadoraInterface[];
   tipocobros: TipoCobroInterface[];
@@ -114,7 +114,7 @@ export class AddVentaComponent implements OnInit {
   solicitud = new FormGroup({
     occ: new FormControl('', [Validators.required]),
     plan: new FormControl('', [Validators.required]),
-    tipocobro: new FormControl('', [Validators.required]),
+    tipocobro: new FormControl('1', [Validators.required]),
     banco: new FormControl('', [Validators.required]),
     tipo_venta: new FormControl('', [Validators.required]),
   });
@@ -151,13 +151,14 @@ export class AddVentaComponent implements OnInit {
 
   add_buy() {
     var newFormat: SaleRequestInterface = {};
+
     var buy = new FormGroup({
       modelo: new FormControl('', [Validators.required]),
       numero_cuenta_pos: new FormControl('', [Validators.required, Validators.minLength(20)]),
       precio_usd: new FormControl(''),
       lugar_entrega: new FormControl(''),
       terminal: new FormControl(''),
-      cod_afiliado: new FormControl(''),
+      cod_afiliado: new FormControl('', [Validators.required]),
     });
     var sim = new FormGroup({
       operadora: new FormControl('', [Validators.required]),
@@ -346,7 +347,7 @@ export class AddVentaComponent implements OnInit {
 
   getFraccion(): void {
     console.log("ajaa", this.bancos_fraccion.filter(c => c.codigo == this.solicitud.get('banco').value)[0]);
-    
+
     this.fraccion_pago = this.bancos_fraccion.filter(c => c.codigo == this.solicitud.get('banco').value)[0].fraccion_pago
   }
 
@@ -382,16 +383,7 @@ export class AddVentaComponent implements OnInit {
     })
   }
 
-  buiesInvalid() {
-    var invalid = false;
-    for (let index = 0; index < this.buies.length; index++) {
-      if (this.buies[index].invalid) {
-        invalid = true
-        break;
-      }
-    }
-    return invalid
-  }
+
 
   upload(d: any) {
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
@@ -409,17 +401,32 @@ export class AddVentaComponent implements OnInit {
       file: this.crypto.encryptJson(encode),
     }))
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.default = new ImageDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.document.get(d.id).setValue(true)
       console.log(this.default);
     })
   }
 
-  add_control(id: string){
+  add_control(id: string) {
     this.document.addControl(id, new FormControl('', [Validators.required]))
     return id
   }
 
+  buiesInvalid() {
+    var invalid = false;
+    for (let index = 0; index < this.buies.length; index++) {
+      const codigo = this.solicitud.get('banco').value
+      console.log(codigo);
+      const val: FormGroup = this.buies[index];
+      const cuenta: string = val.get('numero_cuenta_pos').value
+      if (this.buies[index].invalid || !cuenta.startsWith(codigo)) {
+        val.get('numero_cuenta_pos').setErrors({ 'incorrect': true })
+        invalid = true
+        break;
+      }
+    }
+    return invalid
+  }
 }
 
 

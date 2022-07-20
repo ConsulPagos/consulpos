@@ -36,6 +36,8 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { VentasService } from 'src/app/shared/services/ventas.service';
 import { constant } from 'src/app/shared/utils/constant';
+import { ImageResponse, ImageDecrypter } from 'src/app/models/image_response';
+import { ArchiveService } from 'src/app/shared/services/archive.service';
 
 @Component({
   selector: 'app-add-reactivacion',
@@ -74,6 +76,12 @@ export class AddReactivacionComponent implements OnInit {
  categoriaResponse: ValidacionCategoriasResponse;
  categorias: CategoriaInterface[];
 
+   /////////////LOAD IMAGE///////////////
+   default: ImageResponse;
+   imageError: string;
+   isImageSaved: boolean;
+   cardImageBase64: string;
+
  //****************************************************************************************//
  constructor(
    private title: Title,
@@ -87,6 +95,7 @@ export class AddReactivacionComponent implements OnInit {
    private modal: ModalService,
    private loader: LoaderService,
    private inventario: InventarioService,
+   private archivo: ArchiveService,
  ) {
 
  }
@@ -94,36 +103,36 @@ export class AddReactivacionComponent implements OnInit {
 
  identity = new FormGroup({
    rif: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(11), Validators.pattern("^[0-9]*$")]),
-   tipo_doc: new FormControl('', [Validators.required]),
+   tipo_doc: new FormControl('', ),
  });
 
  solicitud = new FormGroup({
-   occ: new FormControl('', [Validators.required]),
-   serial: new FormControl('', [Validators.required]),
+   occ: new FormControl('', ),
+   serial: new FormControl('', ),
  });
 
  sim = new FormGroup({
-   operadora: new FormControl('', [Validators.required]),
+   operadora: new FormControl('', ),
  });
 
  document = new FormGroup({
-   referencia: new FormControl('', [Validators.required]),
+   id: new FormControl(''),
  });
 
  buy = new FormGroup({
-   modelo: new FormControl('', [Validators.required]),
-   modelo2: new FormControl('', [Validators.required]),
-   plataforma: new FormControl('', [Validators.required]),
-   banco: new FormControl('', [Validators.required]),
+   modelo: new FormControl('', ),
+   modelo2: new FormControl('', ),
+   plataforma: new FormControl('', ),
+   banco: new FormControl('', ),
    numero_cuenta_pos: new FormControl('', [Validators.required, Validators.minLength(20)]),
    precio_usd: new FormControl(''),
    lugar_entrega: new FormControl(''),
-   tipocobro: new FormControl('', [Validators.required]),
-   plan: new FormControl('', [Validators.required]),
-   tipo_venta: new FormControl('', [Validators.required]),
-   terminal: new FormControl('', [Validators.required]),
-   cod_afiliado: new FormControl('', [Validators.required]),
-   monto: new FormControl('', [Validators.required]),
+   tipocobro: new FormControl('', ),
+   plan: new FormControl('', ),
+   tipo_venta: new FormControl('', ),
+   terminal: new FormControl('', ),
+   cod_afiliado: new FormControl('', ),
+   monto: new FormControl('', ),
  });
 
  //****************************************************************************************//
@@ -243,7 +252,6 @@ export class AddReactivacionComponent implements OnInit {
      rif: this.crypto.encryptJson(this.identity.get('tipo_doc').value + this.identity.get('rif').value),
      cod_serial: this.crypto.encryptJson(this.solicitud.get('serial').value),
      modelo: this.crypto.encryptJson(this.buy.get('modelo2').value),
-
      solicitud: this.crypto.encryptJson(JSON.stringify(
        {
          occ_id: this.solicitud.get('occ').value,
@@ -253,6 +261,12 @@ export class AddReactivacionComponent implements OnInit {
      solicitudes_banco: this.crypto.encryptJson(JSON.stringify(
        solicitudes_banco_sell
      )),
+
+     documentos: this.crypto.encryptJson(JSON.stringify([
+      this.document.get('RB').value,
+      this.document.get('ACC').value,
+      this.document.get('C').value,
+    ]))
 
    }))
    console.log("verify")
@@ -351,5 +365,39 @@ export class AddReactivacionComponent implements OnInit {
      this.buy.get('terminal').setValue(this.validacionPos.item.terminal)
    })
  }
+
+ upload(d: any, id: any) {
+  var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
+  const encode = d.file.toString()
+  const data = this.crypto.encryptString(JSON.stringify({
+    u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+    correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+    scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+    att_by: this.crypto.encryptJson("CLIENTE"),
+    rif: this.crypto.encryptJson(rif),
+    documento: this.crypto.encryptJson(d.id),
+    extension: this.crypto.encryptJson(d.ext),
+    t_sol_id: this.crypto.encryptJson(null),
+    solicitud: this.crypto.encryptJson(null),
+    file: this.crypto.encryptJson(encode),
+  }))
+  this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.default = new ImageDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+    this.document.get(d.id).setValue(JSON.stringify(
+      {
+        link: this.default.path,
+        id_doc: id,
+        nombre: this.default.nombre,
+        base64: this.default.base64
+      }
+    ))
+    console.log(this.default);
+  })
+}
+
+add_control(id: string) {
+  this.document.addControl(id, new FormControl('', ))
+  return id
+}
 
 }

@@ -1,0 +1,19 @@
+<section id="planes">
+    <div class="container-fluid">
+        <div style="background-color: #fff; border-radius: 10px;">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span matBadge={{countNuevos}} matBadgeSize="small" matBadgeOverlap="false"
+                            matBadgePosition="before">
+                            Listado de planes
+                        </span>
+                    </ng-template>
+                    <app-tabla-planes (deletePlan)="deletePlanes($event)" (count)='countNuevos = $event'
+                        class="w-100">
+                    </app-tabla-planes>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>

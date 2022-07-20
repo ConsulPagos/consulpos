@@ -44,6 +44,7 @@ import { CambioPosResponse, CambioPosDecrypter } from 'src/app/models/cambiopos_
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ArchiveService } from 'src/app/shared/services/archive.service';
 import { DefaultResponse, DefaultDecrypter } from 'src/app/models/default_response';
+import { ImageResponse, ImageDecrypter } from 'src/app/models/image_response';
 //****************************************************************************************//
 
 @Component({
@@ -76,13 +77,18 @@ export class AddTraspasoComponent implements OnInit {
   buies = [];
   formats: SimInterface[] = [];
   formats_buy: SaleRequestInterface[] = [];
-  default: DefaultResponse;
   marcaResponse: ValidacionMarcaResponse;
   marcas: MarcaInterface[];
   validacionPos: CambioPosResponse;
   categoriaResponse: ValidacionCategoriasResponse;
   categorias: CategoriaInterface[];
   invalid = false;
+
+    /////////////LOAD IMAGE///////////////
+    default: ImageResponse;
+    imageError: string;
+    isImageSaved: boolean;
+    cardImageBase64: string;
   //****************************************************************************************//
   constructor(
     private title: Title,
@@ -269,10 +275,9 @@ export class AddTraspasoComponent implements OnInit {
       )),
 
       documentos: this.crypto.encryptJson(JSON.stringify([
-        {
-          link: this.document.get("referencia").value,
-          id_doc: "1"
-        },
+        this.document.get('RB').value,
+        this.document.get('ACC').value,
+        this.document.get('C').value,
       ]))
     }))
     console.log("verify");
@@ -403,7 +408,7 @@ export class AddTraspasoComponent implements OnInit {
     })
   }
 
-  upload(d: any, id: string) {
+  upload(d: any, id: any) {
     var rif = this.identity.get('tipo_doc').value + this.identity.get('rif').value;
     const encode = d.file.toString()
     const data = this.crypto.encryptString(JSON.stringify({
@@ -412,16 +417,29 @@ export class AddTraspasoComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       att_by: this.crypto.encryptJson("CLIENTE"),
       rif: this.crypto.encryptJson(rif),
-      documento: this.crypto.encryptJson(id),
+      documento: this.crypto.encryptJson(d.id),
       extension: this.crypto.encryptJson(d.ext),
       t_sol_id: this.crypto.encryptJson(null),
       solicitud: this.crypto.encryptJson(null),
       file: this.crypto.encryptJson(encode),
     }))
     this.archivo.saveAttached(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.default = new DefaultDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.default = new ImageDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.document.get(d.id).setValue(JSON.stringify(
+        {
+          link: this.default.path,
+          id_doc: id,
+          nombre: this.default.nombre,
+          base64: this.default.base64
+        }
+      ))
       console.log(this.default);
     })
+  }
+
+  add_control(id: string) {
+    this.document.addControl(id, new FormControl('', [Validators.required]))
+    return id
   }
 
 

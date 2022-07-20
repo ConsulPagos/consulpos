@@ -31,6 +31,7 @@ export class ModalDesafiliacionComponent implements OnInit {
   solvenciaResponse:ValidarSolvenciaResponse;
   serial: any;
   items: any;
+  d: any;
 
   constructor(
     private crypto: CryptoService,
@@ -51,12 +52,16 @@ export class ModalDesafiliacionComponent implements OnInit {
   form = new FormGroup({
     motivo: new FormControl('', [Validators.required]),
   });
+  
 
   ngOnInit(): void {
+
     this.solicitudes = JSON.parse(this.storage.get(constant.T_SOLICITUDES)).t_solicitudes
     this.tipo_documentos = JSON.parse(this.storage.get(constant.T_DOCS)).t_docs
-    console.log(this.items)
     console.log(this.data)
+    this.solicitudes = this.solicitudes.filter(i => i.correctivo =='1' );
+    console.log(this.solicitudes);
+    
   }
 
   onlyNumberKey(event) {

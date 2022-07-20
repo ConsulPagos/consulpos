@@ -53,6 +53,7 @@ export class ModalAsignacionComponent implements OnInit {
   asignacion: FormGroup;
 
   ngOnInit(): void {
+    this.findPos()
   }
 
   findPos() {
@@ -62,10 +63,10 @@ export class ModalAsignacionComponent implements OnInit {
         {
           modelo: m.caracteristicas[0].modelo,
           // solicitud_banco: m.caracteristicas[0].solicitud_banco,
-          afiliado:m.caracteristicas[0].solicitud_banco.afiliado,
-          terminal:m.caracteristicas[0].solicitud_banco.terminal,
-          cuenta:m.caracteristicas[0].solicitud_banco.cuenta,
-          solicitud_banco_id:m.caracteristicas[0].solicitud_banco.solicitud_banco_id,
+          afiliado: m.caracteristicas[0].solicitud_banco.afiliado,
+          terminal: m.caracteristicas[0].solicitud_banco.terminal,
+          cuenta: m.caracteristicas[0].solicitud_banco.cuenta,
+          solicitud_banco_id: m.caracteristicas[0].solicitud_banco.solicitud_banco_id,
         }
       )
     });
@@ -80,24 +81,32 @@ export class ModalAsignacionComponent implements OnInit {
       )),
       correctivo: this.crypto.encryptJson(this.dataVenta.correctivo),
     }))
-        console.log("verify")
+    console.log("verify")
     this.venta.doAutomaticAssingItem(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       const json = JSON.parse(this.crypto.decryptString(res))
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.default = new AsignacionDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      var x = this.default.items[0].cod_serial
-      this.x = x
-      console.log(this.x)
+      console.log(this.default);
+      console.log(this.default.items);
+      for (let index = 0; index < this.default.items.length; index++) {
+        const g = this.default.items[index];
+        var x = g.cod_serial
+        this.x = x
+        console.log(this.x)
+      }
+      // var x = this.default.items[0].cod_serial
+      // this.x = x
+
     })
   }
 
-  save() {
-    this.modal.confirm("Se le asignaro seriales a los equipos").subscribe(result => {
-      if (result) {
-        this.saveAsignacion()
-      }
-    })
-  }
+  // save() {
+  //   this.modal.confirm("Se le asignaro seriales a los equipos").subscribe(result => {
+  //     if (result) {
+  //       this.saveAsignacion()
+  //     }
+  //   })
+  // }
 
   saveAsignacion() {
     const data = this.crypto.encryptString(JSON.stringify({
@@ -125,7 +134,7 @@ export class ModalAsignacionComponent implements OnInit {
     })
   }
 
-  
+
   liberarSim() {
     const inputs = [];
     this.dataVenta.modelos.forEach(f => {

@@ -1,7 +1,7 @@
 export interface ValidacionventaRese {
     R?: string;
     M?: string;
-    documentos: any[];
+    // documentos: any[];
     modelos: any[];
     solicitud: any[];
     solicitud_banco: any[];
@@ -20,7 +20,7 @@ export class ValidacionventadosDecrypter {
         const verify: ValidacionventaRese = {
             R: value.R,
             M: this.crypto.decryptJson(value.M),
-            documentos: JSON.parse(this.crypto.decryptJson(value.documentos)) as any[],
+            // documentos: JSON.parse(this.crypto.decryptJson(value.documentos)) as any[],
             modelos: JSON.parse(this.crypto.decryptJson(value.modelos)) as any[],
             solicitud: JSON.parse(this.crypto.decryptJson(value.solicitud)) as any[],
             solicitud_banco: JSON.parse(this.crypto.decryptJson(value.solicitud_banco)) as any[],
