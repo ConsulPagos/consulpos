@@ -136,5 +136,15 @@ export class BancarioService {
     return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
   }
 
+  doGetMonthByBankBalance(data) {
+    var path = `/banking/doGetMonthsByBankBalance`;
+    console.log(path);
+    
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_bancario}` + path, data, { headers: headers, responseType: 'text' })
+  }
 
 }

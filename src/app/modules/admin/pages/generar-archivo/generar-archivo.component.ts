@@ -40,8 +40,29 @@ export class GenerarArchivoComponent implements OnInit {
   meses: MesInterface[];
   generacionResponse: GeneracionResponse;
   tasas: any;
+  monthsByBank: any;
   time: number = 0;
   interval;
+
+  descriptions = [
+    {
+      id: "unico",
+      desc: "Se generará una única línea para cada equipo que posea deuda segun el monto indicado."
+    },
+    {
+      id: "mensual",
+      desc: "Se tomará el monto del plan."
+    }
+    ,
+    {
+      id: "deuda",
+      desc: "Se tomará el monto total de la deuda restante del mes."
+    },
+    {
+      id: "personalizado",
+      desc: "Podrás personalizar la generación de líneas dependiendo el tipo de cliente."
+    }
+  ]
 
   constructor(
     public dialog: MatDialog,
@@ -57,10 +78,12 @@ export class GenerarArchivoComponent implements OnInit {
 
   form = new FormGroup({
     tipo_cobro: new FormControl(null, [Validators.required]),
+    tipo_calculo: new FormControl(null, [Validators.required]),
     banco: new FormControl(null, [Validators.required]),
     cash: new FormControl(null, [Validators.min(0.01)]),
     descripcion: new FormControl('', [Validators.required]),
     tasa: new FormControl('', [Validators.required]),
+    monthname: new FormControl('', [Validators.required]),
   });
 
   formPersonalizado = new FormGroup({
@@ -156,7 +179,7 @@ export class GenerarArchivoComponent implements OnInit {
       this.pauseTimer()
       this.loader.stop()
       this.loading = false;
-      console.log(res)
+      //console.log(res)
       const json = JSON.parse(this.crypto.decryptString(res));
       const def = new DefaultDecrypter(this.crypto).deserialize(json)
 
@@ -182,7 +205,7 @@ export class GenerarArchivoComponent implements OnInit {
           break;
       }
 
-       //this.crypto.setKeys(def.keyS, def.ivJ, def.keyJ, def.ivS)
+      //this.crypto.setKeys(def.keyS, def.ivJ, def.keyJ, def.ivS)
 
     })
 
@@ -220,8 +243,36 @@ export class GenerarArchivoComponent implements OnInit {
           this.toaster.error(response.M)
           break;
       }
-       
+
       this.loadingTasas = false
+    })
+  }
+
+  getMonths() {
+
+    var data: {} = {
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      codigo: this.crypto.encryptJson(this.form.get("banco").value)
+    }
+
+    const dataString = this.crypto.encryptString(JSON.stringify(data));
+
+    this.bancario.doGetMonthByBankBalance(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
+
+      const json = JSON.parse(this.crypto.decryptString(res));
+      const response = new DefaultDecrypter(this.crypto).deserialize(json);
+      switch (json.R) {
+        case constant.R0:
+          this.monthsByBank = JSON.parse(this.crypto.decryptJson(json.meses));
+          break;
+        case constant.R1:
+        default:
+          this.toaster.error(response.M)
+          break;
+      }
+
     })
   }
 
@@ -239,6 +290,10 @@ export class GenerarArchivoComponent implements OnInit {
 
   pauseTimer() {
     clearInterval(this.interval);
+  }
+
+  getDescription() {
+    return this.descriptions.filter(d => d.id == this.form.get("tipo_cobro").value)[0].desc
   }
 
 }
