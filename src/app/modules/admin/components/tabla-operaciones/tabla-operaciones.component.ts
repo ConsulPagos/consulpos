@@ -324,7 +324,7 @@ export class TablaOperacionesComponent implements OnInit {
       filter: this.crypto.encryptJson(filter),
     }))
     this.isLoadingResults = true;
-    this.venta.doFindSales(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.venta.itemsPendientesPorEntregarFiltro(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(this.crypto.decryptString(res))
       this.ShowSalesResponse = new ShowSalesDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       this.isLoadingResults = false;

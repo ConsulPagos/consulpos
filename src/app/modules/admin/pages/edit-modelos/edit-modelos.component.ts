@@ -68,6 +68,7 @@ export class EditModelosComponent implements OnInit {
       categoria: new FormControl(this.editmodelos.categoria_id, [Validators.required]),
       vendible: new FormControl(this.editmodelos.vendible, [Validators.required]),
       complemento: new FormControl(this.editmodelos.complemento, [Validators.required]),
+      caja: new FormControl(this.editmodelos.total, [Validators.required]),
     });
   }
 
@@ -128,7 +129,7 @@ export class EditModelosComponent implements OnInit {
       categoria_id: this.crypto.encryptJson(this.form.get('categoria').value),
       vendible: this.crypto.encryptJson(this.form.get('vendible').value),
       complemento: this.crypto.encryptJson(this.form.get('complemento').value),
-
+      total: this.crypto.encryptJson(this.form.get('caja').value),
     }))
 
     this.loading = true;

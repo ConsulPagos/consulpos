@@ -6,7 +6,7 @@ import { CategoriaInterface } from 'src/app/models/categoria';
 import { DefaultResponse, DefaultDecrypter } from 'src/app/models/default_response';
 import { MarcaInterface } from 'src/app/models/marca';
 import { ValidacionMarcaResponse, ValidacionMarcaDecrypter } from 'src/app/models/validacionmarca_response';
-import { ValidacionCategoriasResponse, ValidacionCategoriasDecrypter} from 'src/app/models/validacioncategoria_response';
+import { ValidacionCategoriasResponse, ValidacionCategoriasDecrypter } from 'src/app/models/validacioncategoria_response';
 import { BancarioService } from 'src/app/shared/services/bancario.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
 import { InventarioService } from 'src/app/shared/services/inventario.service';
@@ -69,6 +69,7 @@ export class AddModelosComponent implements OnInit {
     categoria: new FormControl('', [Validators.required]),
     vendible: new FormControl('', [Validators.required]),
     complemento: new FormControl('', [Validators.required]),
+    caja: new FormControl('', [Validators.required]),
   });
 
   clear() {
@@ -120,7 +121,7 @@ export class AddModelosComponent implements OnInit {
       categoria_id: this.crypto.encryptJson(this.form.get('categoria').value),
       vendible: this.crypto.encryptJson(this.form.get('vendible').value),
       complemento: this.crypto.encryptJson(this.form.get('complemento').value),
-
+      total: this.crypto.encryptJson(this.form.get('caja').value),
     }))
 
     this.loading = true;
