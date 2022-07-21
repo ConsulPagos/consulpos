@@ -29,11 +29,12 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field class="w-100" appearance="outline" *ngIf="form.get('tipo_cobro').value != 'unico'">
+                            <mat-form-field class="w-100" appearance="outline"
+                                *ngIf="form.get('tipo_cobro').value && form.get('tipo_cobro').value != 'unico'">
                                 <mat-label>Tipo de calculo</mat-label>
                                 <mat-select disableRipple formControlName="tipo_calculo">
                                     <mat-option value="unico">
-                                       Cuota única
+                                        Cuota única
                                     </mat-option>
                                     <mat-option value="fraccionado">
                                         Fracionado
@@ -41,7 +42,7 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field class="w-100" appearance="outline" *ngIf="form.get('tipo_cobro').value" >
+                            <mat-form-field class="w-100" appearance="outline" *ngIf="form.get('tipo_cobro').value">
                                 <mat-label>Seleccionar Banco</mat-label>
                                 <mat-select disableRipple formControlName="banco" (selectionChange)="getMonths()">
                                     <mat-option *ngFor="let banco of bancos" value={{banco.codigo}}>
@@ -49,20 +50,22 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field class="w-100" appearance="outline" *ngIf="form.get('banco').value && monthsByBank" >
+                            <mat-form-field class="w-100" appearance="outline"
+                                *ngIf="form.get('banco').value && monthsByBank">
                                 <mat-label>Seleccionar mes a cobrar</mat-label>
                                 <mat-select disableRipple formControlName="monthname">
                                     <mat-option *ngFor="let m of monthsByBank" value={{m.monthname}}>
-                                        {{m.monthname}} 
+                                        {{m.monthname}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field class="form" appearance="outline" *ngIf="form.get('monthname').value && tasas">
+                            <mat-form-field class="form" appearance="outline"
+                                *ngIf="form.get('monthname').value && tasas">
                                 <mat-label>Seleccionar tasa</mat-label>
                                 <mat-select disableRipple formControlName="tasa">
                                     <mat-option *ngFor="let tasa of tasas" value={{tasa.id}}>
-                                        {{tasa.monto | currency:'Bs.'}} {{tasa.fecha_inicio | date:'short'}} 
+                                        {{tasa.monto | currency:'Bs.'}} {{tasa.fecha_inicio | date:'short'}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -70,79 +73,93 @@
                             <div class="cuota-container"
                                 *ngIf="getTipoCobro('personalizado') &&  form.get('tasa').value; else SoloUnaCuota">
                                 <form [formGroup]="formPersonalizado">
-                                    <div class="cuota-personalizado">
-                                        <h6>Juridicos:</h6>
-                                        <mat-form-field class="form" appearance="outline">
-                                            <mat-label>Tipo de cobro para Juridico</mat-label>
-                                            <mat-select disableRipple formControlName="tipoCobroJuridico">
-                                                <mat-option value="unico">
-                                                    Diario
-                                                </mat-option>
-                                                <mat-option value="mensual">
-                                                    Mensual
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                        <mat-form-field class="form" appearance="outline">
-                                            <mat-label>Monto de la cuota en $ para Juridico</mat-label>
-                                            <input matInput type="number" formControlName="cashJuridico"
-                                                placeholder="Ingresa el monto de la cuota en $">
-                                            <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear"
-                                                (click)="value=''">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </mat-form-field>
+                                    <div>
+                                        <h6 class="personalizado-title">Juridicos:</h6>
+                                        <div class="cuota-personalizado">
+                                            <mat-form-field class="form" appearance="outline">
+                                                <mat-label>Tipo de cobro para Juridico</mat-label>
+                                                <mat-select disableRipple formControlName="tipoCobroJuridico">
+                                                    <mat-option value="unico"
+                                                        *ngIf="form.get('tipo_calculo').value == 'unico'">
+                                                        Diario
+                                                    </mat-option>
+                                                    <mat-option value="mensual">
+                                                        Mensual
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <mat-form-field class="form" appearance="outline"
+                                                *ngIf="form.get('tipo_calculo').value != 'unico' || formPersonalizado.get('tipoCobroJuridico').value == 'unico'">
+                                                <mat-label>Monto de la cuota en $ para Juridico</mat-label>
+                                                <input matInput type="number" formControlName="cashJuridico"
+                                                    placeholder="Ingresa el monto de la cuota en $">
+                                                <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear"
+                                                    (click)="value=''">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </mat-form-field>
+                                        </div>
                                     </div>
-                                    <div class="cuota-personalizado">
-                                        <h6>Naturales:</h6>
-                                        <mat-form-field class="form" appearance="outline">
-                                            <mat-label>Tipo de cobro para Natural</mat-label>
-                                            <mat-select disableRipple formControlName="tipoCobroNatural">
-                                                <mat-option value="unico">
-                                                    Diario
-                                                </mat-option>
-                                                <mat-option value="mensual">
-                                                    Mensual
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                        <mat-form-field class="form" appearance="outline">
-                                            <mat-label>Monto de la cuota en $ para Natural</mat-label>
-                                            <input matInput type="number" formControlName="cashNatural"
-                                                placeholder="Ingresa el monto de la cuota en $">
-                                            <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear"
-                                                (click)="value=''">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </mat-form-field>
+                                    <div>
+                                        <h6 class="personalizado-title">Naturales:</h6>
+                                        <div class="cuota-personalizado">
+                                            <mat-form-field class="form" appearance="outline">
+                                                <mat-label>Tipo de cobro para Natural</mat-label>
+                                                <mat-select disableRipple formControlName="tipoCobroNatural">
+                                                    <mat-option value="unico"
+                                                        *ngIf="form.get('tipo_calculo').value == 'unico'">
+                                                        Diario
+                                                    </mat-option>
+                                                    <mat-option value="mensual">
+                                                        Mensual
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <mat-form-field class="form" appearance="outline"
+                                                *ngIf="form.get('tipo_calculo').value != 'unico' || formPersonalizado.get('tipoCobroNatural').value == 'unico'">
+                                                <mat-label>Monto de la cuota en $ para Natural</mat-label>
+                                                <input matInput type="number" formControlName="cashNatural"
+                                                    placeholder="Ingresa el monto de la cuota en $">
+                                                <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear"
+                                                    (click)="value=''">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </mat-form-field>
+                                        </div>
                                     </div>
-                                    <div class="cuota-personalizado">
-                                        <h6>Firma Personal:</h6>
-                                        <mat-form-field class="form" appearance="outline">
-                                            <mat-label>Tipo de cobro para Firma Personal</mat-label>
-                                            <mat-select disableRipple formControlName="tipoCobroFP">
-                                                <mat-option value="unico">
-                                                    Cuota Unica
-                                                </mat-option>
-                                                <mat-option value="mensual">
-                                                    Cuota Mensual
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                        <mat-form-field class="form" appearance="outline">
-                                            <mat-label>Monto de la cuota en $ para Firma Personal</mat-label>
-                                            <input matInput type="number" formControlName="cashFP"
-                                                placeholder="Ingresa el monto de la cuota en $">
-                                            <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear"
-                                                (click)="value=''">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </mat-form-field>
+                                    <div>
+                                        <h6 class="personalizado-title">Firma Personal:</h6>
+                                        <div class="cuota-personalizado">
+                                            <mat-form-field class="form" appearance="outline">
+                                                <mat-label>Tipo de cobro para Firma Personal</mat-label>
+                                                <mat-select disableRipple formControlName="tipoCobroFP">
+                                                    <mat-option value="unico"
+                                                        *ngIf="form.get('tipo_calculo').value == 'unico'">
+                                                        Diario
+                                                    </mat-option>
+                                                    <mat-option value="mensual">
+                                                        Mensual
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <mat-form-field class="form" appearance="outline"
+                                                *ngIf="form.get('tipo_calculo').value != 'unico' || formPersonalizado.get('tipoCobroFP').value == 'unico'">
+                                                <mat-label>Monto de la cuota en $ para Firma Personal</mat-label>
+                                                <input matInput type="number" formControlName="cashFP"
+                                                    placeholder="Ingresa el monto de la cuota en $">
+                                                <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear"
+                                                    (click)="value=''">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </mat-form-field>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
                             <ng-template #SoloUnaCuota>
-                                <mat-form-field *ngIf="form.get('tasa').value && form.get('tipo_calculo').value != 'unico'" class="form" appearance="outline">
+                                <mat-form-field
+                                    *ngIf="form.get('tasa').value && ( form.get('tipo_cobro').value == 'unico' || form.get('tipo_calculo').value == 'fraccionado')"
+                                    class="form" appearance="outline">
                                     <mat-label>Monto de la cuota en $</mat-label>
                                     <input matInput type="number" formControlName="cash"
                                         placeholder="Ingresa el monto de la cuota en $">
@@ -153,15 +170,16 @@
                                 </mat-form-field>
                             </ng-template>
 
-                            <mat-form-field class="form" appearance="outline" *ngIf="form.get('tasa').value">
+                            <!--  <mat-form-field class="form" appearance="outline" *ngIf="form.get('tasa').value">
                                 <mat-label>Concepto</mat-label>
                                 <input matInput type="text" formControlName="descripcion"
                                     placeholder="Ingresa el concepto">
-                            </mat-form-field>
+                            </mat-form-field> -->
 
-                           
-                            <app-action-btn class="btn-submit" (onClick)="submit()" [loading]="loading" *ngIf="form.get('banco').value && tasas"
-                                [text]="'Generar archivo'" [isDisabled]="isInvalid() || loading"></app-action-btn>
+
+                            <app-action-btn class="btn-submit" (onClick)="submit()" [loading]="loading"
+                                *ngIf="form.get('banco').value && tasas" [text]="'Generar archivo'"
+                                [isDisabled]="isInvalid() || loading"></app-action-btn>
 
                         </div>
                     </form>

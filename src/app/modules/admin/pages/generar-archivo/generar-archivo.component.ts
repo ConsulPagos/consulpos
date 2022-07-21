@@ -78,10 +78,10 @@ export class GenerarArchivoComponent implements OnInit {
 
   form = new FormGroup({
     tipo_cobro: new FormControl(null, [Validators.required]),
-    tipo_calculo: new FormControl(null, [Validators.required]),
+    tipo_calculo: new FormControl("unico", [Validators.required]),
     banco: new FormControl(null, [Validators.required]),
     cash: new FormControl(null, [Validators.min(0.01)]),
-    descripcion: new FormControl('', [Validators.required]),
+    // descripcion: new FormControl('', [Validators.required]),
     tasa: new FormControl('', [Validators.required]),
     monthname: new FormControl('', [Validators.required]),
   });
@@ -137,7 +137,8 @@ export class GenerarArchivoComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       codigo: this.crypto.encryptJson(this.form.get('banco').value),
-      descripcion: this.crypto.encryptJson(this.form.get('descripcion').value),
+      tipo_calculo: this.crypto.encryptJson(this.form.get('tipo_calculo').value),
+      /*descripcion: this.crypto.encryptJson(this.form.get('descripcion').value),*/
       tasa: this.crypto.encryptJson(this.tasas.filter(t => t.id == this.form.get('tasa').value)[0].monto),
       id_tasa: this.crypto.encryptJson(this.form.get('tasa').value),
       oper: this.crypto.encryptJson(this.form.get("tipo_cobro").value)
