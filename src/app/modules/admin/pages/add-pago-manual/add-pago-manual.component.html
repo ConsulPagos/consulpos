@@ -32,6 +32,16 @@
                 </div>
             </div>
 
+            <form [formGroup]="date">
+                <mat-form-field appearance="outline" class="container_box_space">
+                    <mat-label>Fecha del Pago</mat-label>
+                    <input matInput [matDatepicker]="dp3" disabled [max]="currentYear" formControlName="fecha"
+                        (dateChange)="tipoPagos()">
+                    <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                    <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                </mat-form-field>
+            </form>
+
 
             <div *ngFor="let format of formats_payments; let i=index">
 
@@ -57,13 +67,6 @@
                         <mat-form-field class="box" appearance="outline">
                             <mat-label>Descripcion</mat-label>
                             <input matInput type="text" formControlName="descripcion" maxlength="45">
-                        </mat-form-field>
-
-                        <mat-form-field appearance="outline" class="container_box_space">
-                            <mat-label>Fecha del Pago</mat-label>
-                            <input matInput [matDatepicker]="dp3" disabled [max]="currentYear" formControlName="fecha">
-                            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-                            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                         </mat-form-field>
                     </div>
                 </form>
@@ -128,10 +131,10 @@
                     </tr>
                     <tr>
                         <td>
-                            <p>{{total}}</p>
+                            <p>{{total?.toFixed(2)}}</p>
                         </td>
                         <td>
-                            <p>{{total_Bs.toFixed(2)}}</p>
+                            <p>{{total_Bs?.toFixed(2)}}</p>
                         </td>
                     </tr>
                 </table>
@@ -147,10 +150,10 @@
                             <p>{{tasa}}</p>
                         </td>
                         <td>
-                            <p>{{total_IVA}}</p>
+                            <p>{{total_IVA?.toFixed(2)}}</p>
                         </td>
                         <td>
-                            <p>{{total_IGTF}}</p>
+                            <p>{{total_IGTF?.toFixed(2)}}</p>
                         </td>
                     </tr>
                 </table>

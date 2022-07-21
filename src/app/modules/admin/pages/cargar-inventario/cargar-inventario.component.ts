@@ -64,6 +64,7 @@ export class CargarInventarioComponent implements OnInit {
     modelo: new FormControl('', [Validators.required]),
     proveedor: new FormControl('', [Validators.required]),
     pedido: new FormControl('', [Validators.required]),
+    caja: new FormControl('', [Validators.required]),
   });
 
   serialForm = new FormGroup({
@@ -185,6 +186,8 @@ export class CargarInventarioComponent implements OnInit {
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       items: this.crypto.encryptJson(JSON.stringify(this.seriales)),
       pedido_id: this.crypto.encryptJson(this.form.get('pedido').value),
+      caja: this.crypto.encryptJson(this.form.get('caja').value),
+      modelo_id: this.crypto.encryptJson(this.form.get('modelo').value),
     }))
     console.log(this.seriales)
     this.loading = true;

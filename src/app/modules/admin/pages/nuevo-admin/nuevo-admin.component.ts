@@ -46,9 +46,9 @@ export class NuevoAdminComponent implements OnInit {
   adminForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     primer_nombre: new FormControl('', [Validators.required, Validators.min(90), Validators.max(99)]),
-    segundo_nombre: new FormControl('', [Validators.required]),
+    segundo_nombre: new FormControl(''),
     primer_apellido: new FormControl('', [Validators.required]),
-    segundo_apellido: new FormControl('', [Validators.required]),
+    segundo_apellido: new FormControl(''),
     cedula: new FormControl('', [Validators.required]),
     rol: new FormControl('', [Validators.required]),
     direccion: new FormControl('', [Validators.required]),
