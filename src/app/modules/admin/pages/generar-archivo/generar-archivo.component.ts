@@ -40,7 +40,9 @@ export class GenerarArchivoComponent implements OnInit {
   meses: MesInterface[];
   generacionResponse: GeneracionResponse;
   tasas: any;
-  monthsByBank: any;
+  monthsByBank: any[] = [];
+  loadingMonthsByBank: boolean = false;
+
   time: number = 0;
   interval;
 
@@ -88,11 +90,11 @@ export class GenerarArchivoComponent implements OnInit {
 
   formPersonalizado = new FormGroup({
     tipoCobroJuridico: new FormControl(null, [Validators.required]),
-    cashJuridico: new FormControl('', [Validators.required]),
+    cashJuridico: new FormControl(''),
     tipoCobroNatural: new FormControl(null, [Validators.required]),
-    cashNatural: new FormControl('', [Validators.required]),
+    cashNatural: new FormControl(''),
     tipoCobroFP: new FormControl(null, [Validators.required]),
-    cashFP: new FormControl('', [Validators.required])
+    cashFP: new FormControl('')
   });
 
   ngOnInit(): void {
@@ -101,8 +103,6 @@ export class GenerarArchivoComponent implements OnInit {
     this.bancos = JSON.parse(this.storage.get(constant.BANCOS)).bancos
     this.getTasas();
   }
-
-
 
   openDialog(): void {
     this.dialog.open(ResultFileComponent, {
@@ -138,6 +138,7 @@ export class GenerarArchivoComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       codigo: this.crypto.encryptJson(this.form.get('banco').value),
       tipo_calculo: this.crypto.encryptJson(this.form.get('tipo_calculo').value),
+      mes: this.crypto.encryptJson(this.form.get('monthname').value),
       /*descripcion: this.crypto.encryptJson(this.form.get('descripcion').value),*/
       tasa: this.crypto.encryptJson(this.tasas.filter(t => t.id == this.form.get('tasa').value)[0].monto),
       id_tasa: this.crypto.encryptJson(this.form.get('tasa').value),
@@ -213,10 +214,13 @@ export class GenerarArchivoComponent implements OnInit {
   }
 
   isInvalid(): boolean {
+
     if (this.form.get("tipo_cobro").value == "personalizado") {
       return this.form.invalid || this.formPersonalizado.invalid;
     }
-    return this.form.invalid || this.form.get("cash").value == null;
+    return this.form.invalid 
+    || (this.form.get('tipo_calculo').value == 'fraccionado' && this.form.get("cash").value == null)
+    || (this.form.get('tipo_cobro').value == 'diario' && this.form.get("cash").value == null);
   }
 
   getTasas() {
@@ -251,6 +255,10 @@ export class GenerarArchivoComponent implements OnInit {
 
   getMonths() {
 
+    this.loadingMonthsByBank = true
+
+    this.monthsByBank = []
+
     var data: {} = {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
@@ -261,6 +269,7 @@ export class GenerarArchivoComponent implements OnInit {
     const dataString = this.crypto.encryptString(JSON.stringify(data));
 
     this.bancario.doGetMonthByBankBalance(`${this.session.getDeviceId()};${dataString}`).subscribe(res => {
+      this.loadingMonthsByBank = false
 
       const json = JSON.parse(this.crypto.decryptString(res));
       const response = new DefaultDecrypter(this.crypto).deserialize(json);
