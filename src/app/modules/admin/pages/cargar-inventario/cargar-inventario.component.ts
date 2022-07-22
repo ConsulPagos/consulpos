@@ -33,14 +33,14 @@ export class CargarInventarioComponent implements OnInit {
   categorias: CategoriaInterface[];
   marcaResponse: ValidacionMarcaResponse;
   marcas: MarcaInterface[];
-  modelos: ModeloInterface[];
+  modelos: any[];
   almacenes: any[];
   provedores: any[];
   pedidosResponse: ValidacionPedidosResponse;
   pedidos: any[];
   seriales = [];
 
-  LIMITEXBOX = 20;
+  LIMITEXBOX = 0;
 
   constructor(
     private crypto: CryptoService,
@@ -50,21 +50,14 @@ export class CargarInventarioComponent implements OnInit {
     private toaster: ToasterService,
     private router: Router,
     private inventario: InventarioService,
-    private ventas: VentasService,
   ) { }
 
   ngOnInit(): void {
-    this.categoria();
-    this.marca();
     this.pedido();
-    this.modelos = JSON.parse(this.storage.get(constant.MODELOS)).modelos
-    this.provedores = JSON.parse(this.storage.get(constant.PROVEEDORES)).proveedores
-    this.almacenes = JSON.parse(this.storage.get(constant.ALMACENES)).almacenes
   }
 
   form = new FormGroup({
     modelo: new FormControl('', [Validators.required]),
-    proveedor: new FormControl('', [Validators.required]),
     pedido: new FormControl('', [Validators.required]),
     caja: new FormControl('', [Validators.required]),
   });
@@ -73,29 +66,7 @@ export class CargarInventarioComponent implements OnInit {
     serial: new FormControl(''),
   });
 
-  categoria() {
-    const data = this.crypto.encryptString(JSON.stringify({
-      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-    }))
-    this.inventario.doListCategorias(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.categoriaResponse = new ValidacionCategoriasDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.categorias = JSON.parse(this.categoriaResponse.categorias)
-    })
-  }
 
-  marca() {
-    const data = this.crypto.encryptString(JSON.stringify({
-      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
-      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
-      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-    }))
-    this.inventario.doListMarcas(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      this.marcaResponse = new ValidacionMarcaDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
-      this.marcas = JSON.parse(this.marcaResponse.marcas)
-    })
-  }
 
   pedido() {
     const data = this.crypto.encryptString(JSON.stringify({
@@ -114,8 +85,19 @@ export class CargarInventarioComponent implements OnInit {
     })
   }
 
-  getMarca(id: any): void {
-    this.modelos = JSON.parse(this.storage.get(constant.MODELOS)).modelos.filter(c => c.id_marca == id)
+  getModelo(): void {
+    console.log(this.form.get("pedido").value);
+    console.log(this.pedidos.filter(c => c.pedido_id == this.form.get("pedido").value)[0]);
+    
+    
+    this.modelos = this.pedidos.filter(c => c.pedido_id == this.form.get("pedido").value)[0].modelos
+  }
+
+  getLimites(): void {
+    
+    this.LIMITEXBOX = this.modelos.filter(c => c.modelo_id == this.form.get("modelo").value)[0].total_por_caja
+    console.log(this.LIMITEXBOX);
+    
   }
 
   onlyCaracteres(event) {
@@ -129,7 +111,6 @@ export class CargarInventarioComponent implements OnInit {
   cargarSerial(serial: string) {
     console.log(serial)
     if (this.seriales.indexOf(serial) == -1 && serial.trim().length > 0 && this.seriales.length < this.LIMITEXBOX) {
-
       const data = this.crypto.encryptString(JSON.stringify({
         u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
         correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
@@ -173,7 +154,6 @@ export class CargarInventarioComponent implements OnInit {
     this.seriales = [];
   }
 
-
   save() {
     this.modal.confirm("Se agregara los items al inventario").subscribe(result => {
       if (result) {
@@ -216,7 +196,5 @@ export class CargarInventarioComponent implements OnInit {
       }
     })
   }
-
-
 
 }

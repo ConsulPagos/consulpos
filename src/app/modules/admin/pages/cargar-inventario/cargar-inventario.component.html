@@ -12,32 +12,22 @@
             </div>
             <form [formGroup]="form">
                 <div class="container">
-
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Pedido Nº</mat-label>
-                        <mat-select disableRipple formControlName="pedido">
-                            <mat-option *ngFor="let pedido of pedidos" value={{pedido.id}}>
+                        <mat-select disableRipple formControlName="pedido" (selectionChange)="getModelo()">
+                            <mat-option *ngFor="let pedido of pedidos" value={{pedido.pedido_id}}>
                                 {{pedido.numero_orden}} - {{pedido.fecha}} </mat-option>
                         </mat-select>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Proveedor</mat-label>
-                        <mat-select disableRipple formControlName="proveedor">
-                            <mat-option *ngFor="let provedor of provedores" value={{provedor.proveedor_id}}>
-                                {{provedor.nombre}} </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Modelo</mat-label>
-                        <mat-select disableRipple formControlName="modelo">
-                            <mat-option *ngFor="let modelo of modelos" value={{modelo.id}}>
+                        <mat-select disableRipple formControlName="modelo" (selectionChange)="getLimites()">
+                            <mat-option *ngFor="let modelo of modelos" value={{modelo.modelo_id}}>
                                 {{modelo.modelo}} </mat-option>
                         </mat-select>
                     </mat-form-field>
 
-                    <!-- vajas -->
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Caja</mat-label>
                         <input matInput placeholder="# caja" type="text" maxlength="3" minlength="1"
