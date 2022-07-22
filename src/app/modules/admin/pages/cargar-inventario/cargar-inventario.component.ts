@@ -40,6 +40,8 @@ export class CargarInventarioComponent implements OnInit {
   pedidos: any[];
   seriales = [];
 
+  LIMITEXBOX = 20;
+
   constructor(
     private crypto: CryptoService,
     private storage: StorageService,
@@ -101,12 +103,14 @@ export class CargarInventarioComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
     }))
-    this.inventario.doPedidosAbiertos(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+    this.inventario.listarPedidosAbiertos(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(res)
       console.log(JSON.parse(this.crypto.decryptString(res)))
       this.pedidosResponse = new ValidacionPedidosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
       console.log(this.pedidosResponse)
       this.pedidos = JSON.parse(this.pedidosResponse.pedidos)
+      console.log(this.pedidos);
+      
     })
   }
 
@@ -124,7 +128,7 @@ export class CargarInventarioComponent implements OnInit {
 
   cargarSerial(serial: string) {
     console.log(serial)
-    if (this.seriales.indexOf(serial) == -1 && serial.trim().length > 0) {
+    if (this.seriales.indexOf(serial) == -1 && serial.trim().length > 0 && this.seriales.length < this.LIMITEXBOX) {
 
       const data = this.crypto.encryptString(JSON.stringify({
         u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),

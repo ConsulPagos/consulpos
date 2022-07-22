@@ -55,3 +55,39 @@ label {
 .container_module {
     margin: 0.55rem;
 }
+
+.title_data {
+    font-weight: bold;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0 !important;
+}
+
+.container_module {
+    margin: 0.25rem;
+}
+
+.contenido{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.box{
+    padding: 0 .5rem;
+}
+
+.black1{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.black2{
+margin: 0 1rem;
+}

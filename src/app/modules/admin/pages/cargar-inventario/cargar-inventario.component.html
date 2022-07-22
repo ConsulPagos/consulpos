@@ -14,10 +14,10 @@
                 <div class="container">
 
                     <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Modelo</mat-label>
-                        <mat-select disableRipple formControlName="modelo" (selectionChange)="clearinputs()">
-                            <mat-option *ngFor="let modelo of modelos" value={{modelo.id}}>
-                                {{modelo.modelo}} </mat-option>
+                        <mat-label>Pedido Nº</mat-label>
+                        <mat-select disableRipple formControlName="pedido">
+                            <mat-option *ngFor="let pedido of pedidos" value={{pedido.id}}>
+                                {{pedido.numero_orden}} - {{pedido.fecha}} </mat-option>
                         </mat-select>
                     </mat-form-field>
 
@@ -30,13 +30,14 @@
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="container_box_space">
-                        <mat-label>Pedido Nº</mat-label>
-                        <mat-select disableRipple formControlName="pedido">
-                            <mat-option *ngFor="let pedido of pedidos" value={{pedido.id}}>
-                                {{pedido.numero_orden}} - {{pedido.fecha}} </mat-option>
+                        <mat-label>Modelo</mat-label>
+                        <mat-select disableRipple formControlName="modelo">
+                            <mat-option *ngFor="let modelo of modelos" value={{modelo.id}}>
+                                {{modelo.modelo}} </mat-option>
                         </mat-select>
                     </mat-form-field>
-<!-- vajas -->
+
+                    <!-- vajas -->
                     <mat-form-field appearance="outline" class="container_box_space">
                         <mat-label>Caja</mat-label>
                         <input matInput placeholder="# caja" type="text" maxlength="3" minlength="1"

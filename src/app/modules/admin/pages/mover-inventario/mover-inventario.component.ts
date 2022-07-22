@@ -21,6 +21,7 @@ import { DiferirDeudaComponent } from '../../components/diferir-deuda/diferir-de
 import { ModalKeySoComponent } from '../../components/modal-key-so/modal-key-so.component';
 import { stringify } from 'querystring';
 import { ModalCambioAlmacenComponent } from '../../components/modal-cambio-almacen/modal-cambio-almacen.component';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-mover-inventario',
@@ -153,7 +154,10 @@ export class MoverInventarioComponent implements OnInit {
       switch (this.defaultResponse.R) {
         case constant.R0:
           this.toaster.success(this.defaultResponse.M)
-          this.router.navigateByUrl('/admin/app/(adr:inventario)')
+          // this.router.navigateByUrl('/admin/app/(adr:inventario)')
+          this.selection.clear()
+          this.searchPos()
+
           break;
         case constant.R1:
           this.toaster.error(this.defaultResponse.M)
@@ -183,7 +187,10 @@ export class MoverInventarioComponent implements OnInit {
       switch (this.defaultResponse.R) {
         case constant.R0:
           this.toaster.success(this.defaultResponse.M)
-          this.router.navigateByUrl('/admin/app/(adr:inventario)')
+          // this.router.navigateByUrl('/admin/app/(adr:mover-inventario)')
+          this.selection.clear()
+
+          this.searchPos()
           break;
         case constant.R1:
           this.toaster.error(this.defaultResponse.M)

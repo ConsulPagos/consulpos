@@ -15,10 +15,14 @@ export class ModalKeySoComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ModalKeySoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      console.log(this.data);
+      
   }
 
   ngOnInit(): void {
   }
+
+
 
 
 }

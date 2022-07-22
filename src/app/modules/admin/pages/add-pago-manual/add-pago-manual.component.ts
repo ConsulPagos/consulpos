@@ -153,18 +153,19 @@ export class AddPagoManualComponent implements OnInit {
       u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
-      solicitud_id: this.crypto.encryptJson(this.addPay.number),
-      t_sol_id: this.crypto.encryptJson(this.addPay.t_sol_id),
+      solicitud: this.crypto.encryptJson(this.addPay.solicitud),
+      cod_serial: this.crypto.encryptJson(this.addPay.cod_serial),
       fecha: this.crypto.encryptJson(fecha),
+      id: this.crypto.encryptJson(this.addPay.id),
     }))
     this.loader.loading()
-    this.pago.doPaymentInput(`${this.session.getDeviceId()};${data}`).subscribe(res => {
-      console.log(res)
+    this.pago.paymentConstructorManual(`${this.session.getDeviceId()};${data}`).subscribe(res => {
       console.log(this.crypto.decryptString(res))
       this.loader.stop()
       const json = JSON.parse(this.crypto.decryptString(res))
+      console.log(json)
+
       this.t_pagos = JSON.parse(this.crypto.decryptJson(json.t_pagos))
-      console.log(this.t_pagos)
       this.total = JSON.parse(this.crypto.decryptJson(json.total_dolar))
       this.total_Bs = JSON.parse(this.crypto.decryptJson(json.total_Bs))
       this.total_IGTF = JSON.parse(this.crypto.decryptJson(json.total_IGTF))

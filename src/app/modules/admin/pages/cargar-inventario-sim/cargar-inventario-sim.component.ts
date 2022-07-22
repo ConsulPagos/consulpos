@@ -183,7 +183,7 @@ export class CargarInventarioSimComponent implements OnInit {
       correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
       scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
       items: this.crypto.encryptJson(this.form.get('proveedor').value),
-      pedido_id: this.crypto.encryptJson(this.form.get('descipcion').value),
+      pedido_id: this.crypto.encryptJson(this.form.get('pedido').value),
     }))
     this.loading = true;
     console.log("verify")

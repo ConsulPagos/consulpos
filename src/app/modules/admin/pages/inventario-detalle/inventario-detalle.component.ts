@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SearchPosResponse, SearchPosDecrypter } from 'src/app/models/searchpos_response';
 import { ShowInventarioDetalleDecrypter, ShowInventarioDetalleResponse } from 'src/app/models/showinventariodetalle_response';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { CryptoService } from 'src/app/shared/services/crypto.service';
@@ -17,10 +21,17 @@ import { constant } from 'src/app/shared/utils/constant';
 })
 export class InventarioDetalleComponent implements OnInit {
 
+  displayedColumns: string[] = ['fecha', 'numero_orden','numero_factura','marca', "modelo", 'serial', "aplicativo", "llave", "estatus"];
+  dataSource: MatTableDataSource<any>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   id: string;
   isLoadingResults = false;
-  showInventarioResponse: ShowInventarioDetalleResponse;
+  showInventarioResponse: any;
   inventarios = {};
+  searchpos: SearchPosResponse;
+  items: any[];
 
   constructor(
     private session: SesionService,
@@ -38,6 +49,7 @@ export class InventarioDetalleComponent implements OnInit {
     this.route.params.subscribe(params =>
       this.id = params['id']);
     this.showDetalle(this.id)
+
   }
 
   showDetalle(id) {
@@ -56,6 +68,29 @@ export class InventarioDetalleComponent implements OnInit {
       console.log(this.showInventarioResponse)
       this.isLoadingResults = false;
       this.inventarios = this.showInventarioResponse.inventario
+      this.searchPos()
+    })
+  }
+
+  searchPos() {
+    console.log('hola');
+
+    const data = this.crypto.encryptString(JSON.stringify({
+      u_id: this.crypto.encryptJson(this.storage.getJson(constant.USER).uid),
+      correo: this.crypto.encryptJson(this.storage.getJson(constant.USER).email),
+      scod: this.crypto.encryptJson(this.storage.getJson(constant.USER).scod),
+      almacen_id: this.crypto.encryptJson(this.showInventarioResponse.inventario.almacen_id),
+    }))
+
+
+    this.inventario.doListarPosConfigurados(`${this.session.getDeviceId()};${data}`).subscribe(res => {
+      console.log(this.showInventarioResponse.inventario.almacen_id);
+      console.log(res)
+      console.log(JSON.parse(this.crypto.decryptString(res)))
+      this.searchpos = new SearchPosDecrypter(this.crypto).deserialize(JSON.parse(this.crypto.decryptString(res)))
+      this.dataSource = new MatTableDataSource(this.searchpos.items)
+      console.log(this.searchpos)
+      this.items = this.searchpos.items
     })
   }
 

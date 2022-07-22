@@ -132,10 +132,24 @@
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-exchange-alt"></li> <span class="text_side">Pedidos</span>
             </a>
-            <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['cargar-inventario'] } }]"
-                routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
-                <li class="fa fa-university"></li> <span class="text_side">Cargar Inventario</span>
+
+            <a class="menu_side" mat-menu-item [matMenuTriggerFor]="cargarInventario">
+                <li class="fa fa-credit-card icon_side"></li>
+                <span class="text_side">Cargar Inventario</span>
             </a>
+
+            <mat-menu #cargarInventario="matMenu">
+                <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['cargar-inventario'] } }]"
+                    routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                    <li class="fa fa-university"></li> <span class="text_side">Cargar Inventario POS</span>
+                </a>
+
+                <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['cargar-inventario-sim'] } }]"
+                    routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
+                    <li class="fa fa-university"></li> <span class="text_side">Cargar Inventario SIM</span>
+                </a>
+            </mat-menu>
+
             <a class="menu_side" [routerLink]="['/admin/app',{ outlets: { adr: ['inventario'] } }]"
                 routerLinkActive="ad-active" [routerLinkActiveOptions]="{exact: true}">
                 <li class="fa fa-exchange-alt"></li> <span class="text_side">Inventario</span>

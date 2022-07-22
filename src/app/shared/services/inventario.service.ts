@@ -548,4 +548,13 @@ export class InventarioService {
     headers.set('Access-Control-Allow-Origin', '*');
     return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
   }
+
+  listarPedidosAbiertos (data) {
+    var path = `/stock/listarPedidosAbiertos`;
+    var headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain')
+    headers.set('Accept', 'text/plain');
+    headers.set('Access-Control-Allow-Origin', '*');
+    return this.http.post(`${environment.apiHost}${environment.divider}${environment.puerto_inventario}` + path, data, { headers: headers, responseType: 'text' })
+  }
 }
