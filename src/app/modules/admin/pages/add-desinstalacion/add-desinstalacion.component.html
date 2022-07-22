@@ -1,10 +1,10 @@
 <section id="addDesinstalacion">
     <div class="container-fluid">
 
-                <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
-                    [routerLink]="['/admin/app',{ outlets: { adr: ['desinstalacion'] } }]">
-                    <li class="fas fa-arrow-left"></li>
-                </a>
+        <a class="nav-btn" #tooltip="matTooltip" [matTooltipPosition]="'right'" matTooltip="Regresar"
+            [routerLink]="['/admin/app',{ outlets: { adr: ['desinstalacion'] } }]">
+            <li class="fas fa-arrow-left"></li>
+        </a>
 
         <div style="background-color: #fff; border-radius: 10px;">
             <p class="title_mother text-uppercase">
@@ -95,9 +95,18 @@
                         </div>
                     </form>
 
-                    <div>
-                        {{validacionPos | json}}
+                    <div *ngIf="this.solicitud.valid">
+                        <p>Modelo:</p>{{validacionPos.item.modelo}}
+                        <p>Razon Social:</p>{{validacionPos.item.cliente.razon_social}}
+                        <p>Rif:</p>{{validacionPos.item.cliente.rif}}
+                        <p>Plataforma:</p>{{validacionPos.item.plataforma}}
+
+                        <div *ngFor="let item of validacionPos.item.sim">
+                            <p>Modelo sim:</p> {{item.modelo}}
+                            <p>Serial:</p>{{item.cod_serial}}
+                        </div>
                     </div>
+
 
                     <form [formGroup]="buy">
                         <ng-template matStepLabel>Datos de la Venta</ng-template>
@@ -106,7 +115,7 @@
                                 <div class="container_agent">
                                     <mat-form-field appearance="outline" class="ocultar">
                                         <mat-label>Modelo</mat-label>
-                                        <mat-select disableRipple formControlName="modelo" >
+                                        <mat-select disableRipple formControlName="modelo">
                                             <mat-option *ngFor="let modelo of modelos" value={{modelo.id}}>
                                                 {{modelo.modelo}} </mat-option>
                                         </mat-select>

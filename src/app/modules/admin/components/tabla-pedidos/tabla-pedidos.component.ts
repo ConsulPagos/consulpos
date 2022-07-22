@@ -26,7 +26,7 @@ import { constant } from 'src/app/shared/utils/constant';
 })
 export class TablaPedidosComponent implements OnInit {
 
-  displayedColumns: string[] = ['fecha','modelo', 'numero_orden','proveedor','total', 'acciones'];
+  displayedColumns: string[] = ['fecha','modelo', 'numero_orden','proveedor','total'];
   plataforma = [];
 
   isLoadingResults = false;

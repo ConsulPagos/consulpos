@@ -97,6 +97,18 @@
                         </div>
                     </form>
 
+                    <div *ngIf="this.solicitud.valid">
+                        <p>Modelo:</p>{{validacionPos.item.modelo}}
+                        <p>Razon Social:</p>{{validacionPos.item.cliente.razon_social}}
+                        <p>Rif:</p>{{validacionPos.item.cliente.rif}}
+                        <p>Plataforma:</p>{{validacionPos.item.plataforma}}
+
+                        <div *ngFor="let item of validacionPos.item.sim">
+                            <p>Modelo sim:</p> {{item.modelo}}
+                            <p>Serial:</p>{{item.cod_serial}}
+                        </div>
+                    </div>
+
                     <form [formGroup]="buies[i]" #f="ngForm" *ngFor="let format of formats_buy; let i=index">
                         <ng-template matStepLabel>Datos de la Venta</ng-template>
                         <div>
